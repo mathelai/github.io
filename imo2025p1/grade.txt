@@ -1,0 +1,29 @@
+**Expected Score: 4/7**
+
+**CORRECTNESS ISSUE**: The claimed answer k∈{0,1} is **INCORRECT**. See SOLUTION_STATUS.md for details.
+
+
+## Grading
+
+According to IMO grading standards for a 7-point problem:
+
+### Actual Score: 4/7 points
+
+**What works:**
+- ✓ Proves k = 0 is achievable (correct constructive proof using vertical/horizontal lines)
+- ✓ Proves k = 1 is achievable (correct constructive proof)
+- ✓ Clear problem setup and definitions
+- ✓ Well-organized structure
+
+**Major issues preventing higher score:**
+- ✗ **INCORRECT CLAIM**: States k ≥ 2 is impossible, but this is FALSE
+- ✗ The "coverage efficiency argument" in Part 3 has logical gaps
+- ✗ Simulation data in results.json contains INVALID configurations (uses more than n lines)
+- ✗ No rigorous proof that k=2, k=3, etc. are impossible
+
+**Assessment:**
+This solution earns partial credit (4/7) for correctly proving k=0 and k=1 are achievable. However, the claim that k ≥ 2 is impossible is incorrect, and the proof attempt has significant gaps. The actual characterization of all achievable k values remains an open problem.
+
+**To achieve 7/7:** Either:
+1. Rigorously prove k ∈ {0, 1} (if this is actually true), OR
+2. Find the correct characterization and prove it completely

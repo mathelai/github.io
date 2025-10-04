@@ -1,0 +1,7 @@
+There are 4n pebbles of weights 1, 2, 3, ..., 4n. Each pebble is colored in one of n colors and there are four pebbles of each color. Show that we can arrange the pebbles into two piles so that the following two conditions are both satisfied:
+
+
+\begin{itemize}
+\item The total weights of both piles are the same.
+\item Each pile contains two pebbles of each color.
+\end{itemize}

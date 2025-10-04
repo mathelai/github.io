@@ -1,0 +1,11 @@
+The Bank of Bath issues coins with an $A$ on one side and a $B$ on the other. Harry has $n$ of these coins arranged in a line from left to right. He repeatedly performs the following operation:
+\medskip
+\noindent
+If there are exactly $k$ coins showing $A$, then he turns over the $k$-th coin from the left; otherwise, all coins show $B$ and he stops.
+\medskip
+\noindent
+For example, if $n = 3$, the process starting with the configuration $AAB$ would be $AAB \to ABB \to BBB$, which stops after three operations.
+\medskip
+\begin{enumerate}
+\item[(a)] Show that, for each initial configuration, Harry stops after a finite number of operations.
+\item[(b)] For each initial configuration $C$, let $f(C)$ be the number of operations before Harry stops. For example, $f(AAB) = 3$ and $f(BBB) = 0$. Determine the average value of $f(C)$ over all $2^n$ possible initial configurations $C$.

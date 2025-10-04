@@ -1,0 +1,9 @@
+Let (a_n)_{n=1}^{\infty} be an infinite sequence of positive integers, and let k be a positive integer. Suppose that, for each i ≥ 1, a_i is equal to the number of times i appears in the list a_1, a_2, ..., a_k.
+
+
+
+Prove that at least one of the sequence (a_n) and k is eventually periodic.
+
+
+
+(An infinite sequence (a_n) is eventually periodic if there exist positive integers N and T such that a_{n+T} = a_n for all n ≥ N.)

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2024 P5 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid #E2E8F0;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            text-align: center;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        header .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #7A9D8F;
+            padding-bottom: 10px;
+        }
+        .problem-text {
+            background: var(--bg-tertiary);
+            padding: 24px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 12px;
+            font-size: 1.05em;
+            line-height: 1.7;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        /* Override for old problem-text */
+        .old-problem-text {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 4px;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        .controls {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius:  12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .control-group input, .control-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-primary);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .control-group input:focus, .control-group select:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #7A9D8F;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius:  8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5A8070;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button.secondary {
+            background: #6c757d;
+        }
+        button.secondary:hover {
+            background: #5a6268;
+        }
+        .visualization {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-primary);
+            border-radius:  12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            overflow: auto;
+        }
+        .board {
+            display: inline-block;
+            border: 3px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .row {
+            display: flex;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        .cell.first-row {
+            background: #d4edda;
+        }
+        .cell.last-row {
+            background: #d1ecf1;
+        }
+        .cell.monster {
+            background: #f8d7da;
+        }
+        .cell.visited {
+            background: #F5F7FA;
+        }
+        .cell.current {
+            background: #7A9D8F;
+            color: white;
+            font-weight: bold;
+        }
+        .cell.safe {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .results-table th, .results-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-primary);
+        }
+        .results-table th {
+            background: #7A9D8F;
+            color: white;
+            font-weight: 600;
+        }
+        .results-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .answer-box h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        .log {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        .log-entry.success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .log-entry.fail {
+            color: #dc3545;
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header class="header">
+            <h1>IMO 2024 Problem 5</h1>
+            <p>Turbo the Snail</p>
+        </div>
+        <div class="content">
+            <!-- Problem Statement -->
+            <div class="section">
+                <h2 id="problem-title">Problem Statement</h2>
+                <div class="problem-text">
+                    Turbo the snail plays a game on a board with <strong>2024 rows</strong> and <strong>2023 columns</strong>.
+                    There are hidden monsters in <strong>2022</strong> of the cells. Initially, Turbo does not know where any
+                    of the monsters are, but he knows that there is exactly one monster in each row except the first row and
+                    the last row, and that each column contains at most one monster.
+                    <br><br>
+                    Turbo makes a series of attempts to go from the first row to the last row. On each attempt, he chooses
+                    to start on any cell in the first row, then repeatedly moves to an adjacent cell sharing a common side.
+                    (He is allowed to return to a previously visited cell.) If he reaches a cell with a monster, his attempt
+                    ends and he is transported back to the first row to start a new attempt. The monsters do not move, and
+                    Turbo remembers whether or not each cell he has visited contains a monster. If he reaches any cell in the
+                    last row, his attempt ends and the game is over.
+                    <br><br>
+                    <strong>Determine the minimum value of n for which Turbo has a strategy that guarantees reaching the last
+                    row on the n<sup>th</sup> attempt or earlier, regardless of the locations of the monsters.</strong>
+                </div>
+            </div>
+            <!-- Answer -->
+            <div class="section">
+                <h2>Solution</h2>
+                <div class="answer-box">
+                    <h3>Answer: n = 2023</h3>
+                    <p>
+                        By the pigeonhole principle, at least one column must be completely free of monsters
+                        (2023 columns, 2022 monsters, at most one monster per column). The optimal strategy
+                        is to try each column sequentially, going straight down. In the worst case, the safe
+                        column is the last one tried, requiring exactly 2023 attempts.
+                    </p>
+                </div>
+            </div>
+            <!-- Interactive Simulation -->
+            <div class="section">
+                <h2>Interactive Simulation</h2>
+                <div class="controls">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="control-group">
+                            <label for="rows">Rows (min 3):</label>
+                            <input type="number" id="rows" value="6" min="3" max="20">
+                        </div>
+                        <div class="control-group">
+                            <label for="cols">Columns (min 2):</label>
+                            <input type="number" id="cols" value="5" min="2" max="20">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="strategy">Strategy:</label>
+                        <select id="strategy">
+                            <option value="vertical">Vertical Sweep (Try each column sequentially)</option>
+                            <option value="random">Random Column Selection</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="generateNewGame()">Generate New Game</button>
+                        <button onclick="stepSimulation()" id="stepBtn">Step Through</button>
+                        <button onclick="runFullSimulation()" id="runBtn">Run Full Simulation</button>
+                        <button onclick="resetSimulation()" class="secondary">Reset</button>
+                    </div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: #d4edda;"></div>
+                        <span>Start/Goal/Safe</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: #f8d7da;"></div>
+                        <span>Monster</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: #F5F7FA;"></div>
+                        <span>Visited</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: #7A9D8F;"></div>
+                        <span>Current Position</span>
+                    </div>
+                </div>
+                <div class="stats" id="stats"></div>
+                <div class="visualization" id="boardContainer"></div>
+                <div class="log" id="log"></div>
+            </div>
+            <!-- Ground Truth Data -->
+            <div class="section">
+                <h2>Ground Truth Data from Small Cases</h2>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Rows</th>
+                            <th>Columns</th>
+                            <th>Monsters</th>
+                            <th>Safe Columns</th>
+                            <th>Worst Case Attempts</th>
+                            <th>Total Configs</th>
+                        </tr>
+                    </thead>
+                    <tbody id="groundTruthTable"></tbody>
+                </table>
+            </div>
+            <!-- Mathematical Analysis -->
+            <div class="section">
+                <h2>Mathematical Analysis</h2>
+                <div class="problem-text">
+                    <strong>Key Insights:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>There are 2023 columns and 2022 monsters</li>
+                        <li>Each column contains at most one monster</li>
+                        <li>By the pigeonhole principle: 2023 - 2022 = <strong>exactly 1 safe column</strong></li>
+                        <li>Strategy: Try each column in sequence (vertical sweep)</li>
+                        <li>Worst case: The safe column is the last one we try</li>
+                        <li>Therefore: <strong>n = 2023</strong></li>
+                    </ul>
+                    <br>
+                    <strong>Pattern from small cases:</strong> For a board with c columns and m monsters (where m = c - 1),
+                    the minimum guaranteed attempts is <strong>c</strong> (the number of columns).
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Load results data embedded directly
+        const groundTruthData = {
+            "problem": {
+                "rows": 2024,
+                "cols": 2023,
+                "num_monsters": 2022
+            },
+            "answer": 2023,
+            "reasoning": "By pigeonhole principle, at least one column is monster-free. In worst case, we try all monster-containing columns first, then succeed on attempt 2023.",
+            "small_cases": [
+                {"rows": 3, "cols": 2, "num_monsters": 1, "num_safe_columns": 1, "worst_case_attempts": 2, "total_configs": 2},
+                {"rows": 4, "cols": 3, "num_monsters": 2, "num_safe_columns": 1, "worst_case_attempts": 3, "total_configs": 6},
+                {"rows": 5, "cols": 4, "num_monsters": 3, "num_safe_columns": 1, "worst_case_attempts": 4, "total_configs": 24},
+                {"rows": 6, "cols": 5, "num_monsters": 4, "num_safe_columns": 1, "worst_case_attempts": 5, "total_configs": 120},
+                {"rows": 7, "cols": 6, "num_monsters": 5, "num_safe_columns": 1, "worst_case_attempts": 6, "total_configs": 720},
+                {"rows": 8, "cols": 7, "num_monsters": 6, "num_safe_columns": 1, "worst_case_attempts": 7, "total_configs": 5040}
+            ],
+            "pattern": {
+                "formula": "worst_case = cols - num_safe_cols + 1",
+                "formula_holds": true
+            }
+        };
+        // Game state
+        let gameState = {
+            rows: 6,
+            cols: 5,
+            monsters: [],
+            currentAttempt: 0,
+            currentPath: [],
+            attemptLog: [],
+            knownCells: new Set(),
+            strategy: 'vertical'
+        };
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGroundTruthData();
+            generateNewGame();
+        });
+        function loadGroundTruthData() {
+            const tbody = document.getElementById('groundTruthTable');
+            tbody.innerHTML = '';
+            groundTruthData.small_cases.forEach(data => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = data.rows;
+                row.insertCell(1).textContent = data.cols;
+                row.insertCell(2).textContent = data.num_monsters;
+                row.insertCell(3).textContent = data.num_safe_columns;
+                row.insertCell(4).textContent = data.worst_case_attempts;
+                row.insertCell(5).textContent = data.total_configs;
+            });
+        }
+        function generateNewGame() {
+            const rows = parseInt(document.getElementById('rows').value);
+            const cols = parseInt(document.getElementById('cols').value);
+            if (rows < 3 || cols < 2) {
+                alert('Minimum: 3 rows and 2 columns');
+                return;
+            }
+            gameState.rows = rows;
+            gameState.cols = cols;
+            gameState.monsters = [];
+            gameState.currentAttempt = 0;
+            gameState.currentPath = [];
+            gameState.attemptLog = [];
+            gameState.knownCells = new Set();
+            gameState.strategy = document.getElementById('strategy').value;
+            // Generate monster configuration
+            // One monster per row (except first and last)
+            const numMonsters = rows - 2;
+            const monsterRows = [];
+            for (let r = 1; r < rows - 1; r++) {
+                monsterRows.push(r);
+            }
+            // Assign columns randomly (at most one per column)
+            const availableCols = Array.from({length: cols}, (_, i) => i);
+            const shuffled = availableCols.sort(() => Math.random() - 0.5);
+            for (let i = 0; i < numMonsters; i++) {
+                gameState.monsters.push({
+                    row: monsterRows[i],
+                    col: shuffled[i]
+                });
+            }
+            updateDisplay();
+            logMessage(`New game: ${rows} rows × ${cols} cols, ${numMonsters} monsters`);
+        }
+        function resetSimulation() {
+            gameState.currentAttempt = 0;
+            gameState.currentPath = [];
+            gameState.attemptLog = [];
+            gameState.knownCells = new Set();
+            updateDisplay();
+            logMessage('Simulation reset');
+        }
+        function stepSimulation() {
+            if (gameState.attemptLog.some(a => a.success)) {
+                logMessage('Game already won!', 'success');
+                return;
+            }
+            gameState.currentAttempt++;
+            const strategy = gameState.strategy;
+            let startCol;
+            if (strategy === 'vertical') {
+                startCol = (gameState.currentAttempt - 1) % gameState.cols;
+            } else {
+                startCol = Math.floor(Math.random() * gameState.cols);
+            }
+            const result = tryPath(startCol);
+            gameState.attemptLog.push(result);
+            updateDisplay();
+            if (result.success) {
+                logMessage(`Attempt ${gameState.currentAttempt}: SUCCESS! Reached last row via column ${startCol}`, 'success');
+            } else {
+                logMessage(`Attempt ${gameState.currentAttempt}: Failed at row ${result.failRow}, col ${result.failCol} (monster)`, 'fail');
+            }
+        }
+        function runFullSimulation() {
+            resetSimulation();
+            const maxAttempts = gameState.cols * 2;
+            let attempts = 0;
+            while (attempts < maxAttempts) {
+                attempts++;
+                gameState.currentAttempt++;
+                const strategy = gameState.strategy;
+                let startCol;
+                if (strategy === 'vertical') {
+                    startCol = (gameState.currentAttempt - 1) % gameState.cols;
+                } else {
+                    startCol = Math.floor(Math.random() * gameState.cols);
+                }
+                const result = tryPath(startCol);
+                gameState.attemptLog.push(result);
+                if (result.success) {
+                    logMessage(`Attempt ${gameState.currentAttempt}: SUCCESS! Reached last row via column ${startCol}`, 'success');
+                    break;
+                } else {
+                    logMessage(`Attempt ${gameState.currentAttempt}: Failed at row ${result.failRow}, col ${result.failCol}`, 'fail');
+                }
+            }
+            updateDisplay();
+        }
+        function tryPath(col) {
+            const path = [];
+            // Go straight down the column
+            for (let row = 0; row < gameState.rows; row++) {
+                const cellKey = `${row},${col}`;
+                path.push({row, col});
+                gameState.knownCells.add(cellKey);
+                // Check if monster
+                const monster = gameState.monsters.find(m => m.row === row && m.col === col);
+                if (monster) {
+                    return {
+                        success: false,
+                        path: path,
+                        failRow: row,
+                        failCol: col
+                    };
+                }
+                // Check if reached last row
+                if (row === gameState.rows - 1) {
+                    return {
+                        success: true,
+                        path: path
+                    };
+                }
+            }
+        }
+        function updateDisplay() {
+            updateStats();
+            renderBoard();
+        }
+        function updateStats() {
+            const numMonsters = gameState.rows - 2;
+            const numSafeCols = gameState.cols - numMonsters;
+            const attempts = gameState.currentAttempt;
+            const success = gameState.attemptLog.some(a => a.success);
+            const statsHTML = `
+                <div class="stat-card">
+                    <div class="value">${gameState.rows}</div>
+                    <div class="label">Rows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${gameState.cols}</div>
+                    <div class="label">Columns</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${numMonsters}</div>
+                    <div class="label">Monsters</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${numSafeCols}</div>
+                    <div class="label">Safe Columns</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${attempts}</div>
+                    <div class="label">Attempts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${success ? 'Won!' : 'Playing'}</div>
+                    <div class="label">Status</div>
+                </div>
+            `;
+            document.getElementById('stats').innerHTML = statsHTML;
+        }
+        function renderBoard() {
+            const container = document.getElementById('boardContainer');
+            let html = '<div class="board">';
+            for (let r = 0; r < gameState.rows; r++) {
+                html += '<div class="row">';
+                for (let c = 0; c < gameState.cols; c++) {
+                    const cellKey = `${r},${c}`;
+                    const isKnown = gameState.knownCells.has(cellKey);
+                    const monster = gameState.monsters.find(m => m.row === r && m.col === c);
+                    let cellClass = 'cell';
+                    let content = '';
+                    if (r === 0) {
+                        cellClass += ' first-row';
+                        content = '▼';
+                    } else if (r === gameState.rows - 1) {
+                        cellClass += ' last-row';
+                        content = '★';
+                    } else if (isKnown && monster) {
+                        cellClass += ' monster';
+                        content = '👾';
+                    } else if (isKnown) {
+                        cellClass += ' visited';
+                    }
+                    // Check if this is a safe column (no monsters in any known visited cells)
+                    const colHasMonster = gameState.monsters.some(m => m.col === c && gameState.knownCells.has(`${m.row},${m.col}`));
+                    if (!colHasMonster && gameState.currentAttempt > 0) {
+                        const allCellsVisited = Array.from({length: gameState.rows}, (_, row) =>
+                            gameState.knownCells.has(`${row},${c}`)
+                        ).every(v => v);
+                        if (allCellsVisited && r === gameState.rows - 1) {
+                            cellClass += ' safe';
+                        }
+                    }
+                    html += `<div class="${cellClass}">${content}</div>`;
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        function logMessage(message, type = 'normal') {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry' + (type !== 'normal' ? ` ${type}` : '');
+            entry.textContent = message;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        </script>
+</body>
+</html>

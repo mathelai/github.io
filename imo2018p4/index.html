@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2018 P4 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        h1 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .problem-description {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #7A9D8F;
+        }
+        .problem-description p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 8px 12px;
+            border: 2px solid var(--border-primary);
+            border-radius: 5px;
+            width: 80px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius:  8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #7A9D8F;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5A8070;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #48bb78;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #38a169;
+        }
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+        .main-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .grid-container {
+            flex: 1;
+            min-width: 600px;
+        }
+        #canvas {
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: crosshair;
+        }
+        .info-panel {
+            flex: 0 0 300px;
+        }
+        .stats {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 5px;
+        }
+        .stat-label {
+            font-weight: 600;
+            color: #555;
+        }
+        .stat-value {
+            font-weight: 700;
+            color: #7A9D8F;
+        }
+        .red-count {
+            color: #e53e3e !important;
+        }
+        .blue-count {
+            color: #3182ce !important;
+        }
+        .legend {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .legend h3 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+        .red-stone {
+            background: #e53e3e;
+        }
+        .blue-stone {
+            background: #3182ce;
+        }
+        .available-stone {
+            background: #48bb78;
+            opacity: 0.5;
+        }
+        .info-box {
+            background: #F5F7FA;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #6B8CAE;
+        }
+        .info-box h4 {
+            margin-bottom: 10px;
+            color: #c05621;
+        }
+        .info-box p {
+            color: #744210;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .mode-indicator {
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .mode-auto {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+        .mode-manual {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+        .move-history {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .move-history h4 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .move-item {
+            padding: 5px;
+            margin-bottom: 3px;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+        }
+        .move-red {
+            color: #e53e3e;
+        }
+        .move-blue {
+            color: #3182ce;
+        }
+        @media (max-width: 1000px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .info-panel {
+                flex: 1;
+            }
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <h1>IMO 2018 Problem 4</h1>
+        <div class="problem-description">
+            <p><strong>Problem:</strong> A site is any point (x,y) where x and y are positive integers from 1 to 20 (400 sites total).</p>
+            <p><strong>Amy (Red)</strong> places stones such that no two red stones are at distance √5 apart. <strong>Ben (Blue)</strong> places stones anywhere.</p>
+            <p><strong>Goal:</strong> Find the greatest k such that Amy can ensure she places at least k red stones, no matter how Ben plays.</p>
+            <p><strong>Key insight:</strong> Distance √5 = knight's move in chess (e.g., 1 horizontal + 2 vertical, or 2 horizontal + 1 vertical).</p>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value">k = 100</div>
+            <p>The greatest k such that Amy can ensure she places at least k red stones is 100.</p>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label>Grid Size:</label>
+                <input type="number" id="gridSize" value="20" min="3" max="20">
+            </div>
+            <button class="btn-primary" onclick="resetGame()">New Game</button>
+            <button class="btn-secondary" onclick="autoPlay()">Auto-Play</button>
+            <button class="btn-secondary" onclick="amyMove()">Amy Move</button>
+            <button class="btn-danger" onclick="clearGame()">Clear All</button>
+        </div>
+        <div class="main-content">
+            <div class="grid-container">
+                <canvas id="canvas" width="600" height="600" role="img" aria-label="Interactive visualization of the mathematical problem"></canvas>
+            </div>
+            <div class="info-panel">
+                <div class="stats" role="status" aria-live="polite">
+                    <h3>Game Statistics</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Grid Size:</span>
+                        <span class="stat-value" id="statGridSize">20×20</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Red Stones (Amy):</span>
+                        <span class="stat-value red-count" id="statRed">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Blue Stones (Ben):</span>
+                        <span class="stat-value blue-count" id="statBlue">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Available for Amy:</span>
+                        <span class="stat-value" id="statAvailable">400</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Empty Sites:</span>
+                        <span class="stat-value" id="statEmpty">400</span>
+                    </div>
+                </div>
+                <div class="legend">
+                    <h3>Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color red-stone"></div>
+                        <span>Red Stone (Amy)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color blue-stone"></div>
+                        <span>Blue Stone (Ben)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color available-stone"></div>
+                        <span>Available for Amy</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h4>How to Play</h4>
+                    <p><strong>Click on grid</strong> to place Amy's red stone (if valid).</p>
+                    <p><strong>Amy Move:</strong> Let Amy make one strategic move.</p>
+                    <p><strong>Auto-Play:</strong> Run full game simulation.</p>
+                    <p>Green circles show valid placements for Amy.</p>
+                </div>
+                <div class="move-history">
+                    <h4>Move History</h4>
+                    <div id="moveHistory"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let gridSize = 20;
+        let cellSize = 600 / gridSize;
+        let redStones = new Set();
+        let blueStones = new Set();
+        let moveHistory = [];
+        function distanceSquared(p1, p2) {
+            return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2;
+        }
+        function isValidRedPlacement(x, y) {
+            const point = `${x},${y}`;
+            if (redStones.has(point) || blueStones.has(point)) return false;
+            for (let red of redStones) {
+                const [rx, ry] = red.split(',').map(Number);
+                if (distanceSquared({x, y}, {x: rx, y: ry}) === 5) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        function getAvailableSites() {
+            const available = [];
+            for (let x = 1; x <= gridSize; x++) {
+                for (let y = 1; y <= gridSize; y++) {
+                    if (isValidRedPlacement(x, y)) {
+                        available.push({x, y});
+                    }
+                }
+            }
+            return available;
+        }
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw grid lines
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= gridSize; i++) {
+                const pos = i * cellSize;
+                ctx.beginPath();
+                ctx.moveTo(pos, 0);
+                ctx.lineTo(pos, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, pos);
+                ctx.lineTo(canvas.width, pos);
+                ctx.stroke();
+            }
+            // Draw available sites (green)
+            const available = getAvailableSites();
+            ctx.fillStyle = 'rgba(72, 187, 120, 0.3)';
+            for (let site of available) {
+                const cx = (site.x - 0.5) * cellSize;
+                const cy = (site.y - 0.5) * cellSize;
+                ctx.beginPath();
+                ctx.arc(cx, cy, cellSize * 0.3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            // Draw blue stones
+            ctx.fillStyle = '#3182ce';
+            ctx.strokeStyle = '#2c5282';
+            ctx.lineWidth = 2;
+            for (let blue of blueStones) {
+                const [x, y] = blue.split(',').map(Number);
+                const cx = (x - 0.5) * cellSize;
+                const cy = (y - 0.5) * cellSize;
+                ctx.beginPath();
+                ctx.arc(cx, cy, cellSize * 0.35, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+            // Draw red stones
+            ctx.fillStyle = '#e53e3e';
+            ctx.strokeStyle = '#c53030';
+            ctx.lineWidth = 2;
+            for (let red of redStones) {
+                const [x, y] = red.split(',').map(Number);
+                const cx = (x - 0.5) * cellSize;
+                const cy = (y - 0.5) * cellSize;
+                ctx.beginPath();
+                ctx.arc(cx, cy, cellSize * 0.35, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+            updateStats();
+        }
+        function updateStats() {
+            document.getElementById('statGridSize').textContent = `${gridSize}×${gridSize}`;
+            document.getElementById('statRed').textContent = redStones.size;
+            document.getElementById('statBlue').textContent = blueStones.size;
+            const available = getAvailableSites().length;
+            document.getElementById('statAvailable').textContent = available;
+            const empty = gridSize * gridSize - redStones.size - blueStones.size;
+            document.getElementById('statEmpty').textContent = empty;
+        }
+        function addMoveToHistory(player, x, y) {
+            const historyDiv = document.getElementById('moveHistory');
+            const moveNum = moveHistory.length + 1;
+            const moveClass = player === 'red' ? 'move-red' : 'move-blue';
+            const playerName = player === 'red' ? 'Amy' : 'Ben';
+            historyDiv.innerHTML = `<div class="move-item ${moveClass}">${moveNum}. ${playerName} → (${x},${y})</div>` + historyDiv.innerHTML;
+            moveHistory.push({player, x, y});
+        }
+        function placeRed(x, y) {
+            if (!isValidRedPlacement(x, y)) return false;
+            redStones.add(`${x},${y}`);
+            addMoveToHistory('red', x, y);
+            return true;
+        }
+        function greedyAmyMove() {
+            const available = getAvailableSites();
+            if (available.length === 0) return null;
+            // Strategy: pick site that leaves most options
+            let bestSite = null;
+            let bestRemaining = -1;
+            for (let site of available) {
+                const testRed = new Set(redStones);
+                testRed.add(`${site.x},${site.y}`);
+                let remaining = 0;
+                for (let x = 1; x <= gridSize; x++) {
+                    for (let y = 1; y <= gridSize; y++) {
+                        const point = `${x},${y}`;
+                        if (testRed.has(point) || blueStones.has(point)) continue;
+                        let valid = true;
+                        for (let red of testRed) {
+                            const [rx, ry] = red.split(',').map(Number);
+                            if (distanceSquared({x, y}, {x: rx, y: ry}) === 5) {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if (valid) remaining++;
+                    }
+                }
+                if (remaining > bestRemaining) {
+                    bestRemaining = remaining;
+                    bestSite = site;
+                }
+            }
+            return bestSite;
+        }
+        function adversarialBenMove() {
+            const available = getAvailableSites();
+            if (available.length === 0) return null;
+            // Strategy: block site that reduces Amy's options most
+            let bestBlock = null;
+            let bestReduction = -1;
+            const currentAvailable = available.length;
+            for (let site of available) {
+                const testBlue = new Set(blueStones);
+                testBlue.add(`${site.x},${site.y}`);
+                let remaining = 0;
+                for (let x = 1; x <= gridSize; x++) {
+                    for (let y = 1; y <= gridSize; y++) {
+                        const point = `${x},${y}`;
+                        if (redStones.has(point) || testBlue.has(point)) continue;
+                        let valid = true;
+                        for (let red of redStones) {
+                            const [rx, ry] = red.split(',').map(Number);
+                            if (distanceSquared({x, y}, {x: rx, y: ry}) === 5) {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if (valid) remaining++;
+                    }
+                }
+                const reduction = currentAvailable - remaining;
+                if (reduction > bestReduction) {
+                    bestReduction = reduction;
+                    bestBlock = site;
+                }
+            }
+            if (bestBlock) {
+                blueStones.add(`${bestBlock.x},${bestBlock.y}`);
+                addMoveToHistory('blue', bestBlock.x, bestBlock.y);
+                return true;
+            }
+            return false;
+        }
+        function amyMove() {
+            const move = greedyAmyMove();
+            if (move) {
+                placeRed(move.x, move.y);
+                drawGrid();
+            } else {
+                alert('Amy cannot move!');
+            }
+        }
+        function autoPlay() {
+            const interval = setInterval(() => {
+                const amyMove = greedyAmyMove();
+                if (!amyMove) {
+                    clearInterval(interval);
+                    alert(`Game over! Amy placed ${redStones.size} red stones.`);
+                    return;
+                }
+                placeRed(amyMove.x, amyMove.y);
+                drawGrid();
+                if (!adversarialBenMove()) {
+                    clearInterval(interval);
+                    alert(`Game over! Amy placed ${redStones.size} red stones.`);
+                    return;
+                }
+                drawGrid();
+            }, 100);
+        }
+        function resetGame() {
+            const newSize = parseInt(document.getElementById('gridSize').value);
+            if (newSize < 3 || newSize > 20) {
+                alert('Grid size must be between 3 and 20');
+                return;
+            }
+            gridSize = newSize;
+            cellSize = 600 / gridSize;
+            clearGame();
+        }
+        function clearGame() {
+            redStones.clear();
+            blueStones.clear();
+            moveHistory = [];
+            document.getElementById('moveHistory').innerHTML = '';
+            drawGrid();
+        }
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / cellSize) + 1;
+            const y = Math.floor((e.clientY - rect.top) / cellSize) + 1;
+            if (x >= 1 && x <= gridSize && y >= 1 && y <= gridSize) {
+                if (placeRed(x, y)) {
+                    drawGrid();
+                } else {
+                    alert('Invalid placement! Either occupied or violates √5 distance constraint.');
+                }
+            }
+        });
+        // Initialize
+        drawGrid();
+        </script>
+</body>
+</html>

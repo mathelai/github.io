@@ -1,0 +1,172 @@
+{
+  "problem": {
+    "rows": 2024,
+    "cols": 2023,
+    "num_monsters": 2022
+  },
+  "answer": 2023,
+  "reasoning": "By pigeonhole principle, at least one column is monster-free. In worst case, we try all monster-containing columns first, then succeed on attempt 2023.",
+  "small_cases": [
+    {
+      "rows": 3,
+      "cols": 2,
+      "num_monsters": 1,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 2,
+      "worst_config": [
+        [
+          1,
+          0
+        ]
+      ],
+      "total_configs": 2
+    },
+    {
+      "rows": 4,
+      "cols": 3,
+      "num_monsters": 2,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 3,
+      "worst_config": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "total_configs": 6
+    },
+    {
+      "rows": 5,
+      "cols": 4,
+      "num_monsters": 3,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 4,
+      "worst_config": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "total_configs": 24
+    },
+    {
+      "rows": 6,
+      "cols": 5,
+      "num_monsters": 4,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 5,
+      "worst_config": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "total_configs": 120
+    },
+    {
+      "rows": 7,
+      "cols": 6,
+      "num_monsters": 5,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 6,
+      "worst_config": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "total_configs": 720
+    },
+    {
+      "rows": 8,
+      "cols": 7,
+      "num_monsters": 6,
+      "num_safe_columns": 1,
+      "worst_case_attempts": 7,
+      "worst_config": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "total_configs": 5040
+    }
+  ],
+  "pattern": {
+    "formula": "worst_case = cols - num_safe_cols + 1",
+    "formula_holds": true
+  },
+  "imo_analysis": {
+    "rows": 2024,
+    "cols": 2023,
+    "num_monsters": 2022,
+    "num_safe_columns": 1,
+    "minimum_n": 2023,
+    "strategy": "vertical_sweep",
+    "explanation": "Try each column in sequence. In worst case, the 1 safe column(s) are the last ones tried, requiring 2023 attempts."
+  },
+  "metrics": {
+    "runtime_ms": 36.52,
+    "status": "success"
+  }
+}

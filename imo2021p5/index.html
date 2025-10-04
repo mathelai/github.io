@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2021 P5 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid #E2E8F0;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            text-align: center;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        header .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 30px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            border-left: 4px solid #7A9D8F;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-statement p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .controls {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius:  12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 30px;
+        }
+        .controls h3 {
+            color: #7A9D8F;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .control-group input[type="number"],
+        .control-group select,
+        .control-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-primary);
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #7A9D8F;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius:  8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+        button:hover {
+            background: #5A8070;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .visualization {
+            margin-bottom: 30px;
+        }
+        .visualization h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        #circleCanvas {
+            display: block;
+            margin: 0 auto;
+            border: 2px solid var(--border-primary);
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        .move-info {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .move-info h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .move-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid var(--border-primary);
+        }
+        .info-card h4 {
+            color: #7A9D8F;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        .info-card p {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .condition-met {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .condition-not-met {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        .results-table {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .results-table h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-primary);
+        }
+        th {
+            background: #7A9D8F;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .satisfied {
+            background: #d4edda;
+            color: #155724;
+            font-weight: 600;
+        }
+        .not-satisfied {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .statistics {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .statistics h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px solid var(--border-primary);
+            text-align: center;
+        }
+        .stat-card h4 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        .conclusion {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .conclusion h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        .conclusion p {
+            line-height: 1.6;
+            color: #155724;
+        }
+        .error-message {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #721c24;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.25rem;
+            }
+            .content {
+                padding: 15px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header class="header">
+            <h1>IMO 2021 Problem 5</h1>
+            <p>Walnuts Swapped Around a Circle</p>
+        </div>
+        <div class="content">
+            <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                <h2 id="problem-title">Problem Statement</h2>
+                <p>
+                    Two squirrels, Bushy and Jumpy, have collected 2021 walnuts for the winter.
+                    Jumpy numbers the walnuts from 1 through 2021, and digs 2021 little holes in a
+                    circular pattern in the ground around their favourite tree. The next morning
+                    Jumpy notices that Bushy had placed one walnut into each hole, but had paid no
+                    attention to the numbering.
+                </p>
+                <p>
+                    Unhappy, Jumpy decides to reorder the walnuts by performing a sequence of 2021 moves.
+                    In the k-th move, Jumpy swaps the positions of the two walnuts adjacent to walnut k.
+                </p>
+                <p>
+                    <strong>Prove that there exists a value of k such that, on the k-th move, Jumpy swaps
+                    some walnuts a and b such that a &lt; k &lt; b.</strong>
+                </p>
+            </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value"><strong>The statement is TRUE.<strong> For n = 2021 walnuts, there always exists at least one move k where the swapped walnuts a and b satisfy a < k < b, regardless of the initial arrangement.</div>
+            <p>---</p>
+        </div>
+            <div class="controls">
+                <h3>Simulation Controls</h3>
+                <div class="control-group">
+                    <label for="numWalnuts">Number of Walnuts (n):</label>
+                    <input type="number" id="numWalnuts" min="3" max="50" value="7">
+                </div>
+                <div class="control-group">
+                    <label for="permutationType">Initial Arrangement:</label>
+                    <select id="permutationType">
+                        <option value="random">Random Permutation</option>
+                        <option value="identity">Identity (1, 2, 3, ...)</option>
+                        <option value="reverse">Reverse (n, n-1, ..., 1)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="control-group" id="customPermGroup" style="display: none;">
+                    <label for="customPerm">Custom Permutation (comma-separated):</label>
+                    <input type="text" id="customPerm" placeholder="e.g., 3,1,4,2,5">
+                </div>
+                <div class="button-group">
+                    <button onclick="initializeSimulation()">Initialize</button>
+                    <button onclick="stepForward()" id="stepBtn" disabled>Step Forward</button>
+                    <button onclick="runAll()" id="runAllBtn" disabled>Run All Moves</button>
+                    <button onclick="reset()" id="resetBtn" disabled>Reset</button>
+                </div>
+            </div>
+            <div class="visualization">
+                <h3>Circular Arrangement</h3>
+                <canvas id="circleCanvas" width="800" height="600"></canvas>
+            </div>
+            <div class="move-info" id="moveInfo" style="display: none;">
+                <h3>Current Move Information</h3>
+                <div class="move-display">
+                    <div class="info-card">
+                        <h4>Move Number (k)</h4>
+                        <p id="moveNumber">-</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Walnut a</h4>
+                        <p id="walnutA">-</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Walnut b</h4>
+                        <p id="walnutB">-</p>
+                    </div>
+                    <div class="info-card" id="conditionCard">
+                        <h4>Condition a &lt; k &lt; b</h4>
+                        <p id="conditionStatus">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="results-table" id="resultsTable" style="display: none;">
+                <h3>All Moves Summary</h3>
+                <table id="movesTable">
+                    <thead>
+                        <tr>
+                            <th>Move (k)</th>
+                            <th>Walnut a</th>
+                            <th>Walnut b</th>
+                            <th>Condition a &lt; k &lt; b</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movesTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="statistics" id="statistics" style="display: none;">
+                <h3>Statistics</h3>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <h4>Total Moves</h4>
+                        <div class="value" id="totalMoves">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Condition Satisfied</h4>
+                        <div class="value" id="conditionCount">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Percentage</h4>
+                        <div class="value" id="conditionPercent">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Theorem Holds?</h4>
+                        <div class="value" id="theoremHolds">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Simulation state
+        let n = 7;
+        let arrangement = [];
+        let initialArrangement = [];
+        let currentMove = 0;
+        let moveHistory = [];
+        let isInitialized = false;
+        // Canvas elements
+        const canvas = document.getElementById('circleCanvas');
+        const ctx = canvas.getContext('2d');
+        // Event listeners
+        document.getElementById('permutationType').addEventListener('change', function() {
+            const customGroup = document.getElementById('customPermGroup');
+            customGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+        // Helper function to generate permutations
+        function generatePermutation(type, n) {
+            let perm = [];
+            switch(type) {
+                case 'identity':
+                    for (let i = 1; i <= n; i++) perm.push(i);
+                    break;
+                case 'reverse':
+                    for (let i = n; i >= 1; i--) perm.push(i);
+                    break;
+                case 'random':
+                    for (let i = 1; i <= n; i++) perm.push(i);
+                    // Fisher-Yates shuffle
+                    for (let i = n - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [perm[i], perm[j]] = [perm[j], perm[i]];
+                    }
+                    break;
+                case 'custom':
+                    const customInput = document.getElementById('customPerm').value;
+                    perm = customInput.split(',').map(x => parseInt(x.trim()));
+                    // Validate
+                    if (perm.length !== n || !isValidPermutation(perm, n)) {
+                        alert('Invalid custom permutation. Must be a permutation of 1 to ' + n);
+                        return null;
+                    }
+                    break;
+            }
+            return perm;
+        }
+        function isValidPermutation(perm, n) {
+            if (perm.length !== n) return false;
+            const seen = new Set();
+            for (let val of perm) {
+                if (val < 1 || val > n || seen.has(val)) return false;
+                seen.add(val);
+            }
+            return true;
+        }
+        // Initialize simulation
+        function initializeSimulation() {
+            n = parseInt(document.getElementById('numWalnuts').value);
+            if (n < 3 || n > 50) {
+                alert('Please enter a value between 3 and 50');
+                return;
+            }
+            const permType = document.getElementById('permutationType').value;
+            const perm = generatePermutation(permType, n);
+            if (!perm) return;
+            arrangement = perm.slice();
+            initialArrangement = perm.slice();
+            currentMove = 0;
+            moveHistory = [];
+            isInitialized = true;
+            // Enable buttons
+            document.getElementById('stepBtn').disabled = false;
+            document.getElementById('runAllBtn').disabled = false;
+            document.getElementById('resetBtn').disabled = false;
+            // Hide results
+            document.getElementById('resultsTable').style.display = 'none';
+            document.getElementById('statistics').style.display = 'none';
+            document.getElementById('moveInfo').style.display = 'none';
+            drawCircle();
+        }
+        // Draw the circular arrangement
+        function drawCircle() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 80;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw title
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.textAlign = 'center';
+            if (currentMove === 0) {
+                ctx.fillText('Initial Arrangement', centerX, 30);
+            } else {
+                ctx.fillText(`After Move ${currentMove}`, centerX, 30);
+            }
+            // Draw walnuts
+            for (let i = 0; i < n; i++) {
+                const angle = (2 * Math.PI * i / n) - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                // Determine if this walnut is involved in current move
+                let isHighlighted = false;
+                let isWalnutK = false;
+                if (currentMove > 0 && moveHistory.length > 0) {
+                    const lastMove = moveHistory[moveHistory.length - 1];
+                    if (arrangement[i] === lastMove.a || arrangement[i] === lastMove.b) {
+                        isHighlighted = true;
+                    }
+                    if (arrangement[i] === lastMove.k) {
+                        isWalnutK = true;
+                    }
+                }
+                // Draw circle for walnut
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, 2 * Math.PI);
+                if (isWalnutK) {
+                    ctx.fillStyle = '#ffd700';  // Gold for walnut k
+                } else if (isHighlighted) {
+                    ctx.fillStyle = '#ff6b6b';  // Red for swapped walnuts
+                } else {
+                    ctx.fillStyle = '#7A9D8F';
+                }
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Draw walnut number
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 20px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(arrangement[i], x, y);
+                // Draw position number (smaller, below)
+                ctx.fillStyle = '#666';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(`pos ${i}`, x, y + 45);
+            }
+            // Draw legend
+            const legendY = canvas.height - 40;
+            const legendStartX = 50;
+            ctx.textAlign = 'left';
+            ctx.font = '14px sans-serif';
+            // Gold circle
+            ctx.beginPath();
+            ctx.arc(legendStartX, legendY, 12, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ffd700';
+            ctx.fill();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = '#333';
+            ctx.fillText('= Walnut k', legendStartX + 20, legendY + 4);
+            // Red circle
+            ctx.beginPath();
+            ctx.arc(legendStartX + 150, legendY, 12, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#333';
+            ctx.fillText('= Swapped walnuts', legendStartX + 170, legendY + 4);
+        }
+        // Find position of walnut with given number
+        function findWalnut(walnutNum) {
+            return arrangement.indexOf(walnutNum);
+        }
+        // Perform one move
+        function performMove(k) {
+            const posK = findWalnut(k);
+            const leftPos = (posK - 1 + n) % n;
+            const rightPos = (posK + 1) % n;
+            let a = arrangement[leftPos];
+            let b = arrangement[rightPos];
+            // Swap a and b
+            arrangement[leftPos] = b;
+            arrangement[rightPos] = a;
+            // Ensure a < b for reporting
+            if (a > b) [a, b] = [b, a];
+            const conditionSatisfied = a < k && k < b;
+            const moveInfo = {
+                k: k,
+                a: a,
+                b: b,
+                conditionSatisfied: conditionSatisfied
+            };
+            moveHistory.push(moveInfo);
+            return moveInfo;
+        }
+        // Step forward one move
+        function stepForward() {
+            if (!isInitialized) return;
+            if (currentMove >= n) return;
+            currentMove++;
+            const moveInfo = performMove(currentMove);
+            updateMoveInfo(moveInfo);
+            drawCircle();
+            if (currentMove >= n) {
+                document.getElementById('stepBtn').disabled = true;
+                showResults();
+            }
+        }
+        // Run all remaining moves
+        function runAll() {
+            if (!isInitialized) return;
+            while (currentMove < n) {
+                currentMove++;
+                performMove(currentMove);
+            }
+            drawCircle();
+            document.getElementById('stepBtn').disabled = true;
+            if (moveHistory.length > 0) {
+                updateMoveInfo(moveHistory[moveHistory.length - 1]);
+            }
+            showResults();
+        }
+        // Update move information display
+        function updateMoveInfo(moveInfo) {
+            document.getElementById('moveInfo').style.display = 'block';
+            document.getElementById('moveNumber').textContent = moveInfo.k;
+            document.getElementById('walnutA').textContent = moveInfo.a;
+            document.getElementById('walnutB').textContent = moveInfo.b;
+            const conditionCard = document.getElementById('conditionCard');
+            const conditionStatus = document.getElementById('conditionStatus');
+            if (moveInfo.conditionSatisfied) {
+                conditionStatus.textContent = 'YES';
+                conditionCard.className = 'info-card condition-met';
+            } else {
+                conditionStatus.textContent = 'NO';
+                conditionCard.className = 'info-card condition-not-met';
+            }
+        }
+        // Show complete results
+        function showResults() {
+            // Show results table
+            document.getElementById('resultsTable').style.display = 'block';
+            const tbody = document.getElementById('movesTableBody');
+            tbody.innerHTML = '';
+            for (let move of moveHistory) {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = move.k;
+                row.insertCell(1).textContent = move.a;
+                row.insertCell(2).textContent = move.b;
+                const conditionCell = row.insertCell(3);
+                conditionCell.textContent = move.conditionSatisfied ? 'YES' : 'NO';
+                conditionCell.className = move.conditionSatisfied ? 'satisfied' : 'not-satisfied';
+            }
+            // Show statistics
+            document.getElementById('statistics').style.display = 'block';
+            const conditionCount = moveHistory.filter(m => m.conditionSatisfied).length;
+            const percentage = ((conditionCount / n) * 100).toFixed(1);
+            document.getElementById('totalMoves').textContent = n;
+            document.getElementById('conditionCount').textContent = conditionCount;
+            document.getElementById('conditionPercent').textContent = percentage + '%';
+            const theoremHolds = conditionCount > 0;
+            const theoremElement = document.getElementById('theoremHolds');
+            theoremElement.textContent = theoremHolds ? 'YES' : 'NO';
+            theoremElement.style.color = theoremHolds ? '#28a745' : '#dc3545';
+            // Scroll to results
+            document.getElementById('resultsTable').scrollIntoView({ behavior: 'smooth' });
+        }
+        // Reset simulation
+        function reset() {
+            arrangement = initialArrangement.slice();
+            currentMove = 0;
+            moveHistory = [];
+            document.getElementById('stepBtn').disabled = false;
+            document.getElementById('runAllBtn').disabled = false;
+            document.getElementById('resultsTable').style.display = 'none';
+            document.getElementById('statistics').style.display = 'none';
+            document.getElementById('moveInfo').style.display = 'none';
+            drawCircle();
+        }
+        // Initialize with default values on load
+        window.onload = function() {
+            drawCircle();
+        };
+        </script>
+</body>
+</html>

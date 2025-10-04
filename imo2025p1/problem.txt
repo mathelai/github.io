@@ -1,0 +1,9 @@
+A line in the plane is called \emph{sunny} if it is not parallel to any of the $x$–axis, the $y$–axis, and the line $x+y=0$.
+\medskip
+
+Let $n\ge3$ be a given integer. Determine all nonnegative integers $k$ such that there exist $n$ distinct lines in the plane satisfying both of the following conditions:
+\medskip
+\begin{itemize}
+    \item[(i)] for all positive integers $a$ and $b$ with $a+b\le n+1$, the point $(a,b)$ is on at least one of the lines; and
+    \item[(ii)] exactly $k$ of the $n$ lines are sunny.
+\end{itemize}

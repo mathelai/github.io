@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2025 P1 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid #E2E8F0;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            text-align: center;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        header .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+        .controls {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius:  12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            height: fit-content;
+        }
+        .control-group {
+            margin-bottom: 25px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-primary);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            border-radius:  8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .visualization {
+            background: var(--bg-secondary);
+            border-radius:  12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+        #canvas {
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            cursor: crosshair;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .line-list {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .line-item {
+            padding: 10px;
+            background: var(--bg-secondary);
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border-left: 4px solid var(--border-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .line-item.sunny {
+            border-left-color: #6B8CAE;
+            background: #F5F7FA;
+        }
+        .sunny-badge {
+            background: #ffc107;
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin: 30px;
+            border-left: 5px solid #7A9D8F;
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-statement p {
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header class="header">
+            <h1>IMO 2025 Problem 1</h1>
+            <p>Sunny Lines</p>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>A line in the plane is called <strong>sunny</strong> if it is not parallel to any of the x-axis, the y-axis, and the line x+y=0.</p>
+            <p>Let <em>n</em> ≥ 3 be a given integer. Determine all nonnegative integers <em>k</em> such that there exist <em>n</em> distinct lines in the plane satisfying both of the following conditions:</p>
+            <ul>
+                <li>(i) for all positive integers <em>a</em> and <em>b</em> with <em>a</em>+<em>b</em> ≤ <em>n</em>+1, the point (<em>a</em>,<em>b</em>) is on at least one of the lines; and</li>
+                <li>(ii) exactly <em>k</em> of the <em>n</em> lines are sunny.</li>
+            </ul>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <p><strong>For any integer n ≥ 3, the achievable values of k with exactly n lines are: k ∈ {0, 1}<strong></p>
+            <div class="answer-value">That is, only k = 0 and k = 1 are possible when using exactly n lines to cover all required points.</div>
+        </div>
+        <div class="content">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="n-input">Value of n (≥ 3):</label>
+                    <input type="number" id="n-input" min="3" max="10" value="4">
+                </div>
+                <div class="control-group">
+                    <label for="config-select">Configuration:</label>
+                    <select id="config-select">
+                        <option value="vertical">All Vertical (k=0)</option>
+                        <option value="horizontal">All Horizontal (k=0)</option>
+                        <option value="greedy_sunny">Greedy Sunny (k≥1)</option>
+                        <option value="max_sunny">Maximize Sunny</option>
+                        <option value="custom">Custom (click to add lines)</option>
+                    </select>
+                </div>
+                <button onclick="generateConfiguration()">Generate Lines</button>
+                <button onclick="clearLines()" style="margin-top: 10px; background: #F8FAFC;">Clear All Lines</button>
+                <div class="info-box">
+                    <h3>Problem Statement</h3>
+                    <p><strong>Sunny line:</strong> Not parallel to x-axis, y-axis, or x+y=0</p>
+                    <p><strong>Goal:</strong> Find n distinct lines covering all points (a,b) where a,b>0 and a+b≤n+1</p>
+                    <p><strong>Question:</strong> Which values of k (# sunny lines) are achievable?</p>
+                </div>
+                <div class="stats" role="status" aria-live="polite">
+                    <div class="stat-card">
+                        <div class="value" id="stat-points">0</div>
+                        <div class="label">Points</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-lines">0</div>
+                        <div class="label">Lines</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-sunny">0</div>
+                        <div class="label">Sunny</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-coverage">0%</div>
+                        <div class="label">Coverage</div>
+                    </div>
+                </div>
+                <div class="line-list" id="line-list">
+                    <strong>Lines:</strong>
+                    <div id="lines-content"></div>
+                </div>
+            </div>
+            <div class="visualization">
+                <canvas id="canvas" width="800" height="800" role="img" aria-label="Interactive visualization of the mathematical problem"></canvas>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e91e63; width: 15px; height: 15px; border-radius: 50%;"></div>
+                        <span>Required Points</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4caf50;"></div>
+                        <span>Covered Points</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffc107; height: 3px;"></div>
+                        <span>Sunny Lines</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2196f3; height: 3px;"></div>
+                        <span>Non-Sunny Lines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let n = 4;
+        let points = [];
+        let lines = [];
+        let scale = 60;
+        let offsetX = 100;
+        let offsetY = 700;
+        class Line {
+            constructor(slope, intercept, xValue = null) {
+                this.slope = slope;
+                this.intercept = intercept;
+                this.xValue = xValue;
+                this.isVertical = xValue !== null;
+            }
+            containsPoint(x, y) {
+                if (this.isVertical) {
+                    return Math.abs(x - this.xValue) < 0.01;
+                }
+                return Math.abs(y - (this.slope * x + this.intercept)) < 0.01;
+            }
+            isSunny() {
+                if (this.isVertical) return false;
+                if (Math.abs(this.slope) < 0.01) return false;
+                if (Math.abs(this.slope - (-1)) < 0.01) return false;
+                return true;
+            }
+            toString() {
+                if (this.isVertical) return `x = ${this.xValue}`;
+                if (Math.abs(this.slope) < 0.01) return `y = ${this.intercept}`;
+                if (Math.abs(this.slope - (-1)) < 0.01) return `y = -x + ${this.intercept}`;
+                return `y = ${this.slope.toFixed(2)}x + ${this.intercept.toFixed(2)}`;
+            }
+        }
+        function getRequiredPoints(n) {
+            const pts = [];
+            for (let a = 1; a <= n; a++) {
+                for (let b = 1; b <= n; b++) {
+                    if (a + b <= n + 1) {
+                        pts.push({x: a, y: b, covered: false});
+                    }
+                }
+            }
+            return pts;
+        }
+        function toCanvasX(x) {
+            return offsetX + x * scale;
+        }
+        function toCanvasY(y) {
+            return offsetY - y * scale;
+        }
+        function fromCanvasX(cx) {
+            return (cx - offsetX) / scale;
+        }
+        function fromCanvasY(cy) {
+            return (offsetY - cy) / scale;
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw grid
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= n + 2; i++) {
+                ctx.beginPath();
+                ctx.moveTo(toCanvasX(i), toCanvasY(0));
+                ctx.lineTo(toCanvasX(i), toCanvasY(n + 2));
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(toCanvasX(0), toCanvasY(i));
+                ctx.lineTo(toCanvasX(n + 2), toCanvasY(i));
+                ctx.stroke();
+            }
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(toCanvasX(0), toCanvasY(0));
+            ctx.lineTo(toCanvasX(n + 2), toCanvasY(0));
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(toCanvasX(0), toCanvasY(0));
+            ctx.lineTo(toCanvasX(0), toCanvasY(n + 2));
+            ctx.stroke();
+            // Draw axis labels
+            ctx.fillStyle = '#333';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 1; i <= n + 1; i++) {
+                ctx.fillText(i, toCanvasX(i), toCanvasY(-0.3));
+                ctx.fillText(i, toCanvasX(-0.3), toCanvasY(i));
+            }
+            // Update coverage
+            points.forEach(p => p.covered = false);
+            lines.forEach(line => {
+                points.forEach(p => {
+                    if (line.containsPoint(p.x, p.y)) {
+                        p.covered = true;
+                    }
+                });
+            });
+            // Draw lines
+            lines.forEach(line => {
+                ctx.strokeStyle = line.isSunny() ? '#ffc107' : '#2196f3';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                if (line.isVertical) {
+                    ctx.moveTo(toCanvasX(line.xValue), toCanvasY(0));
+                    ctx.lineTo(toCanvasX(line.xValue), toCanvasY(n + 2));
+                } else {
+                    const y1 = line.slope * 0 + line.intercept;
+                    const y2 = line.slope * (n + 2) + line.intercept;
+                    ctx.moveTo(toCanvasX(0), toCanvasY(y1));
+                    ctx.lineTo(toCanvasX(n + 2), toCanvasY(y2));
+                }
+                ctx.stroke();
+            });
+            // Draw points
+            points.forEach(p => {
+                ctx.fillStyle = p.covered ? '#4caf50' : '#e91e63';
+                ctx.beginPath();
+                ctx.arc(toCanvasX(p.x), toCanvasY(p.y), 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+            updateStats();
+        }
+        function updateStats() {
+            const coveredCount = points.filter(p => p.covered).length;
+            const sunnyCount = lines.filter(l => l.isSunny()).length;
+            document.getElementById('stat-points').textContent = points.length;
+            document.getElementById('stat-lines').textContent = lines.length;
+            document.getElementById('stat-sunny').textContent = sunnyCount;
+            document.getElementById('stat-coverage').textContent =
+                points.length > 0 ? Math.round(100 * coveredCount / points.length) + '%' : '0%';
+            // Update line list
+            const linesContent = document.getElementById('lines-content');
+            if (lines.length === 0) {
+                linesContent.innerHTML = '<p style="color: #999; margin-top: 10px;">No lines yet</p>';
+            } else {
+                linesContent.innerHTML = lines.map((line, i) => {
+                    const sunny = line.isSunny();
+                    return `
+                        <div class="line-item ${sunny ? 'sunny' : ''}">
+                            <span>${line.toString()}</span>
+                            ${sunny ? '<span class="sunny-badge">☀️ SUNNY</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        function generateConfiguration() {
+            n = parseInt(document.getElementById('n-input').value);
+            points = getRequiredPoints(n);
+            lines = [];
+            const config = document.getElementById('config-select').value;
+            if (config === 'vertical') {
+                for (let i = 1; i <= n; i++) {
+                    lines.push(new Line(null, null, i));
+                }
+            } else if (config === 'horizontal') {
+                for (let i = 1; i <= n; i++) {
+                    lines.push(new Line(0, i));
+                }
+            } else if (config === 'greedy_sunny') {
+                // Greedy algorithm favoring sunny lines
+                const uncovered = [...points];
+                while (uncovered.length > 0) {
+                    let bestLine = null;
+                    let bestCount = 0;
+                    let bestSunny = false;
+                    // Try sunny lines with various slopes
+                    for (let slope of [1, 2, 0.5, 3, -2, -0.5]) {
+                        for (let b = -n*2; b <= n*3; b++) {
+                            const line = new Line(slope, b);
+                            if (!line.isSunny()) continue;
+                            const count = uncovered.filter(p => line.containsPoint(p.x, p.y)).length;
+                            if (count > bestCount || (count === bestCount && line.isSunny() && !bestSunny)) {
+                                bestLine = line;
+                                bestCount = count;
+                                bestSunny = line.isSunny();
+                            }
+                        }
+                    }
+                    // Also try non-sunny lines
+                    for (let x = 1; x <= n; x++) {
+                        const line = new Line(null, null, x);
+                        const count = uncovered.filter(p => line.containsPoint(p.x, p.y)).length;
+                        if (count > bestCount) {
+                            bestLine = line;
+                            bestCount = count;
+                            bestSunny = false;
+                        }
+                    }
+                    if (bestLine && bestCount > 0) {
+                        lines.push(bestLine);
+                        uncovered.splice(0, uncovered.length, ...uncovered.filter(p => !bestLine.containsPoint(p.x, p.y)));
+                    } else {
+                        break;
+                    }
+                }
+            } else if (config === 'max_sunny') {
+                // Try to maximize sunny lines
+                const uncovered = [...points];
+                while (uncovered.length > 0) {
+                    let bestLine = null;
+                    let bestCount = 0;
+                    for (let slope of [1, 2, 0.5, 3, -2, -0.5, -3]) {
+                        for (let b = -n*3; b <= n*4; b++) {
+                            const line = new Line(slope, b);
+                            if (!line.isSunny()) continue;
+                            const count = uncovered.filter(p => line.containsPoint(p.x, p.y)).length;
+                            if (count > bestCount) {
+                                bestLine = line;
+                                bestCount = count;
+                            }
+                        }
+                    }
+                    if (bestLine && bestCount > 0) {
+                        lines.push(bestLine);
+                        uncovered.splice(0, uncovered.length, ...uncovered.filter(p => !bestLine.containsPoint(p.x, p.y)));
+                    } else {
+                        break;
+                    }
+                }
+            }
+            draw();
+        }
+        function clearLines() {
+            lines = [];
+            draw();
+        }
+        // Initialize
+        generateConfiguration();
+        // Handle n input change
+        document.getElementById('n-input').addEventListener('change', generateConfiguration);
+        </script>
+</body>
+</html>

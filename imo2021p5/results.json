@@ -1,0 +1,8041 @@
+{
+  "problem_statement": "Two squirrels have collected n walnuts numbered 1 to n in a circle. In move k, swap the two walnuts adjacent to walnut k. Prove that there exists k such that the swapped walnuts a,b satisfy a < k < b.",
+  "simulations": {
+    "exhaustive_n3": {
+      "n": 3,
+      "total_permutations": 6,
+      "permutations_with_condition": 6,
+      "permutations_without_condition_count": 0,
+      "counterexamples": [],
+      "min_condition_count": 1,
+      "max_condition_count": 1,
+      "avg_condition_count": 1.0
+    },
+    "exhaustive_n4": {
+      "n": 4,
+      "total_permutations": 24,
+      "permutations_with_condition": 16,
+      "permutations_without_condition_count": 8,
+      "counterexamples": [
+        {
+          "permutation": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "final_arrangement": [
+            1,
+            3,
+            2,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            4,
+            2,
+            3
+          ],
+          "final_arrangement": [
+            1,
+            4,
+            2,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            3,
+            1,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            4,
+            1,
+            3
+          ],
+          "final_arrangement": [
+            2,
+            4,
+            1,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            1,
+            4,
+            2
+          ],
+          "final_arrangement": [
+            3,
+            1,
+            4,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            2,
+            4,
+            1
+          ],
+          "final_arrangement": [
+            3,
+            2,
+            4,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            1,
+            3,
+            2
+          ],
+          "final_arrangement": [
+            4,
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            2,
+            3,
+            1
+          ],
+          "final_arrangement": [
+            4,
+            2,
+            3,
+            1
+          ]
+        }
+      ],
+      "min_condition_count": 0,
+      "max_condition_count": 2,
+      "avg_condition_count": 1.3333333333333333
+    },
+    "exhaustive_n5": {
+      "n": 5,
+      "total_permutations": 120,
+      "permutations_with_condition": 120,
+      "permutations_without_condition_count": 0,
+      "counterexamples": [],
+      "min_condition_count": 1,
+      "max_condition_count": 2,
+      "avg_condition_count": 1.6666666666666667
+    },
+    "exhaustive_n6": {
+      "n": 6,
+      "total_permutations": 720,
+      "permutations_with_condition": 624,
+      "permutations_without_condition_count": 96,
+      "counterexamples": [
+        {
+          "permutation": [
+            1,
+            4,
+            2,
+            5,
+            3,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            5,
+            1,
+            4,
+            3,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            4,
+            2,
+            6,
+            3,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            6,
+            2,
+            4,
+            1,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            4,
+            3,
+            5,
+            2,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            4,
+            3,
+            6,
+            1,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            4,
+            3,
+            6,
+            2,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            4,
+            2,
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            2,
+            3,
+            4,
+            6
+          ],
+          "final_arrangement": [
+            1,
+            3,
+            4,
+            5,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            2,
+            4,
+            3,
+            6
+          ],
+          "final_arrangement": [
+            1,
+            4,
+            3,
+            5,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            2,
+            6,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            3,
+            5,
+            2,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            3,
+            4,
+            2,
+            6
+          ],
+          "final_arrangement": [
+            3,
+            5,
+            1,
+            6,
+            2,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            3,
+            6,
+            2,
+            4
+          ],
+          "final_arrangement": [
+            3,
+            5,
+            1,
+            4,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            5,
+            4,
+            3,
+            2,
+            6
+          ],
+          "final_arrangement": [
+            4,
+            5,
+            1,
+            6,
+            2,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            2,
+            3,
+            4,
+            5
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            2,
+            6,
+            1,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            2,
+            4,
+            3,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            2,
+            6,
+            1,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            2,
+            5,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            5,
+            1,
+            6,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            3,
+            4,
+            2,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            2,
+            5,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            3,
+            5,
+            2,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            3,
+            4,
+            1,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            1,
+            6,
+            4,
+            3,
+            2,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            2,
+            5,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            3,
+            4,
+            5,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            1,
+            5,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            3,
+            4,
+            6,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            4,
+            5,
+            2,
+            6,
+            1,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            4,
+            1,
+            5,
+            3,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            3,
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            4,
+            1,
+            6,
+            3,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            5,
+            2,
+            6,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            4,
+            3,
+            5,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            1,
+            5,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            4,
+            3,
+            6,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            5,
+            2,
+            6,
+            1,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            5,
+            1,
+            4,
+            3,
+            6
+          ],
+          "final_arrangement": [
+            3,
+            6,
+            1,
+            4,
+            2,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            5,
+            1,
+            6,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            1,
+            6,
+            2,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            5,
+            1,
+            6,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            1,
+            6,
+            2,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            5,
+            3,
+            4,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            3,
+            4,
+            2,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            5,
+            3,
+            6,
+            1,
+            4
+          ],
+          "final_arrangement": [
+            1,
+            4,
+            3,
+            6,
+            2,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            6,
+            1,
+            4,
+            3,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            5,
+            2,
+            4,
+            3,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            6,
+            1,
+            5,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            4,
+            3,
+            5,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            6,
+            1,
+            5,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            2,
+            3,
+            4,
+            5,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            6,
+            3,
+            4,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            5,
+            2,
+            4,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            2,
+            6,
+            3,
+            5,
+            1,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            4,
+            1,
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            2,
+            5,
+            1,
+            6,
+            4
+          ],
+          "final_arrangement": [
+            5,
+            4,
+            3,
+            1,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            2,
+            6,
+            1,
+            5,
+            4
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            3,
+            4,
+            5,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            1,
+            5,
+            2,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            4,
+            1,
+            6,
+            3,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            1,
+            6,
+            2,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            2,
+            5,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            2,
+            5,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            5,
+            3,
+            4,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            2,
+            6,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            2,
+            4,
+            3,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            5,
+            1,
+            6,
+            2
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            5,
+            4,
+            3,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            4,
+            6,
+            1,
+            5,
+            2
+          ],
+          "final_arrangement": [
+            5,
+            2,
+            6,
+            1,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            5,
+            1,
+            4,
+            2,
+            6
+          ],
+          "final_arrangement": [
+            1,
+            5,
+            3,
+            6,
+            2,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            5,
+            1,
+            6,
+            2,
+            4
+          ],
+          "final_arrangement": [
+            1,
+            5,
+            3,
+            4,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            5,
+            2,
+            4,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            1,
+            5,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            5,
+            2,
+            6,
+            1,
+            4
+          ],
+          "final_arrangement": [
+            3,
+            6,
+            1,
+            5,
+            2,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            6,
+            1,
+            4,
+            2,
+            5
+          ],
+          "final_arrangement": [
+            3,
+            6,
+            2,
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            6,
+            1,
+            5,
+            2,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            1,
+            4,
+            3,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            6,
+            2,
+            4,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            4,
+            2,
+            6,
+            3,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            3,
+            6,
+            2,
+            5,
+            1,
+            4
+          ],
+          "final_arrangement": [
+            2,
+            5,
+            3,
+            6,
+            1,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            1,
+            5,
+            2,
+            6,
+            3
+          ],
+          "final_arrangement": [
+            4,
+            1,
+            6,
+            3,
+            5,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            1,
+            5,
+            3,
+            6,
+            2
+          ],
+          "final_arrangement": [
+            6,
+            3,
+            5,
+            1,
+            4,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            1,
+            6,
+            2,
+            5,
+            3
+          ],
+          "final_arrangement": [
+            4,
+            2,
+            5,
+            1,
+            6,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            1,
+            6,
+            3,
+            5,
+            2
+          ],
+          "final_arrangement": [
+            5,
+            2,
+            6,
+            3,
+            4,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            2,
+            5,
+            1,
+            6,
+            3
+          ],
+          "final_arrangement": [
+            5,
+            3,
+            4,
+            1,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            2,
+            5,
+            3,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            5,
+            1,
+            4,
+            3,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            2,
+            6,
+            1,
+            5,
+            3
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            4,
+            3,
+            5,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            2,
+            6,
+            3,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            4,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            2,
+            5,
+            1,
+            6
+          ],
+          "final_arrangement": [
+            2,
+            5,
+            4,
+            3,
+            1,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            2,
+            6,
+            1,
+            5
+          ],
+          "final_arrangement": [
+            1,
+            6,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            5,
+            1,
+            6,
+            2
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            5,
+            3,
+            4,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            5,
+            2,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            6,
+            1,
+            5,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            6,
+            1,
+            5,
+            2
+          ],
+          "final_arrangement": [
+            5,
+            2,
+            6,
+            1,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            3,
+            6,
+            2,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            4,
+            2,
+            5,
+            3,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            5,
+            1,
+            6,
+            2,
+            3
+          ],
+          "final_arrangement": [
+            1,
+            5,
+            4,
+            3,
+            2,
+            6
+          ]
+        },
+        {
+          "permutation": [
+            4,
+            6,
+            1,
+            5,
+            2,
+            3
+          ],
+          "final_arrangement": [
+            2,
+            6,
+            1,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            4,
+            2,
+            6,
+            3
+          ],
+          "final_arrangement": [
+            5,
+            3,
+            6,
+            2,
+            4,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            4,
+            3,
+            6,
+            2
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            4,
+            2,
+            5,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            6,
+            2,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            5,
+            4,
+            3,
+            2,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            5,
+            3,
+            4,
+            2,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            6,
+            3,
+            4,
+            2
+          ],
+          "final_arrangement": [
+            4,
+            1,
+            6,
+            2,
+            5,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            1,
+            6,
+            4,
+            3,
+            2
+          ],
+          "final_arrangement": [
+            3,
+            1,
+            6,
+            2,
+            5,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            2,
+            3,
+            4,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            5,
+            2,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            2,
+            4,
+            1,
+            6,
+            3
+          ],
+          "final_arrangement": [
+            4,
+            1,
+            5,
+            2,
+            6,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            2,
+            4,
+            3,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            5,
+            2,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            2,
+            6,
+            1,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            5,
+            2,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            2,
+            6,
+            3,
+            4,
+            1
+          ],
+          "final_arrangement": [
+            6,
+            3,
+            5,
+            2,
+            4,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            3,
+            4,
+            1,
+            6,
+            2
+          ],
+          "final_arrangement": [
+            6,
+            3,
+            4,
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            3,
+            4,
+            2,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            3,
+            6,
+            1,
+            4,
+            2
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            6,
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            3,
+            6,
+            2,
+            4,
+            1
+          ],
+          "final_arrangement": [
+            5,
+            1,
+            4,
+            2,
+            6,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            5,
+            4,
+            3,
+            2,
+            6,
+            1
+          ],
+          "final_arrangement": [
+            5,
+            1,
+            6,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            4,
+            2,
+            5,
+            3
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            5,
+            1,
+            4,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            4,
+            3,
+            5,
+            2
+          ],
+          "final_arrangement": [
+            5,
+            2,
+            4,
+            3,
+            6,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            5,
+            2,
+            3,
+            4
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            3,
+            4,
+            5,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            5,
+            2,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            6,
+            1,
+            4,
+            3,
+            5,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            5,
+            3,
+            4,
+            2
+          ],
+          "final_arrangement": [
+            4,
+            3,
+            5,
+            1,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            1,
+            5,
+            4,
+            3,
+            2
+          ],
+          "final_arrangement": [
+            3,
+            4,
+            5,
+            1,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            2,
+            3,
+            4,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            3,
+            2,
+            6,
+            1,
+            5,
+            4
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            2,
+            4,
+            1,
+            5,
+            3
+          ],
+          "final_arrangement": [
+            4,
+            2,
+            6,
+            3,
+            5,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            2,
+            4,
+            3,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            4,
+            2,
+            6,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            2,
+            5,
+            1,
+            4,
+            3
+          ],
+          "final_arrangement": [
+            5,
+            3,
+            6,
+            1,
+            4,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            2,
+            5,
+            3,
+            4,
+            1
+          ],
+          "final_arrangement": [
+            5,
+            1,
+            6,
+            3,
+            4,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            3,
+            4,
+            1,
+            5,
+            2
+          ],
+          "final_arrangement": [
+            5,
+            2,
+            4,
+            1,
+            6,
+            3
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            3,
+            4,
+            2,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            5,
+            3,
+            4,
+            1
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            3,
+            5,
+            1,
+            4,
+            2
+          ],
+          "final_arrangement": [
+            4,
+            1,
+            5,
+            3,
+            6,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            3,
+            5,
+            2,
+            4,
+            1
+          ],
+          "final_arrangement": [
+            6,
+            3,
+            4,
+            1,
+            5,
+            2
+          ]
+        },
+        {
+          "permutation": [
+            6,
+            4,
+            3,
+            2,
+            5,
+            1
+          ],
+          "final_arrangement": [
+            6,
+            2,
+            5,
+            4,
+            3,
+            1
+          ]
+        }
+      ],
+      "min_condition_count": 0,
+      "max_condition_count": 4,
+      "avg_condition_count": 2.0
+    },
+    "exhaustive_n7": {
+      "n": 7,
+      "total_permutations": 5040,
+      "permutations_with_condition": 5040,
+      "permutations_without_condition_count": 0,
+      "counterexamples": [],
+      "min_condition_count": 1,
+      "max_condition_count": 4,
+      "avg_condition_count": 2.3333333333333335
+    },
+    "random_n10": {
+      "n": 10,
+      "num_samples": 1000,
+      "all_have_condition": false,
+      "min_condition_count": 0,
+      "max_condition_count": 7,
+      "avg_condition_count": 3.359,
+      "min_condition_example": {
+        "permutation": [
+          8,
+          3,
+          6,
+          5,
+          10,
+          4,
+          9,
+          1,
+          7,
+          2
+        ],
+        "condition_count": 0,
+        "condition_moves": [],
+        "sample_index": 45
+      },
+      "samples_summary": [
+        {
+          "sample": 0,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 1,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 2,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 3,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 4,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 5,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 6,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 7,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 8,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 9,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 10,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 11,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 12,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 13,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 14,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 15,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 16,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 17,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 18,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 19,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 20,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 21,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 22,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 23,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 24,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 25,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 26,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 27,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 28,
+          "condition_count": 1,
+          "has_condition": true
+        },
+        {
+          "sample": 29,
+          "condition_count": 1,
+          "has_condition": true
+        },
+        {
+          "sample": 30,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 31,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 32,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 33,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 34,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 35,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 36,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 37,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 38,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 39,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 40,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 41,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 42,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 43,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 44,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 45,
+          "condition_count": 0,
+          "has_condition": false
+        },
+        {
+          "sample": 46,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 47,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 48,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 49,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 50,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 51,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 52,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 53,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 54,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 55,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 56,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 57,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 58,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 59,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 60,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 61,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 62,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 63,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 64,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 65,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 66,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 67,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 68,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 69,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 70,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 71,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 72,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 73,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 74,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 75,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 76,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 77,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 78,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 79,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 80,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 81,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 82,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 83,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 84,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 85,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 86,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 87,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 88,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 89,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 90,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 91,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 92,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 93,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 94,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 95,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 96,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 97,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 98,
+          "condition_count": 2,
+          "has_condition": true
+        },
+        {
+          "sample": 99,
+          "condition_count": 4,
+          "has_condition": true
+        }
+      ]
+    },
+    "random_n21": {
+      "n": 21,
+      "num_samples": 1000,
+      "all_have_condition": true,
+      "min_condition_count": 1,
+      "max_condition_count": 12,
+      "avg_condition_count": 6.995,
+      "min_condition_example": {
+        "permutation": [
+          13,
+          5,
+          18,
+          4,
+          3,
+          8,
+          15,
+          19,
+          2,
+          16,
+          14,
+          17,
+          10,
+          12,
+          6,
+          21,
+          7,
+          9,
+          11,
+          20,
+          1
+        ],
+        "condition_count": 1,
+        "condition_moves": [
+          4
+        ],
+        "sample_index": 174
+      },
+      "samples_summary": [
+        {
+          "sample": 0,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 1,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 2,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 3,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 4,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 5,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 6,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 7,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 8,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 9,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 10,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 11,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 12,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 13,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 14,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 15,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 16,
+          "condition_count": 10,
+          "has_condition": true
+        },
+        {
+          "sample": 17,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 18,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 19,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 20,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 21,
+          "condition_count": 10,
+          "has_condition": true
+        },
+        {
+          "sample": 22,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 23,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 24,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 25,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 26,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 27,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 28,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 29,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 30,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 31,
+          "condition_count": 10,
+          "has_condition": true
+        },
+        {
+          "sample": 32,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 33,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 34,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 35,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 36,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 37,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 38,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 39,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 40,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 41,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 42,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 43,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 44,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 45,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 46,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 47,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 48,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 49,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 50,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 51,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 52,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 53,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 54,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 55,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 56,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 57,
+          "condition_count": 4,
+          "has_condition": true
+        },
+        {
+          "sample": 58,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 59,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 60,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 61,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 62,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 63,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 64,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 65,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 66,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 67,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 68,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 69,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 70,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 71,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 72,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 73,
+          "condition_count": 3,
+          "has_condition": true
+        },
+        {
+          "sample": 74,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 75,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 76,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 77,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 78,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 79,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 80,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 81,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 82,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 83,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 84,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 85,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 86,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 87,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 88,
+          "condition_count": 6,
+          "has_condition": true
+        },
+        {
+          "sample": 89,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 90,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 91,
+          "condition_count": 5,
+          "has_condition": true
+        },
+        {
+          "sample": 92,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 93,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 94,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 95,
+          "condition_count": 8,
+          "has_condition": true
+        },
+        {
+          "sample": 96,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 97,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 98,
+          "condition_count": 7,
+          "has_condition": true
+        },
+        {
+          "sample": 99,
+          "condition_count": 6,
+          "has_condition": true
+        }
+      ]
+    },
+    "random_n50": {
+      "n": 50,
+      "num_samples": 1000,
+      "all_have_condition": true,
+      "min_condition_count": 8,
+      "max_condition_count": 25,
+      "avg_condition_count": 16.583,
+      "min_condition_example": {
+        "permutation": [
+          16,
+          46,
+          14,
+          39,
+          28,
+          40,
+          5,
+          32,
+          31,
+          25,
+          13,
+          44,
+          6,
+          26,
+          36,
+          12,
+          4,
+          17,
+          3,
+          47,
+          11,
+          48,
+          41,
+          35,
+          1,
+          9,
+          2,
+          30,
+          7,
+          43,
+          24,
+          34,
+          27,
+          19,
+          29,
+          21,
+          23,
+          45,
+          10,
+          37,
+          33,
+          42,
+          8,
+          38,
+          50,
+          49,
+          18,
+          22,
+          15,
+          20
+        ],
+        "condition_count": 8,
+        "condition_moves": [
+          9,
+          20,
+          26,
+          27,
+          29,
+          30,
+          41,
+          49
+        ],
+        "sample_index": 851
+      },
+      "samples_summary": [
+        {
+          "sample": 0,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 1,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 2,
+          "condition_count": 19,
+          "has_condition": true
+        },
+        {
+          "sample": 3,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 4,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 5,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 6,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 7,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 8,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 9,
+          "condition_count": 13,
+          "has_condition": true
+        },
+        {
+          "sample": 10,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 11,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 12,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 13,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 14,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 15,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 16,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 17,
+          "condition_count": 13,
+          "has_condition": true
+        },
+        {
+          "sample": 18,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 19,
+          "condition_count": 13,
+          "has_condition": true
+        },
+        {
+          "sample": 20,
+          "condition_count": 13,
+          "has_condition": true
+        },
+        {
+          "sample": 21,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 22,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 23,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 24,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 25,
+          "condition_count": 22,
+          "has_condition": true
+        },
+        {
+          "sample": 26,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 27,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 28,
+          "condition_count": 19,
+          "has_condition": true
+        },
+        {
+          "sample": 29,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 30,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 31,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 32,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 33,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 34,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 35,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 36,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 37,
+          "condition_count": 22,
+          "has_condition": true
+        },
+        {
+          "sample": 38,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 39,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 40,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 41,
+          "condition_count": 21,
+          "has_condition": true
+        },
+        {
+          "sample": 42,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 43,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 44,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 45,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 46,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 47,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 48,
+          "condition_count": 13,
+          "has_condition": true
+        },
+        {
+          "sample": 49,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 50,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 51,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 52,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 53,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 54,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 55,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 56,
+          "condition_count": 19,
+          "has_condition": true
+        },
+        {
+          "sample": 57,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 58,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 59,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 60,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 61,
+          "condition_count": 12,
+          "has_condition": true
+        },
+        {
+          "sample": 62,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 63,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 64,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 65,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 66,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 67,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 68,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 69,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 70,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 71,
+          "condition_count": 19,
+          "has_condition": true
+        },
+        {
+          "sample": 72,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 73,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 74,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 75,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 76,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 77,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 78,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 79,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 80,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 81,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 82,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 83,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 84,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 85,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 86,
+          "condition_count": 9,
+          "has_condition": true
+        },
+        {
+          "sample": 87,
+          "condition_count": 15,
+          "has_condition": true
+        },
+        {
+          "sample": 88,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 89,
+          "condition_count": 16,
+          "has_condition": true
+        },
+        {
+          "sample": 90,
+          "condition_count": 14,
+          "has_condition": true
+        },
+        {
+          "sample": 91,
+          "condition_count": 21,
+          "has_condition": true
+        },
+        {
+          "sample": 92,
+          "condition_count": 20,
+          "has_condition": true
+        },
+        {
+          "sample": 93,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 94,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 95,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 96,
+          "condition_count": 18,
+          "has_condition": true
+        },
+        {
+          "sample": 97,
+          "condition_count": 17,
+          "has_condition": true
+        },
+        {
+          "sample": 98,
+          "condition_count": 11,
+          "has_condition": true
+        },
+        {
+          "sample": 99,
+          "condition_count": 13,
+          "has_condition": true
+        }
+      ]
+    },
+    "random_n100": {
+      "n": 100,
+      "num_samples": 1000,
+      "all_have_condition": true,
+      "min_condition_count": 20,
+      "max_condition_count": 49,
+      "avg_condition_count": 33.288,
+      "min_condition_example": {
+        "permutation": [
+          58,
+          13,
+          86,
+          93,
+          81,
+          16,
+          32,
+          42,
+          50,
+          9,
+          87,
+          14,
+          27,
+          92,
+          63,
+          74,
+          11,
+          48,
+          15,
+          22,
+          2,
+          34,
+          36,
+          83,
+          28,
+          78,
+          99,
+          73,
+          31,
+          38,
+          62,
+          77,
+          68,
+          64,
+          71,
+          40,
+          90,
+          49,
+          18,
+          82,
+          33,
+          47,
+          100,
+          6,
+          56,
+          61,
+          57,
+          45,
+          98,
+          89,
+          24,
+          88,
+          75,
+          35,
+          66,
+          55,
+          1,
+          67,
+          10,
+          12,
+          53,
+          95,
+          25,
+          70,
+          44,
+          43,
+          84,
+          51,
+          37,
+          65,
+          23,
+          97,
+          85,
+          4,
+          79,
+          26,
+          19,
+          72,
+          8,
+          69,
+          41,
+          3,
+          54,
+          76,
+          52,
+          46,
+          7,
+          29,
+          91,
+          20,
+          94,
+          21,
+          59,
+          39,
+          96,
+          17,
+          60,
+          30,
+          5,
+          80
+        ],
+        "condition_count": 20,
+        "condition_moves": [
+          22,
+          29,
+          30,
+          32,
+          36,
+          38,
+          41,
+          44,
+          48,
+          49,
+          50,
+          57,
+          65,
+          66,
+          67,
+          69,
+          71,
+          73,
+          87,
+          88
+        ],
+        "sample_index": 231
+      },
+      "samples_summary": [
+        {
+          "sample": 0,
+          "condition_count": 28,
+          "has_condition": true
+        },
+        {
+          "sample": 1,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 2,
+          "condition_count": 28,
+          "has_condition": true
+        },
+        {
+          "sample": 3,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 4,
+          "condition_count": 49,
+          "has_condition": true
+        },
+        {
+          "sample": 5,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 6,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 7,
+          "condition_count": 38,
+          "has_condition": true
+        },
+        {
+          "sample": 8,
+          "condition_count": 28,
+          "has_condition": true
+        },
+        {
+          "sample": 9,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 10,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 11,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 12,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 13,
+          "condition_count": 40,
+          "has_condition": true
+        },
+        {
+          "sample": 14,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 15,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 16,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 17,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 18,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 19,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 20,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 21,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 22,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 23,
+          "condition_count": 37,
+          "has_condition": true
+        },
+        {
+          "sample": 24,
+          "condition_count": 30,
+          "has_condition": true
+        },
+        {
+          "sample": 25,
+          "condition_count": 39,
+          "has_condition": true
+        },
+        {
+          "sample": 26,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 27,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 28,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 29,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 30,
+          "condition_count": 37,
+          "has_condition": true
+        },
+        {
+          "sample": 31,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 32,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 33,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 34,
+          "condition_count": 37,
+          "has_condition": true
+        },
+        {
+          "sample": 35,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 36,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 37,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 38,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 39,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 40,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 41,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 42,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 43,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 44,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 45,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 46,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 47,
+          "condition_count": 30,
+          "has_condition": true
+        },
+        {
+          "sample": 48,
+          "condition_count": 39,
+          "has_condition": true
+        },
+        {
+          "sample": 49,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 50,
+          "condition_count": 30,
+          "has_condition": true
+        },
+        {
+          "sample": 51,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 52,
+          "condition_count": 44,
+          "has_condition": true
+        },
+        {
+          "sample": 53,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 54,
+          "condition_count": 27,
+          "has_condition": true
+        },
+        {
+          "sample": 55,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 56,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 57,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 58,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 59,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 60,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 61,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 62,
+          "condition_count": 38,
+          "has_condition": true
+        },
+        {
+          "sample": 63,
+          "condition_count": 42,
+          "has_condition": true
+        },
+        {
+          "sample": 64,
+          "condition_count": 40,
+          "has_condition": true
+        },
+        {
+          "sample": 65,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 66,
+          "condition_count": 30,
+          "has_condition": true
+        },
+        {
+          "sample": 67,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 68,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 69,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 70,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 71,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 72,
+          "condition_count": 39,
+          "has_condition": true
+        },
+        {
+          "sample": 73,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 74,
+          "condition_count": 39,
+          "has_condition": true
+        },
+        {
+          "sample": 75,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 76,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 77,
+          "condition_count": 37,
+          "has_condition": true
+        },
+        {
+          "sample": 78,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 79,
+          "condition_count": 37,
+          "has_condition": true
+        },
+        {
+          "sample": 80,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 81,
+          "condition_count": 34,
+          "has_condition": true
+        },
+        {
+          "sample": 82,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 83,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 84,
+          "condition_count": 29,
+          "has_condition": true
+        },
+        {
+          "sample": 85,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 86,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 87,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 88,
+          "condition_count": 31,
+          "has_condition": true
+        },
+        {
+          "sample": 89,
+          "condition_count": 36,
+          "has_condition": true
+        },
+        {
+          "sample": 90,
+          "condition_count": 26,
+          "has_condition": true
+        },
+        {
+          "sample": 91,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 92,
+          "condition_count": 26,
+          "has_condition": true
+        },
+        {
+          "sample": 93,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 94,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 95,
+          "condition_count": 35,
+          "has_condition": true
+        },
+        {
+          "sample": 96,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 97,
+          "condition_count": 32,
+          "has_condition": true
+        },
+        {
+          "sample": 98,
+          "condition_count": 33,
+          "has_condition": true
+        },
+        {
+          "sample": 99,
+          "condition_count": 33,
+          "has_condition": true
+        }
+      ]
+    },
+    "random_n2021": {
+      "n": 2021,
+      "num_samples": 100,
+      "all_have_condition": true,
+      "min_condition_count": 626,
+      "max_condition_count": 710,
+      "avg_condition_count": 675.17,
+      "min_condition_example": {
+        "permutation": [
+          752,
+          1199,
+          1650,
+          935,
+          1625,
+          1830,
+          1176,
+          739,
+          1915,
+          8,
+          1981,
+          1821,
+          1942,
+          945,
+          1030,
+          1344,
+          422,
+          1982,
+          469,
+          925,
+          145,
+          1628,
+          1797,
+          1994,
+          1718,
+          41,
+          101,
+          792,
+          762,
+          1517,
+          1984,
+          1985,
+          1968,
+          1614,
+          1917,
+          216,
+          1132,
+          584,
+          497,
+          1766,
+          1289,
+          693,
+          504,
+          1391,
+          1944,
+          1744,
+          416,
+          613,
+          1664,
+          965,
+          896,
+          910,
+          1908,
+          15,
+          1082,
+          930,
+          112,
+          825,
+          1784,
+          586,
+          671,
+          310,
+          75,
+          1419,
+          439,
+          799,
+          214,
+          323,
+          1001,
+          687,
+          1031,
+          798,
+          330,
+          1647,
+          1719,
+          1144,
+          530,
+          93,
+          1219,
+          1189,
+          1019,
+          376,
+          1636,
+          946,
+          253,
+          653,
+          1129,
+          794,
+          1147,
+          1612,
+          1661,
+          332,
+          779,
+          381,
+          610,
+          165,
+          543,
+          1415,
+          1025,
+          1133,
+          268,
+          551,
+          633,
+          1818,
+          1577,
+          841,
+          899,
+          1573,
+          326,
+          1047,
+          897,
+          685,
+          1528,
+          198,
+          1466,
+          1374,
+          717,
+          1102,
+          25,
+          405,
+          100,
+          1211,
+          1738,
+          539,
+          1873,
+          1820,
+          1814,
+          78,
+          1066,
+          176,
+          1232,
+          724,
+          1585,
+          334,
+          1902,
+          1959,
+          890,
+          1516,
+          646,
+          1327,
+          1200,
+          971,
+          520,
+          787,
+          1587,
+          265,
+          1246,
+          1009,
+          129,
+          1971,
+          515,
+          1905,
+          155,
+          1437,
+          1062,
+          571,
+          1357,
+          621,
+          994,
+          1725,
+          1673,
+          677,
+          795,
+          273,
+          1606,
+          423,
+          1087,
+          1526,
+          1348,
+          1500,
+          675,
+          410,
+          1387,
+          1089,
+          1903,
+          1269,
+          1470,
+          1703,
+          1656,
+          1409,
+          1056,
+          325,
+          884,
+          1877,
+          1977,
+          284,
+          1826,
+          160,
+          495,
+          1020,
+          678,
+          1854,
+          1100,
+          637,
+          1118,
+          1878,
+          589,
+          436,
+          1223,
+          1249,
+          1880,
+          1919,
+          555,
+          1911,
+          29,
+          600,
+          1565,
+          309,
+          823,
+          749,
+          348,
+          1333,
+          223,
+          1713,
+          631,
+          79,
+          552,
+          1720,
+          289,
+          1704,
+          1896,
+          1686,
+          886,
+          233,
+          511,
+          1033,
+          500,
+          988,
+          1421,
+          57,
+          506,
+          479,
+          1623,
+          1023,
+          1645,
+          166,
+          612,
+          46,
+          1336,
+          856,
+          182,
+          1861,
+          894,
+          1405,
+          105,
+          534,
+          491,
+          818,
+          836,
+          1711,
+          672,
+          290,
+          1050,
+          66,
+          468,
+          314,
+          169,
+          447,
+          569,
+          1489,
+          451,
+          1637,
+          1221,
+          1024,
+          1002,
+          1048,
+          1362,
+          1963,
+          1406,
+          1126,
+          776,
+          1326,
+          718,
+          1328,
+          1689,
+          573,
+          1619,
+          1248,
+          1443,
+          1537,
+          452,
+          1652,
+          923,
+          375,
+          668,
+          292,
+          1350,
+          1591,
+          1546,
+          217,
+          1485,
+          588,
+          1874,
+          1149,
+          72,
+          1566,
+          402,
+          1624,
+          437,
+          1486,
+          401,
+          1138,
+          1668,
+          1882,
+          1109,
+          1169,
+          984,
+          725,
+          733,
+          1006,
+          23,
+          1018,
+          1708,
+          1260,
+          549,
+          5,
+          609,
+          2013,
+          999,
+          228,
+          1663,
+          623,
+          1352,
+          950,
+          1110,
+          1095,
+          1519,
+          521,
+          1508,
+          1584,
+          769,
+          2016,
+          319,
+          997,
+          1522,
+          1969,
+          1586,
+          394,
+          1534,
+          175,
+          662,
+          1190,
+          158,
+          679,
+          1475,
+          1765,
+          777,
+          71,
+          916,
+          88,
+          1222,
+          865,
+          814,
+          575,
+          1644,
+          1941,
+          1474,
+          1892,
+          157,
+          869,
+          512,
+          1796,
+          1827,
+          1883,
+          287,
+          1117,
+          991,
+          502,
+          1513,
+          626,
+          974,
+          833,
+          395,
+          1524,
+          390,
+          1658,
+          295,
+          237,
+          1097,
+          598,
+          1496,
+          1802,
+          1613,
+          48,
+          392,
+          1175,
+          1119,
+          617,
+          594,
+          1609,
+          561,
+          1068,
+          1674,
+          1497,
+          1589,
+          1891,
+          1483,
+          1226,
+          443,
+          14,
+          2007,
+          224,
+          1539,
+          1478,
+          854,
+          748,
+          1780,
+          872,
+          482,
+          481,
+          300,
+          493,
+          763,
+          83,
+          1265,
+          756,
+          1529,
+          607,
+          293,
+          371,
+          193,
+          680,
+          1276,
+          1337,
+          377,
+          1037,
+          338,
+          1953,
+          847,
+          496,
+          1514,
+          210,
+          427,
+          1728,
+          1494,
+          1755,
+          489,
+          203,
+          62,
+          1907,
+          878,
+          857,
+          853,
+          1320,
+          1456,
+          670,
+          1008,
+          142,
+          704,
+          305,
+          1932,
+          458,
+          1699,
+          1388,
+          135,
+          1179,
+          1581,
+          1076,
+          50,
+          1889,
+          1651,
+          1484,
+          383,
+          1888,
+          11,
+          159,
+          1851,
+          1459,
+          608,
+          97,
+          148,
+          812,
+          570,
+          507,
+          889,
+          755,
+          557,
+          1540,
+          744,
+          1244,
+          238,
+          1292,
+          1127,
+          819,
+          908,
+          1901,
+          636,
+          1819,
+          428,
+          1313,
+          852,
+          996,
+          1231,
+          1243,
+          1893,
+          937,
+          1458,
+          1710,
+          411,
+          143,
+          1381,
+          331,
+          1502,
+          1545,
+          1135,
+          131,
+          1416,
+          1281,
+          786,
+          873,
+          1515,
+          1238,
+          1995,
+          721,
+          147,
+          1363,
+          780,
+          628,
+          1250,
+          957,
+          488,
+          1549,
+          1803,
+          1992,
+          260,
+          644,
+          1396,
+          624,
+          137,
+          343,
+          1329,
+          727,
+          92,
+          1633,
+          1824,
+          1525,
+          1274,
+          1857,
+          1583,
+          453,
+          364,
+          1564,
+          696,
+          1748,
+          1943,
+          1947,
+          1839,
+          1041,
+          1410,
+          647,
+          907,
+          1495,
+          639,
+          1792,
+          1923,
+          320,
+          826,
+          138,
+          1769,
+          542,
+          1235,
+          1447,
+          1771,
+          705,
+          938,
+          47,
+          64,
+          417,
+          1608,
+          1659,
+          1767,
+          446,
+          838,
+          1316,
+          18,
+          1607,
+          719,
+          980,
+          118,
+          241,
+          1297,
+          683,
+          805,
+          657,
+          384,
+          1741,
+          531,
+          226,
+          625,
+          1359,
+          275,
+          1997,
+          1165,
+          361,
+          1358,
+          1777,
+          1533,
+          170,
+          433,
+          374,
+          1731,
+          35,
+          1298,
+          810,
+          979,
+          650,
+          1340,
+          291,
+          750,
+          929,
+          1191,
+          86,
+          580,
+          2,
+          842,
+          2002,
+          973,
+          333,
+          2001,
+          254,
+          1353,
+          386,
+          1552,
+          1991,
+          893,
+          1558,
+          1670,
+          1616,
+          898,
+          1160,
+          59,
+          1639,
+          843,
+          720,
+          1225,
+          1414,
+          359,
+          1867,
+          906,
+          912,
+          809,
+          425,
+          1081,
+          634,
+          629,
+          1835,
+          753,
+          1166,
+          1671,
+          917,
+          1256,
+          1569,
+          1343,
+          1754,
+          139,
+          649,
+          928,
+          654,
+          1709,
+          1140,
+          301,
+          1045,
+          1039,
+          499,
+          961,
+          1194,
+          1354,
+          1156,
+          1790,
+          831,
+          1912,
+          1634,
+          740,
+          1812,
+          455,
+          1989,
+          1046,
+          1875,
+          1174,
+          1825,
+          781,
+          1816,
+          1694,
+          635,
+          1965,
+          2008,
+          1284,
+          448,
+          1578,
+          611,
+          1570,
+          940,
+          438,
+          1735,
+          1789,
+          630,
+          206,
+          120,
+          1986,
+          1795,
+          766,
+          1885,
+          694,
+          941,
+          1378,
+          1743,
+          1434,
+          1121,
+          324,
+          363,
+          1597,
+          1064,
+          76,
+          1521,
+          1579,
+          1172,
+          54,
+          1722,
+          347,
+          1600,
+          360,
+          1067,
+          315,
+          576,
+          1669,
+          1865,
+          1394,
+          271,
+          1096,
+          349,
+          1325,
+          1793,
+          962,
+          978,
+          1423,
+          1554,
+          1209,
+          432,
+          269,
+          745,
+          1860,
+          1706,
+          620,
+          1838,
+          140,
+          652,
+          711,
+          1987,
+          1251,
+          714,
+          1643,
+          821,
+          1999,
+          9,
+          414,
+          1426,
+          111,
+          1727,
+          1897,
+          1059,
+          1080,
+          713,
+          1479,
+          103,
+          1210,
+          1849,
+          801,
+          1665,
+          1464,
+          144,
+          964,
+          246,
+          738,
+          1542,
+          1058,
+          189,
+          784,
+          564,
+          412,
+          915,
+          430,
+          418,
+          1974,
+          1804,
+          1385,
+          132,
+          104,
+          804,
+          49,
+          1641,
+          770,
+          574,
+          1972,
+          895,
+          987,
+          1338,
+          465,
+          1618,
+          566,
+          1036,
+          1060,
+          33,
+          790,
+          1615,
+          824,
+          921,
+          1279,
+          862,
+          1455,
+          951,
+          523,
+          1759,
+          768,
+          218,
+          1758,
+          1407,
+          1193,
+          741,
+          1216,
+          747,
+          445,
+          1518,
+          205,
+          1692,
+          1922,
+          1170,
+          605,
+          1463,
+          572,
+          1672,
+          1460,
+          73,
+          1462,
+          1323,
+          955,
+          17,
+          1345,
+          30,
+          178,
+          1382,
+          362,
+          68,
+          556,
+          1034,
+          152,
+          691,
+          1772,
+          36,
+          3,
+          1726,
+          1472,
+          729,
+          943,
+          1958,
+          927,
+          74,
+          1753,
+          1120,
+          1801,
+          562,
+          1086,
+          734,
+          806,
+          1113,
+          55,
+          1136,
+          1592,
+          760,
+          686,
+          1805,
+          10,
+          614,
+          357,
+          1638,
+          4,
+          415,
+          1954,
+          1403,
+          554,
+          783,
+          2018,
+          280,
+          1099,
+          1747,
+          444,
+          990,
+          1632,
+          1904,
+          122,
+          156,
+          24,
+          435,
+          1881,
+          904,
+          1629,
+          230,
+          1428,
+          1697,
+          1070,
+          87,
+          1291,
+          1677,
+          1598,
+          393,
+          529,
+          303,
+          1707,
+          1700,
+          1782,
+          212,
+          501,
+          2017,
+          1808,
+          1218,
+          336,
+          1746,
+          1077,
+          352,
+          1213,
+          723,
+          1204,
+          1005,
+          318,
+          522,
+          1252,
+          95,
+          298,
+          1451,
+          1988,
+          1013,
+          1590,
+          378,
+          1282,
+          1285,
+          1245,
+          90,
+          477,
+          1557,
+          1356,
+          102,
+          778,
+          1364,
+          1203,
+          81,
+          924,
+          1288,
+          133,
+          1833,
+          1372,
+          665,
+          1091,
+          716,
+          516,
+          1168,
+          1593,
+          279,
+          1201,
+          701,
+          1858,
+          229,
+          1831,
+          441,
+          1016,
+          98,
+          396,
+          514,
+          1061,
+          420,
+          227,
+          811,
+          1611,
+          177,
+          1691,
+          1217,
+          424,
+          615,
+          953,
+          595,
+          1379,
+          684,
+          337,
+          1448,
+          1107,
+          1667,
+          1757,
+          450,
+          1440,
+          1215,
+          1862,
+          863,
+          1948,
+          1401,
+          1347,
+          1562,
+          1729,
+          1275,
+          891,
+          1488,
+          322,
+          1146,
+          208,
+          1856,
+          1083,
+          1887,
+          22,
+          1695,
+          1384,
+          1950,
+          1162,
+          666,
+          1642,
+          1679,
+          32,
+          1112,
+          1268,
+          1716,
+          1756,
+          676,
+          1580,
+          618,
+          651,
+          861,
+          1970,
+          1,
+          1829,
+          1278,
+          1084,
+          1848,
+          1871,
+          698,
+          2009,
+          1732,
+          283,
+          1701,
+          1918,
+          510,
+          1398,
+          1511,
+          1736,
+          1715,
+          1032,
+          1319,
+          702,
+          759,
+          1043,
+          426,
+          909,
+          197,
+          91,
+          119,
+          261,
+          99,
+          285,
+          355,
+          765,
+          345,
+          1480,
+          1687,
+          1712,
+          1910,
+          834,
+          1978,
+          1377,
+          1106,
+          220,
+          1314,
+          1383,
+          1561,
+          128,
+          1724,
+          815,
+          1152,
+          440,
+          942,
+          108,
+          263,
+          60,
+          1015,
+          1283,
+          1141,
+          827,
+          288,
+          731,
+          1682,
+          1879,
+          380,
+          593,
+          199,
+          1262,
+          1898,
+          1828,
+          771,
+          409,
+          1764,
+          1520,
+          123,
+          350,
+          94,
+          1909,
+          1392,
+          42,
+          767,
+          1961,
+          690,
+          470,
+          972,
+          802,
+          1368,
+          700,
+          1342,
+          490,
+          1610,
+          471,
+          1815,
+          1304,
+          1004,
+          1538,
+          1422,
+          975,
+          1799,
+          181,
+          528,
+          1582,
+          2012,
+          1371,
+          114,
+          183,
+          89,
+          1079,
+          1768,
+          536,
+          1273,
+          887,
+          1853,
+          567,
+          1895,
+          472,
+          1130,
+          449,
+          1300,
+          1003,
+          1073,
+          1349,
+          1938,
+          682,
+          1196,
+          365,
+          829,
+          1809,
+          498,
+          136,
+          487,
+          882,
+          885,
+          1876,
+          150,
+          1925,
+          45,
+          1620,
+          1198,
+          1550,
+          844,
+          816,
+          1487,
+          1161,
+          367,
+          1188,
+          196,
+          1395,
+          1420,
+          1242,
+          1417,
+          1781,
+          1933,
+          403,
+          1239,
+          874,
+          2005,
+          743,
+          1723,
+          1810,
+          866,
+          1051,
+          327,
+          1255,
+          1998,
+          656,
+          722,
+          828,
+          1375,
+          508,
+          173,
+          431,
+          1596,
+          1224,
+          121,
+          194,
+          1505,
+          1027,
+          1787,
+          1293,
+          1432,
+          1555,
+          864,
+          202,
+          830,
+          421,
+          2014,
+          568,
+          1035,
+          627,
+          1605,
+          1341,
+          1469,
+          1452,
+          1164,
+          638,
+          1301,
+          1752,
+          1310,
+          188,
+          1257,
+          1921,
+          1730,
+          1955,
+          1446,
+          151,
+          252,
+          1022,
+          373,
+          321,
+          985,
+          870,
+          1116,
+          712,
+          1315,
+          1108,
+          26,
+          141,
+          1312,
+          1683,
+          1158,
+          603,
+          590,
+          1241,
+          697,
+          706,
+          80,
+          1153,
+          44,
+          191,
+          1159,
+          221,
+          248,
+          525,
+          492,
+          1640,
+          1847,
+          1115,
+          1012,
+          1150,
+          231,
+          1181,
+          1449,
+          1481,
+          124,
+          299,
+          597,
+          1509,
+          172,
+          548,
+          130,
+          1093,
+          797,
+          1563,
+          1125,
+          813,
+          1111,
+          460,
+          311,
+          1551,
+          1530,
+          1635,
+          1177,
+          1131,
+          754,
+          1114,
+          1418,
+          56,
+          34,
+          648,
+          476,
+          43,
+          604,
+          1491,
+          244,
+          1556,
+          69,
+          20,
+          174,
+          234,
+          1137,
+          2010,
+          1571,
+          272,
+          509,
+          379,
+          294,
+          406,
+          1960,
+          312,
+          1220,
+          201,
+          1817,
+          442,
+          1038,
+          58,
+          1400,
+          1951,
+          695,
+          239,
+          1308,
+          262,
+          385,
+          1490,
+          958,
+          257,
+          888,
+          1621,
+          1531,
+          1335,
+          892,
+          213,
+          1778,
+          52,
+          2019,
+          901,
+          281,
+          775,
+          2020,
+          1186,
+          948,
+          28,
+          1139,
+          832,
+          785,
+          356,
+          467,
+          1714,
+          559,
+          1536,
+          1574,
+          709,
+          1055,
+          1702,
+          115,
+          486,
+          274,
+          903,
+          1576,
+          602,
+          77,
+          1575,
+          699,
+          255,
+          296,
+          789,
+          307,
+          461,
+          161,
+          456,
+          1404,
+          1507,
+          606,
+          674,
+          408,
+          817,
+          1868,
+          1786,
+          1205,
+          1617,
+          1167,
+          2021,
+          1311,
+          1512,
+          578,
+          954,
+          474,
+          1886,
+          911,
+          550,
+          1322,
+          1553,
+          1010,
+          1983,
+          1588,
+          1303,
+          1445,
+          478,
+          19,
+          1212,
+          845,
+          398,
+          1594,
+          1007,
+          126,
+          1157,
+          579,
+          286,
+          519,
+          879,
+          751,
+          1266,
+          1105,
+          982,
+          1214,
+          368,
+          27,
+          1227,
+          107,
+          846,
+          259,
+          51,
+          67,
+          541,
+          922,
+          1654,
+          939,
+          1870,
+          1548,
+          1365,
+          480,
+          186,
+          1900,
+          998,
+          1742,
+          382,
+          599,
+          1155,
+          1094,
+          1547,
+          1090,
+          1192,
+          1053,
+          1306,
+          1424,
+          976,
+          1040,
+          660,
+          1351,
+          1966,
+          1698,
+          1779,
+          106,
+          933,
+          1103,
+          1840,
+          153,
+          1411,
+          681,
+          791,
+          1993,
+          1389,
+          2004,
+          1468,
+          1477,
+          800,
+          1295,
+          1745,
+          1294,
+          1054,
+          918,
+          1229,
+          1124,
+          204,
+          256,
+          881,
+          641,
+          1940,
+          1202,
+          494,
+          1259,
+          1676,
+          545,
+          764,
+          340,
+          180,
+          1928,
+          1104,
+          1834,
+          1559,
+          12,
+          113,
+          1173,
+          1296,
+          351,
+          1773,
+          1920,
+          1471,
+          758,
+          643,
+          1208,
+          84,
+          1324,
+          1543,
+          669,
+          277,
+          1207,
+          1399,
+          1163,
+          1026,
+          1501,
+          1253,
+          969,
+          1935,
+          1541,
+          399,
+          1044,
+          919,
+          1270,
+          581,
+          1330,
+          934,
+          1841,
+          185,
+          1476,
+          1750,
+          1973,
+          1151,
+          1626,
+          1439,
+          1360,
+          970,
+          316,
+          282,
+          1763,
+          1503,
+          1739,
+          200,
+          986,
+          689,
+          1811,
+          1052,
+          1467,
+          944,
+          61,
+          353,
+          1740,
+          247,
+          1178,
+          1234,
+          6,
+          1499,
+          1154,
+          37,
+          1560,
+          880,
+          524,
+          565,
+          1734,
+          346,
+          949,
+          535,
+          1800,
+          1894,
+          883,
+          222,
+          1430,
+          737,
+          1272,
+          466,
+          1627,
+          1206,
+          1770,
+          1185,
+          317,
+          297,
+          1837,
+          1184,
+          2011,
+          1321,
+          270,
+          1493,
+          1775,
+          1936,
+          820,
+          304,
+          1760,
+          632,
+          1648,
+          278,
+          963,
+          1063,
+          40,
+          1366,
+          1373,
+          1843,
+          553,
+          1601,
+          1367,
+          959,
+          1946,
+          1412,
+          900,
+          1850,
+          1832,
+          243,
+          877,
+          1631,
+          1976,
+          483,
+          1305,
+          1630,
+          1662,
+          109,
+          1049,
+          1655,
+          1532,
+          952,
+          1544,
+          772,
+          583,
+          306,
+          1964,
+          388,
+          1836,
+          1346,
+          16,
+          981,
+          947,
+          1370,
+          673,
+          876,
+          645,
+          822,
+          1339,
+          715,
+          397,
+          1864,
+          1884,
+          413,
+          1794,
+          190,
+          1798,
+          855,
+          616,
+          116,
+          526,
+          1408,
+          31,
+          1074,
+          459,
+          1380,
+          475,
+          1776,
+          932,
+          1504,
+          39,
+          1572,
+          1182,
+          742,
+          1361,
+          517,
+          1441,
+          664,
+          858,
+          1869,
+          860,
+          1653,
+          505,
+          1233,
+          757,
+          1622,
+          1980,
+          808,
+          110,
+          1996,
+          1937,
+          596,
+          968,
+          1435,
+          1453,
+          1523,
+          434,
+          1914,
+          339,
+          642,
+          1990,
+          2006,
+          902,
+          96,
+          803,
+          995,
+          1017,
+          1646,
+          1527,
+          457,
+          1307,
+          1442,
+          1267,
+          688,
+          1602,
+          1142,
+          1595,
+          547,
+          849,
+          207,
+          1952,
+          1842,
+          1071,
+          518,
+          859,
+          2000,
+          53,
+          730,
+          703,
+          503,
+          532,
+          710,
+          1402,
+          1123,
+          1774,
+          1098,
+          1290,
+          837,
+          1649,
+          65,
+          1761,
+          187,
+          1906,
+          1866,
+          1425,
+          1101,
+          1457,
+          1264,
+          1956,
+          1148,
+          875,
+          1436,
+          387,
+          1846,
+          342,
+          1791,
+          236,
+          1506,
+          1014,
+          1431,
+          527,
+          1254,
+          538,
+          1386,
+          264,
+          1145,
+          560,
+          835,
+          848,
+          211,
+          1822,
+          1934,
+          1931,
+          1397,
+          473,
+          404,
+          1021,
+          1660,
+          372,
+          162,
+          1844,
+          592,
+          1737,
+          1355,
+          302,
+          1078,
+          577,
+          840,
+          1751,
+          839,
+          7,
+          931,
+          736,
+          344,
+          1852,
+          267,
+          250,
+          563,
+          1603,
+          1277,
+          168,
+          276,
+          1065,
+          85,
+          558,
+          1567,
+          746,
+          796,
+          601,
+          249,
+          1949,
+          1299,
+          920,
+          1069,
+          1845,
+          1688,
+          1122,
+          1666,
+          1393,
+          341,
+          867,
+          1376,
+          1473,
+          1072,
+          1236,
+          215,
+          225,
+          708,
+          1510,
+          391,
+          1927,
+          1011,
+          1461,
+          149,
+          1261,
+          1957,
+          1930,
+          313,
+          1187,
+          1680,
+          936,
+          1678,
+          1454,
+          735,
+          913,
+          1975,
+          1247,
+          544,
+          245,
+          726,
+          1696,
+          1427,
+          1085,
+          1230,
+          125,
+          1332,
+          13,
+          782,
+          1749,
+          1228,
+          658,
+          366,
+          537,
+          851,
+          1823,
+          369,
+          1535,
+          1271,
+          871,
+          1979,
+          659,
+          1599,
+          1962,
+          1450,
+          179,
+          1924,
+          582,
+          1807,
+          1433,
+          1859,
+          1482,
+          329,
+          1967,
+          154,
+          1705,
+          640,
+          1092,
+          192,
+          1075,
+          977,
+          1057,
+          1143,
+          1438,
+          1762,
+          1334,
+          966,
+          1492,
+          1813,
+          707,
+          1134,
+          1028,
+          587,
+          1197,
+          1657,
+          117,
+          308,
+          732,
+          914,
+          992,
+          21,
+          1929,
+          2003,
+          235,
+          1675,
+          1717,
+          400,
+          868,
+          773,
+          63,
+          242,
+          1806,
+          127,
+          1721,
+          956,
+          462,
+          1498,
+          1913,
+          1604,
+          850,
+          1916,
+          163,
+          419,
+          1465,
+          761,
+          1785,
+          1890,
+          1872,
+          407,
+          1286,
+          1783,
+          989,
+          184,
+          1926,
+          1690,
+          1180,
+          540,
+          1128,
+          585,
+          358,
+          619,
+          1088,
+          967,
+          793,
+          728,
+          464,
+          2015,
+          429,
+          171,
+          513,
+          146,
+          661,
+          195,
+          134,
+          905,
+          370,
+          546,
+          1693,
+          1263,
+          1171,
+          389,
+          484,
+          667,
+          591,
+          485,
+          1369,
+          960,
+          1733,
+          1258,
+          167,
+          926,
+          258,
+          774,
+          1429,
+          1685,
+          1287,
+          1302,
+          328,
+          1863,
+          1280,
+          1855,
+          1042,
+          1899,
+          454,
+          692,
+          1240,
+          533,
+          1413,
+          622,
+          209,
+          1318,
+          164,
+          463,
+          663,
+          240,
+          335,
+          1317,
+          1444,
+          1788,
+          1568,
+          1309,
+          251,
+          983,
+          1029,
+          38,
+          1390,
+          1331,
+          1237,
+          1195,
+          1000,
+          807,
+          1183,
+          232,
+          1681,
+          82,
+          1945,
+          266,
+          993,
+          70,
+          354,
+          1939,
+          655,
+          1684,
+          788,
+          219
+        ],
+        "condition_count": 626,
+        "condition_moves": [
+          36,
+          56,
+          64,
+          67,
+          69,
+          101,
+          107,
+          113,
+          119,
+          141,
+          148,
+          156,
+          159,
+          183,
+          191,
+          194,
+          195,
+          203,
+          206,
+          225,
+          234,
+          241,
+          242,
+          244,
+          248,
+          252,
+          256,
+          261,
+          263,
+          267,
+          295,
+          296,
+          298,
+          299,
+          308,
+          310,
+          314,
+          316,
+          317,
+          318,
+          335,
+          340,
+          343,
+          350,
+          353,
+          355,
+          362,
+          363,
+          370,
+          371,
+          372,
+          373,
+          379,
+          383,
+          392,
+          396,
+          400,
+          405,
+          411,
+          414,
+          419,
+          420,
+          426,
+          427,
+          430,
+          431,
+          432,
+          433,
+          435,
+          439,
+          441,
+          443,
+          453,
+          456,
+          460,
+          461,
+          463,
+          467,
+          468,
+          473,
+          476,
+          477,
+          478,
+          480,
+          481,
+          484,
+          486,
+          487,
+          493,
+          495,
+          496,
+          501,
+          506,
+          508,
+          509,
+          511,
+          514,
+          519,
+          522,
+          525,
+          526,
+          528,
+          530,
+          531,
+          532,
+          533,
+          534,
+          536,
+          537,
+          544,
+          546,
+          548,
+          549,
+          551,
+          552,
+          558,
+          564,
+          565,
+          570,
+          580,
+          583,
+          584,
+          585,
+          587,
+          589,
+          591,
+          592,
+          593,
+          598,
+          600,
+          601,
+          604,
+          607,
+          610,
+          612,
+          613,
+          614,
+          615,
+          622,
+          634,
+          642,
+          644,
+          649,
+          651,
+          653,
+          661,
+          662,
+          668,
+          669,
+          671,
+          672,
+          674,
+          675,
+          676,
+          679,
+          684,
+          690,
+          691,
+          692,
+          695,
+          696,
+          697,
+          699,
+          704,
+          705,
+          709,
+          712,
+          715,
+          716,
+          717,
+          719,
+          721,
+          722,
+          727,
+          729,
+          730,
+          731,
+          733,
+          748,
+          750,
+          752,
+          753,
+          759,
+          760,
+          764,
+          765,
+          766,
+          767,
+          768,
+          770,
+          771,
+          775,
+          777,
+          778,
+          779,
+          780,
+          782,
+          783,
+          784,
+          787,
+          790,
+          792,
+          795,
+          796,
+          797,
+          798,
+          799,
+          802,
+          803,
+          804,
+          808,
+          810,
+          811,
+          814,
+          818,
+          821,
+          822,
+          823,
+          825,
+          826,
+          828,
+          829,
+          830,
+          836,
+          838,
+          839,
+          842,
+          843,
+          844,
+          845,
+          846,
+          847,
+          848,
+          849,
+          850,
+          853,
+          861,
+          864,
+          865,
+          867,
+          869,
+          870,
+          873,
+          876,
+          877,
+          878,
+          881,
+          884,
+          887,
+          899,
+          900,
+          903,
+          904,
+          905,
+          907,
+          908,
+          910,
+          911,
+          913,
+          914,
+          916,
+          918,
+          920,
+          921,
+          923,
+          924,
+          925,
+          926,
+          927,
+          928,
+          929,
+          930,
+          933,
+          936,
+          940,
+          942,
+          947,
+          951,
+          953,
+          954,
+          955,
+          956,
+          958,
+          960,
+          961,
+          964,
+          968,
+          975,
+          978,
+          981,
+          983,
+          987,
+          989,
+          990,
+          991,
+          992,
+          993,
+          997,
+          998,
+          999,
+          1001,
+          1005,
+          1006,
+          1007,
+          1008,
+          1010,
+          1020,
+          1022,
+          1024,
+          1025,
+          1029,
+          1030,
+          1032,
+          1033,
+          1034,
+          1037,
+          1038,
+          1040,
+          1041,
+          1042,
+          1044,
+          1045,
+          1047,
+          1049,
+          1052,
+          1055,
+          1056,
+          1060,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067,
+          1068,
+          1070,
+          1072,
+          1076,
+          1078,
+          1079,
+          1081,
+          1085,
+          1087,
+          1089,
+          1091,
+          1092,
+          1093,
+          1095,
+          1096,
+          1099,
+          1100,
+          1102,
+          1104,
+          1105,
+          1106,
+          1109,
+          1111,
+          1112,
+          1114,
+          1117,
+          1118,
+          1120,
+          1122,
+          1132,
+          1134,
+          1135,
+          1136,
+          1139,
+          1140,
+          1141,
+          1144,
+          1152,
+          1153,
+          1156,
+          1160,
+          1162,
+          1163,
+          1164,
+          1166,
+          1169,
+          1172,
+          1175,
+          1179,
+          1184,
+          1185,
+          1187,
+          1188,
+          1192,
+          1193,
+          1194,
+          1197,
+          1201,
+          1202,
+          1206,
+          1208,
+          1210,
+          1213,
+          1214,
+          1216,
+          1220,
+          1223,
+          1225,
+          1228,
+          1229,
+          1232,
+          1233,
+          1234,
+          1235,
+          1239,
+          1241,
+          1242,
+          1245,
+          1250,
+          1253,
+          1255,
+          1256,
+          1258,
+          1259,
+          1262,
+          1263,
+          1268,
+          1278,
+          1279,
+          1282,
+          1283,
+          1284,
+          1286,
+          1288,
+          1289,
+          1294,
+          1295,
+          1296,
+          1297,
+          1298,
+          1299,
+          1304,
+          1305,
+          1306,
+          1307,
+          1310,
+          1315,
+          1318,
+          1320,
+          1321,
+          1322,
+          1324,
+          1325,
+          1326,
+          1327,
+          1328,
+          1331,
+          1332,
+          1334,
+          1341,
+          1343,
+          1344,
+          1348,
+          1349,
+          1351,
+          1355,
+          1356,
+          1357,
+          1358,
+          1360,
+          1361,
+          1362,
+          1365,
+          1374,
+          1381,
+          1383,
+          1385,
+          1386,
+          1388,
+          1392,
+          1394,
+          1395,
+          1396,
+          1398,
+          1400,
+          1401,
+          1411,
+          1415,
+          1422,
+          1423,
+          1424,
+          1425,
+          1426,
+          1430,
+          1434,
+          1435,
+          1438,
+          1440,
+          1441,
+          1447,
+          1448,
+          1449,
+          1450,
+          1451,
+          1453,
+          1455,
+          1457,
+          1458,
+          1462,
+          1466,
+          1468,
+          1469,
+          1472,
+          1473,
+          1474,
+          1478,
+          1479,
+          1480,
+          1486,
+          1495,
+          1501,
+          1503,
+          1506,
+          1507,
+          1513,
+          1518,
+          1519,
+          1521,
+          1522,
+          1523,
+          1525,
+          1526,
+          1530,
+          1533,
+          1542,
+          1546,
+          1555,
+          1558,
+          1559,
+          1566,
+          1569,
+          1570,
+          1575,
+          1583,
+          1585,
+          1586,
+          1587,
+          1589,
+          1595,
+          1599,
+          1602,
+          1605,
+          1607,
+          1609,
+          1614,
+          1625,
+          1626,
+          1627,
+          1628,
+          1629,
+          1630,
+          1631,
+          1632,
+          1639,
+          1640,
+          1642,
+          1643,
+          1644,
+          1645,
+          1651,
+          1652,
+          1653,
+          1655,
+          1656,
+          1660,
+          1667,
+          1671,
+          1675,
+          1678,
+          1681,
+          1690,
+          1694,
+          1696,
+          1698,
+          1700,
+          1701,
+          1705,
+          1712,
+          1715,
+          1720,
+          1723,
+          1731,
+          1732,
+          1735,
+          1744,
+          1746,
+          1747,
+          1748,
+          1750,
+          1760,
+          1761,
+          1769,
+          1781,
+          1783,
+          1789,
+          1790,
+          1797,
+          1798,
+          1803,
+          1810,
+          1817,
+          1819,
+          1820,
+          1821,
+          1832,
+          1839,
+          1840,
+          1843,
+          1850,
+          1877,
+          1879,
+          1880,
+          1891,
+          1904,
+          1914,
+          1924,
+          1930,
+          1939,
+          1951,
+          1968,
+          1984,
+          1991
+        ],
+        "sample_index": 73
+      },
+      "samples_summary": [
+        {
+          "sample": 0,
+          "condition_count": 706,
+          "has_condition": true
+        },
+        {
+          "sample": 1,
+          "condition_count": 660,
+          "has_condition": true
+        },
+        {
+          "sample": 2,
+          "condition_count": 683,
+          "has_condition": true
+        },
+        {
+          "sample": 3,
+          "condition_count": 684,
+          "has_condition": true
+        },
+        {
+          "sample": 4,
+          "condition_count": 678,
+          "has_condition": true
+        },
+        {
+          "sample": 5,
+          "condition_count": 685,
+          "has_condition": true
+        },
+        {
+          "sample": 6,
+          "condition_count": 692,
+          "has_condition": true
+        },
+        {
+          "sample": 7,
+          "condition_count": 661,
+          "has_condition": true
+        },
+        {
+          "sample": 8,
+          "condition_count": 680,
+          "has_condition": true
+        },
+        {
+          "sample": 9,
+          "condition_count": 642,
+          "has_condition": true
+        },
+        {
+          "sample": 10,
+          "condition_count": 685,
+          "has_condition": true
+        },
+        {
+          "sample": 11,
+          "condition_count": 644,
+          "has_condition": true
+        },
+        {
+          "sample": 12,
+          "condition_count": 659,
+          "has_condition": true
+        },
+        {
+          "sample": 13,
+          "condition_count": 682,
+          "has_condition": true
+        },
+        {
+          "sample": 14,
+          "condition_count": 687,
+          "has_condition": true
+        },
+        {
+          "sample": 15,
+          "condition_count": 681,
+          "has_condition": true
+        },
+        {
+          "sample": 16,
+          "condition_count": 681,
+          "has_condition": true
+        },
+        {
+          "sample": 17,
+          "condition_count": 676,
+          "has_condition": true
+        },
+        {
+          "sample": 18,
+          "condition_count": 659,
+          "has_condition": true
+        },
+        {
+          "sample": 19,
+          "condition_count": 686,
+          "has_condition": true
+        },
+        {
+          "sample": 20,
+          "condition_count": 680,
+          "has_condition": true
+        },
+        {
+          "sample": 21,
+          "condition_count": 675,
+          "has_condition": true
+        },
+        {
+          "sample": 22,
+          "condition_count": 690,
+          "has_condition": true
+        },
+        {
+          "sample": 23,
+          "condition_count": 672,
+          "has_condition": true
+        },
+        {
+          "sample": 24,
+          "condition_count": 687,
+          "has_condition": true
+        },
+        {
+          "sample": 25,
+          "condition_count": 669,
+          "has_condition": true
+        },
+        {
+          "sample": 26,
+          "condition_count": 699,
+          "has_condition": true
+        },
+        {
+          "sample": 27,
+          "condition_count": 672,
+          "has_condition": true
+        },
+        {
+          "sample": 28,
+          "condition_count": 685,
+          "has_condition": true
+        },
+        {
+          "sample": 29,
+          "condition_count": 674,
+          "has_condition": true
+        },
+        {
+          "sample": 30,
+          "condition_count": 670,
+          "has_condition": true
+        },
+        {
+          "sample": 31,
+          "condition_count": 705,
+          "has_condition": true
+        },
+        {
+          "sample": 32,
+          "condition_count": 684,
+          "has_condition": true
+        },
+        {
+          "sample": 33,
+          "condition_count": 646,
+          "has_condition": true
+        },
+        {
+          "sample": 34,
+          "condition_count": 658,
+          "has_condition": true
+        },
+        {
+          "sample": 35,
+          "condition_count": 672,
+          "has_condition": true
+        },
+        {
+          "sample": 36,
+          "condition_count": 676,
+          "has_condition": true
+        },
+        {
+          "sample": 37,
+          "condition_count": 710,
+          "has_condition": true
+        },
+        {
+          "sample": 38,
+          "condition_count": 677,
+          "has_condition": true
+        },
+        {
+          "sample": 39,
+          "condition_count": 668,
+          "has_condition": true
+        },
+        {
+          "sample": 40,
+          "condition_count": 690,
+          "has_condition": true
+        },
+        {
+          "sample": 41,
+          "condition_count": 691,
+          "has_condition": true
+        },
+        {
+          "sample": 42,
+          "condition_count": 666,
+          "has_condition": true
+        },
+        {
+          "sample": 43,
+          "condition_count": 652,
+          "has_condition": true
+        },
+        {
+          "sample": 44,
+          "condition_count": 670,
+          "has_condition": true
+        },
+        {
+          "sample": 45,
+          "condition_count": 687,
+          "has_condition": true
+        },
+        {
+          "sample": 46,
+          "condition_count": 648,
+          "has_condition": true
+        },
+        {
+          "sample": 47,
+          "condition_count": 649,
+          "has_condition": true
+        },
+        {
+          "sample": 48,
+          "condition_count": 701,
+          "has_condition": true
+        },
+        {
+          "sample": 49,
+          "condition_count": 658,
+          "has_condition": true
+        },
+        {
+          "sample": 50,
+          "condition_count": 693,
+          "has_condition": true
+        },
+        {
+          "sample": 51,
+          "condition_count": 675,
+          "has_condition": true
+        },
+        {
+          "sample": 52,
+          "condition_count": 688,
+          "has_condition": true
+        },
+        {
+          "sample": 53,
+          "condition_count": 700,
+          "has_condition": true
+        },
+        {
+          "sample": 54,
+          "condition_count": 659,
+          "has_condition": true
+        },
+        {
+          "sample": 55,
+          "condition_count": 660,
+          "has_condition": true
+        },
+        {
+          "sample": 56,
+          "condition_count": 657,
+          "has_condition": true
+        },
+        {
+          "sample": 57,
+          "condition_count": 666,
+          "has_condition": true
+        },
+        {
+          "sample": 58,
+          "condition_count": 673,
+          "has_condition": true
+        },
+        {
+          "sample": 59,
+          "condition_count": 696,
+          "has_condition": true
+        },
+        {
+          "sample": 60,
+          "condition_count": 684,
+          "has_condition": true
+        },
+        {
+          "sample": 61,
+          "condition_count": 662,
+          "has_condition": true
+        },
+        {
+          "sample": 62,
+          "condition_count": 680,
+          "has_condition": true
+        },
+        {
+          "sample": 63,
+          "condition_count": 661,
+          "has_condition": true
+        },
+        {
+          "sample": 64,
+          "condition_count": 679,
+          "has_condition": true
+        },
+        {
+          "sample": 65,
+          "condition_count": 678,
+          "has_condition": true
+        },
+        {
+          "sample": 66,
+          "condition_count": 667,
+          "has_condition": true
+        },
+        {
+          "sample": 67,
+          "condition_count": 694,
+          "has_condition": true
+        },
+        {
+          "sample": 68,
+          "condition_count": 664,
+          "has_condition": true
+        },
+        {
+          "sample": 69,
+          "condition_count": 660,
+          "has_condition": true
+        },
+        {
+          "sample": 70,
+          "condition_count": 702,
+          "has_condition": true
+        },
+        {
+          "sample": 71,
+          "condition_count": 661,
+          "has_condition": true
+        },
+        {
+          "sample": 72,
+          "condition_count": 688,
+          "has_condition": true
+        },
+        {
+          "sample": 73,
+          "condition_count": 626,
+          "has_condition": true
+        },
+        {
+          "sample": 74,
+          "condition_count": 674,
+          "has_condition": true
+        },
+        {
+          "sample": 75,
+          "condition_count": 667,
+          "has_condition": true
+        },
+        {
+          "sample": 76,
+          "condition_count": 704,
+          "has_condition": true
+        },
+        {
+          "sample": 77,
+          "condition_count": 655,
+          "has_condition": true
+        },
+        {
+          "sample": 78,
+          "condition_count": 660,
+          "has_condition": true
+        },
+        {
+          "sample": 79,
+          "condition_count": 682,
+          "has_condition": true
+        },
+        {
+          "sample": 80,
+          "condition_count": 677,
+          "has_condition": true
+        },
+        {
+          "sample": 81,
+          "condition_count": 690,
+          "has_condition": true
+        },
+        {
+          "sample": 82,
+          "condition_count": 668,
+          "has_condition": true
+        },
+        {
+          "sample": 83,
+          "condition_count": 697,
+          "has_condition": true
+        },
+        {
+          "sample": 84,
+          "condition_count": 681,
+          "has_condition": true
+        },
+        {
+          "sample": 85,
+          "condition_count": 688,
+          "has_condition": true
+        },
+        {
+          "sample": 86,
+          "condition_count": 684,
+          "has_condition": true
+        },
+        {
+          "sample": 87,
+          "condition_count": 660,
+          "has_condition": true
+        },
+        {
+          "sample": 88,
+          "condition_count": 650,
+          "has_condition": true
+        },
+        {
+          "sample": 89,
+          "condition_count": 692,
+          "has_condition": true
+        },
+        {
+          "sample": 90,
+          "condition_count": 695,
+          "has_condition": true
+        },
+        {
+          "sample": 91,
+          "condition_count": 668,
+          "has_condition": true
+        },
+        {
+          "sample": 92,
+          "condition_count": 662,
+          "has_condition": true
+        },
+        {
+          "sample": 93,
+          "condition_count": 655,
+          "has_condition": true
+        },
+        {
+          "sample": 94,
+          "condition_count": 690,
+          "has_condition": true
+        },
+        {
+          "sample": 95,
+          "condition_count": 668,
+          "has_condition": true
+        },
+        {
+          "sample": 96,
+          "condition_count": 670,
+          "has_condition": true
+        },
+        {
+          "sample": 97,
+          "condition_count": 669,
+          "has_condition": true
+        },
+        {
+          "sample": 98,
+          "condition_count": 679,
+          "has_condition": true
+        },
+        {
+          "sample": 99,
+          "condition_count": 667,
+          "has_condition": true
+        }
+      ]
+    }
+  },
+  "specific_cases": {
+    "identity_n7": {
+      "permutation": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "n": 7,
+      "total_moves": 7,
+      "condition_satisfied_count": 3,
+      "condition_satisfied_moves": [
+        2,
+        4,
+        5
+      ],
+      "move_details": [
+        {
+          "k": 1,
+          "a": 2,
+          "b": 7,
+          "satisfies_condition": false,
+          "relation": "NOT (2 < 1 < 7)"
+        },
+        {
+          "k": 2,
+          "a": 1,
+          "b": 6,
+          "satisfies_condition": true,
+          "relation": "1 < 2 < 6"
+        },
+        {
+          "k": 3,
+          "a": 4,
+          "b": 7,
+          "satisfies_condition": false,
+          "relation": "NOT (4 < 3 < 7)"
+        },
+        {
+          "k": 4,
+          "a": 3,
+          "b": 6,
+          "satisfies_condition": true,
+          "relation": "3 < 4 < 6"
+        },
+        {
+          "k": 5,
+          "a": 1,
+          "b": 7,
+          "satisfies_condition": true,
+          "relation": "1 < 5 < 7"
+        },
+        {
+          "k": 6,
+          "a": 1,
+          "b": 4,
+          "satisfies_condition": false,
+          "relation": "NOT (1 < 6 < 4)"
+        },
+        {
+          "k": 7,
+          "a": 2,
+          "b": 5,
+          "satisfies_condition": false,
+          "relation": "NOT (2 < 7 < 5)"
+        }
+      ],
+      "full_history": [
+        {
+          "move_number": 1,
+          "walnut_k_position": 0,
+          "walnut_a": 2,
+          "walnut_b": 7,
+          "position_a": 1,
+          "position_b": 6,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "arrangement_after": [
+            1,
+            7,
+            3,
+            4,
+            5,
+            6,
+            2
+          ]
+        },
+        {
+          "move_number": 2,
+          "walnut_k_position": 6,
+          "walnut_a": 1,
+          "walnut_b": 6,
+          "position_a": 0,
+          "position_b": 5,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            1,
+            7,
+            3,
+            4,
+            5,
+            6,
+            2
+          ],
+          "arrangement_after": [
+            6,
+            7,
+            3,
+            4,
+            5,
+            1,
+            2
+          ]
+        },
+        {
+          "move_number": 3,
+          "walnut_k_position": 2,
+          "walnut_a": 4,
+          "walnut_b": 7,
+          "position_a": 3,
+          "position_b": 1,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            6,
+            7,
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "arrangement_after": [
+            6,
+            4,
+            3,
+            7,
+            5,
+            1,
+            2
+          ]
+        },
+        {
+          "move_number": 4,
+          "walnut_k_position": 1,
+          "walnut_a": 3,
+          "walnut_b": 6,
+          "position_a": 2,
+          "position_b": 0,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            6,
+            4,
+            3,
+            7,
+            5,
+            1,
+            2
+          ],
+          "arrangement_after": [
+            3,
+            4,
+            6,
+            7,
+            5,
+            1,
+            2
+          ]
+        },
+        {
+          "move_number": 5,
+          "walnut_k_position": 4,
+          "walnut_a": 1,
+          "walnut_b": 7,
+          "position_a": 5,
+          "position_b": 3,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            3,
+            4,
+            6,
+            7,
+            5,
+            1,
+            2
+          ],
+          "arrangement_after": [
+            3,
+            4,
+            6,
+            1,
+            5,
+            7,
+            2
+          ]
+        },
+        {
+          "move_number": 6,
+          "walnut_k_position": 2,
+          "walnut_a": 1,
+          "walnut_b": 4,
+          "position_a": 3,
+          "position_b": 1,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            3,
+            4,
+            6,
+            1,
+            5,
+            7,
+            2
+          ],
+          "arrangement_after": [
+            3,
+            1,
+            6,
+            4,
+            5,
+            7,
+            2
+          ]
+        },
+        {
+          "move_number": 7,
+          "walnut_k_position": 5,
+          "walnut_a": 2,
+          "walnut_b": 5,
+          "position_a": 6,
+          "position_b": 4,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            3,
+            1,
+            6,
+            4,
+            5,
+            7,
+            2
+          ],
+          "arrangement_after": [
+            3,
+            1,
+            6,
+            4,
+            2,
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    "reverse_n7": {
+      "permutation": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "n": 7,
+      "total_moves": 7,
+      "condition_satisfied_count": 3,
+      "condition_satisfied_moves": [
+        2,
+        4,
+        5
+      ],
+      "move_details": [
+        {
+          "k": 1,
+          "a": 2,
+          "b": 7,
+          "satisfies_condition": false,
+          "relation": "NOT (2 < 1 < 7)"
+        },
+        {
+          "k": 2,
+          "a": 1,
+          "b": 6,
+          "satisfies_condition": true,
+          "relation": "1 < 2 < 6"
+        },
+        {
+          "k": 3,
+          "a": 4,
+          "b": 7,
+          "satisfies_condition": false,
+          "relation": "NOT (4 < 3 < 7)"
+        },
+        {
+          "k": 4,
+          "a": 3,
+          "b": 6,
+          "satisfies_condition": true,
+          "relation": "3 < 4 < 6"
+        },
+        {
+          "k": 5,
+          "a": 1,
+          "b": 7,
+          "satisfies_condition": true,
+          "relation": "1 < 5 < 7"
+        },
+        {
+          "k": 6,
+          "a": 1,
+          "b": 4,
+          "satisfies_condition": false,
+          "relation": "NOT (1 < 6 < 4)"
+        },
+        {
+          "k": 7,
+          "a": 2,
+          "b": 5,
+          "satisfies_condition": false,
+          "relation": "NOT (2 < 7 < 5)"
+        }
+      ],
+      "full_history": [
+        {
+          "move_number": 1,
+          "walnut_k_position": 6,
+          "walnut_a": 2,
+          "walnut_b": 7,
+          "position_a": 5,
+          "position_b": 0,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "arrangement_after": [
+            2,
+            6,
+            5,
+            4,
+            3,
+            7,
+            1
+          ]
+        },
+        {
+          "move_number": 2,
+          "walnut_k_position": 0,
+          "walnut_a": 1,
+          "walnut_b": 6,
+          "position_a": 6,
+          "position_b": 1,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            2,
+            6,
+            5,
+            4,
+            3,
+            7,
+            1
+          ],
+          "arrangement_after": [
+            2,
+            1,
+            5,
+            4,
+            3,
+            7,
+            6
+          ]
+        },
+        {
+          "move_number": 3,
+          "walnut_k_position": 4,
+          "walnut_a": 4,
+          "walnut_b": 7,
+          "position_a": 3,
+          "position_b": 5,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            2,
+            1,
+            5,
+            4,
+            3,
+            7,
+            6
+          ],
+          "arrangement_after": [
+            2,
+            1,
+            5,
+            7,
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "move_number": 4,
+          "walnut_k_position": 5,
+          "walnut_a": 3,
+          "walnut_b": 6,
+          "position_a": 4,
+          "position_b": 6,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            2,
+            1,
+            5,
+            7,
+            3,
+            4,
+            6
+          ],
+          "arrangement_after": [
+            2,
+            1,
+            5,
+            7,
+            6,
+            4,
+            3
+          ]
+        },
+        {
+          "move_number": 5,
+          "walnut_k_position": 2,
+          "walnut_a": 1,
+          "walnut_b": 7,
+          "position_a": 1,
+          "position_b": 3,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            2,
+            1,
+            5,
+            7,
+            6,
+            4,
+            3
+          ],
+          "arrangement_after": [
+            2,
+            7,
+            5,
+            1,
+            6,
+            4,
+            3
+          ]
+        },
+        {
+          "move_number": 6,
+          "walnut_k_position": 4,
+          "walnut_a": 1,
+          "walnut_b": 4,
+          "position_a": 3,
+          "position_b": 5,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            2,
+            7,
+            5,
+            1,
+            6,
+            4,
+            3
+          ],
+          "arrangement_after": [
+            2,
+            7,
+            5,
+            4,
+            6,
+            1,
+            3
+          ]
+        },
+        {
+          "move_number": 7,
+          "walnut_k_position": 1,
+          "walnut_a": 2,
+          "walnut_b": 5,
+          "position_a": 0,
+          "position_b": 2,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            2,
+            7,
+            5,
+            4,
+            6,
+            1,
+            3
+          ],
+          "arrangement_after": [
+            5,
+            7,
+            2,
+            4,
+            6,
+            1,
+            3
+          ]
+        }
+      ]
+    },
+    "custom_n5": {
+      "permutation": [
+        3,
+        1,
+        4,
+        2,
+        5
+      ],
+      "n": 5,
+      "total_moves": 5,
+      "condition_satisfied_count": 2,
+      "condition_satisfied_moves": [
+        3,
+        4
+      ],
+      "move_details": [
+        {
+          "k": 1,
+          "a": 3,
+          "b": 4,
+          "satisfies_condition": false,
+          "relation": "NOT (3 < 1 < 4)"
+        },
+        {
+          "k": 2,
+          "a": 3,
+          "b": 5,
+          "satisfies_condition": false,
+          "relation": "NOT (3 < 2 < 5)"
+        },
+        {
+          "k": 3,
+          "a": 2,
+          "b": 4,
+          "satisfies_condition": true,
+          "relation": "2 < 3 < 4"
+        },
+        {
+          "k": 4,
+          "a": 3,
+          "b": 5,
+          "satisfies_condition": true,
+          "relation": "3 < 4 < 5"
+        },
+        {
+          "k": 5,
+          "a": 2,
+          "b": 4,
+          "satisfies_condition": false,
+          "relation": "NOT (2 < 5 < 4)"
+        }
+      ],
+      "full_history": [
+        {
+          "move_number": 1,
+          "walnut_k_position": 1,
+          "walnut_a": 3,
+          "walnut_b": 4,
+          "position_a": 0,
+          "position_b": 2,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            3,
+            1,
+            4,
+            2,
+            5
+          ],
+          "arrangement_after": [
+            4,
+            1,
+            3,
+            2,
+            5
+          ]
+        },
+        {
+          "move_number": 2,
+          "walnut_k_position": 3,
+          "walnut_a": 3,
+          "walnut_b": 5,
+          "position_a": 2,
+          "position_b": 4,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            4,
+            1,
+            3,
+            2,
+            5
+          ],
+          "arrangement_after": [
+            4,
+            1,
+            5,
+            2,
+            3
+          ]
+        },
+        {
+          "move_number": 3,
+          "walnut_k_position": 4,
+          "walnut_a": 2,
+          "walnut_b": 4,
+          "position_a": 3,
+          "position_b": 0,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            4,
+            1,
+            5,
+            2,
+            3
+          ],
+          "arrangement_after": [
+            2,
+            1,
+            5,
+            4,
+            3
+          ]
+        },
+        {
+          "move_number": 4,
+          "walnut_k_position": 3,
+          "walnut_a": 3,
+          "walnut_b": 5,
+          "position_a": 4,
+          "position_b": 2,
+          "condition_satisfied": true,
+          "arrangement_before": [
+            2,
+            1,
+            5,
+            4,
+            3
+          ],
+          "arrangement_after": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "move_number": 5,
+          "walnut_k_position": 4,
+          "walnut_a": 2,
+          "walnut_b": 4,
+          "position_a": 0,
+          "position_b": 3,
+          "condition_satisfied": false,
+          "arrangement_before": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "arrangement_after": [
+            4,
+            1,
+            3,
+            2,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  "metrics": {
+    "runtime_ms": 6506.08,
+    "status": "success"
+  }
+}

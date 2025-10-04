@@ -1,0 +1,19 @@
+{
+  "problem_id": "IMO-2019-P5",
+  "params": {},
+  "method": "Combinatorial Simulation v1.0",
+  "metrics": {
+    "runtime_ms": 23.27,
+    "status": "success"
+  },
+  "seed": 42,
+  "environment": {
+    "python_version": "3.12.4",
+    "platform": "macOS-15.6-arm64-arm-64bit",
+    "timestamp": "2025-10-04T13:27:49.284800Z"
+  },
+  "status": "success",
+  "analysis": {
+    "note": "This problem does not generate simulation results"
+  }
+}

@@ -1,0 +1,613 @@
+{
+  "timestamp": "2025-10-04 11:54:36",
+  "problem": "IMO 2020 Problem 3",
+  "description": "Partition 4n pebbles with weights 1..4n and n colors (4 per color) into two equal-weight piles, each with 2 pebbles of each color",
+  "analysis": [
+    {
+      "n": 1,
+      "num_pebbles": 4,
+      "total_weight": 10,
+      "target_weight": 5,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    },
+    {
+      "n": 2,
+      "num_pebbles": 8,
+      "total_weight": 36,
+      "target_weight": 18,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    },
+    {
+      "n": 3,
+      "num_pebbles": 12,
+      "total_weight": 78,
+      "target_weight": 39,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    },
+    {
+      "n": 4,
+      "num_pebbles": 16,
+      "total_weight": 136,
+      "target_weight": 68,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    },
+    {
+      "n": 5,
+      "num_pebbles": 20,
+      "total_weight": 210,
+      "target_weight": 105,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    },
+    {
+      "n": 6,
+      "num_pebbles": 24,
+      "total_weight": 300,
+      "target_weight": 150,
+      "trials": 51,
+      "successes": 51,
+      "failures": 0,
+      "success_rate": 1.0
+    }
+  ],
+  "patterns": [
+    {
+      "observation": "All tested cases found valid partitions",
+      "confidence": "high"
+    },
+    {
+      "observation": "Target weight is always n(4n+1) for n colors",
+      "formula": "target_weight = n * (4n + 1)"
+    },
+    {
+      "observation": "Each pile must contain exactly 2n pebbles",
+      "formula": "pile_size = 2n"
+    }
+  ],
+  "examples": [
+    {
+      "n": 1,
+      "coloring": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "pile1": [
+        1,
+        4
+      ],
+      "pile2": [
+        2,
+        3
+      ],
+      "success": true,
+      "type": "canonical"
+    },
+    {
+      "n": 2,
+      "coloring": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "pile1": [
+        1,
+        2,
+        7,
+        8
+      ],
+      "pile2": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "success": true,
+      "type": "canonical"
+    },
+    {
+      "n": 3,
+      "coloring": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "pile1": [
+        1,
+        2,
+        5,
+        8,
+        11,
+        12
+      ],
+      "pile2": [
+        3,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "success": true,
+      "type": "canonical"
+    },
+    {
+      "n": 4,
+      "coloring": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3
+      ],
+      "pile1": [
+        1,
+        2,
+        5,
+        6,
+        11,
+        12,
+        15,
+        16
+      ],
+      "pile2": [
+        3,
+        4,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14
+      ],
+      "success": true,
+      "type": "canonical"
+    },
+    {
+      "n": 5,
+      "coloring": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4
+      ],
+      "pile1": [
+        1,
+        2,
+        5,
+        6,
+        9,
+        12,
+        15,
+        16,
+        19,
+        20
+      ],
+      "pile2": [
+        3,
+        4,
+        7,
+        8,
+        10,
+        11,
+        13,
+        14,
+        17,
+        18
+      ],
+      "success": true,
+      "type": "canonical"
+    },
+    {
+      "n": 6,
+      "coloring": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5
+      ],
+      "pile1": [
+        1,
+        2,
+        5,
+        6,
+        9,
+        10,
+        15,
+        16,
+        19,
+        20,
+        23,
+        24
+      ],
+      "pile2": [
+        3,
+        4,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        21,
+        22
+      ],
+      "success": true,
+      "type": "canonical"
+    }
+  ],
+  "visualizations": [
+    {
+      "n": 1,
+      "pebbles": [
+        {
+          "weight": 1,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 2,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 3,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 4,
+          "color": 0,
+          "pile": 1
+        }
+      ],
+      "pile1_weight": 5,
+      "pile2_weight": 5,
+      "pile1_weights": [
+        1,
+        4
+      ],
+      "pile2_weights": [
+        2,
+        3
+      ]
+    },
+    {
+      "n": 2,
+      "pebbles": [
+        {
+          "weight": 1,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 2,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 3,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 4,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 5,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 6,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 7,
+          "color": 1,
+          "pile": 1
+        },
+        {
+          "weight": 8,
+          "color": 1,
+          "pile": 1
+        }
+      ],
+      "pile1_weight": 18,
+      "pile2_weight": 18,
+      "pile1_weights": [
+        1,
+        2,
+        7,
+        8
+      ],
+      "pile2_weights": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "n": 3,
+      "pebbles": [
+        {
+          "weight": 1,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 2,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 3,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 4,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 5,
+          "color": 1,
+          "pile": 1
+        },
+        {
+          "weight": 6,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 7,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 8,
+          "color": 1,
+          "pile": 1
+        },
+        {
+          "weight": 9,
+          "color": 2,
+          "pile": 2
+        },
+        {
+          "weight": 10,
+          "color": 2,
+          "pile": 2
+        },
+        {
+          "weight": 11,
+          "color": 2,
+          "pile": 1
+        },
+        {
+          "weight": 12,
+          "color": 2,
+          "pile": 1
+        }
+      ],
+      "pile1_weight": 39,
+      "pile2_weight": 39,
+      "pile1_weights": [
+        1,
+        2,
+        5,
+        8,
+        11,
+        12
+      ],
+      "pile2_weights": [
+        3,
+        4,
+        6,
+        7,
+        9,
+        10
+      ]
+    },
+    {
+      "n": 4,
+      "pebbles": [
+        {
+          "weight": 1,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 2,
+          "color": 0,
+          "pile": 1
+        },
+        {
+          "weight": 3,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 4,
+          "color": 0,
+          "pile": 2
+        },
+        {
+          "weight": 5,
+          "color": 1,
+          "pile": 1
+        },
+        {
+          "weight": 6,
+          "color": 1,
+          "pile": 1
+        },
+        {
+          "weight": 7,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 8,
+          "color": 1,
+          "pile": 2
+        },
+        {
+          "weight": 9,
+          "color": 2,
+          "pile": 2
+        },
+        {
+          "weight": 10,
+          "color": 2,
+          "pile": 2
+        },
+        {
+          "weight": 11,
+          "color": 2,
+          "pile": 1
+        },
+        {
+          "weight": 12,
+          "color": 2,
+          "pile": 1
+        },
+        {
+          "weight": 13,
+          "color": 3,
+          "pile": 2
+        },
+        {
+          "weight": 14,
+          "color": 3,
+          "pile": 2
+        },
+        {
+          "weight": 15,
+          "color": 3,
+          "pile": 1
+        },
+        {
+          "weight": 16,
+          "color": 3,
+          "pile": 1
+        }
+      ],
+      "pile1_weight": 68,
+      "pile2_weight": 68,
+      "pile1_weights": [
+        1,
+        2,
+        5,
+        6,
+        11,
+        12,
+        15,
+        16
+      ],
+      "pile2_weights": [
+        3,
+        4,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14
+      ]
+    }
+  ],
+  "summary": {
+    "total_trials": 306,
+    "total_successes": 306,
+    "overall_success_rate": 1.0,
+    "conclusion": "All tested colorings admit valid partitions, supporting the conjecture that such a partition always exists."
+  },
+  "metrics": {
+    "runtime_ms": 53.25,
+    "status": "success"
+  }
+}

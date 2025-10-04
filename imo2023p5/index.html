@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2023 P5 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        h2 {
+            color: #9BB8AC;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #7A9D8F;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-left: 4px solid #7A9D8F;
+            margin: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+        }
+        .controls {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius:  12px;
+            margin: 20px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 200px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 8px 12px;
+            border: 2px solid var(--border-primary);
+            border-radius: 4px;
+            width: 100px;
+            font-size: 14px;
+        }
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid var(--border-primary);
+            border-radius: 4px;
+            width: 300px;
+            font-size: 14px;
+        }
+        button {
+            background: #7A9D8F;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius:  8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5A8070;
+        }
+        button.secondary {
+            background: #9BB8AC;
+        }
+        button.secondary:hover {
+            background: #65408a;
+        }
+        .visualization {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius:  12px;
+            min-height: 300px;
+        }
+        .triangle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .triangle-row {
+            display: flex;
+            justify-content: center;
+            margin: 8px 0;
+        }
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #333;
+            background: var(--bg-secondary);
+            margin: 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .circle.red {
+            background: #e74c3c;
+            color: white;
+        }
+        .circle.on-path {
+            border-color: #7A9D8F;
+            border-width: 4px;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+        .circle.red.on-path {
+            background: #c0392b;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+        }
+        .circle .tooltip {
+            position: absolute;
+            top: -30px;
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .circle:hover .tooltip {
+            opacity: 1;
+        }
+        .results-panel {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .result-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+        .highlight {
+            background: #F5F7FA;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        .pattern-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .pattern-table th,
+        .pattern-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-primary);
+        }
+        .pattern-table th {
+            background: #7A9D8F;
+            color: white;
+        }
+        .pattern-table tr:hover {
+            background: #f5f5f5;
+        }
+        .formula {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #7A9D8F;
+        }
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #721c24;
+            color: #721c24;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-primary);
+            margin: 0 20px 20px 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin: 0;
+            border-radius: 0;
+        }
+        .tab.active {
+            color: #7A9D8F;
+            border-bottom: 3px solid #7A9D8F;
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+            padding: 0 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .path-animation {
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid #333;
+        }
+        .legend-circle.red {
+            background: #e74c3c;
+        }
+        .legend-circle.white {
+            background: var(--bg-secondary);
+        }
+        .legend-circle.path {
+            border-color: #7A9D8F;
+            border-width: 4px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2023 Problem 5</h1>
+                <p class="subtitle">Japanese Triangle</p>
+            </div>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <strong>Problem Statement:</strong><br><br>
+            Let <em>n</em> be a positive integer. A Japanese triangle consists of 1 + 2 + ... + <em>n</em> circles
+            arranged in an equilateral triangular shape such that for each <em>i</em> = 1, 2, ..., <em>n</em>,
+            the <em>i</em>-th row contains exactly <em>i</em> circles, exactly one of which is coloured red.
+            <br><br>
+            A ninja path in a Japanese triangle is a sequence of <em>n</em> circles obtained by starting in the
+            top row, then repeatedly going from a circle to one of the two circles immediately below it and
+            finishing in the bottom row.
+            <br><br>
+            <strong>Question:</strong> In terms of <em>n</em>, find the greatest <em>k</em> such that in each
+            Japanese triangle there is a ninja path containing at least <em>k</em> red circles.
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value"><strong>The answer is k = ⌈log₂(n+1)⌉<strong></div>
+            <div class="answer-value">where ⌈x⌉ denotes the ceiling function (smallest integer greater than or equal to x).</div>
+        </div>
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('simulation')">Simulation</button>
+            <button class="tab" onclick="showTab('patterns')">Pattern Analysis</button>
+            <button class="tab" onclick="showTab('examples')">Examples</button>
+        </div>
+        <div id="simulation-tab" class="tab-content active">
+            <h2>Interactive Simulation</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="n-input">Number of rows (n):</label>
+                    <input type="number" id="n-input" min="1" max="8" value="4">
+                    <button onclick="generateRandomTriangle()">Generate Random Triangle</button>
+                    <button onclick="generateWorstCase()" class="secondary">Show Worst Case</button>
+                </div>
+                <div class="control-group">
+                    <label for="red-positions">Red positions (comma-separated):</label>
+                    <input type="text" id="red-positions" placeholder="e.g., 0,1,0,2">
+                    <button onclick="setCustomTriangle()">Set Custom Triangle</button>
+                </div>
+                <div class="control-group">
+                    <label></label>
+                    <button onclick="showAllPaths()">Show All Paths</button>
+                    <button onclick="showBestPath()" class="secondary">Show Best Path</button>
+                    <button onclick="clearPaths()">Clear Paths</button>
+                </div>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-circle white"></div>
+                    <span>White Circle</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle red"></div>
+                    <span>Red Circle</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle white path"></div>
+                    <span>On Selected Path</span>
+                </div>
+            </div>
+            <div class="visualization">
+                <h3>Triangle Visualization</h3>
+                <div id="triangle-display" class="triangle-container"></div>
+            </div>
+            <div class="results-panel" id="results-panel">
+                <h3>Results</h3>
+                <div id="results-content"></div>
+            </div>
+        </div>
+        <div id="patterns-tab" class="tab-content">
+            <h2>Pattern Analysis</h2>
+            <div class="info-box">
+                This section shows the pattern of k (minimum maximum red circles) for different values of n.
+                The simulation finds the worst-case triangle for each n.
+            </div>
+            <table class="pattern-table" id="pattern-table">
+                <thead>
+                    <tr>
+                        <th>n (rows)</th>
+                        <th>Total Triangles</th>
+                        <th>k (min-max red)</th>
+                        <th>Formula: ⌈log₂(n+1)⌉</th>
+                        <th>Match?</th>
+                    </tr>
+                </thead>
+                <tbody id="pattern-tbody">
+                </tbody>
+            </table>
+            <div class="formula">
+                <strong>Answer:</strong> k = ⌈log₂(n+1)⌉
+            </div>
+            <div class="info-box">
+                <strong>Explanation:</strong><br>
+                The answer is k = ⌈log₂(n+1)⌉. This can be proven by showing:
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>There exists a triangle where the maximum path has exactly ⌈log₂(n+1)⌉ red circles (lower bound)</li>
+                    <li>Every triangle has a path with at least ⌈log₂(n+1)⌉ red circles (upper bound)</li>
+                </ol>
+                The worst case occurs when red circles are positioned to minimize overlap with any single path.
+                The logarithmic pattern emerges because each path through the triangle makes n binary choices (left or right at each level),
+                and there are 2ⁿ total paths. By the pigeonhole principle, some path must collect at least ⌈log₂(n+1)⌉ red circles.
+            </div>
+        </div>
+        <div id="examples-tab" class="tab-content">
+            <h2>Example Triangles</h2>
+            <div class="info-box">
+                Click on any example to visualize it in the simulation tab.
+            </div>
+            <div id="examples-container"></div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Global state
+        let currentTriangle = null;
+        let currentPaths = [];
+        let allPaths = [];
+        // Triangle class
+        class JapaneseTriangle {
+            constructor(n, redPositions) {
+                this.n = n;
+                this.redPositions = redPositions;
+            }
+            isRed(row, col) {
+                return this.redPositions[row] === col;
+            }
+            getAllPaths() {
+                const paths = [];
+                function generatePaths(row, col, currentPath) {
+                    currentPath.push([row, col]);
+                    if (row === this.n - 1) {
+                        paths.push([...currentPath]);
+                    } else {
+                        generatePaths.call(this, row + 1, col, currentPath);
+                        generatePaths.call(this, row + 1, col + 1, currentPath);
+                    }
+                    currentPath.pop();
+                }
+                generatePaths.call(this, 0, 0, []);
+                return paths;
+            }
+            countRedInPath(path) {
+                return path.reduce((count, [row, col]) => {
+                    return count + (this.isRed(row, col) ? 1 : 0);
+                }, 0);
+            }
+            maxRedInAnyPath() {
+                const paths = this.getAllPaths();
+                return Math.max(...paths.map(p => this.countRedInPath(p)));
+            }
+            getBestPath() {
+                const paths = this.getAllPaths();
+                let bestPath = paths[0];
+                let maxRed = this.countRedInPath(bestPath);
+                for (const path of paths) {
+                    const red = this.countRedInPath(path);
+                    if (red > maxRed) {
+                        maxRed = red;
+                        bestPath = path;
+                    }
+                }
+                return { path: bestPath, redCount: maxRed };
+            }
+        }
+        // Generate all triangles for a given n
+        function generateAllTriangles(n) {
+            const triangles = [];
+            function generateCombinations(row, currentRed) {
+                if (row === n) {
+                    triangles.push(new JapaneseTriangle(n, [...currentRed]));
+                    return;
+                }
+                for (let col = 0; col <= row; col++) {
+                    currentRed.push(col);
+                    generateCombinations(row + 1, currentRed);
+                    currentRed.pop();
+                }
+            }
+            generateCombinations(0, []);
+            return triangles;
+        }
+        // Find worst case triangle
+        function findWorstCase(n) {
+            const triangles = generateAllTriangles(n);
+            let minMaxRed = Infinity;
+            let worstTriangle = null;
+            for (const triangle of triangles) {
+                const maxRed = triangle.maxRedInAnyPath();
+                if (maxRed < minMaxRed) {
+                    minMaxRed = maxRed;
+                    worstTriangle = triangle;
+                }
+            }
+            return { triangle: worstTriangle, k: minMaxRed };
+        }
+        // Visualize triangle
+        function visualizeTriangle(triangle, highlightPath = null) {
+            const container = document.getElementById('triangle-display');
+            container.innerHTML = '';
+            const pathSet = new Set();
+            if (highlightPath) {
+                highlightPath.forEach(([row, col]) => {
+                    pathSet.add(`${row},${col}`);
+                });
+            }
+            for (let row = 0; row < triangle.n; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'triangle-row';
+                for (let col = 0; col <= row; col++) {
+                    const circle = document.createElement('div');
+                    circle.className = 'circle';
+                    if (triangle.isRed(row, col)) {
+                        circle.classList.add('red');
+                        circle.textContent = 'R';
+                    }
+                    if (pathSet.has(`${row},${col}`)) {
+                        circle.classList.add('on-path');
+                    }
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = `(${row}, ${col})`;
+                    circle.appendChild(tooltip);
+                    rowDiv.appendChild(circle);
+                }
+                container.appendChild(rowDiv);
+            }
+            currentTriangle = triangle;
+            allPaths = triangle.getAllPaths();
+        }
+        // Generate random triangle
+        function generateRandomTriangle() {
+            const n = parseInt(document.getElementById('n-input').value);
+            if (n < 1 || n > 8) {
+                showError('Please enter n between 1 and 8');
+                return;
+            }
+            const redPositions = [];
+            for (let i = 0; i < n; i++) {
+                redPositions.push(Math.floor(Math.random() * (i + 1)));
+            }
+            const triangle = new JapaneseTriangle(n, redPositions);
+            visualizeTriangle(triangle);
+            document.getElementById('red-positions').value = redPositions.join(',');
+            const results = triangle.getBestPath();
+            showResults(`Random triangle generated. Maximum red circles in any path: ${results.redCount}`);
+        }
+        // Generate worst case
+        function generateWorstCase() {
+            const n = parseInt(document.getElementById('n-input').value);
+            if (n < 1 || n > 8) {
+                showError('Please enter n between 1 and 8');
+                return;
+            }
+            if (n > 6) {
+                showError('Worst case computation is limited to n ≤ 6 due to computational complexity');
+                return;
+            }
+            const { triangle, k } = findWorstCase(n);
+            visualizeTriangle(triangle);
+            document.getElementById('red-positions').value = triangle.redPositions.join(',');
+            showResults(`Worst case triangle found! k = ${k} (This is the minimum maximum red circles across all triangles)`);
+        }
+        // Set custom triangle
+        function setCustomTriangle() {
+            const n = parseInt(document.getElementById('n-input').value);
+            const redPosStr = document.getElementById('red-positions').value;
+            const redPositions = redPosStr.split(',').map(s => parseInt(s.trim()));
+            if (redPositions.length !== n) {
+                showError(`Please enter exactly ${n} positions (one for each row)`);
+                return;
+            }
+            for (let i = 0; i < n; i++) {
+                if (redPositions[i] < 0 || redPositions[i] > i) {
+                    showError(`Row ${i} has invalid red position ${redPositions[i]}. Must be between 0 and ${i}`);
+                    return;
+                }
+            }
+            const triangle = new JapaneseTriangle(n, redPositions);
+            visualizeTriangle(triangle);
+            const results = triangle.getBestPath();
+            showResults(`Custom triangle set. Maximum red circles in any path: ${results.redCount}`);
+        }
+        // Show all paths
+        function showAllPaths() {
+            if (!currentTriangle) {
+                showError('Please generate a triangle first');
+                return;
+            }
+            let pathIndex = 0;
+            const paths = currentTriangle.getAllPaths();
+            function showNextPath() {
+                if (pathIndex < paths.length) {
+                    const path = paths[pathIndex];
+                    const redCount = currentTriangle.countRedInPath(path);
+                    visualizeTriangle(currentTriangle, path);
+                    showResults(`Path ${pathIndex + 1}/${paths.length}: ${redCount} red circles. Path: ${JSON.stringify(path)}`);
+                    pathIndex++;
+                    setTimeout(showNextPath, 1000);
+                }
+            }
+            showNextPath();
+        }
+        // Show best path
+        function showBestPath() {
+            if (!currentTriangle) {
+                showError('Please generate a triangle first');
+                return;
+            }
+            const { path, redCount } = currentTriangle.getBestPath();
+            visualizeTriangle(currentTriangle, path);
+            showResults(`Best path found with ${redCount} red circles. Path: ${JSON.stringify(path)}`);
+        }
+        // Clear paths
+        function clearPaths() {
+            if (currentTriangle) {
+                visualizeTriangle(currentTriangle);
+                showResults('Path highlighting cleared');
+            }
+        }
+        // Show results
+        function showResults(message) {
+            const content = document.getElementById('results-content');
+            content.innerHTML = `<div class="result-item">${message}</div>`;
+        }
+        // Show error
+        function showError(message) {
+            const content = document.getElementById('results-content');
+            content.innerHTML = `<div class="error">${message}</div>`;
+        }
+        // Tab switching
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tabName === 'simulation' ? 1 : tabName === 'patterns' ? 2 : 3})`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            if (tabName === 'patterns') {
+                generatePatternTable();
+            } else if (tabName === 'examples') {
+                generateExamples();
+            }
+        }
+        // Generate pattern table
+        function generatePatternTable() {
+            const tbody = document.getElementById('pattern-tbody');
+            tbody.innerHTML = '';
+            for (let n = 1; n <= 6; n++) {
+                const { k } = findWorstCase(n);
+                const expected = Math.ceil(Math.log2(n + 1));
+                const match = k === expected ? '✓' : '✗';
+                let totalTriangles = 1;
+                for (let i = 1; i <= n; i++) {
+                    totalTriangles *= i;
+                }
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${n}</td>
+                    <td>${totalTriangles}</td>
+                    <td><span class="highlight">${k}</span></td>
+                    <td>${expected}</td>
+                    <td style="color: ${match === '✓' ? 'green' : 'red'}; font-size: 20px;">${match}</td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        // Generate examples
+        function generateExamples() {
+            const container = document.getElementById('examples-container');
+            container.innerHTML = '';
+            const examples = [
+                { n: 3, redPositions: [0, 1, 0], description: 'Simple example with n=3' },
+                { n: 4, redPositions: [0, 0, 2, 1], description: 'Worst case for n=4' },
+                { n: 5, redPositions: [0, 0, 2, 1, 3], description: 'Worst case for n=5' },
+                { n: 6, redPositions: [0, 1, 0, 3, 1, 4], description: 'Example with n=6' }
+            ];
+            examples.forEach((ex, idx) => {
+                const triangle = new JapaneseTriangle(ex.n, ex.redPositions);
+                const { redCount } = triangle.getBestPath();
+                const k = Math.ceil(Math.log2(ex.n + 1));
+                const exampleDiv = document.createElement('div');
+                exampleDiv.className = 'result-item';
+                exampleDiv.style.cursor = 'pointer';
+                exampleDiv.innerHTML = `
+                    <strong>Example ${idx + 1}:</strong> ${ex.description}<br>
+                    Red positions: [${ex.redPositions.join(', ')}]<br>
+                    Maximum red circles in any path: <span class="highlight">${redCount}</span><br>
+                    Expected k = ⌈log₂(${ex.n}+1)⌉ = ${k}
+                `;
+                exampleDiv.onclick = () => {
+                    document.getElementById('n-input').value = ex.n;
+                    document.getElementById('red-positions').value = ex.redPositions.join(',');
+                    setCustomTriangle();
+                    showTab('simulation');
+                };
+                container.appendChild(exampleDiv);
+            });
+        }
+        // Initialize
+        window.onload = () => {
+            generateRandomTriangle();
+        };
+        </script>
+</body>
+</html>

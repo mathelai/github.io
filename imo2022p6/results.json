@@ -1,0 +1,557 @@
+{
+  "problem_id": "IMO-2022-P6",
+  "params": {
+    "n_range": [
+      1,
+      8
+    ],
+    "strategies": [
+      "checkerboard",
+      "snake",
+      "random"
+    ]
+  },
+  "method": "Nordic Square Analysis v1.0",
+  "metrics": {
+    "cases_tested": 8,
+    "pattern_verified": false,
+    "formula": "floor(n\u00b2/2) + (1 if n odd else 0)",
+    "simplified_formula": "\u2308n\u00b2/2\u2309"
+  },
+  "seed": 42,
+  "environment": {
+    "python_version": "3.12.4",
+    "platform": "macOS-15.6-arm64-arm-64bit",
+    "timestamp": "2025-10-04T13:39:50.237304Z"
+  },
+  "status": "success",
+  "runtime_ms": 528.005838394165,
+  "ground_truth": {
+    "test_results": [
+      {
+        "n": 1,
+        "n_squared": 1,
+        "theoretical_min": 1,
+        "checkerboard": {
+          "valleys": 1,
+          "total_paths": 1,
+          "valley_positions": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 1
+        },
+        "random_sample": {
+          "valleys": 1,
+          "total_paths": 1
+        },
+        "minimum_found": 1,
+        "achieved_theoretical": true
+      },
+      {
+        "n": 2,
+        "n_squared": 4,
+        "theoretical_min": 2,
+        "checkerboard": {
+          "valleys": 2,
+          "total_paths": 6,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 5
+        },
+        "random_sample": {
+          "valleys": 1,
+          "total_paths": 5
+        },
+        "minimum_found": 5,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 3,
+        "n_squared": 9,
+        "theoretical_min": 5,
+        "checkerboard": {
+          "valleys": 5,
+          "total_paths": 17,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 23
+        },
+        "random_sample": {
+          "valleys": 4,
+          "total_paths": 18
+        },
+        "minimum_found": 17,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 4,
+        "n_squared": 16,
+        "theoretical_min": 8,
+        "checkerboard": {
+          "valleys": 8,
+          "total_paths": 32,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 129
+        },
+        "random_sample": {
+          "valleys": 5,
+          "total_paths": 41
+        },
+        "minimum_found": 32,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 5,
+        "n_squared": 25,
+        "theoretical_min": 13,
+        "checkerboard": {
+          "valleys": 13,
+          "total_paths": 53,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 936
+        },
+        "random_sample": {
+          "valleys": 4,
+          "total_paths": 56
+        },
+        "minimum_found": 53,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 6,
+        "n_squared": 36,
+        "theoretical_min": 18,
+        "checkerboard": {
+          "valleys": 18,
+          "total_paths": 78,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 8441
+        },
+        "random_sample": {
+          "valleys": 7,
+          "total_paths": 90
+        },
+        "minimum_found": 78,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 7,
+        "n_squared": 49,
+        "theoretical_min": 25,
+        "checkerboard": {
+          "valleys": 25,
+          "total_paths": 109,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 91405
+        },
+        "random_sample": {
+          "valleys": 11,
+          "total_paths": 140
+        },
+        "minimum_found": 109,
+        "achieved_theoretical": false
+      },
+      {
+        "n": 8,
+        "n_squared": 64,
+        "theoretical_min": 32,
+        "checkerboard": {
+          "valleys": 32,
+          "total_paths": 144,
+          "valley_positions": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "snake": {
+          "valleys": 1,
+          "total_paths": 1152755
+        },
+        "random_sample": {
+          "valleys": 16,
+          "total_paths": 172
+        },
+        "minimum_found": 144,
+        "achieved_theoretical": false
+      }
+    ],
+    "pattern_table": [
+      {
+        "n": 1,
+        "n_squared": 1,
+        "theoretical": 1,
+        "found": 1,
+        "achieved": true
+      },
+      {
+        "n": 2,
+        "n_squared": 4,
+        "theoretical": 2,
+        "found": 5,
+        "achieved": false
+      },
+      {
+        "n": 3,
+        "n_squared": 9,
+        "theoretical": 5,
+        "found": 17,
+        "achieved": false
+      },
+      {
+        "n": 4,
+        "n_squared": 16,
+        "theoretical": 8,
+        "found": 32,
+        "achieved": false
+      },
+      {
+        "n": 5,
+        "n_squared": 25,
+        "theoretical": 13,
+        "found": 53,
+        "achieved": false
+      },
+      {
+        "n": 6,
+        "n_squared": 36,
+        "theoretical": 18,
+        "found": 78,
+        "achieved": false
+      },
+      {
+        "n": 7,
+        "n_squared": 49,
+        "theoretical": 25,
+        "found": 109,
+        "achieved": false
+      },
+      {
+        "n": 8,
+        "n_squared": 64,
+        "theoretical": 32,
+        "found": 144,
+        "achieved": false
+      }
+    ],
+    "example_n4": {
+      "grid": [
+        [
+          1,
+          9,
+          2,
+          10
+        ],
+        [
+          11,
+          3,
+          12,
+          4
+        ],
+        [
+          5,
+          13,
+          6,
+          14
+        ],
+        [
+          15,
+          7,
+          16,
+          8
+        ]
+      ],
+      "valleys": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "total_paths": 32
+    }
+  },
+  "analysis": {
+    "key_insight": "Checkerboard pattern minimizes valleys to \u2308n\u00b2/2\u2309",
+    "proof_strategy": [
+      "1. Each valley must have all neighbors greater",
+      "2. Checkerboard coloring creates bipartite structure",
+      "3. Small numbers on one color \u2192 all are valleys",
+      "4. Each valley has exactly one uphill path (itself)",
+      "5. Total paths = number of valleys = \u2308n\u00b2/2\u2309"
+    ],
+    "construction": "Place 1 to \u230an\u00b2/2\u230b on one checkerboard color"
+  }
+}

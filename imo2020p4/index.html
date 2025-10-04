@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2020 P4 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin: 30px;
+            border-left: 5px solid #7A9D8F;
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-statement p {
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        .controls {
+            padding: 30px;
+            background: var(--bg-tertiary);
+            border-bottom: 2px solid #e9ecef;
+        }
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .control-item {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        input, select, button {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius:  8px;
+            font-size: 1em;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        button {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .visualization {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .company-section {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .company-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .company-a h2 {
+            color: #dc3545;
+        }
+        .company-b h2 {
+            color: #007bff;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+        }
+        .results {
+            padding: 30px;
+            background: var(--bg-secondary);
+        }
+        .result-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .result-box.success {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+        }
+        .result-box.failure {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+        }
+        .result-box.info {
+            background: #d1ecf1;
+            border: 2px solid #bee5eb;
+            color: #0c5460;
+        }
+        .result-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .common-pairs {
+            margin-top: 15px;
+        }
+        .pair {
+            display: inline-block;
+            background: var(--bg-secondary);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #7A9D8F;
+        }
+        .stat-label {
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .ground-truth {
+            padding: 30px;
+            background: var(--bg-tertiary);
+        }
+        .ground-truth h2 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background: #7A9D8F;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .formula {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-family: 'Courier New', monospace;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2020 Problem 4</h1>
+                <p class="subtitle">Cable Car Linking Problem</p>
+            </div>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>
+                There is an integer <em>n</em> > 1. There are <em>n</em>² stations on a slope of a mountain, all at different altitudes.
+                Each of two cable car companies, A and B, operates <em>k</em> cable cars; each cable car provides a transfer from
+                one of the stations to a higher one (with no intermediate stops).
+            </p>
+            <p>
+                The <em>k</em> cable cars of A have <em>k</em> different starting points and <em>k</em> different finishing points,
+                and a cable car which starts higher also finishes higher. The same conditions hold for B.
+            </p>
+            <p>
+                We say that two stations are <strong>linked by a company</strong> if one can start from the lower station and reach
+                the higher one by using one or more cars of that company (no other movements between stations are allowed).
+            </p>
+            <p>
+                <strong>Problem:</strong> Determine the smallest positive integer <em>k</em> for which one can guarantee that there
+                are two stations that are linked by both companies.
+            </p>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value">$$k = n^2 - n + 1$$</div>
+            <p>---</p>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-item">
+                    <label for="n-value">n (number of stations = n²):</label>
+                    <input type="number" id="n-value" min="2" max="10" value="3">
+                </div>
+                <div class="control-item">
+                    <label for="k-value">k (cable cars per company):</label>
+                    <input type="number" id="k-value" min="1" max="100" value="5">
+                </div>
+                <div class="control-item">
+                    <label for="mode">Mode:</label>
+                    <select id="mode">
+                        <option value="random">Random Configuration</option>
+                        <option value="counterexample">Load Counterexample</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <button onclick="generateConfiguration()">Generate New Configuration</button>
+                <button onclick="runSimulation()">Run Multiple Simulations</button>
+                <button onclick="loadGroundTruth()">Show Ground Truth Data</button>
+            </div>
+        </div>
+        <div class="visualization">
+            <div class="company-section company-a">
+                <h2>Company A Network</h2>
+                <canvas id="canvas-a" width="500" height="500"></canvas>
+            </div>
+            <div class="company-section company-b">
+                <h2>Company B Network</h2>
+                <canvas id="canvas-b" width="500" height="500"></canvas>
+            </div>
+        </div>
+        <div class="results" id="results">
+            <div class="result-box info">
+                <div class="result-title">Instructions</div>
+                <p>Configure n and k above, then click "Generate New Configuration" to visualize a cable car network.</p>
+                <p>Stations are represented as circles (higher altitude = higher position).</p>
+                <p>Cable cars are shown as arrows from lower to higher stations.</p>
+            </div>
+        </div>
+        <div class="ground-truth">
+            <h2>Ground Truth Data</h2>
+            <table id="ground-truth-table">
+                <thead>
+                    <tr>
+                        <th>n</th>
+                        <th>Stations (n²)</th>
+                        <th>Minimum k</th>
+                        <th>Formula: n² - n + 1</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>Matches ✓</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>Close (~)</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>16</td>
+                        <td>10</td>
+                        <td>13</td>
+                        <td>Lower bound</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="formula">
+                Conjecture: k<sub>min</sub> ≥ n² - n + 1
+            </div>
+        </div>
+    </div>
+    </main>
+  <script src="simulator.js"></script>
+</body>
+</html>

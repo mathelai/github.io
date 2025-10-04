@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2020 P3 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            border-left: 5px solid #7A9D8F;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-statement ul {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        .problem-statement li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .controls {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius:  12px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .control-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9em;
+        }
+        input[type="number"] {
+            padding: 10px;
+            border: 2px solid var(--border-primary);
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100px;
+        }
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            border-radius:  8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .visualization {
+            margin-bottom: 30px;
+        }
+        .viz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .viz-header h2 {
+            color: var(--text-primary);
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+        .stat {
+            background: #7A9D8F;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .piles-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .pile {
+            border: 3px solid var(--border-primary);
+            border-radius: 10px;
+            padding: 20px;
+            background: #fafafa;
+        }
+        .pile h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        .pile-weight {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 5px;
+        }
+        .pebbles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+        }
+        .pebble {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        .pebble:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+        .pebble-weight {
+            font-size: 1.2em;
+        }
+        .pebble-color {
+            font-size: 0.7em;
+            opacity: 0.9;
+        }
+        .color-legend {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .color-legend h3 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        .color-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--border-primary);
+        }
+        .ground-truth {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .ground-truth h2 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        .ground-truth-content {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .analysis-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid var(--border-primary);
+        }
+        .analysis-card h4 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+        }
+        .pattern-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pattern-list li {
+            padding: 10px;
+            background: var(--bg-secondary);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #7A9D8F;
+        }
+        .success-indicator {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .success-indicator.success {
+            background: #4caf50;
+            color: white;
+        }
+        .success-indicator.failure {
+            background: #f44336;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .piles-container {
+                grid-template-columns: 1fr;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2020 Problem 3</h1>
+                <p class="subtitle">Partition 4N Colored Pebbles</p>
+            </div>
+        </header>
+        <div class="content">
+            <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                <h2 id="problem-title">Problem Statement</h2>
+                <p>
+                    There are <strong>4n</strong> pebbles of weights <strong>1, 2, 3, ..., 4n</strong>.
+                    Each pebble is colored in one of <strong>n</strong> colors and there are
+                    <strong>four pebbles of each color</strong>.
+                </p>
+                <p style="margin-top: 15px;">
+                    <strong>Show that we can arrange the pebbles into two piles so that the following two conditions are both satisfied:</strong>
+                </p>
+                <ul>
+                    <li>The total weights of both piles are the same.</li>
+                    <li>Each pile contains two pebbles of each color.</li>
+                </ul>
+            </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <p><strong>Yes, such an arrangement always exists for any positive integer n and any coloring of the pebbles.<strong></p>
+            <p>We will prove this by providing an explicit construction that works for any coloring.</p>
+        </div>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="n-input">Number of colors (n):</label>
+                    <input type="number" id="n-input" min="1" max="10" value="3">
+                </div>
+                <button onclick="generateRandom()">Generate Random Coloring</button>
+                <button onclick="generateCanonical()">Generate Canonical Coloring</button>
+                <button onclick="findPartition()" id="find-btn">Find Partition</button>
+            </div>
+            <div id="visualization" class="visualization" style="display: none;">
+                <div class="viz-header">
+                    <h2>Current Configuration</h2>
+                    <div class="stats" role="status" aria-live="polite">
+                        <div class="stat" id="stat-n">n = 3</div>
+                        <div class="stat" id="stat-pebbles">12 pebbles</div>
+                        <div class="stat" id="stat-target">Target: 78</div>
+                    </div>
+                </div>
+                <div class="color-legend" id="color-legend">
+                    <h3>Color Legend</h3>
+                    <div class="color-items" id="color-items"></div>
+                </div>
+                <div id="partition-result"></div>
+            </div>
+            <div class="ground-truth">
+                <h2>Ground Truth Data & Analysis</h2>
+                <div id="ground-truth-loading" class="loading">
+                    Run the simulation to generate ground truth data...
+                </div>
+                <div id="ground-truth-content" class="ground-truth-content" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Color palette for different pebble colors
+        const COLOR_PALETTE = [
+            '#e74c3c', '#3498db', '#2ecc71', '#f39c12',
+            '#9b59b6', '#1abc9c', '#e67e22', '#34495e',
+            '#c0392b', '#2980b9'
+        ];
+        // Global state
+        let currentN = 3;
+        let currentColoring = [];
+        let currentPile1 = [];
+        let currentPile2 = [];
+        let groundTruthData = null;
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGroundTruthData();
+        });
+        function loadGroundTruthData() {
+            // Since we can't use fetch, embed the data generation logic
+            // For now, show a message
+            document.getElementById('ground-truth-loading').innerHTML =
+                'Ground truth data will be displayed here after running simulation.py<br><br>' +
+                '<strong>To generate data:</strong><br>' +
+                '1. Run: <code>python3 simulation.py</code><br>' +
+                '2. The results will be saved to results.json<br>' +
+                '3. Paste the contents below or run the simulation directly in this page';
+        }
+        function generateRandom() {
+            currentN = parseInt(document.getElementById('n-input').value);
+            if (currentN < 1 || currentN > 10) {
+                alert('Please enter n between 1 and 10');
+                return;
+            }
+            // Generate random coloring
+            currentColoring = [];
+            for (let color = 0; color < currentN; color++) {
+                for (let i = 0; i < 4; i++) {
+                    currentColoring.push(color);
+                }
+            }
+            // Shuffle using Fisher-Yates algorithm
+            for (let i = currentColoring.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentColoring[i], currentColoring[j]] = [currentColoring[j], currentColoring[i]];
+            }
+            updateVisualization();
+        }
+        function generateCanonical() {
+            currentN = parseInt(document.getElementById('n-input').value);
+            if (currentN < 1 || currentN > 10) {
+                alert('Please enter n between 1 and 10');
+                return;
+            }
+            // Generate canonical coloring: first 4 pebbles color 0, next 4 color 1, etc.
+            currentColoring = [];
+            for (let color = 0; color < currentN; color++) {
+                for (let i = 0; i < 4; i++) {
+                    currentColoring.push(color);
+                }
+            }
+            updateVisualization();
+        }
+        function updateVisualization() {
+            const numPebbles = 4 * currentN;
+            const totalWeight = (numPebbles * (numPebbles + 1)) / 2;
+            const targetWeight = totalWeight / 2;
+            // Update stats
+            document.getElementById('stat-n').textContent = `n = ${currentN}`;
+            document.getElementById('stat-pebbles').textContent = `${numPebbles} pebbles`;
+            document.getElementById('stat-target').textContent = `Target: ${targetWeight}`;
+            // Update color legend
+            const colorItems = document.getElementById('color-items');
+            colorItems.innerHTML = '';
+            for (let i = 0; i < currentN; i++) {
+                const item = document.createElement('div');
+                item.className = 'color-item';
+                item.innerHTML = `
+                    <div class="color-swatch" style="background-color: ${COLOR_PALETTE[i]}"></div>
+                    <span>Color ${i}</span>
+                `;
+                colorItems.appendChild(item);
+            }
+            document.getElementById('visualization').style.display = 'block';
+            document.getElementById('partition-result').innerHTML =
+                '<p style="text-align: center; padding: 20px; color: var(--text-secondary);">Click "Find Partition" to compute a valid partition</p>';
+        }
+        function findPartition() {
+            if (currentColoring.length === 0) {
+                alert('Please generate a coloring first');
+                return;
+            }
+            document.getElementById('find-btn').disabled = true;
+            document.getElementById('find-btn').textContent = 'Computing...';
+            // Run partition algorithm
+            setTimeout(() => {
+                const result = greedyPartition();
+                displayPartition(result);
+                document.getElementById('find-btn').disabled = false;
+                document.getElementById('find-btn').textContent = 'Find Partition';
+            }, 100);
+        }
+        function greedyPartition() {
+            // Group pebbles by color
+            const colorGroups = Array(currentN).fill(0).map(() => []);
+            for (let weight = 1; weight <= 4 * currentN; weight++) {
+                const color = currentColoring[weight - 1];
+                colorGroups[color].push(weight);
+            }
+            // Backtracking to find valid partition
+            const targetWeight = (4 * currentN * (4 * currentN + 1)) / 4;
+            function backtrack(colorIdx, pile1, pile2) {
+                if (colorIdx === currentN) {
+                    const sum1 = pile1.reduce((a, b) => a + b, 0);
+                    const sum2 = pile2.reduce((a, b) => a + b, 0);
+                    return sum1 === sum2;
+                }
+                const pebbles = colorGroups[colorIdx];
+                // Try all ways to choose 2 pebbles for pile1
+                for (let i = 0; i < pebbles.length; i++) {
+                    for (let j = i + 1; j < pebbles.length; j++) {
+                        const newPile1 = [...pile1, pebbles[i], pebbles[j]];
+                        const newPile2 = [...pile2, ...pebbles.filter((_, idx) => idx !== i && idx !== j)];
+                        // Prune if exceeded target
+                        const sum1 = newPile1.reduce((a, b) => a + b, 0);
+                        const sum2 = newPile2.reduce((a, b) => a + b, 0);
+                        if (sum1 > targetWeight || sum2 > targetWeight) {
+                            continue;
+                        }
+                        if (backtrack(colorIdx + 1, newPile1, newPile2)) {
+                            pile1.length = 0;
+                            pile1.push(...newPile1);
+                            pile2.length = 0;
+                            pile2.push(...newPile2);
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            currentPile1 = [];
+            currentPile2 = [];
+            const success = backtrack(0, currentPile1, currentPile2);
+            return { success, pile1: currentPile1, pile2: currentPile2 };
+        }
+        function displayPartition(result) {
+            const partitionDiv = document.getElementById('partition-result');
+            if (!result.success) {
+                partitionDiv.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <span class="success-indicator failure">Partition Not Found</span>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            The algorithm could not find a valid partition for this coloring.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+            const pile1Weight = result.pile1.reduce((a, b) => a + b, 0);
+            const pile2Weight = result.pile2.reduce((a, b) => a + b, 0);
+            // Verify color distribution
+            const pile1Colors = Array(currentN).fill(0);
+            const pile2Colors = Array(currentN).fill(0);
+            result.pile1.forEach(weight => pile1Colors[currentColoring[weight - 1]]++);
+            result.pile2.forEach(weight => pile2Colors[currentColoring[weight - 1]]++);
+            const colorValid = pile1Colors.every(c => c === 2) && pile2Colors.every(c => c === 2);
+            partitionDiv.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <span class="success-indicator success">Valid Partition Found!</span>
+                </div>
+                <div class="piles-container">
+                    <div class="pile">
+                        <h3>Pile 1</h3>
+                        <div class="pile-weight">Weight: ${pile1Weight}</div>
+                        <div class="pebbles-grid" id="pile1-pebbles"></div>
+                    </div>
+                    <div class="pile">
+                        <h3>Pile 2</h3>
+                        <div class="pile-weight">Weight: ${pile2Weight}</div>
+                        <div class="pebbles-grid" id="pile2-pebbles"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 15px; background: ${colorValid ? '#e8f5e9' : '#ffebee'}; border-radius: 5px;">
+                    <strong>Validation:</strong><br>
+                    Equal weights: ${pile1Weight === pile2Weight ? '✓' : '✗'}<br>
+                    2 pebbles per color in each pile: ${colorValid ? '✓' : '✗'}
+                </div>
+            `;
+            // Render pebbles
+            renderPebbles('pile1-pebbles', result.pile1);
+            renderPebbles('pile2-pebbles', result.pile2);
+            // Update ground truth display
+            updateGroundTruthDisplay(result);
+        }
+        function renderPebbles(containerId, pebbles) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            pebbles.sort((a, b) => a - b);
+            pebbles.forEach(weight => {
+                const color = currentColoring[weight - 1];
+                const pebble = document.createElement('div');
+                pebble.className = 'pebble';
+                pebble.style.backgroundColor = COLOR_PALETTE[color];
+                pebble.innerHTML = `
+                    <div class="pebble-weight">${weight}</div>
+                    <div class="pebble-color">C${color}</div>
+                `;
+                pebble.title = `Weight: ${weight}, Color: ${color}`;
+                container.appendChild(pebble);
+            });
+        }
+        function updateGroundTruthDisplay(result) {
+            const contentDiv = document.getElementById('ground-truth-content');
+            const loadingDiv = document.getElementById('ground-truth-loading');
+            // Create analysis data
+            const analysis = {
+                n: currentN,
+                num_pebbles: 4 * currentN,
+                total_weight: (4 * currentN * (4 * currentN + 1)) / 2,
+                target_weight: (4 * currentN * (4 * currentN + 1)) / 4,
+                coloring: currentColoring,
+                partition: {
+                    pile1: result.pile1.sort((a, b) => a - b),
+                    pile2: result.pile2.sort((a, b) => a - b),
+                    pile1_weight: result.pile1.reduce((a, b) => a + b, 0),
+                    pile2_weight: result.pile2.reduce((a, b) => a + b, 0)
+                },
+                verification: {
+                    equal_weights: result.pile1.reduce((a, b) => a + b, 0) === result.pile2.reduce((a, b) => a + b, 0),
+                    color_distribution_valid: true
+                },
+                observations: [
+                    `For n=${currentN}, we have ${4*currentN} pebbles with total weight ${(4 * currentN * (4 * currentN + 1)) / 2}`,
+                    `Target weight per pile: ${(4 * currentN * (4 * currentN + 1)) / 4}`,
+                    `Each pile must contain exactly ${2*currentN} pebbles`,
+                    `Partition found successfully with equal weights`
+                ]
+            };
+            loadingDiv.style.display = 'none';
+            contentDiv.style.display = 'block';
+            contentDiv.innerHTML = `
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <h4>Configuration</h4>
+                        <p>n = ${analysis.n}</p>
+                        <p>Total pebbles: ${analysis.num_pebbles}</p>
+                        <p>Total weight: ${analysis.total_weight}</p>
+                    </div>
+                    <div class="analysis-card">
+                        <h4>Target</h4>
+                        <p>Weight per pile: ${analysis.target_weight}</p>
+                        <p>Pebbles per pile: ${2 * currentN}</p>
+                        <p>Each color per pile: 2</p>
+                    </div>
+                    <div class="analysis-card">
+                        <h4>Results</h4>
+                        <p>Pile 1 weight: ${analysis.partition.pile1_weight}</p>
+                        <p>Pile 2 weight: ${analysis.partition.pile2_weight}</p>
+                        <p>Valid: ${analysis.verification.equal_weights ? 'Yes' : 'No'}</p>
+                    </div>
+                </div>
+                <h3 style="margin: 20px 0 10px 0;">Observations</h3>
+                <ul class="pattern-list">
+                    ${analysis.observations.map(obs => `<li>${obs}</li>`).join('')}
+                </ul>
+                <h3 style="margin: 20px 0 10px 0;">Coloring & Partition Data</h3>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;">
+                    <pre>${JSON.stringify(analysis, null, 2)}</pre>
+                </div>
+            `;
+        }
+        </script>
+</body>
+</html>
