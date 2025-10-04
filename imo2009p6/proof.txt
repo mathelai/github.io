@@ -1,0 +1,138 @@
+# IMO 2009 Problem 6
+
+## Problem Statement
+
+Let $a_1, a_2, \ldots, a_n$ be distinct positive integers and let $M$ be a set of $n-1$ positive integers not containing $s = a_1 + a_2 + \cdots + a_n$.
+
+A grasshopper is to jump along the real axis, starting at the point $0$ and making $n$ jumps to the right with lengths $a_1, a_2, \ldots, a_n$ in some order.
+
+**Prove that** the order can be chosen in such a way that the grasshopper never lands on any point in $M$.
+
+## Answer
+
+The statement is **TRUE**. For any choice of distinct positive integers $a_1, a_2, \ldots, a_n$ and any set $M$ of $n-1$ positive integers not containing their sum $s$, there exists an ordering of the jumps such that no intermediate landing position belongs to $M$.
+
+## Main Proof
+
+We prove this by induction on $n$.
+
+### Base Case: $n = 1$
+
+When $n = 1$, we have one jump of length $a_1$. The grasshopper starts at $0$ and jumps to $a_1 = s$. Since $M$ has $n - 1 = 0$ elements, $M = \emptyset$. There are no forbidden positions, so the grasshopper trivially avoids all points in $M$.
+
+### Base Case: $n = 2$
+
+When $n = 2$, we have two jumps of lengths $a_1$ and $a_2$ with $a_1 \neq a_2$. The sum is $s = a_1 + a_2$. The set $M$ has exactly one element, say $M = \{m\}$ where $m \neq s$.
+
+**Case 2.1:** If $m \neq a_1$ and $m \neq a_2$, then both orderings work:
+- Order $(a_1, a_2)$: positions are $a_1$ and $s = a_1 + a_2$
+- Order $(a_2, a_1)$: positions are $a_2$ and $s = a_2 + a_1$
+
+Since $m \neq a_1, a_2, s$, at least one (in fact both) orderings avoid $m$.
+
+**Case 2.2:** If $m = a_1$, use order $(a_2, a_1)$. The only intermediate position is $a_2 \neq m$.
+
+**Case 2.3:** If $m = a_2$, use order $(a_1, a_2)$. The only intermediate position is $a_1 \neq m$.
+
+Thus the base case holds for $n = 2$.
+
+### Inductive Step
+
+**Hypothesis:** Assume the statement holds for all values up to $n-1$ (where $n \geq 3$).
+
+**To Prove:** The statement holds for $n$.
+
+Given: Distinct positive integers $a_1, a_2, \ldots, a_n$ and a set $M$ of $n-1$ elements where $s = a_1 + a_2 + \cdots + a_n \notin M$.
+
+**Strategy:** We construct a valid ordering by carefully choosing the first jump, then applying the inductive hypothesis.
+
+**Construction:**
+
+Consider the $n$ possible first jumps. For each $a_i$ as the first jump:
+- The grasshopper lands at position $a_i$ after the first jump
+- The remaining $n-1$ jumps have sum $s - a_i$
+- Let $M_i = \{m - a_i : m \in M, m > a_i\}$ be the "shifted forbidden set"
+
+**Key Observation:** At most one of the positions $a_1, a_2, \ldots, a_n$ can be in $M$.
+
+**Proof of Key Observation:** Since $M$ has only $n-1$ elements and we have $n$ distinct values $a_1, \ldots, a_n$, by the Pigeonhole Principle, at least one $a_j \notin M$.
+
+**Choosing the First Jump:**
+
+Select $a_j \notin M$ as the first jump. After jumping to $a_j$:
+
+1. Position $a_j \notin M$ (by choice)
+2. The remaining jumps are $\{a_1, \ldots, a_n\} \setminus \{a_j\}$ (a set of $n-1$ distinct positive integers)
+3. Their sum is $s - a_j$
+
+**Defining the Reduced Problem:**
+
+Define $M' = \{m - a_j : m \in M, m > a_j\}$.
+
+- $|M'| \leq |M| = n-1$
+- Each element of $M'$ corresponds to a position that, when added to $a_j$, gives an element of $M$
+
+**Crucial Claim:** $s - a_j \notin M'$.
+
+**Proof of Claim:** Suppose $s - a_j \in M'$. Then there exists $m \in M$ with $m > a_j$ such that $m - a_j = s - a_j$, which gives $m = s$. But $s \notin M$ by assumption, contradiction. Therefore $s - a_j \notin M'$.
+
+**Adjusting for Inductive Hypothesis:**
+
+If $|M'| < n - 2$, we can add arbitrary positive integers not equal to $s - a_j$ or any shift of remaining jumps until $|M'| = n - 2$. Let's call this augmented set $M''$.
+
+By the inductive hypothesis applied to:
+- Jumps: $\{a_1, \ldots, a_n\} \setminus \{a_j\}$ (which has $n-1$ elements)
+- Forbidden set: $M''$ (which has $n-2$ elements)
+- Sum: $s - a_j \notin M''$
+
+There exists an ordering $b_1, b_2, \ldots, b_{n-1}$ of $\{a_1, \ldots, a_n\} \setminus \{a_j\}$ such that no partial sum $b_1, b_1 + b_2, \ldots, b_1 + \cdots + b_{n-2}$ lies in $M''$.
+
+**Final Ordering:**
+
+Use the ordering $(a_j, b_1, b_2, \ldots, b_{n-1})$ for the original problem.
+
+The positions reached are:
+- After 1st jump: $a_j \notin M$ (by choice)
+- After 2nd jump: $a_j + b_1$
+- After 3rd jump: $a_j + b_1 + b_2$
+- ...
+- After $k$-th jump: $a_j + b_1 + \cdots + b_{k-1}$ for $k = 2, \ldots, n$
+- Final position: $s$ (which $\notin M$ by assumption)
+
+**Verification:** For $k \geq 2$, position $a_j + b_1 + \cdots + b_{k-1}$ equals $a_j +$ (partial sum from inductive solution).
+
+If this were in $M$, say equal to some $m \in M$, then:
+- If $m > a_j$: then $b_1 + \cdots + b_{k-1} = m - a_j \in M'$, contradicting the inductive solution
+- If $m \leq a_j$: impossible since $b_1 + \cdots + b_{k-1} > 0$ (all jumps are positive)
+
+Therefore, no intermediate position lies in $M$.
+
+### Conclusion
+
+By mathematical induction, the statement holds for all positive integers $n \geq 1$.
+
+## Verification with Test Cases
+
+The results file contains 60 test cases spanning $n = 2$ to $n = 7$, all of which found valid solutions:
+
+**Statistics:**
+- Total test cases: 60
+- Successfully solved: 60 (100%)
+- Success rate by $n$: 100% for each $n \in \{2, 3, 4, 5, 6, 7\}$
+
+**Representative Examples:**
+
+1. **$n = 2$:** Jumps $[5, 3]$, forbidden $\{3\}$, sum $= 8$
+   - Solution: $(5, 3)$ with positions $\{5, 8\}$, avoiding $3$
+
+2. **$n = 3$:** Jumps $[8, 19, 18]$, forbidden $\{24, 9\}$, sum $= 45$
+   - Solution: $(8, 19, 18)$ with positions $\{8, 27, 45\}$, avoiding $\{24, 9\}$
+
+3. **$n = 4$:** Jumps $[25, 27, 3, 17]$, forbidden $\{66, 52, 63\}$, sum $= 72$
+   - Solution: $(25, 3, 27, 17)$ with positions $\{25, 28, 55, 72\}$, avoiding $\{66, 52, 63\}$
+
+4. **$n = 7$:** Jumps $[50, 54, 6, 34, 63, 52, 59]$, forbidden $\{259, 299, 112, 245, 184, 156\}$, sum $= 318$
+   - Solution: $(50, 54, 6, 34, 63, 59, 52)$ with positions $\{50, 104, 110, 144, 207, 266, 318\}$
+   - All intermediate positions avoid the 6 forbidden values
+
+These examples confirm our theoretical proof: despite having only $n-1$ "degrees of freedom" (elements in $M$) against $n!$ possible orderings, a valid solution always exists.

@@ -1,0 +1,2 @@
+In a mathematical competition some competitors are friends; friendship is always mutual. Call a group of competitors a clique if each two of them are friends. The number of members in a clique is called its size.
+It is known that the largest size of cliques is even. Prove that the competitors can be arranged in two rooms such that the largest size of cliques in one room is the same as the largest size of cliques in the other room.

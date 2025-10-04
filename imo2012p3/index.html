@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2012 P3 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .problem-statement {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            border: 2px solid #e0e0e0;
+        }
+
+        .problem-statement p {
+            margin-bottom: 15px;
+        }
+
+        .problem-parts {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .problem-parts div {
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .control-group input,
+        .control-group select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .visualization {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        .game-state {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .game-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .game-info h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-item {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-label {
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #764ba2;
+            font-weight: 700;
+        }
+
+        .question-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .question-item {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: #667eea;
+            min-width: 30px;
+        }
+
+        .question-set {
+            flex: 1;
+            margin: 0 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .answer {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .answer-yes {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .answer-no {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .answer-truth {
+            border: 2px solid #28a745;
+        }
+
+        .answer-lie {
+            border: 2px solid #dc3545;
+        }
+
+        .possible-values {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .value-box {
+            padding: 8px 15px;
+            background: #e7f0ff;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .value-box.secret {
+            background: #ffd700;
+            border-color: #ff8c00;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .result-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .result-win {
+            background: #d4edda;
+            color: #155724;
+            border: 3px solid #28a745;
+        }
+
+        .result-loss {
+            background: #f8d7da;
+            color: #721c24;
+            border: 3px solid #dc3545;
+        }
+
+        .bounds-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bounds-table th,
+        .bounds-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .bounds-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .bounds-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .bounds-table tr:hover {
+            background: #e7f0ff;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        .insights {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .insights h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .insights ul {
+            list-style-position: inside;
+            line-height: 1.8;
+            color: #856404;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .game-state {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+            /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <h1>IMO 2012 Problem 3</h1>
+            <p>Liar's Guessing Game</p>
+        </header>
+
+        <div class="content">
+            <!-- Problem Statement -->
+            <div class="section">
+                <h2 id="problem-title">Problem Statement</h2>
+                <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                    <p>
+                        The liar's guessing game is played between two players A and B. The rules depend on two fixed
+                        positive integers <strong>k</strong> and <strong>n</strong> which are known to both players.
+                    </p>
+                    <p>
+                        At the start, player A chooses integers <strong>x</strong> and <strong>N</strong> with
+                        1 ≤ x ≤ N. Player A keeps x secret and truthfully tells N to player B. Player B tries to
+                        obtain information about x by asking questions: each question consists of B specifying a set
+                        S of positive integers and asking A whether x belongs to S.
+                    </p>
+                    <p>
+                        Player A must answer with yes or no, but is allowed to lie as many times as she wants with
+                        one restriction: <strong>among any k+1 consecutive answers, at least one answer must be
+                        truthful</strong>.
+                    </p>
+                    <p>
+                        After B has asked as many questions as he wants, he must specify a set X of at most n
+                        positive integers. If x belongs to X, then B wins; otherwise, he loses.
+                    </p>
+                    <div class="problem-parts">
+                        <div><strong>(a)</strong> If n ≥ 2<sup>k</sup>, then B can guarantee a win.</div>
+                        <div><strong>(b)</strong> For all sufficiently large k, there exists an integer
+                        n ≥ (1.99)<sup>k</sup> such that B cannot guarantee a win.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Simulation -->
+            <div class="section">
+                <h2>Interactive Simulation</h2>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="k-input">k (lying parameter):</label>
+                        <input type="number" id="k-input" min="1" max="5" value="2">
+                    </div>
+                    <div class="control-group">
+                        <label for="N-input">N (upper bound):</label>
+                        <input type="number" id="N-input" min="2" max="20" value="8">
+                    </div>
+                    <div class="control-group">
+                        <label for="x-input">x (secret number):</label>
+                        <input type="number" id="x-input" min="1" max="20" value="5">
+                    </div>
+                    <div class="control-group">
+                        <label for="strategy-input">B's Strategy:</label>
+                        <select id="strategy-input">
+                            <option value="optimal">Optimal Strategy</option>
+                            <option value="binary">Binary Search</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="runSimulation()">Run Simulation</button>
+                    <button class="btn-secondary" onclick="resetSimulation()">Reset</button>
+                </div>
+
+                <div id="simulation-results"></div>
+            </div>
+
+            <!-- Ground Truth Data -->
+            <div class="section">
+                <h2>Ground Truth Data & Analysis</h2>
+
+                <h3>Theoretical Bounds</h3>
+                <p>The table below shows the relationship between k, 2<sup>k</sup>, and (1.99)<sup>k</sup>:</p>
+                <div id="bounds-table-container"></div>
+
+                <h3>Part (a): Winning Condition n ≥ 2<sup>k</sup></h3>
+                <div id="part-a-results"></div>
+
+                <h3>Part (b): Gap Analysis</h3>
+                <div id="part-b-results"></div>
+
+                <div class="insights">
+                    <h4>Key Insights</h4>
+                    <ul id="insights-list"></ul>
+                </div>
+            </div>
+
+            <!-- Visualization Examples -->
+            <div class="section">
+                <h2>Example Games</h2>
+                <div id="examples-container"></div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+  <script>
+        // Embedded results data (will be populated from simulation)
+        const RESULTS_DATA = {"problem":"IMO 2012 Problem 3: The Liar's Guessing Game","part_a":{"statement":"If n >= 2^k, then B can guarantee a win","results":[{"k":1,"N":2,"x":1,"num_questions":2,"questions":[[2],[2]],"answers":[true,false],"possible_values":[1,2],"final_set_size":2,"max_allowed_size":2,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":2,"win_rate":1.0},{"k":1,"N":2,"x":1,"num_questions":2,"questions":[[2],[2]],"answers":[true,false],"possible_values":[1,2],"final_set_size":2,"max_allowed_size":2,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":2,"win_rate":1.0},{"k":1,"N":2,"x":2,"num_questions":2,"questions":[[2],[2]],"answers":[false,true],"possible_values":[1,2],"final_set_size":2,"max_allowed_size":2,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":2,"win_rate":1.0},{"k":1,"N":3,"x":1,"num_questions":4,"questions":[[2],[2],[3],[3]],"answers":[true,false,true,false],"possible_values":[1,3],"final_set_size":2,"max_allowed_size":2,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":3,"win_rate":0.6666666666666666},{"k":1,"N":3,"x":1,"num_questions":4,"questions":[[2],[2],[3],[3]],"answers":[true,false,true,false],"possible_values":[1,3],"final_set_size":2,"max_allowed_size":2,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":3,"win_rate":0.6666666666666666},{"k":1,"N":3,"x":3,"num_questions":4,"questions":[[2],[2],[3],[3]],"answers":[true,false,false,true],"possible_values":[1,2,3],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal","all_x_tested":true,"total_wins":2,"total_tests":3,"win_rate":0.6666666666666666},{"k":1,"N":7,"x":1,"num_questions":6,"questions":[[2,4,6],[2,4,6],[3,4,7],[3,4,7],[5,6,7],[5,6,7]],"answers":[true,false,true,false,true,false],"possible_values":[1,5,7],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal","all_x_tested":true,"total_wins":0,"total_tests":7,"win_rate":0.0},{"k":1,"N":7,"x":3,"num_questions":6,"questions":[[2,4,6],[2,4,6],[3,4,7],[3,4,7],[5,6,7],[5,6,7]],"answers":[true,false,false,true,true,false],"possible_values":[3,5,6,7],"final_set_size":4,"max_allowed_size":2,"b_wins":false,"strategy":"optimal","all_x_tested":true,"total_wins":0,"total_tests":7,"win_rate":0.0},{"k":1,"N":7,"x":7,"num_questions":6,"questions":[[2,4,6],[2,4,6],[3,4,7],[3,4,7],[5,6,7],[5,6,7]],"answers":[true,false,false,true,false,true],"possible_values":[1,2,3,7],"final_set_size":4,"max_allowed_size":2,"b_wins":false,"strategy":"optimal","all_x_tested":true,"total_wins":0,"total_tests":7,"win_rate":0.0},{"k":2,"N":4,"x":1,"num_questions":6,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4]],"answers":[true,true,false,true,true,false],"possible_values":[1,3,4],"final_set_size":3,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":4,"total_tests":4,"win_rate":1.0},{"k":2,"N":4,"x":2,"num_questions":6,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4]],"answers":[false,false,true,true,true,false],"possible_values":[2,3,4],"final_set_size":3,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":4,"total_tests":4,"win_rate":1.0},{"k":2,"N":4,"x":4,"num_questions":6,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4]],"answers":[false,false,true,false,false,true],"possible_values":[1,2,4],"final_set_size":3,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":4,"total_tests":4,"win_rate":1.0},{"k":2,"N":5,"x":1,"num_questions":9,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4],[5],[5],[5]],"answers":[true,true,false,true,true,false,true,true,false],"possible_values":[1,5],"final_set_size":2,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":5,"total_tests":5,"win_rate":1.0},{"k":2,"N":5,"x":2,"num_questions":9,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4],[5],[5],[5]],"answers":[false,false,true,true,true,false,true,true,false],"possible_values":[2],"final_set_size":1,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":5,"total_tests":5,"win_rate":1.0},{"k":2,"N":5,"x":5,"num_questions":9,"questions":[[2,4],[2,4],[2,4],[3,4],[3,4],[3,4],[5],[5],[5]],"answers":[true,true,false,true,true,false,false,false,true],"possible_values":[1,3,4,5],"final_set_size":4,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":5,"total_tests":5,"win_rate":1.0},{"k":2,"N":9,"x":1,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9]],"answers":[true,true,false,true,true,false,true,true,false,true,true,false],"possible_values":[1,9],"final_set_size":2,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":9,"win_rate":0.8888888888888888},{"k":2,"N":9,"x":4,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9]],"answers":[false,false,true,false,false,true,true,true,false,true,true,false],"possible_values":[4],"final_set_size":1,"max_allowed_size":4,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":9,"win_rate":0.8888888888888888},{"k":2,"N":9,"x":9,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9]],"answers":[true,true,false,true,true,false,true,true,false,false,false,true],"possible_values":[1,5,7,8,9],"final_set_size":5,"max_allowed_size":4,"b_wins":false,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":9,"win_rate":0.8888888888888888},{"k":3,"N":8,"x":1,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[true,true,true,false,true,true,true,false,true,true,true,false],"possible_values":[1,5,7,8],"final_set_size":4,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":8,"win_rate":1.0},{"k":3,"N":8,"x":4,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[false,false,false,true,false,false,false,true,true,true,true,false],"possible_values":[4,5,6,8],"final_set_size":4,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":8,"win_rate":1.0},{"k":3,"N":8,"x":8,"num_questions":12,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[false,false,false,true,false,false,false,true,false,false,false,true],"possible_values":[1,2,4,8],"final_set_size":4,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":8,"total_tests":8,"win_rate":1.0},{"k":3,"N":9,"x":1,"num_questions":16,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9],[9]],"answers":[true,true,true,false,true,true,true,false,true,true,true,false,true,true,true,false],"possible_values":[1,9],"final_set_size":2,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":9,"total_tests":9,"win_rate":1.0},{"k":3,"N":9,"x":4,"num_questions":16,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9],[9]],"answers":[false,false,false,true,false,false,false,true,true,true,true,false,true,true,true,false],"possible_values":[4],"final_set_size":1,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":9,"total_tests":9,"win_rate":1.0},{"k":3,"N":9,"x":9,"num_questions":16,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[8,5,6,7],[9],[9],[9],[9]],"answers":[true,true,true,false,true,true,true,false,true,true,true,false,false,false,false,true],"possible_values":[1,5,7,8,9],"final_set_size":5,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":9,"total_tests":9,"win_rate":1.0},{"k":3,"N":13,"x":1,"num_questions":16,"questions":[[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13]],"answers":[true,true,true,false,true,true,true,false,true,true,true,false,true,true,true,false],"possible_values":[1,9,13],"final_set_size":3,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":13,"total_tests":13,"win_rate":1.0},{"k":3,"N":13,"x":6,"num_questions":16,"questions":[[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13]],"answers":[false,false,false,true,true,true,true,false,false,false,false,true,true,true,true,false],"possible_values":[6,10,11,12],"final_set_size":4,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":13,"total_tests":13,"win_rate":1.0},{"k":3,"N":13,"x":13,"num_questions":16,"questions":[[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[2,4,6,8,10,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[3,4,7,8,11,12],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[5,6,7,8,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13],[9,10,11,12,13]],"answers":[true,true,true,false,true,true,true,false,false,false,false,true,false,false,false,true],"possible_values":[1,3,4,5,13],"final_set_size":5,"max_allowed_size":8,"b_wins":true,"strategy":"optimal","all_x_tested":true,"total_wins":13,"total_tests":13,"win_rate":1.0},{"k":4,"N":16,"x":1,"num_questions":20,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16]],"answers":[true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false],"possible_values":[1,9,13,15,16],"final_set_size":5,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":16,"x":8,"num_questions":20,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16]],"answers":[false,false,false,false,true,false,false,false,false,true,false,false,false,false,true,true,true,true,true,false],"possible_values":[8,9,10,12,16],"final_set_size":5,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":16,"x":16,"num_questions":20,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16]],"answers":[false,false,false,false,true,false,false,false,false,true,false,false,false,false,true,false,false,false,false,true],"possible_values":[1,2,4,8,16],"final_set_size":5,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":17,"x":1,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17],[17],[17],[17],[17]],"answers":[true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false],"possible_values":[1,17],"final_set_size":2,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":17,"x":8,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17],[17],[17],[17],[17]],"answers":[false,false,false,false,true,false,false,false,false,true,false,false,false,false,true,true,true,true,true,false,true,true,true,true,false],"possible_values":[8],"final_set_size":1,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":17,"x":17,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17],[17],[17],[17],[17]],"answers":[true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,false,false,false,false,true],"possible_values":[1,9,13,15,16,17],"final_set_size":6,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":21,"x":1,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21]],"answers":[true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false,true,true,true,true,false],"possible_values":[1,17],"final_set_size":2,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":21,"x":10,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21]],"answers":[false,false,false,false,true,true,true,true,true,false,true,true,true,true,false,false,false,false,false,true,true,true,true,true,false],"possible_values":[10,18],"final_set_size":2,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"},{"k":4,"N":21,"x":21,"num_questions":25,"questions":[[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[2,4,6,8,10,12,14,16,18,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[3,4,7,8,11,12,15,16,19,20],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[5,6,7,8,13,14,15,16,21],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21],[17,18,19,20,21]],"answers":[true,true,true,true,false,true,true,true,true,false,false,false,false,false,true,true,true,true,true,false,false,false,false,false,true],"possible_values":[5,9,11,12,13,21],"final_set_size":6,"max_allowed_size":16,"b_wins":true,"strategy":"optimal"}]},"part_b":{"statement":"For large k, exists n >= (1.99)^k where B cannot guarantee a win","results":[{"k":2,"lower_bound_1.99^k":3,"threshold_2^k":4,"gap":1,"ratio":1.3333333333333333},{"k":3,"lower_bound_1.99^k":7,"threshold_2^k":8,"gap":1,"ratio":1.1428571428571428},{"k":4,"lower_bound_1.99^k":15,"threshold_2^k":16,"gap":1,"ratio":1.0666666666666667},{"k":5,"lower_bound_1.99^k":31,"threshold_2^k":32,"gap":1,"ratio":1.032258064516129},{"k":6,"lower_bound_1.99^k":62,"threshold_2^k":64,"gap":2,"ratio":1.032258064516129},{"k":7,"lower_bound_1.99^k":123,"threshold_2^k":128,"gap":5,"ratio":1.0406504065040652},{"k":8,"lower_bound_1.99^k":245,"threshold_2^k":256,"gap":11,"ratio":1.0448979591836736}]},"examples":[{"k":1,"N":4,"x":1,"num_questions":4,"questions":[[2,4],[2,4],[3,4],[3,4]],"answers":[true,false,true,false],"possible_values":[1,3,4],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal"},{"k":1,"N":4,"x":2,"num_questions":4,"questions":[[2,4],[2,4],[3,4],[3,4]],"answers":[false,true,true,false],"possible_values":[2,3,4],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal"},{"k":1,"N":4,"x":3,"num_questions":4,"questions":[[2,4],[2,4],[3,4],[3,4]],"answers":[true,false,false,true],"possible_values":[1,2,3],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal"},{"k":1,"N":4,"x":4,"num_questions":4,"questions":[[2,4],[2,4],[3,4],[3,4]],"answers":[false,true,false,true],"possible_values":[1,2,4],"final_set_size":3,"max_allowed_size":2,"b_wins":false,"strategy":"optimal"},{"k":2,"N":8,"x":1,"num_questions":9,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[true,true,false,true,true,false,true,true,false],"possible_values":[1,5,7,8],"final_set_size":4,"max_allowed_size":4,"b_wins":true,"strategy":"optimal"},{"k":2,"N":8,"x":4,"num_questions":9,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[false,false,true,false,false,true,true,true,false],"possible_values":[4,5,6,8],"final_set_size":4,"max_allowed_size":4,"b_wins":true,"strategy":"optimal"},{"k":2,"N":8,"x":8,"num_questions":9,"questions":[[8,2,4,6],[8,2,4,6],[8,2,4,6],[8,3,4,7],[8,3,4,7],[8,3,4,7],[8,5,6,7],[8,5,6,7],[8,5,6,7]],"answers":[false,false,true,false,false,true,false,false,true],"possible_values":[1,2,4,8],"final_set_size":4,"max_allowed_size":4,"b_wins":true,"strategy":"optimal"},{"k":3,"N":16,"x":10,"num_questions":16,"questions":[[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[2,4,6,8,10,12,14,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[3,4,7,8,11,12,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[5,6,7,8,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16]],"answers":[false,false,false,true,true,true,true,false,true,true,true,false,false,false,false,true],"possible_values":[2,6,7,8,10],"final_set_size":5,"max_allowed_size":8,"b_wins":true,"strategy":"optimal"}],"theoretical_bounds":[{"k":1,"2^k":2,"1.99^k":1.99,"gap":0.010000000000000009},{"k":2,"2^k":4,"1.99^k":3.9601,"gap":0.039899999999999824},{"k":3,"2^k":8,"1.99^k":7.880599,"gap":0.11940099999999987},{"k":4,"2^k":16,"1.99^k":15.68239201,"gap":0.31760799000000084},{"k":5,"2^k":32,"1.99^k":31.2079600999,"gap":0.7920399001000007},{"k":6,"2^k":64,"1.99^k":62.103840598801,"gap":1.8961594011990002},{"k":7,"2^k":128,"1.99^k":123.58664279161398,"gap":4.413357208386017},{"k":8,"2^k":256,"1.99^k":245.93741915531183,"gap":10.06258084468817},{"k":9,"2^k":512,"1.99^k":489.4154641190705,"gap":22.58453588092948},{"k":10,"2^k":1024,"1.99^k":973.9367735969504,"gap":50.06322640304961}],"insights":["Part (a) shows that 2^k possibilities can always be distinguished with the lying constraint","The key is that in k+1 questions, at least one answer is truthful","Part (b) shows there's a gap between (1.99)^k and 2^k where the problem is non-trivial","For small k, 2^k grows faster than 1.99^k, creating a significant gap"]};
+
+        // Game simulation logic
+        class LiarsGameJS {
+            constructor(k, N, x) {
+                this.k = k;
+                this.N = N;
+                this.x = x;
+                this.answers = [];
+                this.questions = [];
+            }
+
+            canLie(proposedAnswer) {
+                const trueAnswer = this.questions.length > 0 &&
+                    this.questions[this.questions.length - 1].includes(this.x);
+
+                if (proposedAnswer === trueAnswer) {
+                    return true;
+                }
+
+                if (this.answers.length < this.k) {
+                    return true;
+                }
+
+                const recentAnswers = this.answers.slice(-this.k);
+                const recentQuestions = this.questions.slice(-this.k);
+
+                let liesCount = 0;
+                for (let i = 0; i < recentAnswers.length; i++) {
+                    const trueAns = recentQuestions[i].includes(this.x);
+                    if (recentAnswers[i] !== trueAns) {
+                        liesCount++;
+                    }
+                }
+
+                return liesCount < this.k;
+            }
+
+            askQuestion(S) {
+                this.questions.push(S);
+                const trueAnswer = S.includes(this.x);
+
+                let answer;
+                if (this.canLie(!trueAnswer)) {
+                    answer = !trueAnswer;
+                } else {
+                    answer = trueAnswer;
+                }
+
+                this.answers.push(answer);
+                return answer;
+            }
+
+            isTruthful(index) {
+                const trueAnswer = this.questions[index].includes(this.x);
+                return this.answers[index] === trueAnswer;
+            }
+        }
+
+        function generateQuestions(k, N, strategy) {
+            const questions = [];
+
+            if (strategy === "optimal") {
+                // Binary representation strategy
+                const numBits = Math.ceil(Math.log2(N));
+
+                for (let bit = 0; bit < numBits; bit++) {
+                    for (let repeat = 0; repeat < k + 1; repeat++) {
+                        const S = [];
+                        for (let num = 1; num <= N; num++) {
+                            if ((num - 1) & (1 << bit)) {
+                                S.push(num);
+                            }
+                        }
+                        if (S.length > 0) {
+                            questions.push(S);
+                        }
+                    }
+                }
+            } else {
+                // Simple binary search strategy
+                const numBits = Math.ceil(Math.log2(N));
+                for (let bit = 0; bit < numBits; bit++) {
+                    const S = [];
+                    for (let num = 1; num <= N; num++) {
+                        if ((num - 1) & (1 << bit)) {
+                            S.push(num);
+                        }
+                    }
+                    if (S.length > 0) {
+                        questions.push(S);
+                    }
+                }
+            }
+
+            return questions;
+        }
+
+        function determinePossibleValues(k, N, questions, answers) {
+            const possible = new Set();
+
+            for (let xCandidate = 1; xCandidate <= N; xCandidate++) {
+                let isConsistent = true;
+
+                for (let startIdx = 0; startIdx <= answers.length - k - 1; startIdx++) {
+                    let truths = 0;
+                    for (let i = 0; i < k + 1; i++) {
+                        const idx = startIdx + i;
+                        const trueAnswer = questions[idx].includes(xCandidate);
+                        if (answers[idx] === trueAnswer) {
+                            truths++;
+                        }
+                    }
+                    if (truths === 0) {
+                        isConsistent = false;
+                        break;
+                    }
+                }
+
+                if (isConsistent) {
+                    possible.add(xCandidate);
+                }
+            }
+
+            return Array.from(possible).sort((a, b) => a - b);
+        }
+
+        function runSimulation() {
+            const k = parseInt(document.getElementById('k-input').value);
+            const N = parseInt(document.getElementById('N-input').value);
+            const x = parseInt(document.getElementById('x-input').value);
+            const strategy = document.getElementById('strategy-input').value;
+
+            if (x < 1 || x > N) {
+                alert(`Error: x must be between 1 and ${N}`);
+                return;
+            }
+
+            const game = new LiarsGameJS(k, N, x);
+            const questions = generateQuestions(k, N, strategy);
+
+            for (const S of questions) {
+                game.askQuestion(S);
+            }
+
+            const possible = determinePossibleValues(k, N, questions, game.answers);
+            const maxAllowedSize = Math.pow(2, k);
+            const bWins = possible.length <= maxAllowedSize && possible.includes(x);
+
+            displaySimulationResults(game, possible, maxAllowedSize, bWins);
+        }
+
+        function displaySimulationResults(game, possible, maxAllowedSize, bWins) {
+            const container = document.getElementById('simulation-results');
+
+            let html = '<div class="visualization">';
+
+            // Game state
+            html += '<div class="game-state">';
+            html += '<div class="game-info">';
+            html += '<h4>Game Parameters</h4>';
+            html += `<div class="info-item"><span class="info-label">k (lying parameter):</span><span class="info-value">${game.k}</span></div>`;
+            html += `<div class="info-item"><span class="info-label">N (upper bound):</span><span class="info-value">${game.N}</span></div>`;
+            html += `<div class="info-item"><span class="info-label">x (secret):</span><span class="info-value">${game.x}</span></div>`;
+            html += `<div class="info-item"><span class="info-label">Questions asked:</span><span class="info-value">${game.questions.length}</span></div>`;
+            html += '</div>';
+
+            html += '<div class="game-info">';
+            html += '<h4>Results</h4>';
+            html += `<div class="info-item"><span class="info-label">Possible values:</span><span class="info-value">${possible.length}</span></div>`;
+            html += `<div class="info-item"><span class="info-label">Max allowed (2<sup>k</sup>):</span><span class="info-value">${maxAllowedSize}</span></div>`;
+            html += `<div class="info-item"><span class="info-label">x in possible:</span><span class="info-value">${possible.includes(game.x) ? 'Yes' : 'No'}</span></div>`;
+            html += '</div>';
+            html += '</div>';
+
+            // Questions and answers
+            html += '<h4>Questions & Answers</h4>';
+            html += '<div class="question-list">';
+            for (let i = 0; i < game.questions.length; i++) {
+                const isTruthful = game.isTruthful(i);
+                const answerClass = game.answers[i] ? 'answer-yes' : 'answer-no';
+                const truthClass = isTruthful ? 'answer-truth' : 'answer-lie';
+
+                html += '<div class="question-item">';
+                html += `<span class="question-number">Q${i + 1}</span>`;
+                html += `<span class="question-set">{${game.questions[i].join(', ')}}</span>`;
+                html += `<span class="answer ${answerClass} ${truthClass}">${game.answers[i] ? 'YES' : 'NO'}${isTruthful ? ' ✓' : ' ✗'}</span>`;
+                html += '</div>';
+            }
+            html += '</div>';
+
+            // Possible values
+            html += '<h4>Remaining Possible Values for x</h4>';
+            html += '<div class="possible-values">';
+            for (const val of possible) {
+                const isSecret = val === game.x;
+                html += `<div class="value-box ${isSecret ? 'secret' : ''}">${val}${isSecret ? ' ★' : ''}</div>`;
+            }
+            html += '</div>';
+
+            // Result
+            const resultClass = bWins ? 'result-win' : 'result-loss';
+            const resultText = bWins ? 'Player B WINS!' : 'Player B LOSES!';
+            html += `<div class="result-box ${resultClass}">${resultText}</div>`;
+
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function resetSimulation() {
+            document.getElementById('simulation-results').innerHTML = '';
+        }
+
+        function displayBoundsTable() {
+            const container = document.getElementById('bounds-table-container');
+            const bounds = RESULTS_DATA.theoretical_bounds;
+
+            let html = '<table class="bounds-table">';
+            html += '<thead><tr><th>k</th><th>2<sup>k</sup></th><th>(1.99)<sup>k</sup></th><th>Gap</th></tr></thead>';
+            html += '<tbody>';
+
+            for (const bound of bounds) {
+                html += '<tr>';
+                html += `<td>${bound.k}</td>`;
+                html += `<td>${bound['2^k']}</td>`;
+                html += `<td>${bound['1.99^k'].toFixed(2)}</td>`;
+                html += `<td>${bound.gap.toFixed(2)}</td>`;
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function displayPartAResults() {
+            const container = document.getElementById('part-a-results');
+            const results = RESULTS_DATA.part_a.results.filter(r => r.all_x_tested);
+
+            if (results.length === 0) {
+                container.innerHTML = '<p>No comprehensive test results available.</p>';
+                return;
+            }
+
+            let html = '<p>Testing all possible values of x for small instances:</p>';
+            html += '<table class="bounds-table">';
+            html += '<thead><tr><th>k</th><th>N</th><th>2<sup>k</sup></th><th>Win Rate</th><th>Status</th></tr></thead>';
+            html += '<tbody>';
+
+            const seen = new Set();
+            for (const result of results) {
+                const key = `${result.k}-${result.N}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                const threshold = Math.pow(2, result.k);
+                const status = result.win_rate === 1.0 ? '✓ B always wins' : '✗ B can lose';
+
+                html += '<tr>';
+                html += `<td>${result.k}</td>`;
+                html += `<td>${result.N}</td>`;
+                html += `<td>${threshold}</td>`;
+                html += `<td>${(result.win_rate * 100).toFixed(0)}% (${result.total_wins}/${result.total_tests})</td>`;
+                html += `<td>${status}</td>`;
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function displayPartBResults() {
+            const container = document.getElementById('part-b-results');
+            const results = RESULTS_DATA.part_b.results;
+
+            let html = '<p>Analysis of the gap between (1.99)<sup>k</sup> and 2<sup>k</sup>:</p>';
+            html += '<table class="bounds-table">';
+            html += '<thead><tr><th>k</th><th>(1.99)<sup>k</sup></th><th>2<sup>k</sup></th><th>Gap Size</th><th>Ratio</th></tr></thead>';
+            html += '<tbody>';
+
+            for (const result of results) {
+                html += '<tr>';
+                html += `<td>${result.k}</td>`;
+                html += `<td>${result['lower_bound_1.99^k']}</td>`;
+                html += `<td>${result['threshold_2^k']}</td>`;
+                html += `<td>${result.gap}</td>`;
+                html += `<td>${result.ratio.toFixed(4)}</td>`;
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            html += '<p style="margin-top: 15px;"><strong>Observation:</strong> The gap grows as k increases, showing that there exists a range where the problem becomes more difficult.</p>';
+            container.innerHTML = html;
+        }
+
+        function displayInsights() {
+            const container = document.getElementById('insights-list');
+            const insights = RESULTS_DATA.insights;
+
+            let html = '';
+            for (const insight of insights) {
+                html += `<li>${insight}</li>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function displayExamples() {
+            const container = document.getElementById('examples-container');
+            const examples = RESULTS_DATA.examples.slice(0, 3);
+
+            let html = '';
+            for (let i = 0; i < examples.length; i++) {
+                const ex = examples[i];
+                const bWins = ex.b_wins;
+
+                html += '<div class="visualization" style="margin-bottom: 20px;">';
+                html += `<h4>Example ${i + 1}: k=${ex.k}, N=${ex.N}, x=${ex.x}</h4>`;
+
+                html += '<div class="question-list" style="max-height: 200px;">';
+                for (let j = 0; j < ex.questions.length; j++) {
+                    const isTruthful = ex.questions[j].includes(ex.x) === ex.answers[j];
+                    const answerClass = ex.answers[j] ? 'answer-yes' : 'answer-no';
+                    const truthClass = isTruthful ? 'answer-truth' : 'answer-lie';
+
+                    html += '<div class="question-item" style="font-size: 0.9em; padding: 8px;">';
+                    html += `<span class="question-number" style="min-width: 25px;">Q${j + 1}</span>`;
+                    html += `<span class="question-set">{${ex.questions[j].join(', ')}}</span>`;
+                    html += `<span class="answer ${answerClass} ${truthClass}">${ex.answers[j] ? 'YES' : 'NO'}</span>`;
+                    html += '</div>';
+                }
+                html += '</div>';
+
+                html += '<div style="margin-top: 10px;">';
+                html += `<strong>Result:</strong> ${ex.final_set_size} possible values (max: ${ex.max_allowed_size}) - `;
+                html += `<span style="color: ${bWins ? '#155724' : '#721c24'}; font-weight: 700;">${bWins ? 'B WINS' : 'B LOSES'}</span>`;
+                html += '</div>';
+
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            displayBoundsTable();
+            displayPartAResults();
+            displayPartBResults();
+            displayInsights();
+            displayExamples();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2001 P4 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .problem-statement {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .problem-statement h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .problem-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .math {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            color: #764ba2;
+            font-weight: 500;
+        }
+
+        .controls {
+            padding: 25px;
+            background: #f1f3f5;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .n-values-input {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .n-values-input input {
+            flex: 1;
+            min-width: 60px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            padding: 25px;
+        }
+
+        .results h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .visualization {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .visualization h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: #d4edda;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            margin-top: 15px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-label {
+            min-width: 80px;
+            font-size: 0.9em;
+            color: #495057;
+        }
+
+        .bar {
+            height: 25px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .formula {
+            background: #e7f5ff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 4px solid #1971c2;
+        }
+
+        .success-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #51cf66;
+        }
+
+        .fail-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff6b6b;
+        }
+
+        .info-box {
+            background: #fff3bf;
+            border: 1px solid #ffd43b;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #e67700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+            /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <h1>IMO 2001 Problem 4</h1>
+            <p>Permutation Sum Congruence on Odd Lengths</p>
+        </header>
+
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <div class="problem-text">
+                Let <span class="math">n</span><sub>1</sub>, <span class="math">n</span><sub>2</sub>, ..., <span class="math">n<sub>m</sub></span> be integers where <span class="math">m</span> > 1 is odd.
+                Let <span class="math">x</span> = (<span class="math">x</span><sub>1</sub>, ..., <span class="math">x<sub>m</sub></span>) denote a permutation of the integers 1, 2, ..., <span class="math">m</span>.
+                Let <span class="math">f</span>(<span class="math">x</span>) = <span class="math">x</span><sub>1</sub><span class="math">n</span><sub>1</sub> + <span class="math">x</span><sub>2</sub><span class="math">n</span><sub>2</sub> + ... + <span class="math">x<sub>m</sub></span><span class="math">n<sub>m</sub></span>.
+                Show that for some distinct permutations <span class="math">a</span>, <span class="math">b</span> the difference <span class="math">f</span>(<span class="math">a</span>) - <span class="math">f</span>(<span class="math">b</span>) is a multiple of <span class="math">m</span>!.
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="m-value">Value of m (must be odd, > 1):</label>
+                <select id="m-value">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7 (Warning: 7! = 5040 permutations, may be slow)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="n-values">Values of n<sub>1</sub>, n<sub>2</sub>, ..., n<sub>m</sub> (comma-separated integers):</label>
+                <input type="text" id="n-values" placeholder="e.g., 1, 2, 3" value="1, 2, 3">
+            </div>
+
+            <div class="control-group">
+                <label>Quick presets:</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                    <button onclick="loadPreset('all-ones')">All Ones</button>
+                    <button onclick="loadPreset('all-zeros')">All Zeros</button>
+                    <button onclick="loadPreset('sequential')">Sequential (1,2,3,...)</button>
+                    <button onclick="loadPreset('random')">Random</button>
+                </div>
+            </div>
+
+            <button onclick="runSimulation()" style="width: 100%; margin-top: 20px;">Run Simulation</button>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <!-- Results will be dynamically inserted here -->
+        </div>
+
+        <div id="ground-truth" class="results" style="display: none;">
+            <h2>Ground Truth Data</h2>
+            <div id="ground-truth-content"></div>
+        </div>
+    </div>
+
+    </main>
+  <script>
+        let currentResults = null;
+        let groundTruthData = null;
+
+        // Factorial function
+        function factorial(n) {
+            if (n <= 1) return 1;
+            return n * factorial(n - 1);
+        }
+
+        // Generate all permutations
+        function* permutations(arr) {
+            if (arr.length <= 1) {
+                yield arr;
+            } else {
+                for (let i = 0; i < arr.length; i++) {
+                    const rest = [...arr.slice(0, i), ...arr.slice(i + 1)];
+                    for (const perm of permutations(rest)) {
+                        yield [arr[i], ...perm];
+                    }
+                }
+            }
+        }
+
+        // Compute f(x) = x_1*n_1 + x_2*n_2 + ... + x_m*n_m
+        function computeF(perm, nValues) {
+            return perm.reduce((sum, x, i) => sum + x * nValues[i], 0);
+        }
+
+        // Load preset values
+        function loadPreset(preset) {
+            const m = parseInt(document.getElementById('m-value').value);
+            let values = [];
+
+            switch(preset) {
+                case 'all-ones':
+                    values = Array(m).fill(1);
+                    break;
+                case 'all-zeros':
+                    values = Array(m).fill(0);
+                    break;
+                case 'sequential':
+                    values = Array.from({length: m}, (_, i) => i + 1);
+                    break;
+                case 'random':
+                    values = Array.from({length: m}, () => Math.floor(Math.random() * 20) - 10);
+                    break;
+            }
+
+            document.getElementById('n-values').value = values.join(', ');
+        }
+
+        // Run the simulation
+        function runSimulation() {
+            const m = parseInt(document.getElementById('m-value').value);
+            const nValuesStr = document.getElementById('n-values').value;
+            const nValues = nValuesStr.split(',').map(s => parseInt(s.trim()));
+
+            // Validate input
+            if (nValues.length !== m) {
+                alert(`Please enter exactly ${m} values for n, separated by commas.`);
+                return;
+            }
+
+            if (nValues.some(isNaN)) {
+                alert('Please enter valid integers for all n values.');
+                return;
+            }
+
+            // Show loading
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Computing permutations and analyzing...</div>';
+
+            // Run simulation asynchronously to allow UI update
+            setTimeout(() => {
+                try {
+                    const results = runAnalysis(m, nValues);
+                    displayResults(results);
+                    currentResults = results;
+
+                    // Load and display ground truth data
+                    loadGroundTruth();
+                } catch (error) {
+                    resultsDiv.innerHTML = `<div class="loading" style="color: red;">Error: ${error.message}</div>`;
+                }
+            }, 100);
+        }
+
+        // Main analysis function
+        function runAnalysis(m, nValues) {
+            const mFactorial = factorial(m);
+            const baseArray = Array.from({length: m}, (_, i) => i + 1);
+
+            // Generate all permutations
+            const allPerms = Array.from(permutations(baseArray));
+
+            // Compute f(x) for all permutations
+            const fValues = new Map();
+            for (const perm of allPerms) {
+                fValues.set(JSON.stringify(perm), computeF(perm, nValues));
+            }
+
+            // Find divisible pairs
+            const divisiblePairs = [];
+            const permsArray = Array.from(allPerms);
+
+            for (let i = 0; i < permsArray.length; i++) {
+                for (let j = i + 1; j < permsArray.length; j++) {
+                    const permA = permsArray[i];
+                    const permB = permsArray[j];
+                    const fA = fValues.get(JSON.stringify(permA));
+                    const fB = fValues.get(JSON.stringify(permB));
+                    const diff = fA - fB;
+
+                    if (diff % mFactorial === 0) {
+                        divisiblePairs.push({
+                            permA: permA,
+                            permB: permB,
+                            fA: fA,
+                            fB: fB,
+                            difference: diff,
+                            quotient: diff / mFactorial
+                        });
+                    }
+                }
+            }
+
+            // Compute residue distribution
+            const residueClasses = new Map();
+            for (const [permStr, fVal] of fValues.entries()) {
+                const residue = ((fVal % mFactorial) + mFactorial) % mFactorial; // Handle negative
+                if (!residueClasses.has(residue)) {
+                    residueClasses.set(residue, []);
+                }
+                residueClasses.get(residue).push(JSON.parse(permStr));
+            }
+
+            return {
+                m: m,
+                nValues: nValues,
+                mFactorial: mFactorial,
+                totalPermutations: allPerms.length,
+                allFValues: Array.from(fValues.entries()).map(([permStr, fVal]) => ({
+                    perm: JSON.parse(permStr),
+                    f: fVal
+                })),
+                divisiblePairs: divisiblePairs,
+                residueClasses: residueClasses,
+                hasCollision: Array.from(residueClasses.values()).some(perms => perms.length > 1)
+            };
+        }
+
+        // Display results
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+
+            let html = `
+                <h2>
+                    Simulation Results
+                    ${results.hasCollision ? '<span class="success-indicator" title="Pairs found!"></span>' : '<span class="fail-indicator" title="No pairs found"></span>'}
+                </h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Value of m</div>
+                        <div class="stat-value">${results.m}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">m! (Factorial)</div>
+                        <div class="stat-value">${results.mFactorial.toLocaleString()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Permutations</div>
+                        <div class="stat-value">${results.totalPermutations.toLocaleString()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Divisible Pairs Found</div>
+                        <div class="stat-value ${results.divisiblePairs.length > 0 ? 'highlight' : ''}">${results.divisiblePairs.length.toLocaleString()}</div>
+                    </div>
+                </div>
+
+                <div class="formula">
+                    <strong>n values:</strong> [${results.nValues.join(', ')}]<br>
+                    <strong>f(x) = </strong>${results.nValues.map((n, i) => `x<sub>${i+1}</sub>·${n}`).join(' + ')}
+                </div>
+
+                <div class="info-box">
+                    <h4>Key Insight: Pigeonhole Principle</h4>
+                    <p>There are <strong>${results.totalPermutations}</strong> permutations mapped to <strong>${results.mFactorial}</strong> possible residue classes (mod ${results.mFactorial}).
+                    The residues used: <strong>${results.residueClasses.size}</strong>.
+                    When multiple permutations map to the same residue class, their f-values differ by a multiple of ${results.mFactorial}!</p>
+                </div>
+            `;
+
+            // Show residue distribution
+            html += `
+                <div class="visualization">
+                    <h3>Residue Class Distribution (f(x) mod ${results.mFactorial})</h3>
+                    <p>Showing how permutations are distributed across residue classes:</p>
+                    <div class="chart-container">
+                        <div class="bar-chart">
+            `;
+
+            const sortedResidues = Array.from(results.residueClasses.entries())
+                .sort((a, b) => b[1].length - a[1].length)
+                .slice(0, 20); // Show top 20
+
+            const maxCount = Math.max(...Array.from(results.residueClasses.values()).map(v => v.length));
+
+            for (const [residue, perms] of sortedResidues) {
+                const width = (perms.length / maxCount) * 100;
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-label">Residue ${residue}:</div>
+                        <div class="bar" style="width: ${width}%">${perms.length}</div>
+                    </div>
+                `;
+            }
+
+            html += `
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Show example divisible pairs
+            if (results.divisiblePairs.length > 0) {
+                html += `
+                    <div class="visualization">
+                        <h3>Example Divisible Pairs (showing first 10)</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Permutation a</th>
+                                    <th>f(a)</th>
+                                    <th>Permutation b</th>
+                                    <th>f(b)</th>
+                                    <th>f(a) - f(b)</th>
+                                    <th>Quotient</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                for (let i = 0; i < Math.min(10, results.divisiblePairs.length); i++) {
+                    const pair = results.divisiblePairs[i];
+                    html += `
+                        <tr>
+                            <td>[${pair.permA.join(', ')}]</td>
+                            <td>${pair.fA}</td>
+                            <td>[${pair.permB.join(', ')}]</td>
+                            <td>${pair.fB}</td>
+                            <td class="highlight">${pair.difference}</td>
+                            <td>${pair.quotient} × ${results.mFactorial}</td>
+                        </tr>
+                    `;
+                }
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Show all f-values (for small m)
+            if (results.totalPermutations <= 24) {
+                html += `
+                    <div class="visualization">
+                        <h3>All Permutations and their f-values</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Permutation</th>
+                                    <th>f(x)</th>
+                                    <th>f(x) mod ${results.mFactorial}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                results.allFValues.forEach((item, i) => {
+                    const residue = ((item.f % results.mFactorial) + results.mFactorial) % results.mFactorial;
+                    html += `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>[${item.perm.join(', ')}]</td>
+                            <td>${item.f}</td>
+                            <td>${residue}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Load ground truth data from results.json
+        function loadGroundTruth() {
+            // Since we can't use fetch in a no-server environment,
+            // we'll embed the data structure and instructions
+            const groundTruthDiv = document.getElementById('ground-truth');
+            groundTruthDiv.style.display = 'block';
+
+            const html = `
+                <div class="info-box">
+                    <h4>About Ground Truth Data</h4>
+                    <p>To view comprehensive ground truth data from the Python simulation:</p>
+                    <ol>
+                        <li>Run the Python simulation: <code>python simulation.py</code></li>
+                        <li>This generates <code>results.json</code> with extensive test cases</li>
+                        <li>The results.json includes:
+                            <ul>
+                                <li>Test cases for m = 3, 5 with various n-value sequences</li>
+                                <li>Random test cases to verify the theorem</li>
+                                <li>Symmetry analysis showing transposition effects</li>
+                                <li>Pigeonhole principle verification for all cases</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="visualization">
+                    <h3>Current Session Results</h3>
+                    <p><strong>Configuration:</strong> m = ${currentResults.m}, n = [${currentResults.nValues.join(', ')}]</p>
+                    <p><strong>Finding:</strong> ${currentResults.divisiblePairs.length > 0 ?
+                        `✓ Found ${currentResults.divisiblePairs.length} pairs of distinct permutations where f(a) - f(b) is divisible by ${currentResults.mFactorial}!` :
+                        `✗ No pairs found (this shouldn't happen for valid odd m > 1)`
+                    }</p>
+                    <p><strong>Residue Classes Used:</strong> ${currentResults.residueClasses.size} out of ${currentResults.mFactorial} possible classes</p>
+                    <p><strong>Classes with Multiple Permutations:</strong> ${Array.from(currentResults.residueClasses.values()).filter(v => v.length > 1).length}</p>
+                </div>
+
+                <div class="visualization">
+                    <h3>Theoretical Foundation</h3>
+                    <p>The simulation confirms the IMO 2001 Problem 4 theorem:</p>
+                    <ul>
+                        <li><strong>Pigeonhole Principle:</strong> With m! permutations and only finitely many residue classes mod m!, collisions must occur when the mapping is not injective.</li>
+                        <li><strong>Odd m Requirement:</strong> The oddness of m is crucial for ensuring the mapping f cannot be injective for all choices of n-values.</li>
+                        <li><strong>Collision Guarantee:</strong> Every test case shows at least one residue class containing multiple permutations, proving the existence of distinct a, b with f(a) ≡ f(b) (mod m!).</li>
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('ground-truth-content').innerHTML = html;
+        }
+
+        // Initialize with default values
+        window.onload = function() {
+            loadPreset('sequential');
+        };
+    </script>
+</body>
+</html>

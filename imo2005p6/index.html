@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2005 P6 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .problem-statement {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .problem-statement h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .problem-statement p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .controls h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: inline-block;
+            width: 200px;
+            font-weight: 600;
+        }
+
+        .control-group input, .control-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .visualization {
+            margin-bottom: 30px;
+        }
+
+        .visualization h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .contestant-card {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .contestant-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contestant-card.highlight {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .contestant-number {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .problems-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .problems-list {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .statistics {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .pair-matrix {
+            display: grid;
+            grid-template-columns: 50px repeat(6, 1fr);
+            gap: 2px;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .matrix-cell {
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .matrix-header {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .matrix-data {
+            background: #f8f9fa;
+        }
+
+        .matrix-data.valid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .matrix-data.invalid {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .results-display {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .results-display h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .distribution-chart {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: flex-end;
+            height: 200px;
+        }
+
+        .bar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s;
+        }
+
+        .bar-label {
+            margin-top: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bar-value {
+            color: white;
+            font-weight: 600;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+            /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header class="header">
+            <h1>IMO 2005 Problem 6</h1>
+            <p>Pairwise Success for Dual-Near Perfect Solver</p>
+        </div>
+
+        <div class="content">
+            <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                <h2 id="problem-title">Problem Statement</h2>
+                <p>In a mathematical competition, in which <strong>6 problems</strong> were posed to the participants, every two of these problems were solved by <strong>more than 2/5 of the contestants</strong>. Moreover, <strong>no contestant solved all the 6 problems</strong>. Show that there are <strong>at least 2 contestants who solved exactly 5 problems each</strong>.</p>
+            </div>
+
+            <div class="controls">
+                <h3>Simulation Controls</h3>
+                <div class="control-group">
+                    <label for="numContestants">Number of Contestants:</label>
+                    <input type="number" id="numContestants" value="6" min="1" max="20">
+                </div>
+                <div class="control-group">
+                    <label for="strategy">Strategy:</label>
+                    <select id="strategy">
+                        <option value="each_skip_different">Each contestant skips a different problem</option>
+                        <option value="random_5">Random assignment of 5 problems</option>
+                        <option value="try_minimize_5">Try to minimize contestants with 5</option>
+                        <option value="custom">Custom configuration</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="runSimulation()">Run Simulation</button>
+                <button class="btn" onclick="runAllTests()">Run All Test Cases</button>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <div class="visualization">
+                <h3>Contestants and Problems Solved</h3>
+                <div id="contestantsGrid" class="grid-container"></div>
+            </div>
+
+            <div class="statistics">
+                <h3>Statistics</h3>
+                <div class="stat-grid" id="statsGrid"></div>
+            </div>
+
+            <div class="statistics">
+                <h3>Distribution of Problems Solved</h3>
+                <div class="distribution-chart" id="distributionChart"></div>
+            </div>
+
+            <div class="statistics">
+                <h3>Pair-wise Problem Coverage Matrix</h3>
+                <p style="margin-bottom: 10px; color: #666; font-size: 14px;">
+                    Shows how many contestants solved each pair of problems.
+                    <span style="color: #155724;">Green</span> = satisfies constraint (> 2n/5),
+                    <span style="color: #721c24;">Red</span> = violates constraint.
+                </p>
+                <div id="pairMatrix" class="pair-matrix"></div>
+            </div>
+
+            <div class="results-display" id="resultsDisplay">
+                <h4>Ground Truth Data</h4>
+                <div id="groundTruthData"></div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+  <script>
+        // Core simulation logic
+        function countContestantsSolvingPair(contestants, p1, p2) {
+            return contestants.filter(solved => solved.has(p1) && solved.has(p2)).length;
+        }
+
+        function validatesPairConstraint(contestants) {
+            const n = contestants.length;
+            const threshold = 2 * n / 5;
+
+            for (let p1 = 0; p1 < 6; p1++) {
+                for (let p2 = p1 + 1; p2 < 6; p2++) {
+                    const count = countContestantsSolvingPair(contestants, p1, p2);
+                    if (count <= threshold) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function validatesAllConstraints(contestants) {
+            // No contestant solved all 6 problems
+            if (contestants.some(solved => solved.size === 6)) {
+                return false;
+            }
+
+            // Every pair solved by more than 2/5
+            return validatesPairConstraint(contestants);
+        }
+
+        function countByProblemsSolved(contestants) {
+            const counts = {};
+            for (let i = 0; i <= 6; i++) counts[i] = 0;
+
+            contestants.forEach(solved => {
+                counts[solved.size]++;
+            });
+
+            return counts;
+        }
+
+        function generateContestants(n, strategy) {
+            const contestants = [];
+
+            switch(strategy) {
+                case 'each_skip_different':
+                    for (let i = 0; i < n; i++) {
+                        const skipped = i % 6;
+                        const solved = new Set();
+                        for (let p = 0; p < 6; p++) {
+                            if (p !== skipped) solved.add(p);
+                        }
+                        contestants.push(solved);
+                    }
+                    break;
+
+                case 'random_5':
+                    for (let i = 0; i < n; i++) {
+                        const skipped = Math.floor(Math.random() * 6);
+                        const solved = new Set();
+                        for (let p = 0; p < 6; p++) {
+                            if (p !== skipped) solved.add(p);
+                        }
+                        contestants.push(solved);
+                    }
+                    break;
+
+                case 'try_minimize_5':
+                    // Try to have just 1 with 5, rest with 4
+                    if (n > 0) {
+                        contestants.push(new Set([0, 1, 2, 3, 4]));
+                    }
+                    for (let i = 1; i < n; i++) {
+                        contestants.push(new Set([0, 1, 2, 3]));
+                    }
+                    break;
+
+                case 'custom':
+                    // Generate a mix
+                    for (let i = 0; i < n; i++) {
+                        const numProblems = 5; // Always 5 for now
+                        const skipped = i % 6;
+                        const solved = new Set();
+                        for (let p = 0; p < 6; p++) {
+                            if (p !== skipped) solved.add(p);
+                        }
+                        contestants.push(solved);
+                    }
+                    break;
+            }
+
+            return contestants;
+        }
+
+        function computePairStatistics(contestants) {
+            const n = contestants.length;
+            const threshold = 2 * n / 5;
+            const stats = {};
+
+            for (let p1 = 0; p1 < 6; p1++) {
+                for (let p2 = p1 + 1; p2 < 6; p2++) {
+                    const count = countContestantsSolvingPair(contestants, p1, p2);
+                    stats[`${p1},${p2}`] = {
+                        count: count,
+                        threshold: threshold,
+                        satisfies: count > threshold,
+                        ratio: n > 0 ? count / n : 0
+                    };
+                }
+            }
+
+            return stats;
+        }
+
+        function displayContestants(contestants) {
+            const grid = document.getElementById('contestantsGrid');
+            grid.innerHTML = '';
+
+            const distribution = countByProblemsSolved(contestants);
+
+            contestants.forEach((solved, index) => {
+                const card = document.createElement('div');
+                card.className = 'contestant-card';
+                if (solved.size === 5) {
+                    card.classList.add('highlight');
+                }
+
+                const problemsArray = Array.from(solved).sort((a, b) => a - b);
+
+                card.innerHTML = `
+                    <div class="contestant-number">C${index + 1}</div>
+                    <div class="problems-badge">${solved.size} probs</div>
+                    <div class="problems-list">${problemsArray.map(p => `P${p}`).join(', ')}</div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function displayStatistics(contestants, valid) {
+            const grid = document.getElementById('statsGrid');
+            const n = contestants.length;
+            const threshold = 2 * n / 5;
+            const distribution = countByProblemsSolved(contestants);
+
+            const stats = [
+                { label: 'Total Contestants', value: n },
+                { label: 'Threshold (2n/5)', value: threshold.toFixed(2) },
+                { label: 'Min per pair', value: Math.floor(threshold) + 1 },
+                { label: 'With 5 problems', value: distribution[5] },
+                { label: 'With 4 problems', value: distribution[4] },
+                { label: 'Constraints satisfied', value: valid ? 'Yes' : 'No' }
+            ];
+
+            grid.innerHTML = stats.map(stat => `
+                <div class="stat-card">
+                    <div class="stat-label">${stat.label}</div>
+                    <div class="stat-value">${stat.value}</div>
+                </div>
+            `).join('');
+        }
+
+        function displayDistribution(contestants) {
+            const chart = document.getElementById('distributionChart');
+            const distribution = countByProblemsSolved(contestants);
+            const maxCount = Math.max(...Object.values(distribution), 1);
+
+            chart.innerHTML = '';
+
+            for (let i = 0; i <= 6; i++) {
+                const count = distribution[i] || 0;
+                const height = (count / maxCount) * 180;
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+
+                barContainer.innerHTML = `
+                    <div class="bar" style="height: ${height}px">
+                        <div class="bar-value">${count > 0 ? count : ''}</div>
+                    </div>
+                    <div class="bar-label">${i} problems</div>
+                `;
+
+                chart.appendChild(barContainer);
+            }
+        }
+
+        function displayPairMatrix(contestants) {
+            const matrix = document.getElementById('pairMatrix');
+            const pairStats = computePairStatistics(contestants);
+            const n = contestants.length;
+
+            let html = '<div class="matrix-cell"></div>';
+            for (let p = 0; p < 6; p++) {
+                html += `<div class="matrix-cell matrix-header">P${p}</div>`;
+            }
+
+            for (let p1 = 0; p1 < 6; p1++) {
+                html += `<div class="matrix-cell matrix-header">P${p1}</div>`;
+                for (let p2 = 0; p2 < 6; p2++) {
+                    if (p1 === p2) {
+                        html += `<div class="matrix-cell matrix-data">-</div>`;
+                    } else if (p1 < p2) {
+                        const key = `${p1},${p2}`;
+                        const stat = pairStats[key];
+                        const cssClass = stat.satisfies ? 'valid' : 'invalid';
+                        html += `<div class="matrix-cell matrix-data ${cssClass}">${stat.count}</div>`;
+                    } else {
+                        const key = `${p2},${p1}`;
+                        const stat = pairStats[key];
+                        html += `<div class="matrix-cell matrix-data">${(stat.ratio * 100).toFixed(0)}%</div>`;
+                    }
+                }
+            }
+
+            matrix.innerHTML = html;
+        }
+
+        function displayAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+        }
+
+        function displayGroundTruth(contestants, valid) {
+            const display = document.getElementById('groundTruthData');
+            const distribution = countByProblemsSolved(contestants);
+            const n = contestants.length;
+            const threshold = 2 * n / 5;
+
+            const groundTruth = {
+                n_contestants: n,
+                threshold: threshold,
+                min_per_pair: Math.floor(threshold) + 1,
+                valid_configuration: valid,
+                distribution: distribution,
+                contestants_with_5: distribution[5],
+                satisfies_theorem: distribution[5] >= 2,
+                contestants: contestants.map(s => Array.from(s).sort((a, b) => a - b))
+            };
+
+            display.innerHTML = `<pre class="code-block">${JSON.stringify(groundTruth, null, 2)}</pre>`;
+        }
+
+        function runSimulation() {
+            const n = parseInt(document.getElementById('numContestants').value);
+            const strategy = document.getElementById('strategy').value;
+
+            const contestants = generateContestants(n, strategy);
+            const valid = validatesAllConstraints(contestants);
+            const distribution = countByProblemsSolved(contestants);
+
+            displayContestants(contestants);
+            displayStatistics(contestants, valid);
+            displayDistribution(contestants);
+            displayPairMatrix(contestants);
+            displayGroundTruth(contestants, valid);
+
+            if (valid && distribution[5] >= 2) {
+                displayAlert(`Valid configuration! Found ${distribution[5]} contestants who solved exactly 5 problems. The theorem holds!`, 'success');
+            } else if (valid && distribution[5] < 2) {
+                displayAlert(`Valid configuration but COUNTEREXAMPLE found! Only ${distribution[5]} contestant(s) solved 5 problems. This contradicts the theorem!`, 'warning');
+            } else {
+                displayAlert(`Invalid configuration: Does not satisfy the pair constraint (every pair must be solved by > 2n/5 contestants).`, 'info');
+            }
+        }
+
+        function runAllTests() {
+            const testCases = [
+                { n: 6, strategy: 'each_skip_different', name: 'n=6, each skips different' },
+                { n: 9, strategy: 'try_minimize_5', name: 'n=9, minimize 5s' },
+                { n: 10, strategy: 'each_skip_different', name: 'n=10, cycling skip' },
+                { n: 12, strategy: 'each_skip_different', name: 'n=12, cycling skip' },
+                { n: 15, strategy: 'random_5', name: 'n=15, random 5' }
+            ];
+
+            let results = '<h4>Test Results Summary</h4><ul>';
+
+            testCases.forEach(test => {
+                const contestants = generateContestants(test.n, test.strategy);
+                const valid = validatesAllConstraints(contestants);
+                const distribution = countByProblemsSolved(contestants);
+
+                const status = valid ?
+                    (distribution[5] >= 2 ? 'Valid (theorem holds)' : 'Valid (COUNTEREXAMPLE)') :
+                    'Invalid';
+
+                results += `<li><strong>${test.name}:</strong> ${status} - ${distribution[5]} contestants with 5 problems</li>`;
+            });
+
+            results += '</ul>';
+
+            const display = document.getElementById('groundTruthData');
+            display.innerHTML = results;
+
+            displayAlert('Completed running all test cases. Check the results below.', 'info');
+        }
+
+        // Initialize with default simulation
+        window.onload = function() {
+            runSimulation();
+        };
+    </script>
+</body>
+</html>

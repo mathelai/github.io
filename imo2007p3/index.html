@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2007 P3 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            border-left: 5px solid #7A9D8F;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-text {
+            background: var(--bg-tertiary);
+            padding: 24px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 12px;
+            font-size: 1.05em;
+            line-height: 1.7;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        /* Override for old problem-text */
+        .old-problem-text {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: var(--text-primary);
+        }
+        .controls {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-primary);
+            border-radius:  12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        select, input[type="number"], button {
+            padding: 10px 15px;
+            border: 2px solid var(--border-primary);
+            border-radius:  8px;
+            font-size: 1em;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            max-width: 300px;
+        }
+        button {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .viz-panel {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--border-primary);
+        }
+        .viz-panel h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        #canvas-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            border: 2px solid var(--border-primary);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            max-width: 100%;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--border-primary);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #7A9D8F;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .partition-details {
+            margin-top: 15px;
+        }
+        .room {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid var(--border-primary);
+        }
+        .room h4 {
+            margin-bottom: 10px;
+        }
+        .room.room1 {
+            border-color: #ff6b6b;
+        }
+        .room.room2 {
+            border-color: #4ecdc4;
+        }
+        .vertices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .vertex-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .room1 .vertex-badge {
+            background: #ff6b6b;
+            color: white;
+        }
+        .room2 .vertex-badge {
+            background: #4ecdc4;
+            color: white;
+        }
+        .insights {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .insights h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .insights ul {
+            list-style-position: inside;
+            line-height: 2;
+        }
+        .insights li {
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .visualization {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2007 Problem 3</h1>
+                <p class="subtitle">Clique Rooms</p>
+            </div>
+        </header>
+        <div class="content">
+            <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                <h2 id="problem-title">Problem Statement</h2>
+                <div class="problem-text">
+                    In a mathematical competition some competitors are friends; friendship is always mutual.
+                    Call a group of competitors a <strong>clique</strong> if each two of them are friends.
+                    The number of members in a clique is called its <strong>size</strong>.
+                    <br><br>
+                    It is known that the largest size of cliques is <strong>even</strong>. Prove that the
+                    competitors can be arranged in two rooms such that the largest size of cliques in one
+                    room is the same as the largest size of cliques in the other room.
+                </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <p><strong>Yes<strong>, the competitors can always be arranged in two rooms with equal maximum clique sizes.</p>
+            <p>Specifically, if the maximum clique size in the original graph is 2k (even), then we can partition the competitors into two rooms such that the maximum clique size in each room is exactly k.</p>
+        </div>
+            </div>
+            <div class="controls">
+                <h3 style="margin-bottom: 20px; color: #7A9D8F;">Simulation Controls</h3>
+                <div class="control-group">
+                    <label for="graphType">Graph Type:</label>
+                    <select id="graphType" onchange="updateParameters()">
+                        <option value="complete">Complete Graph K_n</option>
+                        <option value="disjoint">Disjoint Cliques</option>
+                        <option value="bipartite">Complete Bipartite K_{m,n}</option>
+                        <option value="random">Random Graph</option>
+                    </select>
+                </div>
+                <div id="parameters"></div>
+                <button onclick="runSimulation()" style="margin-top: 15px; padding: 12px 30px;">
+                    Run Simulation
+                </button>
+            </div>
+            <div id="canvas-container" class="viz-panel">
+                <canvas id="graphCanvas" width="800" height="600"></canvas>
+            </div>
+            <div class="visualization">
+                <div class="viz-panel">
+                    <h3>Graph Statistics</h3>
+                    <div class="stats" role="status" aria-live="polite">
+                        <div class="stat-card">
+                            <div class="stat-value" id="numVertices">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="numEdges">0</div>
+                            <div class="stat-label">Edges</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="maxClique">0</div>
+                            <div class="stat-label">Max Clique Size</div>
+                        </div>
+                    </div>
+                    <div id="graphInfo"></div>
+                </div>
+                <div class="viz-panel">
+                    <h3>Partition Results</h3>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="room1Max">0</div>
+                            <div class="stat-label">Room 1 Max Clique</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="room2Max">0</div>
+                            <div class="stat-label">Room 2 Max Clique</div>
+                        </div>
+                    </div>
+                    <div id="partitionInfo"></div>
+                    <div class="partition-details" id="partitionDetails"></div>
+                </div>
+            </div>
+            <div class="insights">
+                <h3>Key Insights from Simulation</h3>
+                <ul>
+                    <li><strong>Strategy:</strong> Take any maximum clique of size 2k and split it evenly (k vertices in each room)</li>
+                    <li><strong>Guarantee:</strong> This ensures each room has max clique size at most k</li>
+                    <li><strong>Proof idea:</strong> Any clique in a room can contain at most k vertices from the original maximum clique, so neither room can have a clique larger than k</li>
+                    <li><strong>Balanced partition:</strong> Since the original graph had maximum clique size 2k, and each room has at most k, we achieve the target of equal maximum clique sizes</li>
+                    <li><strong>Constructive proof:</strong> The algorithm always finds a balanced partition when the maximum clique size is even</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Graph data structure
+        class Graph {
+            constructor(n) {
+                this.n = n;
+                this.edges = new Set();
+            }
+            addEdge(u, v) {
+                if (u !== v) {
+                    const edge = u < v ? `${u},${v}` : `${v},${u}`;
+                    this.edges.add(edge);
+                }
+            }
+            areConnected(u, v) {
+                const edge = u < v ? `${u},${v}` : `${v},${u}`;
+                return this.edges.has(edge);
+            }
+            getNeighbors(v) {
+                const neighbors = new Set();
+                for (const edge of this.edges) {
+                    const [u, w] = edge.split(',').map(Number);
+                    if (u === v) neighbors.add(w);
+                    if (w === v) neighbors.add(u);
+                }
+                return neighbors;
+            }
+            // Find all maximal cliques using Bron-Kerbosch
+            findAllCliques() {
+                const cliques = [];
+                const bronKerbosch = (R, P, X) => {
+                    if (P.size === 0 && X.size === 0) {
+                        if (R.size > 0) {
+                            cliques.push(new Set(R));
+                        }
+                        return;
+                    }
+                    const PArray = Array.from(P);
+                    for (const v of PArray) {
+                        const neighbors = this.getNeighbors(v);
+                        const newR = new Set([...R, v]);
+                        const newP = new Set([...P].filter(x => neighbors.has(x)));
+                        const newX = new Set([...X].filter(x => neighbors.has(x)));
+                        bronKerbosch(newR, newP, newX);
+                        P.delete(v);
+                        X.add(v);
+                    }
+                };
+                bronKerbosch(new Set(), new Set([...Array(this.n).keys()]), new Set());
+                return cliques;
+            }
+            getMaxCliqueSize() {
+                const cliques = this.findAllCliques();
+                return cliques.length > 0 ? Math.max(...cliques.map(c => c.size)) : 0;
+            }
+            getMaxCliqueSizeInSubset(subset) {
+                const subsetSet = new Set(subset);
+                const cliques = [];
+                const bronKerbosch = (R, P, X) => {
+                    if (P.size === 0 && X.size === 0) {
+                        if (R.size > 0) {
+                            cliques.push(new Set(R));
+                        }
+                        return;
+                    }
+                    const PArray = Array.from(P);
+                    for (const v of PArray) {
+                        const neighbors = new Set([...this.getNeighbors(v)].filter(x => subsetSet.has(x)));
+                        const newR = new Set([...R, v]);
+                        const newP = new Set([...P].filter(x => neighbors.has(x)));
+                        const newX = new Set([...X].filter(x => neighbors.has(x)));
+                        bronKerbosch(newR, newP, newX);
+                        P.delete(v);
+                        X.add(v);
+                    }
+                };
+                bronKerbosch(new Set(), subsetSet, new Set());
+                return cliques.length > 0 ? Math.max(...cliques.map(c => c.size)) : 0;
+            }
+        }
+        // Graph generation functions
+        function createCompleteGraph(n) {
+            const g = new Graph(n);
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    g.addEdge(i, j);
+                }
+            }
+            return g;
+        }
+        function createDisjointCliques(sizes) {
+            const total = sizes.reduce((a, b) => a + b, 0);
+            const g = new Graph(total);
+            let start = 0;
+            for (const size of sizes) {
+                for (let i = start; i < start + size; i++) {
+                    for (let j = i + 1; j < start + size; j++) {
+                        g.addEdge(i, j);
+                    }
+                }
+                start += size;
+            }
+            return g;
+        }
+        function createCompleteBipartite(n1, n2) {
+            const g = new Graph(n1 + n2);
+            for (let i = 0; i < n1; i++) {
+                for (let j = n1; j < n1 + n2; j++) {
+                    g.addEdge(i, j);
+                }
+            }
+            return g;
+        }
+        function createRandomGraph(n, clique_size, edge_prob = 0.3) {
+            const g = new Graph(n);
+            // Create clique
+            for (let i = 0; i < clique_size; i++) {
+                for (let j = i + 1; j < clique_size; j++) {
+                    g.addEdge(i, j);
+                }
+            }
+            // Add random edges
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    if (i >= clique_size || j >= clique_size) {
+                        if (Math.random() < edge_prob) {
+                            g.addEdge(i, j);
+                        }
+                    }
+                }
+            }
+            return g;
+        }
+        // Partition finding
+        function findBalancedPartition(graph) {
+            const max = graph.getMaxCliqueSize();
+            // If max clique size is odd, hypothesis not satisfied
+            if (max % 2 === 1) {
+                const half = Math.floor(graph.n / 2);
+                return {
+                    room1: new Set([...Array(half).keys()]),
+                    room2: new Set([...Array(graph.n - half).keys()].map(x => x + half)),
+                    verified: false,
+                    reason: 'Maximum clique size is odd - theorem does not apply'
+                };
+            }
+            // 1) Get any maximum clique C of size 2t
+            const cliques = graph.findAllCliques();
+            const maxCliques = cliques.filter(c => c.size === max);
+            if (maxCliques.length === 0) {
+                const half = Math.floor(graph.n / 2);
+                return {
+                    room1: new Set([...Array(half).keys()]),
+                    room2: new Set([...Array(graph.n - half).keys()].map(x => x + half)),
+                    verified: false,
+                    reason: 'No maximum clique found'
+                };
+            }
+            const C = Array.from(maxCliques[0]);
+            const t = max / 2;
+            // Split C into two halves A and B of size t each
+            const A = new Set(C.slice(0, t));
+            const B = new Set(C.slice(t));
+            // 2) Assign outside vertices guided by adjacency to A/B within C
+            const room1 = new Set(A);
+            const room2 = new Set(B);
+            const inC = new Set(C);
+            for (let v = 0; v < graph.n; v++) {
+                if (!inC.has(v)) {
+                    let degA = 0, degB = 0;
+                    // Count neighbors in A
+                    for (const u of A) {
+                        if (graph.areConnected(u, v)) degA++;
+                    }
+                    // Count neighbors in B
+                    for (const u of B) {
+                        if (graph.areConnected(u, v)) degB++;
+                    }
+                    // Place to a side where deg < t; prefer the side with smaller deg
+                    const okA = degA < t;
+                    const okB = degB < t;
+                    if (okA && (!okB || degA <= degB)) {
+                        room1.add(v);
+                    } else if (okB) {
+                        room2.add(v);
+                    } else {
+                        // Fallback: vertex has >= t neighbors to both sides
+                        // (rare; implies v is nearly complete to C)
+                        if (degA <= degB) room1.add(v);
+                        else room2.add(v);
+                    }
+                }
+            }
+            // 3) Verify the partition achieves the target
+            const room1MaxClique = graph.getMaxCliqueSizeInSubset(room1);
+            const room2MaxClique = graph.getMaxCliqueSizeInSubset(room2);
+            const verified = (room1MaxClique === t && room2MaxClique === t);
+            return {
+                room1,
+                room2,
+                verified,
+                room1MaxClique,
+                room2MaxClique,
+                targetClique: t
+            };
+        }
+        // Visualization
+        function drawGraph(graph, partition = null) {
+            const canvas = document.getElementById('graphCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            ctx.clearRect(0, 0, width, height);
+            // Calculate positions in a circle
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) * 0.35;
+            const positions = [];
+            for (let i = 0; i < graph.n; i++) {
+                const angle = (2 * Math.PI * i) / graph.n - Math.PI / 2;
+                positions.push({
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle)
+                });
+            }
+            // Draw edges
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 2;
+            for (const edge of graph.edges) {
+                const [u, v] = edge.split(',').map(Number);
+                ctx.beginPath();
+                ctx.moveTo(positions[u].x, positions[u].y);
+                ctx.lineTo(positions[v].x, positions[v].y);
+                ctx.stroke();
+            }
+            // Draw vertices
+            const vertexRadius = 20;
+            for (let i = 0; i < graph.n; i++) {
+                const pos = positions[i];
+                // Determine color based on partition
+                let color = '#7A9D8F';
+                if (partition) {
+                    if (partition.room1.has(i)) {
+                        color = '#ff6b6b';
+                    } else if (partition.room2.has(i)) {
+                        color = '#4ecdc4';
+                    }
+                }
+                // Draw circle
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, vertexRadius, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Draw label
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i.toString(), pos.x, pos.y);
+            }
+        }
+        // Update UI
+        function updateParameters() {
+            const graphType = document.getElementById('graphType').value;
+            const params = document.getElementById('parameters');
+            let html = '';
+            switch (graphType) {
+                case 'complete':
+                    html = `
+                        <div class="control-group">
+                            <label for="n">Number of vertices (even):</label>
+                            <input type="number" id="n" value="6" min="2" max="20" step="2">
+                        </div>
+                    `;
+                    break;
+                case 'disjoint':
+                    html = `
+                        <div class="control-group">
+                            <label for="cliques">Clique sizes (comma-separated):</label>
+                            <input type="text" id="cliques" value="4,4,2" style="max-width: 300px;">
+                        </div>
+                    `;
+                    break;
+                case 'bipartite':
+                    html = `
+                        <div class="control-group">
+                            <label for="n1">First partition size:</label>
+                            <input type="number" id="n1" value="3" min="1" max="15">
+                        </div>
+                        <div class="control-group">
+                            <label for="n2">Second partition size:</label>
+                            <input type="number" id="n2" value="3" min="1" max="15">
+                        </div>
+                    `;
+                    break;
+                case 'random':
+                    html = `
+                        <div class="control-group">
+                            <label for="nRandom">Total vertices:</label>
+                            <input type="number" id="nRandom" value="10" min="4" max="20">
+                        </div>
+                        <div class="control-group">
+                            <label for="cliqueSize">Embedded clique size (even):</label>
+                            <input type="number" id="cliqueSize" value="4" min="2" max="10" step="2">
+                        </div>
+                        <div class="control-group">
+                            <label for="edgeProb">Edge probability:</label>
+                            <input type="number" id="edgeProb" value="0.2" min="0" max="1" step="0.1">
+                        </div>
+                    `;
+                    break;
+            }
+            params.innerHTML = html;
+        }
+        function runSimulation() {
+            const graphType = document.getElementById('graphType').value;
+            let graph;
+            switch (graphType) {
+                case 'complete':
+                    const n = parseInt(document.getElementById('n').value);
+                    graph = createCompleteGraph(n);
+                    break;
+                case 'disjoint':
+                    const sizes = document.getElementById('cliques').value
+                        .split(',').map(s => parseInt(s.trim()));
+                    graph = createDisjointCliques(sizes);
+                    break;
+                case 'bipartite':
+                    const n1 = parseInt(document.getElementById('n1').value);
+                    const n2 = parseInt(document.getElementById('n2').value);
+                    graph = createCompleteBipartite(n1, n2);
+                    break;
+                case 'random':
+                    const nRandom = parseInt(document.getElementById('nRandom').value);
+                    const cliqueSize = parseInt(document.getElementById('cliqueSize').value);
+                    const edgeProb = parseFloat(document.getElementById('edgeProb').value);
+                    graph = createRandomGraph(nRandom, cliqueSize, edgeProb);
+                    break;
+            }
+            // Get statistics
+            const maxCliqueSize = graph.getMaxCliqueSize();
+            const partition = findBalancedPartition(graph);
+            const room1Max = partition.room1MaxClique || graph.getMaxCliqueSizeInSubset(partition.room1);
+            const room2Max = partition.room2MaxClique || graph.getMaxCliqueSizeInSubset(partition.room2);
+            const isBalanced = partition.verified !== undefined ? partition.verified :
+                               (room1Max === room2Max) && (room1Max === maxCliqueSize / 2);
+            // Update display
+            document.getElementById('numVertices').textContent = graph.n;
+            document.getElementById('numEdges').textContent = graph.edges.size;
+            document.getElementById('maxClique').textContent = maxCliqueSize;
+            document.getElementById('room1Max').textContent = room1Max;
+            document.getElementById('room2Max').textContent = room2Max;
+            // Graph info
+            const graphInfo = document.getElementById('graphInfo');
+            if (maxCliqueSize % 2 === 0) {
+                graphInfo.innerHTML = `
+                    <div class="info-box">
+                        <strong>Valid input:</strong> Maximum clique size is ${maxCliqueSize} (even).
+                        Target for each room: ${maxCliqueSize / 2}
+                    </div>
+                `;
+            } else {
+                graphInfo.innerHTML = `
+                    <div class="warning-box">
+                        <strong>Note:</strong> Maximum clique size is ${maxCliqueSize} (odd).
+                        The problem requires even maximum clique size.
+                    </div>
+                `;
+            }
+            // Partition info
+            const partitionInfo = document.getElementById('partitionInfo');
+            if (partition.reason) {
+                partitionInfo.innerHTML = `
+                    <div class="warning-box">
+                        <strong>Note:</strong> ${partition.reason}
+                    </div>
+                `;
+            } else if (isBalanced) {
+                partitionInfo.innerHTML = `
+                    <div class="success-box">
+                        <strong>✓ Verified!</strong> Balanced partition found using adjacency-aware assignment. Each room has maximum clique size ${room1Max}.
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            Algorithm: Split maximum clique C into halves A and B, then assign each vertex v to the side where it has fewer neighbors in that half of C.
+                        </div>
+                    </div>
+                `;
+            } else {
+                partitionInfo.innerHTML = `
+                    <div class="warning-box">
+                        <strong>Verification failed:</strong> Room 1 max clique: ${room1Max}, Room 2 max clique: ${room2Max}, Target: ${partition.targetClique || maxCliqueSize / 2}
+                        ${maxCliqueSize % 2 !== 0 ? '<br>This is expected since max clique size is odd.' : '<br>The adjacency-aware algorithm should have succeeded. This may indicate a bug or adversarial graph structure.'}
+                    </div>
+                `;
+            }
+            // Partition details
+            const details = document.getElementById('partitionDetails');
+            details.innerHTML = `
+                <div class="room room1">
+                    <h4>Room 1 (${partition.room1.size} vertices)</h4>
+                    <div class="vertices">
+                        ${Array.from(partition.room1).sort((a, b) => a - b)
+                            .map(v => `<span class="vertex-badge">${v}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="room room2">
+                    <h4>Room 2 (${partition.room2.size} vertices)</h4>
+                    <div class="vertices">
+                        ${Array.from(partition.room2).sort((a, b) => a - b)
+                            .map(v => `<span class="vertex-badge">${v}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            // Draw graph
+            drawGraph(graph, partition);
+        }
+        // Initialize
+        updateParameters();
+        runSimulation();
+        </script>
+</body>
+</html>

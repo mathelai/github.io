@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2011 P2 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #7A9D8F;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .canvas-section {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            border: 2px solid #7A9D8F;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            display: block;
+            width: 100%;
+            cursor: crosshair;
+        }
+        .controls {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius:  12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        select, button, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-primary);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        button {
+            background: #7A9D8F;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #5A8070;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stats {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #7A9D8F;
+            margin-top: 15px;
+        }
+        .stats h3 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        .stat-label {
+            font-weight: 600;
+            color: #555;
+        }
+        .stat-value {
+            color: #7A9D8F;
+            font-weight: 600;
+        }
+        .results-section {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .results-section h2 {
+            color: #7A9D8F;
+            margin-bottom: 20px;
+        }
+        .result-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 5px solid #7A9D8F;
+        }
+        .result-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .badge-warning {
+            background: #F5F7FA;
+            color: #856404;
+        }
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .speed-control input[type="range"] {
+            flex: 1;
+        }
+        .legend {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid var(--border-primary);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+        .point-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .point-item {
+            padding: 5px;
+            margin: 3px 0;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .instructions {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #0066cc;
+        }
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <h1>IMO 2011 Problem 2</h1>
+        <p>Windmill</p>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>
+                Let <strong>S</strong> be a finite set of at least two points in the plane.
+                Assume that no three points of <strong>S</strong> are collinear.
+                A <strong>windmill</strong> is a process that starts with a line ℓ going through a single point P ∈ S.
+                The line rotates clockwise about the pivot P until the first time that the line meets some other point belonging to S.
+                This point, Q, takes over as the new pivot, and the line now rotates clockwise about Q,
+                until it next meets a point of S. This process continues indefinitely.
+            </p>
+            <p style="margin-top: 15px; font-weight: 600;">
+                <strong>Goal:</strong> Show that we can choose a point P in S and a line ℓ going through P
+                such that the resulting windmill uses each point of S as a pivot infinitely many times.
+            </p>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value"><strong>Yes, such a point $P$ and line $\ell$ always exist.<strong> Specifically, if $|\mathcal{S}|$ is odd, any point $P \in \mathcal{S}$ works with an appropriately chosen initial line through $P$ and one other point in $\mathcal{S}$. If $|\mathcal{S}|$ is even, we must choose $P$ to be a point on the convex hull of $\mathcal{S}$ with the line initially passing through another point of $\mathcal{S}$ on the opposite side.</div>
+        </div>
+        <div class="main-content">
+            <div class="canvas-section">
+                <h2 style="margin-bottom: 15px; color: #7A9D8F;">Interactive Visualization</h2>
+                <canvas id="canvas" width="600" height="600" role="img" aria-label="Interactive visualization of the mathematical problem"></canvas>
+                <div class="legend">
+                    <strong>Legend:</strong>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #7A9D8F;"></div>
+                        <span>Points in set S</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff6b6b;"></div>
+                        <span>Current pivot point</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #333; height: 2px;"></div>
+                        <span>Rotating line</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(102, 126, 234, 0.1); border-style: dashed;"></div>
+                        <span>Line trail (fading)</span>
+                    </div>
+                </div>
+                <div class="instructions">
+                    <strong>Instructions:</strong>
+                    <ul>
+                        <li>Click on the canvas to add points (at least 2 points required)</li>
+                        <li>Select a preset configuration or use custom points</li>
+                        <li>Click "Start Windmill" to begin the animation</li>
+                        <li>Watch as the line rotates and visits each point</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="controls">
+                <h2 style="margin-bottom: 15px; color: #7A9D8F;">Controls</h2>
+                <div class="control-group">
+                    <label for="config">Preset Configurations:</label>
+                    <select id="config">
+                        <option value="custom">Custom (Click to Add Points)</option>
+                        <option value="triangle">Triangle (3 points)</option>
+                        <option value="square">Square (4 points)</option>
+                        <option value="pentagon">Pentagon (5 points)</option>
+                        <option value="hexagon">Hexagon (6 points)</option>
+                        <option value="random5">Random 5 points</option>
+                        <option value="random7">Random 7 points</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Animation Speed:</label>
+                    <div class="speed-control">
+                        <span>Slow</span>
+                        <input type="range" id="speed" min="1" max="100" value="50">
+                        <span>Fast</span>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="startBtn">Start Windmill</button>
+                    <button id="stopBtn">Stop</button>
+                    <button id="resetBtn">Reset</button>
+                    <button id="clearBtn">Clear Points</button>
+                </div>
+                <div class="stats" role="status" aria-live="polite">
+                    <h3>Statistics</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Points:</span>
+                        <span class="stat-value" id="totalPoints">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Current Pivot:</span>
+                        <span class="stat-value" id="currentPivot">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Rotation Count:</span>
+                        <span class="stat-value" id="rotationCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">All Visited:</span>
+                        <span class="stat-value" id="allVisited">No</span>
+                    </div>
+                    <div id="visitCounts" class="point-list" style="margin-top: 15px; display: none;">
+                        <strong>Visit Counts:</strong>
+                        <div id="visitList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="results-section">
+            <h2>Ground Truth Data from Simulation</h2>
+            <div id="resultsContainer">
+                <p style="color: var(--text-secondary);">Loading simulation results...</p>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Embedded simulation results (will be populated from results.json)
+        const SIMULATION_RESULTS = {
+  "triangle": {
+    "name": "triangle",
+    "points": [
+      [0, 0],
+      [1, 0],
+      [0.5, 0.8660254037844386]
+    ],
+    "num_points": 3,
+    "best_start_pivot": 2,
+    "best_start_angle": -2.0943951023931953,
+    "best_target_point": 0,
+    "all_visited": true,
+    "period": 3,
+    "visit_counts": {
+      "2": 667,
+      "1": 667,
+      "0": 666
+    },
+    "steps": 2000,
+    "pivot_sequence": [2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2]
+  },
+  "square": {
+    "name": "square",
+    "points": [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1]
+    ],
+    "num_points": 4,
+    "best_start_pivot": 0,
+    "best_start_angle": 1.5707963267948966,
+    "best_target_point": 3,
+    "all_visited": true,
+    "period": 8,
+    "visit_counts": {
+      "0": 500,
+      "2": 500,
+      "3": 500,
+      "1": 500
+    },
+    "steps": 2000,
+    "pivot_sequence": [0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1]
+  },
+  "pentagon": {
+    "name": "pentagon",
+    "points": [
+      [1.0, 0.0],
+      [0.30901699437494745, 0.9510565162951535],
+      [-0.8090169943749473, 0.5877852522924732],
+      [-0.8090169943749475, -0.587785252292473],
+      [0.30901699437494723, -0.9510565162951536]
+    ],
+    "num_points": 5,
+    "best_start_pivot": 0,
+    "best_start_angle": -2.199114857512855,
+    "best_target_point": 4,
+    "all_visited": true,
+    "period": 10,
+    "visit_counts": {
+      "0": 400,
+      "3": 400,
+      "4": 400,
+      "2": 400,
+      "1": 400
+    },
+    "steps": 2000,
+    "pivot_sequence": [0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1, 0, 3, 4, 2, 1]
+  },
+  "hexagon": {
+    "name": "hexagon",
+    "points": [
+      [1.0, 0.0],
+      [0.5000000000000001, 0.8660254037844386],
+      [-0.4999999999999998, 0.8660254037844387],
+      [-1.0, 1.2246467991473532e-16],
+      [-0.5000000000000004, -0.8660254037844384],
+      [0.5000000000000001, -0.8660254037844386]
+    ],
+    "num_points": 6,
+    "best_start_pivot": 4,
+    "best_start_angle": 2.0943951023931953,
+    "best_target_point": 3,
+    "all_visited": true,
+    "period": 12,
+    "visit_counts": {
+      "4": 333,
+      "2": 334,
+      "3": 333,
+      "1": 334,
+      "0": 333,
+      "5": 333
+    },
+    "steps": 2000,
+    "pivot_sequence": [4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1, 0, 5, 4, 2, 3, 1]
+  },
+  "random_5": {
+    "name": "random_5",
+    "points": [
+      [0.7487512221733681, -0.37067393794167297],
+      [0.4639878836228102, 0.1973169683940732],
+      [-0.23415337472333597, -0.23413695694918055],
+      [-0.8838327756636011, 0.7323522915498704],
+      [-0.1252440773487086, -0.813914503608093]
+    ],
+    "num_points": 5,
+    "best_start_pivot": 1,
+    "best_start_angle": 2.763722944257566,
+    "best_target_point": 3,
+    "all_visited": true,
+    "period": 6,
+    "visit_counts": {
+      "1": 334,
+      "4": 667,
+      "0": 333,
+      "2": 333,
+      "3": 333
+    },
+    "steps": 2000,
+    "pivot_sequence": [1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0, 2, 3, 1, 4, 4, 0]
+  },
+  "random_7": {
+    "name": "random_7",
+    "points": [
+      [0.39876326538362266, 0.6597139304973848],
+      [-1.5296534266497076, -1.7075032176405897],
+      [-0.06693851484837929, -0.9021800779518044],
+      [-1.5377269220686324, 1.4091375917942093],
+      [-0.27221992543153695, -0.8350834392078323],
+      [0.8044144181651146, 1.6677338331621377],
+      [-0.8314214058591274, -0.5345526268252332]
+    ],
+    "num_points": 7,
+    "best_start_pivot": 6,
+    "best_start_angle": -0.4931249767859804,
+    "best_target_point": 4,
+    "all_visited": true,
+    "period": 17,
+    "visit_counts": {
+      "6": 354,
+      "5": 236,
+      "4": 352,
+      "0": 235,
+      "3": 353,
+      "2": 235,
+      "1": 235
+    },
+    "steps": 2000,
+    "pivot_sequence": [6, 5, 4, 0, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4, 0, 5, 3, 1, 2, 6, 4]
+  },
+  "simple_3": {
+    "name": "simple_3",
+    "points": [
+      [0, 0],
+      [2, 0],
+      [1, 1]
+    ],
+    "num_points": 3,
+    "best_start_pivot": 2,
+    "best_start_angle": -2.356194490192345,
+    "best_target_point": 0,
+    "all_visited": true,
+    "period": 3,
+    "visit_counts": {
+      "2": 667,
+      "1": 667,
+      "0": 666
+    },
+    "steps": 2000,
+    "pivot_sequence": [2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2]
+  },
+  "general_4": {
+    "name": "general_4",
+    "points": [
+      [0, 0],
+      [3, 0],
+      [1, 2],
+      [2, 1]
+    ],
+    "num_points": 4,
+    "best_start_pivot": 3,
+    "best_start_angle": -2.677945044588987,
+    "best_target_point": 0,
+    "all_visited": true,
+    "period": 3,
+    "visit_counts": {
+      "3": 1,
+      "1": 667,
+      "0": 666,
+      "2": 666
+    },
+    "steps": 2000,
+    "pivot_sequence": [3, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2]
+  }
+};
+        // Canvas and visualization state
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        let currentPivot = -1;
+        let lineAngle = 0;
+        let animationRunning = false;
+        let animationId = null;
+        let rotationCount = 0;
+        let visitCounts = {};
+        let lineTrail = [];
+        const maxTrailLength = 20;
+        // Get controls
+        const configSelect = document.getElementById('config');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const speedSlider = document.getElementById('speed');
+        // Initialize
+        function init() {
+            drawScene();
+            updateStats();
+            displayResults();
+        }
+        // Coordinate transformation
+        function toCanvasCoords(x, y) {
+            const margin = 50;
+            const size = canvas.width - 2 * margin;
+            return {
+                x: margin + (x + 2) * size / 4,
+                y: canvas.height - margin - (y + 2) * size / 4
+            };
+        }
+        function fromCanvasCoords(cx, cy) {
+            const margin = 50;
+            const size = canvas.width - 2 * margin;
+            return {
+                x: (cx - margin) * 4 / size - 2,
+                y: (canvas.height - cy - margin) * 4 / size - 2
+            };
+        }
+        // Draw functions
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw coordinate system
+            ctx.strokeStyle = '#eee';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            const center = toCanvasCoords(0, 0);
+            ctx.beginPath();
+            ctx.moveTo(0, center.y);
+            ctx.lineTo(canvas.width, center.y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(center.x, 0);
+            ctx.lineTo(center.x, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            // Draw line trail (fading)
+            lineTrail.forEach((trail, idx) => {
+                const alpha = idx / lineTrail.length * 0.3;
+                ctx.strokeStyle = `rgba(102, 126, 234, ${alpha})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                const p1 = toCanvasCoords(trail.x1, trail.y1);
+                const p2 = toCanvasCoords(trail.x2, trail.y2);
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            });
+            // Draw line
+            if (animationRunning && currentPivot >= 0) {
+                const pivot = points[currentPivot];
+                const pivotCanvas = toCanvasCoords(pivot.x, pivot.y);
+                const lineLength = 1000;
+                const x1 = pivotCanvas.x + Math.cos(lineAngle) * lineLength;
+                const y1 = pivotCanvas.y - Math.sin(lineAngle) * lineLength;
+                const x2 = pivotCanvas.x - Math.cos(lineAngle) * lineLength;
+                const y2 = pivotCanvas.y + Math.sin(lineAngle) * lineLength;
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            // Draw points
+            points.forEach((point, idx) => {
+                const c = toCanvasCoords(point.x, point.y);
+                const isPivot = idx === currentPivot;
+                const radius = isPivot ? 10 : 7;
+                const visitCount = visitCounts[idx] || 0;
+                // Point
+                ctx.fillStyle = isPivot ? '#ff6b6b' : '#7A9D8F';
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Label
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`P${idx}`, c.x, c.y - 15);
+                // Visit count (if visited)
+                if (visitCount > 0) {
+                    ctx.font = '10px Arial';
+                    ctx.fillStyle = '#666';
+                    ctx.fillText(`(${visitCount})`, c.x, c.y + 25);
+                }
+            });
+        }
+        // Windmill algorithm
+        function angleToPoint(pivotIdx, targetIdx, currentAngle) {
+            if (pivotIdx === targetIdx) return Infinity;
+            const pivot = points[pivotIdx];
+            const target = points[targetIdx];
+            const dx = target.x - pivot.x;
+            const dy = target.y - pivot.y;
+            const targetAngle = Math.atan2(dy, dx);
+            // Line has two directions
+            const angle1 = currentAngle;
+            const angle2 = (currentAngle + Math.PI) % (2 * Math.PI);
+            function clockwiseAngle(from, to) {
+                let diff = (from - to) % (2 * Math.PI);
+                if (diff < 0) diff += 2 * Math.PI;
+                return diff > 1e-9 ? diff : 2 * Math.PI;
+            }
+            const rotation1 = clockwiseAngle(angle1, targetAngle);
+            const rotation2 = clockwiseAngle(angle2, targetAngle);
+            return Math.min(rotation1, rotation2);
+        }
+        function findNextPivot(currentPivotIdx, currentAngle) {
+            let minRotation = Infinity;
+            let nextPivot = -1;
+            let newAngle = currentAngle;
+            points.forEach((point, idx) => {
+                if (idx === currentPivotIdx) return;
+                const rotation = angleToPoint(currentPivotIdx, idx, currentAngle);
+                if (rotation < minRotation - 1e-9) {
+                    minRotation = rotation;
+                    nextPivot = idx;
+                    const pivot = points[currentPivotIdx];
+                    const target = points[idx];
+                    const dx = target.x - pivot.x;
+                    const dy = target.y - pivot.y;
+                    newAngle = Math.atan2(dy, dx);
+                }
+            });
+            return { nextPivot, newAngle };
+        }
+        // Animation
+        function animate() {
+            if (!animationRunning) return;
+            const speed = parseInt(speedSlider.value);
+            const rotationSpeed = speed * 0.001;
+            // Rotate line
+            lineAngle -= rotationSpeed;
+            if (lineAngle < 0) lineAngle += 2 * Math.PI;
+            // Check if we hit a point
+            const result = findNextPivot(currentPivot, lineAngle);
+            // Check if we should switch pivot
+            const currentRotation = angleToPoint(currentPivot, result.nextPivot, lineAngle);
+            if (currentRotation < rotationSpeed * 2) {
+                // Switch pivot
+                const pivot = points[currentPivot];
+                const target = points[result.nextPivot];
+                // Add to trail
+                lineTrail.push({
+                    x1: pivot.x, y1: pivot.y,
+                    x2: target.x, y2: target.y
+                });
+                if (lineTrail.length > maxTrailLength) {
+                    lineTrail.shift();
+                }
+                currentPivot = result.nextPivot;
+                lineAngle = result.newAngle;
+                rotationCount++;
+                visitCounts[currentPivot] = (visitCounts[currentPivot] || 0) + 1;
+                updateStats();
+            }
+            drawScene();
+            animationId = requestAnimationFrame(animate);
+        }
+        // Update statistics display
+        function updateStats() {
+            document.getElementById('totalPoints').textContent = points.length;
+            document.getElementById('currentPivot').textContent =
+                currentPivot >= 0 ? `P${currentPivot}` : '-';
+            document.getElementById('rotationCount').textContent = rotationCount;
+            const allVisited = points.length > 0 &&
+                points.every((_, idx) => visitCounts[idx] > 0);
+            document.getElementById('allVisited').textContent =
+                allVisited ? 'Yes' : 'No';
+            document.getElementById('allVisited').style.color =
+                allVisited ? '#28a745' : '#dc3545';
+            // Update visit counts list
+            const visitList = document.getElementById('visitList');
+            const visitCountsDiv = document.getElementById('visitCounts');
+            if (Object.keys(visitCounts).length > 0) {
+                visitCountsDiv.style.display = 'block';
+                visitList.innerHTML = '';
+                points.forEach((_, idx) => {
+                    const count = visitCounts[idx] || 0;
+                    const item = document.createElement('div');
+                    item.className = 'point-item';
+                    item.style.background = count > 0 ? '#e7f3ff' : '#fff';
+                    item.textContent = `Point ${idx}: ${count} visits`;
+                    visitList.appendChild(item);
+                });
+            } else {
+                visitCountsDiv.style.display = 'none';
+            }
+        }
+        // Load preset configuration
+        function loadPreset(name) {
+            points = [];
+            visitCounts = {};
+            rotationCount = 0;
+            currentPivot = -1;
+            lineTrail = [];
+            const presets = {
+                triangle: [[0, 0], [1, 0], [0.5, Math.sqrt(3)/2]],
+                square: [[0, 0], [1, 0], [1, 1], [0, 1]],
+                pentagon: Array.from({length: 5}, (_, i) => [
+                    Math.cos(2 * Math.PI * i / 5),
+                    Math.sin(2 * Math.PI * i / 5)
+                ]),
+                hexagon: Array.from({length: 6}, (_, i) => [
+                    Math.cos(2 * Math.PI * i / 6),
+                    Math.sin(2 * Math.PI * i / 6)
+                ]),
+                random5: [
+                    [0.7, -0.3], [0.4, 0.2], [-0.2, -0.2],
+                    [-0.8, 0.7], [-0.1, -0.8]
+                ],
+                random7: [
+                    [0.4, 0.7], [-1.5, -1.7], [-0.1, -0.9],
+                    [-1.5, 1.4], [-0.3, -0.8], [0.8, 1.7], [-0.8, -0.5]
+                ]
+            };
+            if (presets[name]) {
+                points = presets[name].map(([x, y]) => ({x, y}));
+            }
+            drawScene();
+            updateStats();
+        }
+        // Event handlers
+        canvas.addEventListener('click', (e) => {
+            if (configSelect.value !== 'custom') return;
+            const rect = canvas.getBoundingClientRect();
+            const cx = e.clientX - rect.left;
+            const cy = e.clientY - rect.top;
+            const coords = fromCanvasCoords(cx, cy);
+            points.push(coords);
+            drawScene();
+            updateStats();
+        });
+        configSelect.addEventListener('change', (e) => {
+            if (e.target.value !== 'custom') {
+                loadPreset(e.target.value);
+            }
+        });
+        startBtn.addEventListener('click', () => {
+            if (points.length < 2) {
+                alert('Please add at least 2 points!');
+                return;
+            }
+            if (!animationRunning) {
+                // Initialize: start from first point, line to second point
+                currentPivot = 0;
+                const dx = points[1].x - points[0].x;
+                const dy = points[1].y - points[0].y;
+                lineAngle = Math.atan2(dy, dx);
+                visitCounts[0] = 1;
+                animationRunning = true;
+                animate();
+            }
+        });
+        stopBtn.addEventListener('click', () => {
+            animationRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        });
+        resetBtn.addEventListener('click', () => {
+            animationRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            currentPivot = -1;
+            lineAngle = 0;
+            rotationCount = 0;
+            visitCounts = {};
+            lineTrail = [];
+            drawScene();
+            updateStats();
+        });
+        clearBtn.addEventListener('click', () => {
+            animationRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            points = [];
+            currentPivot = -1;
+            lineAngle = 0;
+            rotationCount = 0;
+            visitCounts = {};
+            lineTrail = [];
+            configSelect.value = 'custom';
+            drawScene();
+            updateStats();
+        });
+        // Display simulation results
+        function displayResults() {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '';
+            Object.entries(SIMULATION_RESULTS).forEach(([name, data]) => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                const badge = data.all_visited ?
+                    '<span class="badge badge-success">ALL POINTS VISITED</span>' :
+                    '<span class="badge badge-warning">INCOMPLETE</span>';
+                const periodInfo = data.period > 0 ?
+                    `<strong>Period:</strong> ${data.period} steps` :
+                    '<strong>Period:</strong> Not detected';
+                card.innerHTML = `
+                    <h3>${data.name.toUpperCase()} ${badge}</h3>
+                    <div class="result-grid">
+                        <div><strong>Points:</strong> ${data.num_points}</div>
+                        <div><strong>Steps simulated:</strong> ${data.steps}</div>
+                        <div>${periodInfo}</div>
+                        <div><strong>Start pivot:</strong> Point ${data.best_start_pivot}</div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <strong>Visit counts:</strong>
+                        ${Object.entries(data.visit_counts)
+                            .map(([pt, count]) => `P${pt}: ${count}`)
+                            .join(', ')}
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.9em; color: var(--text-secondary);">
+                        <strong>Pattern:</strong> ${data.pivot_sequence.slice(0, 20).join(' → ')}...
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        // Initialize on load
+        init();
+        </script>
+</body>
+</html>

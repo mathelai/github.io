@@ -1,0 +1,4 @@
+Define a hook to be a figure made up of six unit squares as shown in the problem statement,
+or any of the figures obtained by applying rotations and reflections to this figure.
+Determine all m × n rectangles that can be covered without gaps and without overlaps with hooks,
+such that no part of a hook covers area outside the rectangle.

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2008 P5 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .problem-statement {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .problem-statement h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            background: #e9ecef;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 80px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+            width: 100px;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .result-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .visualization {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .lamps-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lamp {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .lamp.off {
+            background: #6c757d;
+            color: white;
+        }
+
+        .lamp.on {
+            background: #ffd700;
+            color: #333;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .lamp.group1 {
+            border-color: #28a745;
+        }
+
+        .lamp.group2 {
+            border-color: #dc3545;
+        }
+
+        .sequence-display {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .sequence-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .sequence-item:hover {
+            background: #dee2e6;
+        }
+
+        .animation-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-info {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .pattern-analysis {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .pattern-analysis h3 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-lamp {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .info-message {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+            /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <h1>IMO 2008 Problem 5</h1>
+
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>
+                Let <strong>n</strong> and <strong>k</strong> be positive integers with <strong>k ≥ n</strong>
+                and <strong>k - n</strong> an even number. There are <strong>2n</strong> lamps labelled
+                <strong>1, 2, ..., 2n</strong>, each of which can be either on or off. Initially all the
+                lamps are off.
+            </p>
+            <p style="margin-top: 10px;">
+                We consider sequences of steps: at each step one of the lamps is switched (from on to off
+                or from off to on).
+            </p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>N</strong> = number of k-step sequences resulting in lamps 1 through n all ON,
+                    and lamps n+1 through 2n all OFF</li>
+                <li><strong>M</strong> = number of k-step sequences with the same result, but where none of
+                    the lamps n+1 through 2n is ever switched ON</li>
+            </ul>
+            <p style="margin-top: 10px;">
+                <strong>Determine N/M.</strong>
+            </p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="n-input">n:</label>
+                <input type="number" id="n-input" min="1" max="6" value="2">
+
+                <label for="k-input">k:</label>
+                <input type="number" id="k-input" min="1" max="12" value="2">
+
+                <button onclick="computeRatio()">Compute N/M</button>
+                <button onclick="runFullSimulation()">Run Full Analysis</button>
+            </div>
+            <div class="info-message">
+                <strong>Constraint:</strong> k ≥ n and (k - n) must be even
+            </div>
+        </div>
+
+        <div id="error-container"></div>
+
+        <div id="results-container"></div>
+
+        <div class="visualization">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">Interactive Lamp Visualization</h2>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-lamp" style="background: #6c757d;"></div>
+                    <span>Lamp OFF</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-lamp" style="background: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);"></div>
+                    <span>Lamp ON</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-lamp" style="border-color: #28a745; border-width: 3px;"></div>
+                    <span>Lamps 1 to n (must be ON at end)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-lamp" style="border-color: #dc3545; border-width: 3px;"></div>
+                    <span>Lamps n+1 to 2n (must stay OFF for M)</span>
+                </div>
+            </div>
+
+            <div class="step-info" id="step-info">
+                Click "Compute N/M" to start
+            </div>
+
+            <div class="lamps-container" id="lamps-container"></div>
+
+            <div class="animation-controls">
+                <button onclick="resetLamps()">Reset Lamps</button>
+                <button onclick="showRandomNSequence()">Show Random N-Sequence</button>
+                <button onclick="showRandomMSequence()">Show Random M-Sequence</button>
+            </div>
+        </div>
+
+        <div id="sequences-container"></div>
+
+        <div id="analysis-container"></div>
+    </div>
+
+    </main>
+  <script>
+        let currentN = 2;
+        let currentK = 2;
+        let currentSequences = { examples_N: [], examples_M: [] };
+        let lampStates = [];
+        let allResults = [];
+
+        // Initialize lamps
+        function initializeLamps(n) {
+            currentN = n;
+            lampStates = Array(2 * n).fill(false);
+            renderLamps();
+        }
+
+        function renderLamps() {
+            const container = document.getElementById('lamps-container');
+            container.innerHTML = '';
+
+            lampStates.forEach((isOn, index) => {
+                const lamp = document.createElement('div');
+                lamp.className = 'lamp ' + (isOn ? 'on' : 'off');
+                lamp.className += index < currentN ? ' group1' : ' group2';
+                lamp.textContent = index + 1;
+                lamp.onclick = () => toggleLamp(index);
+                container.appendChild(lamp);
+            });
+        }
+
+        function toggleLamp(index) {
+            lampStates[index] = !lampStates[index];
+            renderLamps();
+            updateStepInfo('Manual mode: Lamp ' + (index + 1) + ' switched');
+        }
+
+        function resetLamps() {
+            lampStates = Array(2 * currentN).fill(false);
+            renderLamps();
+            updateStepInfo('All lamps reset to OFF');
+        }
+
+        function updateStepInfo(message) {
+            document.getElementById('step-info').textContent = message;
+        }
+
+        function showSequence(sequence, type) {
+            resetLamps();
+            let step = 0;
+
+            const interval = setInterval(() => {
+                if (step >= sequence.length) {
+                    clearInterval(interval);
+                    updateStepInfo(`${type}-Sequence complete! Final state shown.`);
+                    return;
+                }
+
+                const lampIndex = sequence[step] - 1; // Convert to 0-indexed
+                lampStates[lampIndex] = !lampStates[lampIndex];
+                renderLamps();
+                updateStepInfo(`${type}-Sequence: Step ${step + 1}/${sequence.length} - Switching lamp ${sequence[step]}`);
+                step++;
+            }, 800);
+        }
+
+        function showRandomNSequence() {
+            if (currentSequences.examples_N.length === 0) {
+                alert('No N-sequences available. Please compute N/M first.');
+                return;
+            }
+            const randomSeq = currentSequences.examples_N[
+                Math.floor(Math.random() * currentSequences.examples_N.length)
+            ];
+            showSequence(randomSeq, 'N');
+        }
+
+        function showRandomMSequence() {
+            if (currentSequences.examples_M.length === 0) {
+                alert('No M-sequences available. Please compute N/M first.');
+                return;
+            }
+            const randomSeq = currentSequences.examples_M[
+                Math.floor(Math.random() * currentSequences.examples_M.length)
+            ];
+            showSequence(randomSeq, 'M');
+        }
+
+        // Core computation functions (JavaScript implementation)
+        function countSequencesN(n, k) {
+            const totalLamps = 2 * n;
+            const targetState = Array(n).fill(true).concat(Array(n).fill(false));
+
+            let dp = [new Map()];
+            for (let i = 1; i <= k; i++) {
+                dp.push(new Map());
+            }
+
+            const initialState = Array(totalLamps).fill(false).join(',');
+            dp[0].set(initialState, 1);
+
+            for (let step = 0; step < k; step++) {
+                for (let [stateStr, count] of dp[step]) {
+                    const state = stateStr.split(',').map(s => s === 'true');
+
+                    for (let lampIdx = 0; lampIdx < totalLamps; lampIdx++) {
+                        const newState = [...state];
+                        newState[lampIdx] = !newState[lampIdx];
+                        const newStateStr = newState.join(',');
+
+                        dp[step + 1].set(
+                            newStateStr,
+                            (dp[step + 1].get(newStateStr) || 0) + count
+                        );
+                    }
+                }
+            }
+
+            const targetStr = targetState.join(',');
+            return dp[k].get(targetStr) || 0;
+        }
+
+        function countSequencesM(n, k) {
+            const totalLamps = 2 * n;
+            const targetState = Array(n).fill(true).concat(Array(n).fill(false));
+
+            let dp = [new Map()];
+            for (let i = 1; i <= k; i++) {
+                dp.push(new Map());
+            }
+
+            const initialState = Array(totalLamps).fill(false).join(',');
+            dp[0].set(initialState, 1);
+
+            for (let step = 0; step < k; step++) {
+                for (let [stateStr, count] of dp[step]) {
+                    const state = stateStr.split(',').map(s => s === 'true');
+
+                    for (let lampIdx = 0; lampIdx < totalLamps; lampIdx++) {
+                        const newState = [...state];
+                        newState[lampIdx] = !newState[lampIdx];
+
+                        // Check constraint: lamps n+1 to 2n must never be ON
+                        let violatesConstraint = false;
+                        for (let i = n; i < totalLamps; i++) {
+                            if (newState[i]) {
+                                violatesConstraint = true;
+                                break;
+                            }
+                        }
+
+                        if (violatesConstraint) continue;
+
+                        const newStateStr = newState.join(',');
+                        dp[step + 1].set(
+                            newStateStr,
+                            (dp[step + 1].get(newStateStr) || 0) + count
+                        );
+                    }
+                }
+            }
+
+            const targetStr = targetState.join(',');
+            return dp[k].get(targetStr) || 0;
+        }
+
+        function generateSequenceExamples(n, k, maxExamples = 10) {
+            if (k > 8) return { examples_N: [], examples_M: [] }; // Too computationally expensive
+
+            const totalLamps = 2 * n;
+            const targetState = Array(n).fill(true).concat(Array(n).fill(false));
+            const examplesN = [];
+            const examplesM = [];
+
+            // Generate all possible sequences
+            function* generateSequences(length) {
+                if (length === 0) {
+                    yield [];
+                    return;
+                }
+                for (let lamp = 0; lamp < totalLamps; lamp++) {
+                    for (let rest of generateSequences(length - 1)) {
+                        yield [lamp, ...rest];
+                    }
+                }
+            }
+
+            let checked = 0;
+            for (let sequence of generateSequences(k)) {
+                checked++;
+                if (checked > 100000) break; // Limit computation
+
+                const state = Array(totalLamps).fill(false);
+                let violatesM = false;
+
+                for (let lampIdx of sequence) {
+                    state[lampIdx] = !state[lampIdx];
+                    if (state.slice(n).some(s => s)) {
+                        violatesM = true;
+                    }
+                }
+
+                if (state.join(',') === targetState.join(',')) {
+                    const seq1Indexed = sequence.map(i => i + 1);
+                    examplesN.push(seq1Indexed);
+                    if (!violatesM) {
+                        examplesM.push(seq1Indexed);
+                    }
+
+                    if (examplesN.length >= maxExamples && examplesM.length >= maxExamples) {
+                        break;
+                    }
+                }
+            }
+
+            return { examples_N: examplesN, examples_M: examplesM };
+        }
+
+        function computeRatio() {
+            const n = parseInt(document.getElementById('n-input').value);
+            const k = parseInt(document.getElementById('k-input').value);
+
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = '';
+
+            if (k < n || (k - n) % 2 !== 0) {
+                errorContainer.innerHTML = `
+                    <div class="error-message">
+                        <strong>Invalid parameters:</strong> k must be ≥ n and (k - n) must be even
+                    </div>
+                `;
+                return;
+            }
+
+            if (n > 6 || k > 12) {
+                errorContainer.innerHTML = `
+                    <div class="error-message">
+                        <strong>Warning:</strong> Large values may take a long time to compute.
+                        Try n ≤ 6 and k ≤ 12 for reasonable performance.
+                    </div>
+                `;
+            }
+
+            updateStepInfo('Computing...');
+
+            setTimeout(() => {
+                const N = countSequencesN(n, k);
+                const M = countSequencesM(n, k);
+                const ratio = M > 0 ? N / M : null;
+
+                currentN = n;
+                currentK = k;
+
+                displayResults(n, k, N, M, ratio);
+
+                // Generate examples
+                const examples = generateSequenceExamples(n, k, 10);
+                currentSequences = examples;
+                displaySequences(examples);
+
+                initializeLamps(n);
+                updateStepInfo(`n=${n}, k=${k}: Computed N=${N}, M=${M}, N/M=${ratio}`);
+            }, 100);
+        }
+
+        function displayResults(n, k, N, M, ratio) {
+            const container = document.getElementById('results-container');
+            const kMinusN = k - n;
+            const expectedRatio = Math.pow(2, kMinusN);
+            const isExpected = Math.abs(ratio - expectedRatio) < 0.0001;
+
+            container.innerHTML = `
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>N (All sequences)</h3>
+                        <div class="value">${N.toLocaleString()}</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>M (Constrained sequences)</h3>
+                        <div class="value">${M.toLocaleString()}</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>N/M Ratio</h3>
+                        <div class="value">${ratio !== null ? ratio.toFixed(6) : 'undefined'}</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Expected: 2<sup>(k-n)</sup> = 2<sup>${kMinusN}</sup></h3>
+                        <div class="value">${expectedRatio}</div>
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            ${isExpected ? '✓ Matches!' : '✗ Does not match'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displaySequences(examples) {
+            const container = document.getElementById('sequences-container');
+
+            if (examples.examples_N.length === 0 && examples.examples_M.length === 0) {
+                container.innerHTML = `
+                    <div class="info-message">
+                        No example sequences generated (k might be too large for enumeration)
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="sequence-display"><h3 style="margin-bottom: 15px;">Example Sequences</h3>';
+
+            if (examples.examples_M.length > 0) {
+                html += '<h4 style="color: #28a745; margin-bottom: 10px;">M-Sequences (constrained - lamps n+1 to 2n never ON):</h4>';
+                examples.examples_M.slice(0, 5).forEach((seq, i) => {
+                    html += `<div class="sequence-item">M${i+1}: [${seq.join(', ')}]</div>`;
+                });
+            }
+
+            if (examples.examples_N.length > examples.examples_M.length) {
+                html += '<h4 style="color: #667eea; margin-bottom: 10px; margin-top: 15px;">N-Sequences (all valid sequences):</h4>';
+                examples.examples_N.slice(0, 5).forEach((seq, i) => {
+                    html += `<div class="sequence-item">N${i+1}: [${seq.join(', ')}]</div>`;
+                });
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function runFullSimulation() {
+            const testCases = [
+                [1, 1], [1, 3], [1, 5],
+                [2, 2], [2, 4], [2, 6],
+                [3, 3], [3, 5], [3, 7],
+                [4, 4], [4, 6],
+                [5, 5]
+            ];
+
+            allResults = [];
+            updateStepInfo('Running full analysis...');
+
+            setTimeout(() => {
+                for (let [n, k] of testCases) {
+                    const N = countSequencesN(n, k);
+                    const M = countSequencesM(n, k);
+                    const ratio = M > 0 ? N / M : null;
+                    allResults.push({ n, k, N, M, ratio });
+                }
+
+                displayFullAnalysis();
+                updateStepInfo('Full analysis complete!');
+            }, 100);
+        }
+
+        function displayFullAnalysis() {
+            const analysisContainer = document.getElementById('analysis-container');
+
+            let tableHTML = `
+                <div class="pattern-analysis">
+                    <h3>Pattern Analysis: N/M = 2<sup>(k-n)</sup></h3>
+                    <p>The ratio N/M equals 2<sup>(k-n)</sup> for all valid (n, k) pairs!</p>
+                    <p>This can also be written as: N/M = 4<sup>(k-n)/2</sup></p>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>n</th>
+                                <th>k</th>
+                                <th>k-n</th>
+                                <th>N</th>
+                                <th>M</th>
+                                <th>N/M</th>
+                                <th>2<sup>(k-n)</sup></th>
+                                <th>Match?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            allResults.forEach(result => {
+                const kMinusN = result.k - result.n;
+                const expectedRatio = Math.pow(2, kMinusN);
+                const matches = Math.abs(result.ratio - expectedRatio) < 0.0001 ? '✓' : '✗';
+                tableHTML += `
+                    <tr>
+                        <td>${result.n}</td>
+                        <td>${result.k}</td>
+                        <td>${kMinusN}</td>
+                        <td>${result.N.toLocaleString()}</td>
+                        <td>${result.M.toLocaleString()}</td>
+                        <td>${result.ratio.toFixed(6)}</td>
+                        <td>${expectedRatio}</td>
+                        <td>${matches}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            analysisContainer.innerHTML = tableHTML;
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            initializeLamps(2);
+            updateStepInfo('Ready! Enter n and k values and click "Compute N/M"');
+        };
+    </script>
+</body>
+</html>

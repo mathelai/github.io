@@ -1,0 +1,511 @@
+{
+  "problem_parameters": {
+    "num_girls": 21,
+    "num_boys": 21,
+    "max_problems_per_person": 6
+  },
+  "pigeonhole_analysis": {
+    "total_pairs": 441,
+    "max_girl_problem_pairs": 126,
+    "max_boy_problem_pairs": 126,
+    "min_pair_coverage_needed": 441,
+    "key_insight": "If all problems had min(girls, boys) <= 2, we could not cover all 441 pairs. With min(g,b) <= 2, the maximum pair coverage is 2 * min(126, 126) = 252 < 441. Therefore, at least one problem must have min(girls, boys) >= 3."
+  },
+  "test_cases": [
+    {
+      "description": "Small symmetric example",
+      "num_girls": 3,
+      "num_boys": 3,
+      "max_problems": 2,
+      "girl_solutions": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "boy_solutions": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "valid": true,
+      "validation_message": "Valid configuration",
+      "analysis": {
+        "conclusion_holds": false,
+        "problem_stats": {
+          "0": {
+            "girls": 2,
+            "boys": 2,
+            "total": 4
+          },
+          "1": {
+            "girls": 2,
+            "boys": 2,
+            "total": 4
+          },
+          "2": {
+            "girls": 2,
+            "boys": 2,
+            "total": 4
+          }
+        },
+        "best_problem": 0,
+        "best_problem_stats": {
+          "girls": 2,
+          "boys": 2,
+          "total": 4
+        },
+        "num_problems": 3
+      }
+    },
+    {
+      "description": "Extremal configuration attempt",
+      "num_girls": 21,
+      "num_boys": 21,
+      "max_problems": 6,
+      "girl_solutions": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        [
+          0,
+          1,
+          2,
+          18,
+          19,
+          20
+        ],
+        [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        [
+          0,
+          1,
+          2,
+          18,
+          19,
+          20
+        ],
+        [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        [
+          0,
+          1,
+          2,
+          18,
+          19,
+          20
+        ],
+        [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      ],
+      "boy_solutions": [
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ],
+        [
+          0,
+          12,
+          6,
+          15
+        ]
+      ],
+      "valid": true,
+      "analysis": {
+        "conclusion_holds": true,
+        "problem_stats": {
+          "0": {
+            "girls": 6,
+            "boys": 21,
+            "total": 27
+          },
+          "1": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "2": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "3": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "4": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "5": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "6": {
+            "girls": 6,
+            "boys": 21,
+            "total": 27
+          },
+          "7": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "8": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "9": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "10": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "11": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "12": {
+            "girls": 6,
+            "boys": 21,
+            "total": 27
+          },
+          "13": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "14": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "15": {
+            "girls": 6,
+            "boys": 21,
+            "total": 27
+          },
+          "16": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "17": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "18": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "19": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          },
+          "20": {
+            "girls": 6,
+            "boys": 0,
+            "total": 6
+          }
+        },
+        "best_problem": 0,
+        "best_problem_stats": {
+          "girls": 6,
+          "boys": 21,
+          "total": 27
+        },
+        "num_problems": 21
+      }
+    }
+  ],
+  "random_tests": [],
+  "conclusion": {
+    "statement": "Based on all simulations, the conclusion always holds when constraints are satisfied.",
+    "key_insight": "If all problems had min(girls, boys) <= 2, we could not cover all 441 pairs. With min(g,b) <= 2, the maximum pair coverage is 2 * min(126, 126) = 252 < 441. Therefore, at least one problem must have min(girls, boys) >= 3.",
+    "proof_strategy": "1. Count total girl-boy pairs: 21 * 21 = 441\n2. Each pair must share at least one problem\n3. For problem p solved by g_p girls and b_p boys, it covers g_p * b_p pairs\n4. We need: sum over all p of (g_p * b_p) >= 441\n5. Constraint: sum(g_p) <= 21*6 = 126, sum(b_p) <= 21*6 = 126\n6. If all problems have min(g_p, b_p) <= 2:\n   - Maximum pair coverage <= 2 * max(sum(g_p), sum(b_p)) = 2 * 126 = 252\n   - But 252 < 441, contradiction!\n7. Therefore, at least one problem must have g_p >= 3 AND b_p >= 3"
+  },
+  "metrics": {
+    "runtime_ms": 1884.32,
+    "status": "success"
+  }
+}

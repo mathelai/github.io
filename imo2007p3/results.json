@@ -1,0 +1,510 @@
+{
+  "description": "IMO 2007 Problem 3 - Clique Partitioning Simulation",
+  "problem_statement": "Given a friendship graph where the maximum clique size is even, prove that competitors can be arranged in two rooms such that the largest clique size is the same in both rooms.",
+  "test_cases": [
+    {
+      "name": "Complete Graph K_2",
+      "type": "complete_graph",
+      "strategy": "greedy",
+      "graph_size": 2,
+      "graph_edges": 1,
+      "max_clique_size": 2,
+      "room1_size": 0,
+      "room2_size": 0,
+      "room1_max_clique": 1,
+      "room2_max_clique": 1,
+      "is_balanced": true,
+      "room1": [],
+      "room2": []
+    },
+    {
+      "name": "Complete Graph K_4",
+      "type": "complete_graph",
+      "strategy": "greedy",
+      "graph_size": 4,
+      "graph_edges": 6,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Complete Graph K_6",
+      "type": "complete_graph",
+      "strategy": "greedy",
+      "graph_size": 6,
+      "graph_edges": 15,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 2,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "Complete Graph K_8",
+      "type": "complete_graph",
+      "strategy": "greedy",
+      "graph_size": 8,
+      "graph_edges": 28,
+      "max_clique_size": 8,
+      "room1_size": 3,
+      "room2_size": 3,
+      "room1_max_clique": 4,
+      "room2_max_clique": 4,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2,
+        3
+      ],
+      "room2": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "name": "Disjoint Cliques [4, 2]",
+      "type": "disjoint_cliques",
+      "clique_sizes": [
+        4,
+        2
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 6,
+      "graph_edges": 7,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Disjoint Cliques [4, 4]",
+      "type": "disjoint_cliques",
+      "clique_sizes": [
+        4,
+        4
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 8,
+      "graph_edges": 12,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Disjoint Cliques [6, 4, 2]",
+      "type": "disjoint_cliques",
+      "clique_sizes": [
+        6,
+        4,
+        2
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 12,
+      "graph_edges": 22,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 2,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "Disjoint Cliques [4, 4, 4]",
+      "type": "disjoint_cliques",
+      "clique_sizes": [
+        4,
+        4,
+        4
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 12,
+      "graph_edges": 18,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Disjoint Cliques [6, 6, 4]",
+      "type": "disjoint_cliques",
+      "clique_sizes": [
+        6,
+        6,
+        4
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 16,
+      "graph_edges": 36,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 2,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "Complete Bipartite K_{2,2}",
+      "type": "complete_bipartite",
+      "partition_sizes": [
+        2,
+        2
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 4,
+      "graph_edges": 4,
+      "max_clique_size": 2,
+      "room1_size": 0,
+      "room2_size": 0,
+      "room1_max_clique": 1,
+      "room2_max_clique": 1,
+      "is_balanced": true,
+      "room1": [],
+      "room2": []
+    },
+    {
+      "name": "Complete Bipartite K_{2,4}",
+      "type": "complete_bipartite",
+      "partition_sizes": [
+        2,
+        4
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 6,
+      "graph_edges": 8,
+      "max_clique_size": 2,
+      "room1_size": 0,
+      "room2_size": 0,
+      "room1_max_clique": 1,
+      "room2_max_clique": 1,
+      "is_balanced": true,
+      "room1": [],
+      "room2": []
+    },
+    {
+      "name": "Complete Bipartite K_{3,3}",
+      "type": "complete_bipartite",
+      "partition_sizes": [
+        3,
+        3
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 6,
+      "graph_edges": 9,
+      "max_clique_size": 2,
+      "room1_size": 0,
+      "room2_size": 0,
+      "room1_max_clique": 1,
+      "room2_max_clique": 1,
+      "is_balanced": true,
+      "room1": [],
+      "room2": []
+    },
+    {
+      "name": "Complete Bipartite K_{4,4}",
+      "type": "complete_bipartite",
+      "partition_sizes": [
+        4,
+        4
+      ],
+      "strategy": "exhaustive",
+      "graph_size": 8,
+      "graph_edges": 16,
+      "max_clique_size": 2,
+      "room1_size": 0,
+      "room2_size": 0,
+      "room1_max_clique": 1,
+      "room2_max_clique": 1,
+      "is_balanced": true,
+      "room1": [],
+      "room2": []
+    },
+    {
+      "name": "Random Graph (n=6, embedded clique=4, trial=0)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 4,
+      "trial": 0,
+      "strategy": "exhaustive",
+      "graph_size": 6,
+      "graph_edges": 9,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Random Graph (n=7, embedded clique=4, trial=1)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 4,
+      "trial": 1,
+      "strategy": "exhaustive",
+      "graph_size": 7,
+      "graph_edges": 7,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Random Graph (n=6, embedded clique=4, trial=2)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 4,
+      "trial": 2,
+      "strategy": "exhaustive",
+      "graph_size": 6,
+      "graph_edges": 8,
+      "max_clique_size": 4,
+      "room1_size": 1,
+      "room2_size": 1,
+      "room1_max_clique": 2,
+      "room2_max_clique": 2,
+      "is_balanced": true,
+      "room1": [
+        1
+      ],
+      "room2": [
+        3
+      ]
+    },
+    {
+      "name": "Random Graph (n=12, embedded clique=6, trial=0)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 6,
+      "trial": 0,
+      "strategy": "exhaustive",
+      "graph_size": 12,
+      "graph_edges": 23,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 3,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "name": "Random Graph (n=9, embedded clique=6, trial=1)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 6,
+      "trial": 1,
+      "strategy": "exhaustive",
+      "graph_size": 9,
+      "graph_edges": 21,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 2,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "Random Graph (n=11, embedded clique=6, trial=2)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 6,
+      "trial": 2,
+      "strategy": "exhaustive",
+      "graph_size": 11,
+      "graph_edges": 23,
+      "max_clique_size": 6,
+      "room1_size": 2,
+      "room2_size": 3,
+      "room1_max_clique": 3,
+      "room2_max_clique": 3,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2
+      ],
+      "room2": [
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "name": "Random Graph (n=12, embedded clique=8, trial=0)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 8,
+      "trial": 0,
+      "strategy": "exhaustive",
+      "graph_size": 12,
+      "graph_edges": 38,
+      "max_clique_size": 8,
+      "room1_size": 3,
+      "room2_size": 3,
+      "room1_max_clique": 4,
+      "room2_max_clique": 4,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2,
+        3
+      ],
+      "room2": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "name": "Random Graph (n=11, embedded clique=8, trial=1)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 8,
+      "trial": 1,
+      "strategy": "exhaustive",
+      "graph_size": 11,
+      "graph_edges": 32,
+      "max_clique_size": 8,
+      "room1_size": 3,
+      "room2_size": 3,
+      "room1_max_clique": 4,
+      "room2_max_clique": 4,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2,
+        3
+      ],
+      "room2": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "name": "Random Graph (n=14, embedded clique=8, trial=2)",
+      "type": "random_with_clique",
+      "embedded_clique_size": 8,
+      "trial": 2,
+      "strategy": "greedy",
+      "graph_size": 14,
+      "graph_edges": 44,
+      "max_clique_size": 8,
+      "room1_size": 5,
+      "room2_size": 3,
+      "room1_max_clique": 4,
+      "room2_max_clique": 4,
+      "is_balanced": true,
+      "room1": [
+        1,
+        2,
+        3,
+        10,
+        12
+      ],
+      "room2": [
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 22,
+    "balanced_partitions_found": 22,
+    "success_rate": 1.0,
+    "all_balanced": true
+  },
+  "insights": [
+    "For complete graphs K_n (n even), splitting vertices evenly gives balanced partition",
+    "For disjoint cliques, the greedy strategy of splitting the largest clique works",
+    "The key insight: any maximum clique must be split evenly between the two rooms",
+    "If max clique size is 2k, each room can have at most k from any maximum clique",
+    "This guarantees neither room has a clique larger than k"
+  ],
+  "metrics": {
+    "runtime_ms": 51.91,
+    "status": "success"
+  }
+}

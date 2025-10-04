@@ -1,0 +1,5352 @@
+{
+  "problem": "IMO 2012 Problem 3: The Liar's Guessing Game",
+  "part_a": {
+    "statement": "If n >= 2^k, then B can guarantee a win",
+    "results": [
+      {
+        "k": 1,
+        "N": 2,
+        "x": 1,
+        "num_questions": 2,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ],
+        "answers": [
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          2
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 2,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 2,
+        "win_rate": 1.0
+      },
+      {
+        "k": 1,
+        "N": 2,
+        "x": 1,
+        "num_questions": 2,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ],
+        "answers": [
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          2
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 2,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 2,
+        "win_rate": 1.0
+      },
+      {
+        "k": 1,
+        "N": 2,
+        "x": 2,
+        "num_questions": 2,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ],
+        "answers": [
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 2,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 2,
+        "win_rate": 1.0
+      },
+      {
+        "k": 1,
+        "N": 3,
+        "x": 1,
+        "num_questions": 4,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          3
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 2,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 3,
+        "win_rate": 0.6666666666666666
+      },
+      {
+        "k": 1,
+        "N": 3,
+        "x": 1,
+        "num_questions": 4,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          3
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 2,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 3,
+        "win_rate": 0.6666666666666666
+      },
+      {
+        "k": 1,
+        "N": 3,
+        "x": 3,
+        "num_questions": 4,
+        "questions": [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2,
+          3
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 2,
+        "b_wins": false,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 2,
+        "total_tests": 3,
+        "win_rate": 0.6666666666666666
+      },
+      {
+        "k": 1,
+        "N": 7,
+        "x": 1,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          5,
+          7
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 2,
+        "b_wins": false,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 0,
+        "total_tests": 7,
+        "win_rate": 0.0
+      },
+      {
+        "k": 1,
+        "N": 7,
+        "x": 3,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          3,
+          5,
+          6,
+          7
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 2,
+        "b_wins": false,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 0,
+        "total_tests": 7,
+        "win_rate": 0.0
+      },
+      {
+        "k": 1,
+        "N": 7,
+        "x": 7,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            2,
+            4,
+            6
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 2,
+        "b_wins": false,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 0,
+        "total_tests": 7,
+        "win_rate": 0.0
+      },
+      {
+        "k": 2,
+        "N": 4,
+        "x": 1,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          3,
+          4
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 4,
+        "total_tests": 4,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 4,
+        "x": 2,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          2,
+          3,
+          4
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 4,
+        "total_tests": 4,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 4,
+        "x": 4,
+        "num_questions": 6,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2,
+          4
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 4,
+        "total_tests": 4,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 5,
+        "x": 1,
+        "num_questions": 9,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          5
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 5,
+        "total_tests": 5,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 5,
+        "x": 2,
+        "num_questions": 9,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          2
+        ],
+        "final_set_size": 1,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 5,
+        "total_tests": 5,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 5,
+        "x": 5,
+        "num_questions": 9,
+        "questions": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 5,
+        "total_tests": 5,
+        "win_rate": 1.0
+      },
+      {
+        "k": 2,
+        "N": 9,
+        "x": 1,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          9
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 9,
+        "win_rate": 0.8888888888888888
+      },
+      {
+        "k": 2,
+        "N": 9,
+        "x": 4,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          4
+        ],
+        "final_set_size": 1,
+        "max_allowed_size": 4,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 9,
+        "win_rate": 0.8888888888888888
+      },
+      {
+        "k": 2,
+        "N": 9,
+        "x": 9,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          5,
+          7,
+          8,
+          9
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 4,
+        "b_wins": false,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 9,
+        "win_rate": 0.8888888888888888
+      },
+      {
+        "k": 3,
+        "N": 8,
+        "x": 1,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          5,
+          7,
+          8
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 8,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 8,
+        "x": 4,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          4,
+          5,
+          6,
+          8
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 8,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 8,
+        "x": 8,
+        "num_questions": 12,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 8,
+        "total_tests": 8,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 9,
+        "x": 1,
+        "num_questions": 16,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          9
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 9,
+        "total_tests": 9,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 9,
+        "x": 4,
+        "num_questions": 16,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          4
+        ],
+        "final_set_size": 1,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 9,
+        "total_tests": 9,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 9,
+        "x": 9,
+        "num_questions": 16,
+        "questions": [
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            2,
+            4,
+            6
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            3,
+            4,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            8,
+            5,
+            6,
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          5,
+          7,
+          8,
+          9
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 9,
+        "total_tests": 9,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 13,
+        "x": 1,
+        "num_questions": 16,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          9,
+          13
+        ],
+        "final_set_size": 3,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 13,
+        "total_tests": 13,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 13,
+        "x": 6,
+        "num_questions": 16,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          6,
+          10,
+          11,
+          12
+        ],
+        "final_set_size": 4,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 13,
+        "total_tests": 13,
+        "win_rate": 1.0
+      },
+      {
+        "k": 3,
+        "N": 13,
+        "x": 13,
+        "num_questions": 16,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          3,
+          4,
+          5,
+          13
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 8,
+        "b_wins": true,
+        "strategy": "optimal",
+        "all_x_tested": true,
+        "total_wins": 13,
+        "total_tests": 13,
+        "win_rate": 1.0
+      },
+      {
+        "k": 4,
+        "N": 16,
+        "x": 1,
+        "num_questions": 20,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          9,
+          13,
+          15,
+          16
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 16,
+        "x": 8,
+        "num_questions": 20,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          8,
+          9,
+          10,
+          12,
+          16
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 16,
+        "x": 16,
+        "num_questions": 20,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ],
+        "final_set_size": 5,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 17,
+        "x": 1,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          17
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 17,
+        "x": 8,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          8
+        ],
+        "final_set_size": 1,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 17,
+        "x": 17,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ],
+          [
+            17
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          1,
+          9,
+          13,
+          15,
+          16,
+          17
+        ],
+        "final_set_size": 6,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 21,
+        "x": 1,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          1,
+          17
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 21,
+        "x": 10,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        ],
+        "answers": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "possible_values": [
+          10,
+          18
+        ],
+        "final_set_size": 2,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      },
+      {
+        "k": 4,
+        "N": 21,
+        "x": 21,
+        "num_questions": 25,
+        "questions": [
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            3,
+            4,
+            7,
+            8,
+            11,
+            12,
+            15,
+            16,
+            19,
+            20
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            5,
+            6,
+            7,
+            8,
+            13,
+            14,
+            15,
+            16,
+            21
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        ],
+        "answers": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "possible_values": [
+          5,
+          9,
+          11,
+          12,
+          13,
+          21
+        ],
+        "final_set_size": 6,
+        "max_allowed_size": 16,
+        "b_wins": true,
+        "strategy": "optimal"
+      }
+    ]
+  },
+  "part_b": {
+    "statement": "For large k, exists n >= (1.99)^k where B cannot guarantee a win",
+    "results": [
+      {
+        "k": 2,
+        "lower_bound_1.99^k": 3,
+        "threshold_2^k": 4,
+        "gap": 1,
+        "ratio": 1.3333333333333333
+      },
+      {
+        "k": 3,
+        "lower_bound_1.99^k": 7,
+        "threshold_2^k": 8,
+        "gap": 1,
+        "ratio": 1.1428571428571428
+      },
+      {
+        "k": 4,
+        "lower_bound_1.99^k": 15,
+        "threshold_2^k": 16,
+        "gap": 1,
+        "ratio": 1.0666666666666667
+      },
+      {
+        "k": 5,
+        "lower_bound_1.99^k": 31,
+        "threshold_2^k": 32,
+        "gap": 1,
+        "ratio": 1.032258064516129
+      },
+      {
+        "k": 6,
+        "lower_bound_1.99^k": 62,
+        "threshold_2^k": 64,
+        "gap": 2,
+        "ratio": 1.032258064516129
+      },
+      {
+        "k": 7,
+        "lower_bound_1.99^k": 123,
+        "threshold_2^k": 128,
+        "gap": 5,
+        "ratio": 1.0406504065040652
+      },
+      {
+        "k": 8,
+        "lower_bound_1.99^k": 245,
+        "threshold_2^k": 256,
+        "gap": 11,
+        "ratio": 1.0448979591836736
+      }
+    ]
+  },
+  "examples": [
+    {
+      "k": 1,
+      "N": 4,
+      "x": 1,
+      "num_questions": 4,
+      "questions": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "answers": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "possible_values": [
+        1,
+        3,
+        4
+      ],
+      "final_set_size": 3,
+      "max_allowed_size": 2,
+      "b_wins": false,
+      "strategy": "optimal"
+    },
+    {
+      "k": 1,
+      "N": 4,
+      "x": 2,
+      "num_questions": 4,
+      "questions": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "answers": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "possible_values": [
+        2,
+        3,
+        4
+      ],
+      "final_set_size": 3,
+      "max_allowed_size": 2,
+      "b_wins": false,
+      "strategy": "optimal"
+    },
+    {
+      "k": 1,
+      "N": 4,
+      "x": 3,
+      "num_questions": 4,
+      "questions": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "answers": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "possible_values": [
+        1,
+        2,
+        3
+      ],
+      "final_set_size": 3,
+      "max_allowed_size": 2,
+      "b_wins": false,
+      "strategy": "optimal"
+    },
+    {
+      "k": 1,
+      "N": 4,
+      "x": 4,
+      "num_questions": 4,
+      "questions": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "answers": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "possible_values": [
+        1,
+        2,
+        4
+      ],
+      "final_set_size": 3,
+      "max_allowed_size": 2,
+      "b_wins": false,
+      "strategy": "optimal"
+    },
+    {
+      "k": 2,
+      "N": 8,
+      "x": 1,
+      "num_questions": 9,
+      "questions": [
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ]
+      ],
+      "answers": [
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      "possible_values": [
+        1,
+        5,
+        7,
+        8
+      ],
+      "final_set_size": 4,
+      "max_allowed_size": 4,
+      "b_wins": true,
+      "strategy": "optimal"
+    },
+    {
+      "k": 2,
+      "N": 8,
+      "x": 4,
+      "num_questions": 9,
+      "questions": [
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ]
+      ],
+      "answers": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false
+      ],
+      "possible_values": [
+        4,
+        5,
+        6,
+        8
+      ],
+      "final_set_size": 4,
+      "max_allowed_size": 4,
+      "b_wins": true,
+      "strategy": "optimal"
+    },
+    {
+      "k": 2,
+      "N": 8,
+      "x": 8,
+      "num_questions": 9,
+      "questions": [
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          2,
+          4,
+          6
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          3,
+          4,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          5,
+          6,
+          7
+        ]
+      ],
+      "answers": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true
+      ],
+      "possible_values": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "final_set_size": 4,
+      "max_allowed_size": 4,
+      "b_wins": true,
+      "strategy": "optimal"
+    },
+    {
+      "k": 3,
+      "N": 16,
+      "x": 10,
+      "num_questions": 16,
+      "questions": [
+        [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        [
+          3,
+          4,
+          7,
+          8,
+          11,
+          12,
+          15,
+          16
+        ],
+        [
+          3,
+          4,
+          7,
+          8,
+          11,
+          12,
+          15,
+          16
+        ],
+        [
+          3,
+          4,
+          7,
+          8,
+          11,
+          12,
+          15,
+          16
+        ],
+        [
+          3,
+          4,
+          7,
+          8,
+          11,
+          12,
+          15,
+          16
+        ],
+        [
+          5,
+          6,
+          7,
+          8,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          5,
+          6,
+          7,
+          8,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          5,
+          6,
+          7,
+          8,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          5,
+          6,
+          7,
+          8,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      ],
+      "answers": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "possible_values": [
+        2,
+        6,
+        7,
+        8,
+        10
+      ],
+      "final_set_size": 5,
+      "max_allowed_size": 8,
+      "b_wins": true,
+      "strategy": "optimal"
+    }
+  ],
+  "theoretical_bounds": [
+    {
+      "k": 1,
+      "2^k": 2,
+      "1.99^k": 1.99,
+      "gap": 0.010000000000000009
+    },
+    {
+      "k": 2,
+      "2^k": 4,
+      "1.99^k": 3.9601,
+      "gap": 0.039899999999999824
+    },
+    {
+      "k": 3,
+      "2^k": 8,
+      "1.99^k": 7.880599,
+      "gap": 0.11940099999999987
+    },
+    {
+      "k": 4,
+      "2^k": 16,
+      "1.99^k": 15.68239201,
+      "gap": 0.31760799000000084
+    },
+    {
+      "k": 5,
+      "2^k": 32,
+      "1.99^k": 31.2079600999,
+      "gap": 0.7920399001000007
+    },
+    {
+      "k": 6,
+      "2^k": 64,
+      "1.99^k": 62.103840598801,
+      "gap": 1.8961594011990002
+    },
+    {
+      "k": 7,
+      "2^k": 128,
+      "1.99^k": 123.58664279161398,
+      "gap": 4.413357208386017
+    },
+    {
+      "k": 8,
+      "2^k": 256,
+      "1.99^k": 245.93741915531183,
+      "gap": 10.06258084468817
+    },
+    {
+      "k": 9,
+      "2^k": 512,
+      "1.99^k": 489.4154641190705,
+      "gap": 22.58453588092948
+    },
+    {
+      "k": 10,
+      "2^k": 1024,
+      "1.99^k": 973.9367735969504,
+      "gap": 50.06322640304961
+    }
+  ],
+  "insights": [
+    "Part (a) shows that 2^k possibilities can always be distinguished with the lying constraint",
+    "The key is that in k+1 questions, at least one answer is truthful",
+    "Part (b) shows there's a gap between (1.99)^k and 2^k where the problem is non-trivial",
+    "For small k, 2^k grows faster than 1.99^k, creating a significant gap"
+  ],
+  "metrics": {
+    "runtime_ms": 34.55,
+    "status": "success"
+  }
+}

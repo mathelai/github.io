@@ -1,0 +1,241 @@
+{
+  "problem_statement": {
+    "description": "Colombian configuration with 2013 red and 2014 blue points",
+    "question": "Find the least value of k such that for any Colombian configuration, there is a good arrangement of k lines"
+  },
+  "answer": 2013,
+  "small_cases": [
+    {
+      "num_red": 1,
+      "num_blue": 2,
+      "total_points": 3,
+      "theoretical_minimum": 1,
+      "greedy_lines": 1,
+      "pattern": "k = min(1, 2) = 1"
+    },
+    {
+      "num_red": 2,
+      "num_blue": 3,
+      "total_points": 5,
+      "theoretical_minimum": 2,
+      "greedy_lines": 2,
+      "pattern": "k = min(2, 3) = 2"
+    },
+    {
+      "num_red": 3,
+      "num_blue": 4,
+      "total_points": 7,
+      "theoretical_minimum": 3,
+      "greedy_lines": 3,
+      "pattern": "k = min(3, 4) = 3"
+    },
+    {
+      "num_red": 4,
+      "num_blue": 5,
+      "total_points": 9,
+      "theoretical_minimum": 4,
+      "greedy_lines": 4,
+      "pattern": "k = min(4, 5) = 4"
+    },
+    {
+      "num_red": 5,
+      "num_blue": 6,
+      "total_points": 11,
+      "theoretical_minimum": 5,
+      "greedy_lines": 5,
+      "pattern": "k = min(5, 6) = 5"
+    },
+    {
+      "num_red": 10,
+      "num_blue": 11,
+      "total_points": 21,
+      "theoretical_minimum": 10,
+      "greedy_lines": 10,
+      "pattern": "k = min(10, 11) = 10"
+    },
+    {
+      "num_red": 20,
+      "num_blue": 21,
+      "total_points": 41,
+      "theoretical_minimum": 20,
+      "greedy_lines": 20,
+      "pattern": "k = min(20, 21) = 20"
+    }
+  ],
+  "colombian_configuration": {
+    "problem": "Colombian Configuration",
+    "num_red": 2013,
+    "num_blue": 2014,
+    "total_points": 4027,
+    "theoretical_minimum": 2013,
+    "answer": 2013,
+    "explanation": "For a Colombian configuration with 2013 red points and 2014 blue points, we need at least 2013 lines. This is because in the worst case, we need to isolate each point of the smaller color from all points of the other color.",
+    "sample_red_points": [
+      [
+        1.1179154631853367,
+        -1.7774443792321637
+      ],
+      [
+        11.95943966205439,
+        3.146130424901705
+      ],
+      [
+        19.37835427942597,
+        -2.2003606727608367
+      ],
+      [
+        26.232171522539577,
+        1.2535696502965072
+      ],
+      [
+        37.82245154471316,
+        2.476093529390419
+      ]
+    ],
+    "sample_blue_points": [
+      [
+        291.0127011751865,
+        309.8429080798129
+      ],
+      [
+        297.60209762147696,
+        313.74163904613044
+      ],
+      [
+        306.16906299410437,
+        306.44679004870625
+      ],
+      [
+        318.6486322115868,
+        310.89412064962244
+      ],
+      [
+        330.90887568657485,
+        309.5164785907181
+      ]
+    ]
+  },
+  "upper_bound_proof": {
+    "theorem": "Upper Bound",
+    "statement": "For any Colombian configuration, 2013 lines are sufficient.",
+    "proof_sketch": [
+      "For each of the 2013 red points r_i, we construct a line L_i that separates r_i from all blue points.",
+      "This is possible because no three points are collinear.",
+      "For each red point r_i, consider the 2014 blue points.",
+      "We can draw a line that has r_i on one side and all 2014 blue points on the other.",
+      "After drawing all 2013 such lines, each region contains at most red points (no blue points mixed with red).",
+      "Therefore, 2013 lines suffice."
+    ]
+  },
+  "lower_bound_proof": {
+    "theorem": "Lower Bound",
+    "statement": "For some Colombian configurations, at least 2013 lines are necessary.",
+    "proof_sketch": [
+      "Consider a configuration where red and blue points are \"maximally mixed\".",
+      "Place points on two concentric circles: red points on inner circle, blue points on outer circle.",
+      "For this configuration, we need to separate each red point from the blue points surrounding it.",
+      "Each line can separate at most one red point from all blue points.",
+      "Therefore, we need at least 2013 lines.",
+      "This shows that k >= 2013."
+    ],
+    "worst_case_example": "Concentric circles with red inside, blue outside"
+  },
+  "visualization_data": {
+    "red_points": [
+      [
+        50.0,
+        55.88991449194787
+      ],
+      [
+        191.19791242860998,
+        64.7570175555647
+      ],
+      [
+        272.1127403991907,
+        51.36782703651605
+      ],
+      [
+        315.255089027603,
+        57.82683590260305
+      ],
+      [
+        423.1469025738837,
+        50.0
+      ],
+      [
+        107.40888836107533,
+        122.74407460180765
+      ],
+      [
+        132.7159754410564,
+        151.32209046272203
+      ],
+      [
+        271.6662563669448,
+        136.29911160245723
+      ],
+      [
+        313.18845584097426,
+        148.66175935188343
+      ],
+      [
+        404.4235538994439,
+        164.7111790559838
+      ]
+    ],
+    "blue_points": [
+      [
+        93.02534891900889,
+        242.24035994336847
+      ],
+      [
+        163.79688279701205,
+        221.8593957530395
+      ],
+      [
+        265.5420862740659,
+        252.5919970312939
+      ],
+      [
+        343.1832369872248,
+        219.63104841181107
+      ],
+      [
+        388.18948232653656,
+        235.48309218396707
+      ],
+      [
+        59.19979878312274,
+        323.0399416648183
+      ],
+      [
+        154.39492326715722,
+        317.1561117334412
+      ],
+      [
+        276.3560273771576,
+        348.2998425126558
+      ],
+      [
+        341.34658888710516,
+        313.4541354519186
+      ],
+      [
+        450.0,
+        331.36582547900497
+      ],
+      [
+        55.63176496486971,
+        382.41248954178906
+      ]
+    ],
+    "num_red": 10,
+    "num_blue": 11,
+    "min_lines_needed": 10
+  },
+  "key_insight": "The answer is min(num_red, num_blue) = min(2013, 2014) = 2013. Each line can separate at most one point of the minority color from all points of the majority color, so we need exactly 2013 lines in the worst case.",
+  "metrics": {
+    "runtime_ms": 26.86,
+    "status": "success"
+  }
+}

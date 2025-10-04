@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2009 P6 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid #E2E8F0;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            text-align: center;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        header .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 15px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            margin: 25px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #7A9D8F;
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-statement p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            padding: 25px;
+        }
+        .panel {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .panel h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #7A9D8F;
+        }
+        .controls {
+            grid-column: 1 / -1;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #7A9D8F;
+        }
+        .input-group small {
+            display: block;
+            margin-top: 5px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius:  8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #7A9D8F;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5A8070;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .visualization {
+            min-height: 400px;
+            position: relative;
+        }
+        .number-line {
+            margin: 40px 0;
+            position: relative;
+        }
+        .line {
+            height: 3px;
+            background: #dee2e6;
+            position: relative;
+            margin: 20px 0;
+        }
+        .position {
+            position: absolute;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .position-marker {
+            width: 12px;
+            height: 12px;
+            background: #7A9D8F;
+            border-radius: 50%;
+            margin: 0 auto 5px;
+            position: relative;
+            top: -5px;
+        }
+        .position-marker.forbidden {
+            background: #dc3545;
+        }
+        .position-marker.landing {
+            background: #28a745;
+            width: 16px;
+            height: 16px;
+            top: -7px;
+        }
+        .position-marker.collision {
+            background: #ffc107;
+            width: 16px;
+            height: 16px;
+            top: -7px;
+        }
+        .position-label {
+            font-size: 0.85em;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .jump-arrow {
+            position: absolute;
+            top: -30px;
+            height: 30px;
+            border-left: 2px solid #7A9D8F;
+            border-right: 2px solid #7A9D8F;
+            border-top: 2px solid #7A9D8F;
+        }
+        .jump-label {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #7A9D8F;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+        .info-box {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .info-box h4 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.warning {
+            background: #F5F7FA;
+            color: #856404;
+        }
+        .results-table {
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        .results-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .results-table th {
+            background: #7A9D8F;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .results-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .results-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .ground-truth {
+            grid-column: 1 / -1;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .example-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .example-card:hover {
+            border-color: #7A9D8F;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+        .example-card h4 {
+            color: #7A9D8F;
+            margin-bottom: 8px;
+        }
+        .example-card .data {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--text-primary);
+        }
+        .insights {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .insights h4 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+        }
+        .insights ul {
+            list-style-position: inside;
+            line-height: 1.8;
+        }
+        .insights li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .animation-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+        .animation-controls button {
+            flex: 0 0 auto;
+            padding: 8px 16px;
+        }
+        .step-indicator {
+            font-weight: 600;
+            color: #7A9D8F;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header class="header">
+            <h1>IMO 2009 Problem 6</h1>
+            <p>Grasshopper</p>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>
+                Let <em>a₁, a₂, ..., aₙ</em> be distinct positive integers and let <em>M</em> be a set of
+                <em>n-1</em> positive integers not containing <em>s = a₁ + a₂ + ... + aₙ</em>.
+            </p>
+            <p>
+                A grasshopper is to jump along the real axis, starting at the point 0 and making
+                <em>n</em> jumps to the right with lengths <em>a₁, a₂, ..., aₙ</em> in some order.
+            </p>
+            <p>
+                <strong>Prove that the order can be chosen in such a way that the grasshopper never
+                lands on any point in M.</strong>
+            </p>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value">The statement is <strong>TRUE<strong>. For any choice of distinct positive integers $a_1, a_2, \ldots, a_n$ and any set $M$ of $n-1$ positive integers not containing their sum $s$, there exists an ordering of the jumps such that no intermediate landing position belongs to $M$.</div>
+        </div>
+        <div class="main-content">
+            <div class="panel controls">
+                <h3>Simulation Controls</h3>
+                <div class="input-group">
+                    <label>Jump Lengths (comma-separated distinct positive integers):</label>
+                    <input type="text" id="jumps" value="1, 2, 3, 4, 5" placeholder="e.g., 1, 2, 3, 4">
+                    <small>Enter n distinct positive integers</small>
+                </div>
+                <div class="input-group">
+                    <label>Forbidden Positions M (comma-separated):</label>
+                    <input type="text" id="forbidden" value="3, 6, 9, 12" placeholder="e.g., 2, 5, 7">
+                    <small>Enter at most n-1 positions (not including the sum)</small>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="runSimulation()">Find Valid Ordering</button>
+                    <button class="btn-secondary" onclick="generateRandom()">Random Example</button>
+                    <button class="btn-success" onclick="loadExample()">Load Example</button>
+                </div>
+            </div>
+            <div class="panel">
+                <h3>Current Configuration</h3>
+                <div id="config-info"></div>
+            </div>
+            <div class="panel">
+                <h3>Solution Status</h3>
+                <div id="solution-status"></div>
+            </div>
+            <div class="panel visualization">
+                <h3>Visualization</h3>
+                <div id="viz-area"></div>
+                <div class="animation-controls" id="animation-controls" style="display: none;">
+                    <button class="btn-secondary" onclick="animateStep(-1)">◀ Prev</button>
+                    <button class="btn-secondary" onclick="animateStep(1)">Next ▶</button>
+                    <button class="btn-primary" onclick="playAnimation()">▶ Play</button>
+                    <button class="btn-secondary" onclick="resetAnimation()">Reset</button>
+                    <span class="step-indicator" id="step-indicator"></span>
+                </div>
+            </div>
+            <div class="panel ground-truth">
+                <h3>Ground Truth Data</h3>
+                <div id="ground-truth"></div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Ground truth data loaded from simulation results
+        const GROUND_TRUTH = {
+            "test_cases": [],
+            "statistics": {
+                "total_cases": 60,
+                "solved_cases": 60,
+                "unsolved_cases": 0
+            },
+            "specific_examples": [
+                {
+                    "name": "Simple example (n=3)",
+                    "jumps": [1, 2, 3],
+                    "forbidden": [2, 4],
+                    "total_sum": 6,
+                    "ordering": [1, 2, 3],
+                    "positions": [1, 3, 6]
+                },
+                {
+                    "name": "Four jumps",
+                    "jumps": [1, 2, 3, 4],
+                    "forbidden": [2, 4, 7],
+                    "total_sum": 10,
+                    "ordering": [1, 2, 3, 4],
+                    "positions": [1, 3, 6, 10]
+                },
+                {
+                    "name": "Consecutive jumps",
+                    "jumps": [1, 2, 3, 4, 5],
+                    "forbidden": [9, 3, 12, 6],
+                    "total_sum": 15,
+                    "ordering": [1, 3, 4, 2, 5],
+                    "positions": [1, 4, 8, 10, 15]
+                }
+            ],
+            "proof_insights": [
+                "The problem always has a solution (the theorem to prove).",
+                "There are at most n-1 forbidden positions but n! possible orderings.",
+                "Each ordering creates n-1 intermediate positions (excluding start and final).",
+                "The constraint |M| = n-1 is crucial - there are 'enough' orderings.",
+                "A greedy/constructive approach often works: choose jumps to avoid forbidden positions.",
+                "The final position (sum of all jumps) is guaranteed not to be in M.",
+                "Different orderings create different sets of intermediate positions."
+            ]
+        };
+        let currentAnimation = {
+            ordering: [],
+            step: 0,
+            interval: null
+        };
+        function parseInput(str) {
+            return str.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x) && x > 0);
+        }
+        function findValidOrdering(jumps, forbidden) {
+            const forbiddenSet = new Set(forbidden);
+            function backtrack(remaining, currentSum, path) {
+                if (remaining.length === 0) {
+                    return path;
+                }
+                for (let i = 0; i < remaining.length; i++) {
+                    const jump = remaining[i];
+                    const nextSum = currentSum + jump;
+                    // Check if this would land on forbidden (unless it's the final jump)
+                    if (remaining.length > 1 && forbiddenSet.has(nextSum)) {
+                        continue;
+                    }
+                    const newRemaining = [...remaining.slice(0, i), ...remaining.slice(i + 1)];
+                    const result = backtrack(newRemaining, nextSum, [...path, jump]);
+                    if (result !== null) {
+                        return result;
+                    }
+                }
+                return null;
+            }
+            return backtrack(jumps, 0, []);
+        }
+        function computePartialSums(ordering) {
+            const sums = [];
+            let current = 0;
+            for (const jump of ordering) {
+                current += jump;
+                sums.push(current);
+            }
+            return sums;
+        }
+        function visualizeJumps(ordering, forbidden) {
+            if (!ordering || ordering.length === 0) {
+                return '<p>No valid ordering found or invalid input.</p>';
+            }
+            const positions = computePartialSums(ordering);
+            const maxPos = positions[positions.length - 1];
+            const forbiddenSet = new Set(forbidden);
+            let html = '<div class="number-line">';
+            html += '<div class="line" style="width: 100%;">';
+            // Add start position
+            html += `<div class="position" style="left: 0%;">
+                <div class="position-marker"></div>
+                <div class="position-label">0</div>
+            </div>`;
+            // Add all positions
+            positions.forEach((pos, idx) => {
+                const percent = (pos / maxPos) * 100;
+                const isLanding = idx < positions.length - 1;
+                const isForbidden = forbiddenSet.has(pos);
+                const isCollision = isLanding && isForbidden;
+                let markerClass = 'position-marker';
+                if (isCollision) markerClass += ' collision';
+                else if (isLanding) markerClass += ' landing';
+                html += `<div class="position" style="left: ${percent}%;">
+                    <div class="${markerClass}"></div>
+                    <div class="position-label">${pos}</div>
+                </div>`;
+            });
+            // Add forbidden positions that aren't landing sites
+            forbidden.forEach(pos => {
+                if (pos <= maxPos && !positions.includes(pos)) {
+                    const percent = (pos / maxPos) * 100;
+                    html += `<div class="position" style="left: ${percent}%;">
+                        <div class="position-marker forbidden"></div>
+                        <div class="position-label">${pos}</div>
+                    </div>`;
+                }
+            });
+            html += '</div>';
+            // Add jump arrows
+            let currentPos = 0;
+            ordering.forEach((jump, idx) => {
+                const nextPos = currentPos + jump;
+                const startPercent = (currentPos / maxPos) * 100;
+                const endPercent = (nextPos / maxPos) * 100;
+                const width = endPercent - startPercent;
+                html += `<div class="jump-arrow" style="left: ${startPercent}%; width: ${width}%;">
+                    <div class="jump-label">+${jump}</div>
+                </div>`;
+                currentPos = nextPos;
+            });
+            html += '</div>';
+            // Add legend
+            html += `<div class="info-box">
+                <h4>Legend:</h4>
+                <p><span style="color: #7A9D8F;">●</span> Start position (0)</p>
+                <p><span style="color: #28a745;">●</span> Landing positions (intermediate)</p>
+                <p><span style="color: #dc3545;">●</span> Forbidden positions</p>
+                <p><span style="color: #ffc107;">●</span> Collision (landing on forbidden)</p>
+            </div>`;
+            return html;
+        }
+        function runSimulation() {
+            const jumpsInput = document.getElementById('jumps').value;
+            const forbiddenInput = document.getElementById('forbidden').value;
+            const jumps = parseInput(jumpsInput);
+            const forbidden = parseInput(forbiddenInput);
+            // Validate input
+            if (jumps.length === 0) {
+                alert('Please enter valid jump lengths');
+                return;
+            }
+            const uniqueJumps = [...new Set(jumps)];
+            if (uniqueJumps.length !== jumps.length) {
+                alert('Jump lengths must be distinct!');
+                return;
+            }
+            const total = jumps.reduce((a, b) => a + b, 0);
+            if (forbidden.includes(total)) {
+                alert(`The sum ${total} cannot be in the forbidden set M!`);
+                return;
+            }
+            if (forbidden.length > jumps.length - 1) {
+                alert(`M can have at most n-1 = ${jumps.length - 1} elements!`);
+                return;
+            }
+            // Display configuration
+            const configHtml = `
+                <div class="info-box">
+                    <h4>Input Data:</h4>
+                    <p><strong>n =</strong> ${jumps.length}</p>
+                    <p><strong>Jumps:</strong> [${jumps.join(', ')}]</p>
+                    <p><strong>Sum:</strong> ${total}</p>
+                    <p><strong>Forbidden M:</strong> {${forbidden.join(', ')}}</p>
+                    <p><strong>|M| =</strong> ${forbidden.length} (max allowed: ${jumps.length - 1})</p>
+                </div>
+            `;
+            document.getElementById('config-info').innerHTML = configHtml;
+            // Find valid ordering
+            const ordering = findValidOrdering(jumps, forbidden);
+            // Display solution status
+            let statusHtml = '';
+            if (ordering) {
+                const positions = computePartialSums(ordering);
+                const intermediatePositions = positions.slice(0, -1);
+                const collisions = intermediatePositions.filter(p => forbidden.includes(p));
+                statusHtml = `
+                    <div class="info-box">
+                        <h4>Solution Found! <span class="status success">Valid</span></h4>
+                        <p><strong>Ordering:</strong> [${ordering.join(', ')}]</p>
+                        <p><strong>Positions:</strong> [${positions.join(', ')}]</p>
+                        <p><strong>Intermediate positions:</strong> [${intermediatePositions.join(', ')}]</p>
+                        <p><strong>Collisions with M:</strong> ${collisions.length === 0 ? 'None ✓' : collisions.join(', ')}</p>
+                        ${collisions.length === 0 ? '<p class="status success">No forbidden positions hit!</p>' : '<p class="status error">Invalid solution!</p>'}
+                    </div>
+                `;
+                // Setup animation
+                currentAnimation.ordering = ordering;
+                currentAnimation.step = 0;
+                document.getElementById('animation-controls').style.display = 'flex';
+                updateStepIndicator();
+            } else {
+                statusHtml = `
+                    <div class="info-box">
+                        <h4>No Solution Found <span class="status error">Failed</span></h4>
+                        <p>The algorithm couldn't find a valid ordering. This might indicate an error in the input or algorithm.</p>
+                    </div>
+                `;
+                document.getElementById('animation-controls').style.display = 'none';
+            }
+            document.getElementById('solution-status').innerHTML = statusHtml;
+            // Visualize
+            const vizHtml = visualizeJumps(ordering, forbidden);
+            document.getElementById('viz-area').innerHTML = vizHtml;
+        }
+        function generateRandom() {
+            const n = Math.floor(Math.random() * 5) + 3; // n between 3 and 7
+            const maxVal = n * 10;
+            // Generate distinct jumps
+            const jumps = [];
+            while (jumps.length < n) {
+                const val = Math.floor(Math.random() * maxVal) + 1;
+                if (!jumps.includes(val)) {
+                    jumps.push(val);
+                }
+            }
+            const total = jumps.reduce((a, b) => a + b, 0);
+            // Generate forbidden set
+            const forbidden = [];
+            const numForbidden = Math.min(n - 1, Math.floor(Math.random() * (n - 1)) + 1);
+            while (forbidden.length < numForbidden) {
+                const val = Math.floor(Math.random() * total) + 1;
+                if (val !== total && !forbidden.includes(val)) {
+                    forbidden.push(val);
+                }
+            }
+            document.getElementById('jumps').value = jumps.join(', ');
+            document.getElementById('forbidden').value = forbidden.join(', ');
+            runSimulation();
+        }
+        function loadExample() {
+            const examples = GROUND_TRUTH.specific_examples;
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('jumps').value = example.jumps.join(', ');
+            document.getElementById('forbidden').value = example.forbidden.join(', ');
+            runSimulation();
+        }
+        function updateStepIndicator() {
+            const indicator = document.getElementById('step-indicator');
+            indicator.textContent = `Step ${currentAnimation.step} / ${currentAnimation.ordering.length}`;
+        }
+        function animateStep(direction) {
+            currentAnimation.step = Math.max(0, Math.min(currentAnimation.ordering.length, currentAnimation.step + direction));
+            updateStepIndicator();
+            // Visualize up to current step
+            const partialOrdering = currentAnimation.ordering.slice(0, currentAnimation.step);
+            const forbidden = parseInput(document.getElementById('forbidden').value);
+            if (partialOrdering.length > 0) {
+                const vizHtml = visualizeJumps(partialOrdering, forbidden);
+                document.getElementById('viz-area').innerHTML = vizHtml;
+            } else {
+                document.getElementById('viz-area').innerHTML = '<p>Starting position: 0</p>';
+            }
+        }
+        function playAnimation() {
+            if (currentAnimation.interval) {
+                clearInterval(currentAnimation.interval);
+                currentAnimation.interval = null;
+                return;
+            }
+            currentAnimation.step = 0;
+            currentAnimation.interval = setInterval(() => {
+                if (currentAnimation.step >= currentAnimation.ordering.length) {
+                    clearInterval(currentAnimation.interval);
+                    currentAnimation.interval = null;
+                    return;
+                }
+                animateStep(1);
+            }, 1000);
+        }
+        function resetAnimation() {
+            if (currentAnimation.interval) {
+                clearInterval(currentAnimation.interval);
+                currentAnimation.interval = null;
+            }
+            currentAnimation.step = 0;
+            updateStepIndicator();
+            const forbidden = parseInput(document.getElementById('forbidden').value);
+            const vizHtml = visualizeJumps(currentAnimation.ordering, forbidden);
+            document.getElementById('viz-area').innerHTML = vizHtml;
+        }
+        // Display ground truth data
+        function displayGroundTruth() {
+            let html = `
+                <div class="info-box">
+                    <h4>Simulation Statistics</h4>
+                    <p><strong>Total test cases:</strong> ${GROUND_TRUTH.statistics.total_cases}</p>
+                    <p><strong>Solved:</strong> ${GROUND_TRUTH.statistics.solved_cases}
+                       <span class="status success">100% success rate</span></p>
+                </div>
+            `;
+            html += '<h4 style="margin-top: 20px; color: #7A9D8F;">Example Cases:</h4>';
+            GROUND_TRUTH.specific_examples.forEach((example, idx) => {
+                html += `
+                    <div class="example-card" onclick="loadSpecificExample(${idx})">
+                        <h4>${example.name}</h4>
+                        <div class="data">
+                            <p>Jumps: [${example.jumps.join(', ')}]</p>
+                            <p>Forbidden: {${example.forbidden.join(', ')}}</p>
+                            <p>Solution: [${example.ordering.join(', ')}]</p>
+                            <p>Positions: [${example.positions.join(', ')}]</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `
+                <div class="insights">
+                    <h4>Key Insights for Proof:</h4>
+                    <ul>
+                        ${GROUND_TRUTH.proof_insights.map(insight => `<li>${insight}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            document.getElementById('ground-truth').innerHTML = html;
+        }
+        function loadSpecificExample(idx) {
+            const example = GROUND_TRUTH.specific_examples[idx];
+            document.getElementById('jumps').value = example.jumps.join(', ');
+            document.getElementById('forbidden').value = example.forbidden.join(', ');
+            runSimulation();
+        }
+        // Initialize on load
+        window.onload = function() {
+            displayGroundTruth();
+            runSimulation();
+        };
+        </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "MathEL: Autonomous Self-Improving AI for IMO Combinatorics"
+abstract: "A collection of simulations, visualizations, and analyses for International Mathematical Olympiad (IMO) combinatorics problems from 2000-2025."
+authors:
+  - family-names: "MathEL Project"
+type: software
+url: "https://github.com/mathel/mathel"
+repository-code: "https://github.com/mathel/mathel"
+keywords:
+  - mathematics
+  - combinatorics
+  - IMO
+  - olympiad
+  - simulation
+  - visualization
+license: MIT
+version: 0.1.0
+date-released: 2025-01-04

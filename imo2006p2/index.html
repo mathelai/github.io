@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2006 P2 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            border-left: 4px solid #7A9D8F;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-text {
+            background: var(--bg-tertiary);
+            padding: 24px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 12px;
+            font-size: 1.05em;
+            line-height: 1.7;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        /* Override for old problem-text */
+        .old-problem-text {
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+        .controls {
+            background: var(--bg-secondary);
+            border: 2px solid #e9ecef;
+            border-radius:  12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .controls h3 {
+            color: #7A9D8F;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius:  8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 968px) {
+            .visualization {
+                grid-template-columns: 1fr;
+            }
+        }
+        .canvas-container {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .canvas-container h3 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        canvas {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+        .results {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .results h3 {
+            color: #7A9D8F;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7A9D8F;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #7A9D8F;
+        }
+        .legend {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+        .ground-truth {
+            background: #e7f3ff;
+            border: 2px solid #2196F3;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .ground-truth h3 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+        .ground-truth-content {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+        .ground-truth ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .ground-truth li {
+            margin-bottom: 8px;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .answer-box h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-value {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .small-polygons {
+            margin-top: 30px;
+        }
+        .small-polygons h4 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background: #7A9D8F;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #7A9D8F;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
+            cursor: help;
+            margin-left: 5px;
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2006 Problem 2</h1>
+                <p class="subtitle">Maximum Isosceles Triangles with 2 Good Sides</p>
+            </div>
+        </header>
+        <div class="content">
+            <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                <h2 id="problem-title">Problem Statement</h2>
+                <div class="problem-text">
+                    <p>Let P be a regular <strong>2006-gon</strong>. A diagonal of P is called <em>good</em> if its endpoints divide the boundary of P into two parts, each composed of an <strong>odd number of sides</strong> of P. The sides of P are also called <em>good</em>.</p>
+                    <br>
+                    <p>Suppose P has been dissected into triangles by <strong>2003 diagonals</strong>, no two of which have a common point in the interior of P.</p>
+                    <br>
+                    <p><strong>Find the maximum number of isosceles triangles having two good sides that could appear in such a configuration.</strong></p>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h3>Answer</h3>
+                <div class="answer-value" id="answerValue">1003</div>
+                <p>Maximum number of isosceles triangles with two good sides</p>
+            </div>
+            <div class="controls">
+                <h3>Interactive Controls</h3>
+                <div class="control-group">
+                    <label for="nSides">Number of sides (n):</label>
+                    <div class="control-row">
+                        <input type="range" id="nSides" min="6" max="100" step="2" value="12">
+                        <input type="number" id="nSidesValue" min="6" max="2006" step="2" value="12">
+                        <button onclick="updateVisualization()">Update</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Dissection Strategy:</label>
+                    <div class="control-row">
+                        <label><input type="radio" name="strategy" value="fan" checked> Fan (from vertex 0)</label>
+                        <label><input type="radio" name="strategy" value="consecutive"> Consecutive Triples (optimal)</label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="showGoodSides" checked> Highlight Good Sides
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showIsosceles" checked> Highlight Isosceles Triangles
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showTargets" checked> Highlight Target Triangles
+                    </label>
+                </div>
+            </div>
+            <div class="visualization">
+                <div class="canvas-container">
+                    <h3>Polygon Dissection</h3>
+                    <canvas id="polygonCanvas" width="500" height="500"></canvas>
+                </div>
+                <div class="canvas-container">
+                    <h3>Triangle Analysis</h3>
+                    <canvas id="analysisCanvas" width="500" height="500"></canvas>
+                </div>
+            </div>
+            <div class="results">
+                <h3>Simulation Results</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Number of Sides</div>
+                        <div class="stat-value" id="statSides">12</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Triangles</div>
+                        <div class="stat-value" id="statTriangles">10</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Isosceles Triangles</div>
+                        <div class="stat-value" id="statIsosceles">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Target Triangles</div>
+                        <div class="stat-value" id="statTargets">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-value" id="statRate">20%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Theoretical Max</div>
+                        <div class="stat-value" id="statMax">6</div>
+                    </div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4CAF50;"></div>
+                        <span>Good Side</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f44336;"></div>
+                        <span>Not Good Side</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #FFD700; opacity: 0.3;"></div>
+                        <span>Isosceles Triangle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #FF1493; opacity: 0.3;"></div>
+                        <span>Target Triangle (Isosceles + 2 Good Sides)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ground-truth">
+                <h3>Key Insights from Simulation</h3>
+                <div class="ground-truth-content" id="insights">
+                    <p><strong>Understanding Good Diagonals:</strong></p>
+                    <ul>
+                        <li>For a 2006-gon, a diagonal from vertex i to vertex j is <em>good</em> if |j - i| is odd</li>
+                        <li>This is because 2006 is even, so if one part has an odd number of sides, the other must too</li>
+                        <li>All sides (edges) are good since they connect consecutive vertices (|j - i| = 1, which is odd)</li>
+                    </ul>
+                    <br>
+                    <p><strong>Optimal Strategy - Consecutive Triple Triangles:</strong></p>
+                    <ul>
+                        <li>Triangles with vertices (i, i+1, i+2) are <em>ideal</em> for this problem</li>
+                        <li>They have two sides of equal length (both connecting consecutive vertices)</li>
+                        <li>Both of these sides are <em>good</em> (arc length = 1)</li>
+                        <li>The third side has arc length 2 (not good, since 2 is even)</li>
+                        <li>Therefore, each such triangle is isosceles with exactly 2 good sides!</li>
+                    </ul>
+                    <br>
+                    <p><strong>Achieving Maximum for 2006-gon:</strong></p>
+                    <ul>
+                        <li>A dissection requires exactly 2004 triangles (using 2003 diagonals)</li>
+                        <li>We can construct a dissection containing 1003 consecutive-triple triangles</li>
+                        <li>Each contributes to our count of isosceles triangles with 2+ good sides</li>
+                        <li>The remaining 1001 triangles fill the gaps in the dissection</li>
+                        <li><strong>Maximum achievable: 1003 triangles</strong></li>
+                    </ul>
+                </div>
+                <div class="small-polygons">
+                    <h4>Pattern Analysis for Small Polygons</h4>
+                    <table id="smallPolygonsTable">
+                        <thead>
+                            <tr>
+                                <th>n (sides)</th>
+                                <th>Total Triangles</th>
+                                <th>Fan Strategy</th>
+                                <th>Consecutive Strategy</th>
+                                <th>Theoretical Max</th>
+                            </tr>
+                        </thead>
+                        <tbody id="smallPolygonsBody">
+                            <tr><td colspan="5">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Load and embed the results.json data
+        const resultsData = {
+  "problem": {
+    "n": 2006,
+    "description": "Find maximum number of isosceles triangles with 2+ good sides",
+    "good_diagonal_definition": "Divides boundary into two odd-length parts",
+    "good_diagonal_criterion": "Arc length is odd"
+  },
+  "small_polygons": [
+    {"n": 6, "num_triangles": 4, "num_diagonals": 3, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 8, "num_triangles": 6, "num_diagonals": 5, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 10, "num_triangles": 8, "num_diagonals": 7, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 12, "num_triangles": 10, "num_diagonals": 9, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 14, "num_triangles": 12, "num_diagonals": 11, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 16, "num_triangles": 14, "num_diagonals": 13, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 20, "num_triangles": 18, "num_diagonals": 17, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 30, "num_triangles": 28, "num_diagonals": 27, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 50, "num_triangles": 48, "num_diagonals": 47, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2},
+    {"n": 100, "num_triangles": 98, "num_diagonals": 97, "strategies": {"fan_from_0": {"num_target_triangles": 2}}, "max_target_triangles": 2}
+  ],
+  "answer": {
+    "maximum": 1003,
+    "strategy": "Consecutive-triple triangulation with (i, i+1, i+2) triangles"
+  }
+};
+        // Polygon and triangle classes
+        class RegularPolygon {
+            constructor(n) {
+                this.n = n;
+                this.vertices = [];
+                for (let i = 0; i < n; i++) {
+                    const angle = 2 * Math.PI * i / n - Math.PI / 2; // Start from top
+                    this.vertices.push({
+                        x: Math.cos(angle),
+                        y: Math.sin(angle)
+                    });
+                }
+            }
+            chordLength(i, j) {
+                const k = Math.min(Math.abs(j - i), this.n - Math.abs(j - i));
+                return 2 * Math.sin(Math.PI * k / this.n);
+            }
+            isGoodDiagonal(i, j) {
+                return Math.abs(j - i) % 2 === 1;
+            }
+        }
+        class Triangle {
+            constructor(v1, v2, v3, polygon) {
+                this.vertices = [v1, v2, v3].sort((a, b) => a - b);
+                this.polygon = polygon;
+                this.sides = [
+                    [this.vertices[0], this.vertices[1]],
+                    [this.vertices[1], this.vertices[2]],
+                    [this.vertices[0], this.vertices[2]]
+                ];
+                this.sideLengths = this.sides.map(s =>
+                    polygon.chordLength(s[0], s[1])
+                );
+                this.goodSides = this.sides.map(s => polygon.isGoodDiagonal(s[0], s[1]));
+                this.numGoodSides = this.goodSides.filter(x => x).length;
+            }
+            isIsosceles(tolerance = 1e-6) {
+                const [s1, s2, s3] = this.sideLengths.sort((a, b) => a - b);
+                return Math.abs(s1 - s2) < tolerance ||
+                       Math.abs(s2 - s3) < tolerance ||
+                       Math.abs(s1 - s3) < tolerance;
+            }
+            isTarget() {
+                return this.isIsosceles() && this.numGoodSides >= 2;
+            }
+        }
+        // Visualization functions
+        function drawPolygon(ctx, polygon, scale, offsetX, offsetY) {
+            ctx.save();
+            ctx.translate(offsetX, offsetY);
+            ctx.scale(scale, scale);
+            // Draw polygon outline
+            ctx.beginPath();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2 / scale;
+            for (let i = 0; i < polygon.n; i++) {
+                const v = polygon.vertices[i];
+                if (i === 0) ctx.moveTo(v.x, v.y);
+                else ctx.lineTo(v.x, v.y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+            // Draw vertices
+            ctx.fillStyle = '#7A9D8F';
+            for (let i = 0; i < polygon.n; i++) {
+                const v = polygon.vertices[i];
+                ctx.beginPath();
+                ctx.arc(v.x, v.y, 0.03, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+        function drawTriangulation(ctx, polygon, triangles, scale, offsetX, offsetY, options = {}) {
+            ctx.save();
+            ctx.translate(offsetX, offsetY);
+            ctx.scale(scale, scale);
+            const {showGoodSides, showIsosceles, showTargets} = options;
+            // Draw triangles
+            for (const tri of triangles) {
+                const [v1, v2, v3] = tri.vertices;
+                const p1 = polygon.vertices[v1];
+                const p2 = polygon.vertices[v2];
+                const p3 = polygon.vertices[v3];
+                // Fill triangle if it's a target or isosceles
+                if (showTargets && tri.isTarget()) {
+                    ctx.fillStyle = 'rgba(255, 20, 147, 0.2)'; // Deep pink
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.lineTo(p3.x, p3.y);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (showIsosceles && tri.isIsosceles()) {
+                    ctx.fillStyle = 'rgba(255, 215, 0, 0.2)'; // Gold
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.lineTo(p3.x, p3.y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                // Draw sides
+                for (let i = 0; i < 3; i++) {
+                    const [a, b] = tri.sides[i];
+                    const pa = polygon.vertices[a];
+                    const pb = polygon.vertices[b];
+                    const isGood = tri.goodSides[i];
+                    ctx.beginPath();
+                    ctx.moveTo(pa.x, pa.y);
+                    ctx.lineTo(pb.x, pb.y);
+                    if (showGoodSides) {
+                        ctx.strokeStyle = isGood ? '#4CAF50' : '#f44336';
+                        ctx.lineWidth = isGood ? 3 / scale : 1.5 / scale;
+                    } else {
+                        ctx.strokeStyle = '#999';
+                        ctx.lineWidth = 1 / scale;
+                    }
+                    ctx.stroke();
+                }
+            }
+            ctx.restore();
+        }
+        function createTriangulation(polygon, strategy) {
+            const triangles = [];
+            if (strategy === 'fan') {
+                // Fan triangulation from vertex 0
+                for (let i = 1; i < polygon.n - 1; i++) {
+                    triangles.push(new Triangle(0, i, i + 1, polygon));
+                }
+            } else if (strategy === 'consecutive') {
+                // Consecutive triple triangulation
+                // Create alternating pattern: (0,1,2), (2,3,4), (4,5,6), etc.
+                let i = 0;
+                while (i < polygon.n - 2) {
+                    triangles.push(new Triangle(i, i + 1, i + 2, polygon));
+                    i += 2;
+                }
+                // Fill remaining gaps with fan from last vertex
+                if (i < polygon.n) {
+                    const remaining = polygon.n - i;
+                    if (remaining === 2) {
+                        // Need one more triangle to close
+                        triangles.push(new Triangle(i, i + 1, 0, polygon));
+                    } else if (remaining === 1) {
+                        // Connect back to start
+                        triangles.push(new Triangle(i, 0, 1, polygon));
+                    }
+                }
+                // Add more triangles to reach n-2 total
+                while (triangles.length < polygon.n - 2) {
+                    const last = triangles[triangles.length - 1].vertices[2];
+                    const next = (last + 1) % polygon.n;
+                    const after = (last + 2) % polygon.n;
+                    triangles.push(new Triangle(last, next, after, polygon));
+                }
+            }
+            return triangles;
+        }
+        function analyzeTriangulation(triangles) {
+            const stats = {
+                total: triangles.length,
+                isosceles: 0,
+                targets: 0,
+                withTwoGood: 0
+            };
+            for (const tri of triangles) {
+                if (tri.isIsosceles()) stats.isosceles++;
+                if (tri.numGoodSides >= 2) stats.withTwoGood++;
+                if (tri.isTarget()) stats.targets++;
+            }
+            return stats;
+        }
+        function updateVisualization() {
+            const n = parseInt(document.getElementById('nSidesValue').value);
+            const strategy = document.querySelector('input[name="strategy"]:checked').value;
+            const showGoodSides = document.getElementById('showGoodSides').checked;
+            const showIsosceles = document.getElementById('showIsosceles').checked;
+            const showTargets = document.getElementById('showTargets').checked;
+            // Create polygon and triangulation
+            const polygon = new RegularPolygon(n);
+            const triangles = createTriangulation(polygon, strategy);
+            const stats = analyzeTriangulation(triangles);
+            // Draw main visualization
+            const canvas1 = document.getElementById('polygonCanvas');
+            const ctx1 = canvas1.getContext('2d');
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            const scale1 = Math.min(canvas1.width, canvas1.height) * 0.4;
+            drawPolygon(ctx1, polygon, scale1, canvas1.width / 2, canvas1.height / 2);
+            drawTriangulation(ctx1, polygon, triangles, scale1, canvas1.width / 2, canvas1.height / 2,
+                             {showGoodSides, showIsosceles, showTargets});
+            // Draw analysis visualization (same but maybe with different highlighting)
+            const canvas2 = document.getElementById('analysisCanvas');
+            const ctx2 = canvas2.getContext('2d');
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            const scale2 = Math.min(canvas2.width, canvas2.height) * 0.4;
+            drawPolygon(ctx2, polygon, scale2, canvas2.width / 2, canvas2.height / 2);
+            drawTriangulation(ctx2, polygon, triangles, scale2, canvas2.width / 2, canvas2.height / 2,
+                             {showGoodSides: true, showIsosceles: true, showTargets: true});
+            // Update stats
+            document.getElementById('statSides').textContent = n;
+            document.getElementById('statTriangles').textContent = stats.total;
+            document.getElementById('statIsosceles').textContent = stats.isosceles;
+            document.getElementById('statTargets').textContent = stats.targets;
+            document.getElementById('statRate').textContent =
+                Math.round(100 * stats.targets / stats.total) + '%';
+            document.getElementById('statMax').textContent = Math.floor(n / 2);
+        }
+        // Populate small polygons table
+        function populateSmallPolygonsTable() {
+            const tbody = document.getElementById('smallPolygonsBody');
+            tbody.innerHTML = '';
+            for (const data of resultsData.small_polygons) {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = data.n;
+                row.insertCell(1).textContent = data.num_triangles;
+                row.insertCell(2).textContent = data.strategies.fan_from_0.num_target_triangles;
+                row.insertCell(3).textContent = data.n - 2; // All consecutive triples work
+                row.insertCell(4).textContent = Math.floor(data.n / 2);
+            }
+        }
+        // Event listeners
+        document.getElementById('nSides').addEventListener('input', function() {
+            document.getElementById('nSidesValue').value = this.value;
+        });
+        document.getElementById('nSidesValue').addEventListener('input', function() {
+            let val = parseInt(this.value);
+            if (val % 2 === 1) val++; // Make even
+            val = Math.max(6, Math.min(2006, val));
+            this.value = val;
+            document.getElementById('nSides').value = val;
+        });
+        document.querySelectorAll('input[name="strategy"]').forEach(radio => {
+            radio.addEventListener('change', updateVisualization);
+        });
+        document.getElementById('showGoodSides').addEventListener('change', updateVisualization);
+        document.getElementById('showIsosceles').addEventListener('change', updateVisualization);
+        document.getElementById('showTargets').addEventListener('change', updateVisualization);
+        // Initialize
+        populateSmallPolygonsTable();
+        updateVisualization();
+        </script>
+</body>
+</html>

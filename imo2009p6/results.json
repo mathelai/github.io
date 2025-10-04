@@ -1,0 +1,3339 @@
+{
+  "test_cases": [
+    {
+      "n": 2,
+      "jumps": [
+        13,
+        14
+      ],
+      "forbidden": [
+        2
+      ],
+      "total_sum": 27,
+      "solution_found": true,
+      "solution": [
+        13,
+        14
+      ],
+      "analysis": {
+        "ordering": [
+          13,
+          14
+        ],
+        "positions": [
+          13,
+          27
+        ],
+        "total_sum": 27,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          11
+        ],
+        "avg_min_distance": 11.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        5,
+        3
+      ],
+      "forbidden": [
+        3
+      ],
+      "total_sum": 8,
+      "solution_found": true,
+      "solution": [
+        5,
+        3
+      ],
+      "analysis": {
+        "ordering": [
+          5,
+          3
+        ],
+        "positions": [
+          5,
+          8
+        ],
+        "total_sum": 8,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          5
+        ],
+        "min_distances": [
+          2
+        ],
+        "avg_min_distance": 2.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        2,
+        3
+      ],
+      "forbidden": [
+        1
+      ],
+      "total_sum": 5,
+      "solution_found": true,
+      "solution": [
+        2,
+        3
+      ],
+      "analysis": {
+        "ordering": [
+          2,
+          3
+        ],
+        "positions": [
+          2,
+          5
+        ],
+        "total_sum": 5,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          2
+        ],
+        "min_distances": [
+          1
+        ],
+        "avg_min_distance": 1.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        8,
+        18
+      ],
+      "forbidden": [
+        5
+      ],
+      "total_sum": 26,
+      "solution_found": true,
+      "solution": [
+        8,
+        18
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          18
+        ],
+        "positions": [
+          8,
+          26
+        ],
+        "total_sum": 26,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3
+        ],
+        "avg_min_distance": 3.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        8,
+        10
+      ],
+      "forbidden": [
+        4
+      ],
+      "total_sum": 18,
+      "solution_found": true,
+      "solution": [
+        8,
+        10
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          10
+        ],
+        "positions": [
+          8,
+          18
+        ],
+        "total_sum": 18,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4
+        ],
+        "avg_min_distance": 4.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        9,
+        12
+      ],
+      "forbidden": [
+        17
+      ],
+      "total_sum": 21,
+      "solution_found": true,
+      "solution": [
+        9,
+        12
+      ],
+      "analysis": {
+        "ordering": [
+          9,
+          12
+        ],
+        "positions": [
+          9,
+          21
+        ],
+        "total_sum": 21,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          8
+        ],
+        "avg_min_distance": 8.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        19,
+        3
+      ],
+      "forbidden": [
+        16
+      ],
+      "total_sum": 22,
+      "solution_found": true,
+      "solution": [
+        19,
+        3
+      ],
+      "analysis": {
+        "ordering": [
+          19,
+          3
+        ],
+        "positions": [
+          19,
+          22
+        ],
+        "total_sum": 22,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3
+        ],
+        "avg_min_distance": 3.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        11,
+        5
+      ],
+      "forbidden": [
+        7
+      ],
+      "total_sum": 16,
+      "solution_found": true,
+      "solution": [
+        11,
+        5
+      ],
+      "analysis": {
+        "ordering": [
+          11,
+          5
+        ],
+        "positions": [
+          11,
+          16
+        ],
+        "total_sum": 16,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4
+        ],
+        "avg_min_distance": 4.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        8,
+        12
+      ],
+      "forbidden": [
+        13
+      ],
+      "total_sum": 20,
+      "solution_found": true,
+      "solution": [
+        8,
+        12
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          12
+        ],
+        "positions": [
+          8,
+          20
+        ],
+        "total_sum": 20,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          5
+        ],
+        "avg_min_distance": 5.0
+      }
+    },
+    {
+      "n": 2,
+      "jumps": [
+        15,
+        12
+      ],
+      "forbidden": [
+        9
+      ],
+      "total_sum": 27,
+      "solution_found": true,
+      "solution": [
+        15,
+        12
+      ],
+      "analysis": {
+        "ordering": [
+          15,
+          12
+        ],
+        "positions": [
+          15,
+          27
+        ],
+        "total_sum": 27,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          6
+        ],
+        "avg_min_distance": 6.0
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        28,
+        13,
+        25
+      ],
+      "forbidden": [
+        54,
+        6
+      ],
+      "total_sum": 66,
+      "solution_found": true,
+      "solution": [
+        28,
+        13,
+        25
+      ],
+      "analysis": {
+        "ordering": [
+          28,
+          13,
+          25
+        ],
+        "positions": [
+          28,
+          41,
+          66
+        ],
+        "total_sum": 66,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          22,
+          13
+        ],
+        "avg_min_distance": 17.5
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        5,
+        19,
+        28
+      ],
+      "forbidden": [
+        49,
+        5
+      ],
+      "total_sum": 52,
+      "solution_found": true,
+      "solution": [
+        19,
+        5,
+        28
+      ],
+      "analysis": {
+        "ordering": [
+          19,
+          5,
+          28
+        ],
+        "positions": [
+          19,
+          24,
+          52
+        ],
+        "total_sum": 52,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          14,
+          19
+        ],
+        "avg_min_distance": 16.5
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        28,
+        2,
+        3
+      ],
+      "forbidden": [
+        24,
+        6
+      ],
+      "total_sum": 33,
+      "solution_found": true,
+      "solution": [
+        28,
+        2,
+        3
+      ],
+      "analysis": {
+        "ordering": [
+          28,
+          2,
+          3
+        ],
+        "positions": [
+          28,
+          30,
+          33
+        ],
+        "total_sum": 33,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4,
+          6
+        ],
+        "avg_min_distance": 5.0
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        8,
+        19,
+        18
+      ],
+      "forbidden": [
+        24,
+        9
+      ],
+      "total_sum": 45,
+      "solution_found": true,
+      "solution": [
+        8,
+        19,
+        18
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          19,
+          18
+        ],
+        "positions": [
+          8,
+          27,
+          45
+        ],
+        "total_sum": 45,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          8
+        ],
+        "min_distances": [
+          1,
+          3
+        ],
+        "avg_min_distance": 2.0
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        8,
+        10,
+        4
+      ],
+      "forbidden": [
+        16,
+        13
+      ],
+      "total_sum": 22,
+      "solution_found": true,
+      "solution": [
+        8,
+        10,
+        4
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          10,
+          4
+        ],
+        "positions": [
+          8,
+          18,
+          22
+        ],
+        "total_sum": 22,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          18
+        ],
+        "min_distances": [
+          5,
+          2
+        ],
+        "avg_min_distance": 3.5
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        20,
+        9,
+        24
+      ],
+      "forbidden": [
+        51,
+        23
+      ],
+      "total_sum": 53,
+      "solution_found": true,
+      "solution": [
+        20,
+        9,
+        24
+      ],
+      "analysis": {
+        "ordering": [
+          20,
+          9,
+          24
+        ],
+        "positions": [
+          20,
+          29,
+          53
+        ],
+        "total_sum": 53,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3,
+          6
+        ],
+        "avg_min_distance": 4.5
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        26,
+        19,
+        27
+      ],
+      "forbidden": [
+        11,
+        63
+      ],
+      "total_sum": 72,
+      "solution_found": true,
+      "solution": [
+        26,
+        19,
+        27
+      ],
+      "analysis": {
+        "ordering": [
+          26,
+          19,
+          27
+        ],
+        "positions": [
+          26,
+          45,
+          72
+        ],
+        "total_sum": 72,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          15,
+          18
+        ],
+        "avg_min_distance": 16.5
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        11,
+        5,
+        13
+      ],
+      "forbidden": [
+        2,
+        21
+      ],
+      "total_sum": 29,
+      "solution_found": true,
+      "solution": [
+        11,
+        5,
+        13
+      ],
+      "analysis": {
+        "ordering": [
+          11,
+          5,
+          13
+        ],
+        "positions": [
+          11,
+          16,
+          29
+        ],
+        "total_sum": 29,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          9,
+          5
+        ],
+        "avg_min_distance": 7.0
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        8,
+        12,
+        13
+      ],
+      "forbidden": [
+        9,
+        13
+      ],
+      "total_sum": 33,
+      "solution_found": true,
+      "solution": [
+        8,
+        12,
+        13
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          12,
+          13
+        ],
+        "positions": [
+          8,
+          20,
+          33
+        ],
+        "total_sum": 33,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          8
+        ],
+        "min_distances": [
+          1,
+          7
+        ],
+        "avg_min_distance": 4.0
+      }
+    },
+    {
+      "n": 3,
+      "jumps": [
+        15,
+        20,
+        12
+      ],
+      "forbidden": [
+        9,
+        18
+      ],
+      "total_sum": 47,
+      "solution_found": true,
+      "solution": [
+        15,
+        20,
+        12
+      ],
+      "analysis": {
+        "ordering": [
+          15,
+          20,
+          12
+        ],
+        "positions": [
+          15,
+          35,
+          47
+        ],
+        "total_sum": 47,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3,
+          17
+        ],
+        "avg_min_distance": 10.0
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        25,
+        27,
+        3,
+        17
+      ],
+      "forbidden": [
+        66,
+        52,
+        63
+      ],
+      "total_sum": 72,
+      "solution_found": true,
+      "solution": [
+        25,
+        3,
+        27,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          25,
+          3,
+          27,
+          17
+        ],
+        "positions": [
+          25,
+          28,
+          55,
+          72
+        ],
+        "total_sum": 72,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          27,
+          24,
+          3
+        ],
+        "avg_min_distance": 18.0
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        9,
+        37,
+        5,
+        17
+      ],
+      "forbidden": [
+        16,
+        58,
+        64
+      ],
+      "total_sum": 68,
+      "solution_found": true,
+      "solution": [
+        9,
+        37,
+        5,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          9,
+          37,
+          5,
+          17
+        ],
+        "positions": [
+          9,
+          46,
+          51,
+          68
+        ],
+        "total_sum": 68,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          7,
+          12,
+          7
+        ],
+        "avg_min_distance": 8.666666666666666
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        4,
+        6,
+        24,
+        11
+      ],
+      "forbidden": [
+        17,
+        43,
+        20
+      ],
+      "total_sum": 45,
+      "solution_found": true,
+      "solution": [
+        4,
+        6,
+        24,
+        11
+      ],
+      "analysis": {
+        "ordering": [
+          4,
+          6,
+          24,
+          11
+        ],
+        "positions": [
+          4,
+          10,
+          34,
+          45
+        ],
+        "total_sum": 45,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          13,
+          7,
+          9
+        ],
+        "avg_min_distance": 9.666666666666666
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        16,
+        38,
+        35,
+        9
+      ],
+      "forbidden": [
+        48,
+        61,
+        78
+      ],
+      "total_sum": 98,
+      "solution_found": true,
+      "solution": [
+        16,
+        38,
+        35,
+        9
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          38,
+          35,
+          9
+        ],
+        "positions": [
+          16,
+          54,
+          89,
+          98
+        ],
+        "total_sum": 98,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          32,
+          6,
+          11
+        ],
+        "avg_min_distance": 16.333333333333332
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        16,
+        20,
+        7,
+        26
+      ],
+      "forbidden": [
+        20,
+        12,
+        62
+      ],
+      "total_sum": 69,
+      "solution_found": true,
+      "solution": [
+        16,
+        20,
+        7,
+        26
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          20,
+          7,
+          26
+        ],
+        "positions": [
+          16,
+          36,
+          43,
+          69
+        ],
+        "total_sum": 69,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4,
+          16,
+          19
+        ],
+        "avg_min_distance": 13.0
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        17,
+        23,
+        34,
+        2
+      ],
+      "forbidden": [
+        32,
+        60,
+        7
+      ],
+      "total_sum": 76,
+      "solution_found": true,
+      "solution": [
+        17,
+        23,
+        34,
+        2
+      ],
+      "analysis": {
+        "ordering": [
+          17,
+          23,
+          34,
+          2
+        ],
+        "positions": [
+          17,
+          40,
+          74,
+          76
+        ],
+        "total_sum": 76,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          10,
+          8,
+          14
+        ],
+        "avg_min_distance": 10.666666666666666
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        37,
+        6,
+        32,
+        17
+      ],
+      "forbidden": [
+        1,
+        19,
+        5
+      ],
+      "total_sum": 92,
+      "solution_found": true,
+      "solution": [
+        37,
+        6,
+        32,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          37,
+          6,
+          32,
+          17
+        ],
+        "positions": [
+          37,
+          43,
+          75,
+          92
+        ],
+        "total_sum": 92,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          18,
+          24,
+          56
+        ],
+        "avg_min_distance": 32.666666666666664
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        21,
+        10,
+        26,
+        4
+      ],
+      "forbidden": [
+        35,
+        53,
+        5
+      ],
+      "total_sum": 61,
+      "solution_found": true,
+      "solution": [
+        21,
+        10,
+        26,
+        4
+      ],
+      "analysis": {
+        "ordering": [
+          21,
+          10,
+          26,
+          4
+        ],
+        "positions": [
+          21,
+          31,
+          57,
+          61
+        ],
+        "total_sum": 61,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          14,
+          4,
+          4
+        ],
+        "avg_min_distance": 7.333333333333333
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        15,
+        24,
+        25,
+        9
+      ],
+      "forbidden": [
+        25,
+        11,
+        6
+      ],
+      "total_sum": 73,
+      "solution_found": true,
+      "solution": [
+        15,
+        24,
+        25,
+        9
+      ],
+      "analysis": {
+        "ordering": [
+          15,
+          24,
+          25,
+          9
+        ],
+        "positions": [
+          15,
+          39,
+          64,
+          73
+        ],
+        "total_sum": 73,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4,
+          14,
+          39
+        ],
+        "avg_min_distance": 19.0
+      }
+    },
+    {
+      "n": 4,
+      "jumps": [
+        30,
+        24,
+        18,
+        9
+      ],
+      "forbidden": [
+        24,
+        1,
+        44
+      ],
+      "total_sum": 81,
+      "solution_found": true,
+      "solution": [
+        30,
+        24,
+        18,
+        9
+      ],
+      "analysis": {
+        "ordering": [
+          30,
+          24,
+          18,
+          9
+        ],
+        "positions": [
+          30,
+          54,
+          72,
+          81
+        ],
+        "total_sum": 81,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          6,
+          10,
+          28
+        ],
+        "avg_min_distance": 14.666666666666666
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        25,
+        49,
+        27,
+        3,
+        17
+      ],
+      "forbidden": [
+        66,
+        52,
+        118,
+        63
+      ],
+      "total_sum": 121,
+      "solution_found": true,
+      "solution": [
+        25,
+        49,
+        27,
+        3,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          25,
+          49,
+          27,
+          3,
+          17
+        ],
+        "positions": [
+          25,
+          74,
+          101,
+          104,
+          121
+        ],
+        "total_sum": 121,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          27,
+          8,
+          17,
+          14
+        ],
+        "avg_min_distance": 16.5
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        9,
+        37,
+        49,
+        5,
+        17
+      ],
+      "forbidden": [
+        16,
+        98,
+        64,
+        58
+      ],
+      "total_sum": 117,
+      "solution_found": true,
+      "solution": [
+        9,
+        37,
+        49,
+        5,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          9,
+          37,
+          49,
+          5,
+          17
+        ],
+        "positions": [
+          9,
+          46,
+          95,
+          100,
+          117
+        ],
+        "total_sum": 117,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          100
+        ],
+        "min_distances": [
+          7,
+          12,
+          3,
+          2
+        ],
+        "avg_min_distance": 6.0
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        4,
+        6,
+        24,
+        11,
+        48
+      ],
+      "forbidden": [
+        40,
+        33,
+        86,
+        78
+      ],
+      "total_sum": 93,
+      "solution_found": true,
+      "solution": [
+        4,
+        6,
+        24,
+        11,
+        48
+      ],
+      "analysis": {
+        "ordering": [
+          4,
+          6,
+          24,
+          11,
+          48
+        ],
+        "positions": [
+          4,
+          10,
+          34,
+          45,
+          93
+        ],
+        "total_sum": 93,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          34
+        ],
+        "min_distances": [
+          29,
+          23,
+          1,
+          5
+        ],
+        "avg_min_distance": 14.5
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        16,
+        38,
+        35,
+        9,
+        24
+      ],
+      "forbidden": [
+        81,
+        78,
+        61,
+        118
+      ],
+      "total_sum": 122,
+      "solution_found": true,
+      "solution": [
+        16,
+        38,
+        35,
+        9,
+        24
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          38,
+          35,
+          9,
+          24
+        ],
+        "positions": [
+          16,
+          54,
+          89,
+          98,
+          122
+        ],
+        "total_sum": 122,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          45,
+          7,
+          8,
+          17
+        ],
+        "avg_min_distance": 19.25
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        16,
+        20,
+        7,
+        47,
+        26
+      ],
+      "forbidden": [
+        9,
+        20,
+        12,
+        62
+      ],
+      "total_sum": 116,
+      "solution_found": true,
+      "solution": [
+        16,
+        20,
+        7,
+        47,
+        26
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          20,
+          7,
+          47,
+          26
+        ],
+        "positions": [
+          16,
+          36,
+          43,
+          90,
+          116
+        ],
+        "total_sum": 116,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4,
+          16,
+          19,
+          28
+        ],
+        "avg_min_distance": 16.75
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        40,
+        17,
+        48,
+        23,
+        45
+      ],
+      "forbidden": [
+        136,
+        8,
+        120,
+        167
+      ],
+      "total_sum": 173,
+      "solution_found": true,
+      "solution": [
+        40,
+        17,
+        48,
+        23,
+        45
+      ],
+      "analysis": {
+        "ordering": [
+          40,
+          17,
+          48,
+          23,
+          45
+        ],
+        "positions": [
+          40,
+          57,
+          105,
+          128,
+          173
+        ],
+        "total_sum": 173,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          32,
+          49,
+          15,
+          8
+        ],
+        "avg_min_distance": 26.0
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        37,
+        6,
+        32,
+        49,
+        17
+      ],
+      "forbidden": [
+        1,
+        10,
+        38,
+        121
+      ],
+      "total_sum": 141,
+      "solution_found": true,
+      "solution": [
+        37,
+        6,
+        32,
+        49,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          37,
+          6,
+          32,
+          49,
+          17
+        ],
+        "positions": [
+          37,
+          43,
+          75,
+          124,
+          141
+        ],
+        "total_sum": 141,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          37
+        ],
+        "min_distances": [
+          1,
+          5,
+          37,
+          3
+        ],
+        "avg_min_distance": 11.5
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        21,
+        10,
+        26,
+        42,
+        4
+      ],
+      "forbidden": [
+        10,
+        13,
+        69,
+        47
+      ],
+      "total_sum": 103,
+      "solution_found": true,
+      "solution": [
+        21,
+        10,
+        26,
+        42,
+        4
+      ],
+      "analysis": {
+        "ordering": [
+          21,
+          10,
+          26,
+          42,
+          4
+        ],
+        "positions": [
+          21,
+          31,
+          57,
+          99,
+          103
+        ],
+        "total_sum": 103,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          8,
+          16,
+          10,
+          30
+        ],
+        "avg_min_distance": 16.0
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        15,
+        24,
+        25,
+        9,
+        13
+      ],
+      "forbidden": [
+        32,
+        18,
+        11,
+        6
+      ],
+      "total_sum": 86,
+      "solution_found": true,
+      "solution": [
+        15,
+        24,
+        25,
+        9,
+        13
+      ],
+      "analysis": {
+        "ordering": [
+          15,
+          24,
+          25,
+          9,
+          13
+        ],
+        "positions": [
+          15,
+          39,
+          64,
+          73,
+          86
+        ],
+        "total_sum": 86,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3,
+          7,
+          32,
+          41
+        ],
+        "avg_min_distance": 20.75
+      }
+    },
+    {
+      "n": 5,
+      "jumps": [
+        30,
+        40,
+        24,
+        18,
+        9
+      ],
+      "forbidden": [
+        24,
+        1,
+        87,
+        111
+      ],
+      "total_sum": 121,
+      "solution_found": true,
+      "solution": [
+        30,
+        40,
+        24,
+        18,
+        9
+      ],
+      "analysis": {
+        "ordering": [
+          30,
+          40,
+          24,
+          18,
+          9
+        ],
+        "positions": [
+          30,
+          70,
+          94,
+          112,
+          121
+        ],
+        "total_sum": 121,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          112
+        ],
+        "min_distances": [
+          6,
+          17,
+          7,
+          1
+        ],
+        "avg_min_distance": 7.75
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        55,
+        25,
+        49,
+        27,
+        3,
+        17
+      ],
+      "forbidden": [
+        131,
+        104,
+        78,
+        123,
+        125
+      ],
+      "total_sum": 176,
+      "solution_found": true,
+      "solution": [
+        55,
+        25,
+        49,
+        27,
+        3,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          55,
+          25,
+          49,
+          27,
+          3,
+          17
+        ],
+        "positions": [
+          55,
+          80,
+          129,
+          156,
+          159,
+          176
+        ],
+        "total_sum": 176,
+        "num_close_calls": 2,
+        "close_call_positions": [
+          80,
+          129
+        ],
+        "min_distances": [
+          23,
+          2,
+          2,
+          25,
+          28
+        ],
+        "avg_min_distance": 16.0
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        9,
+        37,
+        55,
+        52,
+        49,
+        5
+      ],
+      "forbidden": [
+        66,
+        195,
+        116,
+        31,
+        127
+      ],
+      "total_sum": 207,
+      "solution_found": true,
+      "solution": [
+        9,
+        37,
+        55,
+        52,
+        49,
+        5
+      ],
+      "analysis": {
+        "ordering": [
+          9,
+          37,
+          55,
+          52,
+          49,
+          5
+        ],
+        "positions": [
+          9,
+          46,
+          101,
+          153,
+          202,
+          207
+        ],
+        "total_sum": 207,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          22,
+          15,
+          15,
+          26,
+          7
+        ],
+        "avg_min_distance": 17.0
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        56,
+        55,
+        4,
+        6,
+        59,
+        24
+      ],
+      "forbidden": [
+        65,
+        172,
+        44,
+        79,
+        189
+      ],
+      "total_sum": 204,
+      "solution_found": true,
+      "solution": [
+        56,
+        55,
+        4,
+        6,
+        59,
+        24
+      ],
+      "analysis": {
+        "ordering": [
+          56,
+          55,
+          4,
+          6,
+          59,
+          24
+        ],
+        "positions": [
+          56,
+          111,
+          115,
+          121,
+          180,
+          204
+        ],
+        "total_sum": 204,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          9,
+          32,
+          36,
+          42,
+          8
+        ],
+        "avg_min_distance": 25.4
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        16,
+        38,
+        35,
+        9,
+        24,
+        39
+      ],
+      "forbidden": [
+        4,
+        17,
+        149,
+        122,
+        156
+      ],
+      "total_sum": 161,
+      "solution_found": true,
+      "solution": [
+        16,
+        38,
+        35,
+        9,
+        39,
+        24
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          38,
+          35,
+          9,
+          39,
+          24
+        ],
+        "positions": [
+          16,
+          54,
+          89,
+          98,
+          137,
+          161
+        ],
+        "total_sum": 161,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          16
+        ],
+        "min_distances": [
+          1,
+          37,
+          33,
+          24,
+          12
+        ],
+        "avg_min_distance": 21.4
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        16,
+        20,
+        7,
+        47,
+        26,
+        31
+      ],
+      "forbidden": [
+        6,
+        103,
+        40,
+        18,
+        24
+      ],
+      "total_sum": 147,
+      "solution_found": true,
+      "solution": [
+        16,
+        20,
+        7,
+        47,
+        26,
+        31
+      ],
+      "analysis": {
+        "ordering": [
+          16,
+          20,
+          7,
+          47,
+          26,
+          31
+        ],
+        "positions": [
+          16,
+          36,
+          43,
+          90,
+          116,
+          147
+        ],
+        "total_sum": 147,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          16
+        ],
+        "min_distances": [
+          2,
+          4,
+          3,
+          13,
+          13
+        ],
+        "avg_min_distance": 7.0
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        40,
+        17,
+        48,
+        23,
+        51,
+        45
+      ],
+      "forbidden": [
+        167,
+        8,
+        136,
+        216,
+        190
+      ],
+      "total_sum": 224,
+      "solution_found": true,
+      "solution": [
+        40,
+        17,
+        48,
+        23,
+        51,
+        45
+      ],
+      "analysis": {
+        "ordering": [
+          40,
+          17,
+          48,
+          23,
+          51,
+          45
+        ],
+        "positions": [
+          40,
+          57,
+          105,
+          128,
+          179,
+          224
+        ],
+        "total_sum": 224,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          32,
+          49,
+          31,
+          8,
+          11
+        ],
+        "avg_min_distance": 26.2
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        51,
+        37,
+        53,
+        6,
+        32,
+        49
+      ],
+      "forbidden": [
+        1,
+        67,
+        38,
+        170,
+        10
+      ],
+      "total_sum": 228,
+      "solution_found": true,
+      "solution": [
+        51,
+        37,
+        53,
+        6,
+        32,
+        49
+      ],
+      "analysis": {
+        "ordering": [
+          51,
+          37,
+          53,
+          6,
+          32,
+          49
+        ],
+        "positions": [
+          51,
+          88,
+          141,
+          147,
+          179,
+          228
+        ],
+        "total_sum": 228,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          13,
+          21,
+          29,
+          23,
+          9
+        ],
+        "avg_min_distance": 19.0
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        21,
+        10,
+        26,
+        42,
+        4,
+        5
+      ],
+      "forbidden": [
+        69,
+        106,
+        75,
+        13,
+        47
+      ],
+      "total_sum": 108,
+      "solution_found": true,
+      "solution": [
+        21,
+        10,
+        26,
+        42,
+        4,
+        5
+      ],
+      "analysis": {
+        "ordering": [
+          21,
+          10,
+          26,
+          42,
+          4,
+          5
+        ],
+        "positions": [
+          21,
+          31,
+          57,
+          99,
+          103,
+          108
+        ],
+        "total_sum": 108,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          8,
+          16,
+          10,
+          7,
+          3
+        ],
+        "avg_min_distance": 8.8
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        15,
+        24,
+        25,
+        9,
+        13,
+        46
+      ],
+      "forbidden": [
+        64,
+        130,
+        36,
+        12,
+        22
+      ],
+      "total_sum": 132,
+      "solution_found": true,
+      "solution": [
+        15,
+        24,
+        9,
+        25,
+        13,
+        46
+      ],
+      "analysis": {
+        "ordering": [
+          15,
+          24,
+          9,
+          25,
+          13,
+          46
+        ],
+        "positions": [
+          15,
+          39,
+          48,
+          73,
+          86,
+          132
+        ],
+        "total_sum": 132,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          3,
+          3,
+          12,
+          9,
+          22
+        ],
+        "avg_min_distance": 9.8
+      }
+    },
+    {
+      "n": 6,
+      "jumps": [
+        30,
+        40,
+        24,
+        18,
+        9,
+        12
+      ],
+      "forbidden": [
+        129,
+        2,
+        21,
+        87,
+        119
+      ],
+      "total_sum": 133,
+      "solution_found": true,
+      "solution": [
+        30,
+        40,
+        24,
+        18,
+        9,
+        12
+      ],
+      "analysis": {
+        "ordering": [
+          30,
+          40,
+          24,
+          18,
+          9,
+          12
+        ],
+        "positions": [
+          30,
+          70,
+          94,
+          112,
+          121,
+          133
+        ],
+        "total_sum": 133,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          121
+        ],
+        "min_distances": [
+          9,
+          17,
+          7,
+          7,
+          2
+        ],
+        "avg_min_distance": 8.4
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        50,
+        54,
+        6,
+        34,
+        63,
+        52,
+        59
+      ],
+      "forbidden": [
+        259,
+        299,
+        112,
+        245,
+        184,
+        156
+      ],
+      "total_sum": 318,
+      "solution_found": true,
+      "solution": [
+        50,
+        54,
+        6,
+        34,
+        63,
+        59,
+        52
+      ],
+      "analysis": {
+        "ordering": [
+          50,
+          54,
+          6,
+          34,
+          63,
+          59,
+          52
+        ],
+        "positions": [
+          50,
+          104,
+          110,
+          144,
+          207,
+          266,
+          318
+        ],
+        "total_sum": 318,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          110
+        ],
+        "min_distances": [
+          62,
+          8,
+          2,
+          12,
+          23,
+          7
+        ],
+        "avg_min_distance": 19.0
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        18,
+        9,
+        33,
+        16,
+        64,
+        58,
+        31
+      ],
+      "forbidden": [
+        98,
+        167,
+        202,
+        54,
+        25,
+        125
+      ],
+      "total_sum": 229,
+      "solution_found": true,
+      "solution": [
+        18,
+        9,
+        33,
+        16,
+        64,
+        58,
+        31
+      ],
+      "analysis": {
+        "ordering": [
+          18,
+          9,
+          33,
+          16,
+          64,
+          58,
+          31
+        ],
+        "positions": [
+          18,
+          27,
+          60,
+          76,
+          140,
+          198,
+          229
+        ],
+        "total_sum": 229,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          27
+        ],
+        "min_distances": [
+          7,
+          2,
+          6,
+          22,
+          15,
+          4
+        ],
+        "avg_min_distance": 9.333333333333334
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        8,
+        12,
+        11,
+        47,
+        22,
+        40,
+        17
+      ],
+      "forbidden": [
+        41,
+        10,
+        111,
+        149,
+        55,
+        156
+      ],
+      "total_sum": 157,
+      "solution_found": true,
+      "solution": [
+        8,
+        12,
+        11,
+        47,
+        22,
+        40,
+        17
+      ],
+      "analysis": {
+        "ordering": [
+          8,
+          12,
+          11,
+          47,
+          22,
+          40,
+          17
+        ],
+        "positions": [
+          8,
+          20,
+          31,
+          78,
+          100,
+          140,
+          157
+        ],
+        "total_sum": 157,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          8
+        ],
+        "min_distances": [
+          2,
+          10,
+          10,
+          23,
+          11,
+          9
+        ],
+        "avg_min_distance": 10.833333333333334
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        31,
+        17,
+        48,
+        61,
+        9,
+        2,
+        59
+      ],
+      "forbidden": [
+        67,
+        142,
+        50,
+        215,
+        121,
+        60
+      ],
+      "total_sum": 227,
+      "solution_found": true,
+      "solution": [
+        31,
+        17,
+        48,
+        61,
+        9,
+        2,
+        59
+      ],
+      "analysis": {
+        "ordering": [
+          31,
+          17,
+          48,
+          61,
+          9,
+          2,
+          59
+        ],
+        "positions": [
+          31,
+          48,
+          96,
+          157,
+          166,
+          168,
+          227
+        ],
+        "total_sum": 227,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          48
+        ],
+        "min_distances": [
+          19,
+          2,
+          25,
+          15,
+          24,
+          26
+        ],
+        "avg_min_distance": 18.5
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        31,
+        39,
+        14,
+        51,
+        62,
+        20,
+        6
+      ],
+      "forbidden": [
+        6,
+        103,
+        75,
+        141,
+        205,
+        18
+      ],
+      "total_sum": 223,
+      "solution_found": true,
+      "solution": [
+        31,
+        39,
+        14,
+        51,
+        62,
+        20,
+        6
+      ],
+      "analysis": {
+        "ordering": [
+          31,
+          39,
+          14,
+          51,
+          62,
+          20,
+          6
+        ],
+        "positions": [
+          31,
+          70,
+          84,
+          135,
+          197,
+          217,
+          223
+        ],
+        "total_sum": 223,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          13,
+          5,
+          9,
+          6,
+          8,
+          12
+        ],
+        "avg_min_distance": 8.833333333333334
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        33,
+        46,
+        4,
+        60,
+        32,
+        7,
+        58
+      ],
+      "forbidden": [
+        96,
+        64,
+        41,
+        121,
+        29,
+        223
+      ],
+      "total_sum": 240,
+      "solution_found": true,
+      "solution": [
+        33,
+        46,
+        4,
+        60,
+        32,
+        7,
+        58
+      ],
+      "analysis": {
+        "ordering": [
+          33,
+          46,
+          4,
+          60,
+          32,
+          7,
+          58
+        ],
+        "positions": [
+          33,
+          79,
+          83,
+          143,
+          175,
+          182,
+          240
+        ],
+        "total_sum": 240,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          4,
+          15,
+          13,
+          22,
+          48,
+          41
+        ],
+        "avg_min_distance": 23.833333333333332
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        11,
+        63,
+        34,
+        5,
+        1,
+        19,
+        43
+      ],
+      "forbidden": [
+        96,
+        6,
+        70,
+        82,
+        151,
+        121
+      ],
+      "total_sum": 176,
+      "solution_found": true,
+      "solution": [
+        11,
+        63,
+        34,
+        5,
+        1,
+        19,
+        43
+      ],
+      "analysis": {
+        "ordering": [
+          11,
+          63,
+          34,
+          5,
+          1,
+          19,
+          43
+        ],
+        "positions": [
+          11,
+          74,
+          108,
+          113,
+          114,
+          133,
+          176
+        ],
+        "total_sum": 176,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          5,
+          4,
+          12,
+          8,
+          7,
+          12
+        ],
+        "avg_min_distance": 8.0
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        42,
+        20,
+        51,
+        7,
+        10,
+        13,
+        24
+      ],
+      "forbidden": [
+        130,
+        10,
+        15,
+        23,
+        150,
+        55
+      ],
+      "total_sum": 167,
+      "solution_found": true,
+      "solution": [
+        42,
+        20,
+        51,
+        7,
+        13,
+        10,
+        24
+      ],
+      "analysis": {
+        "ordering": [
+          42,
+          20,
+          51,
+          7,
+          13,
+          10,
+          24
+        ],
+        "positions": [
+          42,
+          62,
+          113,
+          120,
+          133,
+          143,
+          167
+        ],
+        "total_sum": 167,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          13,
+          7,
+          17,
+          10,
+          3,
+          7
+        ],
+        "avg_min_distance": 9.5
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        30,
+        48,
+        49,
+        17,
+        25,
+        6,
+        64
+      ],
+      "forbidden": [
+        64,
+        130,
+        36,
+        103,
+        208,
+        54
+      ],
+      "total_sum": 239,
+      "solution_found": true,
+      "solution": [
+        30,
+        48,
+        49,
+        17,
+        25,
+        6,
+        64
+      ],
+      "analysis": {
+        "ordering": [
+          30,
+          48,
+          49,
+          17,
+          25,
+          6,
+          64
+        ],
+        "positions": [
+          30,
+          78,
+          127,
+          144,
+          169,
+          175,
+          239
+        ],
+        "total_sum": 239,
+        "num_close_calls": 0,
+        "close_call_positions": [],
+        "min_distances": [
+          6,
+          14,
+          3,
+          14,
+          39,
+          33
+        ],
+        "avg_min_distance": 18.166666666666668
+      }
+    },
+    {
+      "n": 7,
+      "jumps": [
+        60,
+        48,
+        35,
+        18,
+        24,
+        1,
+        22
+      ],
+      "forbidden": [
+        129,
+        142,
+        21,
+        86,
+        119,
+        155
+      ],
+      "total_sum": 208,
+      "solution_found": true,
+      "solution": [
+        60,
+        48,
+        35,
+        18,
+        24,
+        1,
+        22
+      ],
+      "analysis": {
+        "ordering": [
+          60,
+          48,
+          35,
+          18,
+          24,
+          1,
+          22
+        ],
+        "positions": [
+          60,
+          108,
+          143,
+          161,
+          185,
+          186,
+          208
+        ],
+        "total_sum": 208,
+        "num_close_calls": 1,
+        "close_call_positions": [
+          143
+        ],
+        "min_distances": [
+          26,
+          11,
+          1,
+          6,
+          30,
+          31
+        ],
+        "avg_min_distance": 17.5
+      }
+    }
+  ],
+  "statistics": {
+    "total_cases": 60,
+    "solved_cases": 60,
+    "unsolved_cases": 0,
+    "by_n": {
+      "2": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      },
+      "3": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      },
+      "4": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      },
+      "5": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      },
+      "6": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      },
+      "7": {
+        "total": 10,
+        "solved": 10,
+        "unsolved": 0,
+        "avg_solve_time": 0
+      }
+    }
+  },
+  "patterns": [
+    {
+      "observation": "Success rate by n",
+      "data": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 1.0,
+        "7": 1.0
+      }
+    }
+  ],
+  "examples": [
+    {
+      "n": 4,
+      "jumps": [
+        25,
+        27,
+        3,
+        17
+      ],
+      "forbidden": [
+        66,
+        52,
+        63
+      ],
+      "ordering": [
+        25,
+        3,
+        27,
+        17
+      ],
+      "positions": [
+        25,
+        28,
+        55,
+        72
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        9,
+        37,
+        5,
+        17
+      ],
+      "forbidden": [
+        16,
+        58,
+        64
+      ],
+      "ordering": [
+        9,
+        37,
+        5,
+        17
+      ],
+      "positions": [
+        9,
+        46,
+        51,
+        68
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        4,
+        6,
+        24,
+        11
+      ],
+      "forbidden": [
+        17,
+        43,
+        20
+      ],
+      "ordering": [
+        4,
+        6,
+        24,
+        11
+      ],
+      "positions": [
+        4,
+        10,
+        34,
+        45
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        16,
+        38,
+        35,
+        9
+      ],
+      "forbidden": [
+        48,
+        61,
+        78
+      ],
+      "ordering": [
+        16,
+        38,
+        35,
+        9
+      ],
+      "positions": [
+        16,
+        54,
+        89,
+        98
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        16,
+        20,
+        7,
+        26
+      ],
+      "forbidden": [
+        20,
+        12,
+        62
+      ],
+      "ordering": [
+        16,
+        20,
+        7,
+        26
+      ],
+      "positions": [
+        16,
+        36,
+        43,
+        69
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        17,
+        23,
+        34,
+        2
+      ],
+      "forbidden": [
+        32,
+        60,
+        7
+      ],
+      "ordering": [
+        17,
+        23,
+        34,
+        2
+      ],
+      "positions": [
+        17,
+        40,
+        74,
+        76
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        37,
+        6,
+        32,
+        17
+      ],
+      "forbidden": [
+        1,
+        19,
+        5
+      ],
+      "ordering": [
+        37,
+        6,
+        32,
+        17
+      ],
+      "positions": [
+        37,
+        43,
+        75,
+        92
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        21,
+        10,
+        26,
+        4
+      ],
+      "forbidden": [
+        35,
+        53,
+        5
+      ],
+      "ordering": [
+        21,
+        10,
+        26,
+        4
+      ],
+      "positions": [
+        21,
+        31,
+        57,
+        61
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        15,
+        24,
+        25,
+        9
+      ],
+      "forbidden": [
+        25,
+        11,
+        6
+      ],
+      "ordering": [
+        15,
+        24,
+        25,
+        9
+      ],
+      "positions": [
+        15,
+        39,
+        64,
+        73
+      ]
+    },
+    {
+      "n": 4,
+      "jumps": [
+        30,
+        24,
+        18,
+        9
+      ],
+      "forbidden": [
+        24,
+        1,
+        44
+      ],
+      "ordering": [
+        30,
+        24,
+        18,
+        9
+      ],
+      "positions": [
+        30,
+        54,
+        72,
+        81
+      ]
+    }
+  ],
+  "specific_examples": [
+    {
+      "name": "Simple example (n=3)",
+      "jumps": [
+        1,
+        2,
+        3
+      ],
+      "forbidden": [
+        2,
+        4
+      ],
+      "total_sum": 6,
+      "ordering": [
+        1,
+        2,
+        3
+      ],
+      "positions": [
+        1,
+        3,
+        6
+      ],
+      "explanation": "With jumps [1,2,3] and forbidden {2,4}, we need to avoid positions 2 and 4."
+    },
+    {
+      "name": "Four jumps",
+      "jumps": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "forbidden": [
+        2,
+        4,
+        7
+      ],
+      "total_sum": 10,
+      "ordering": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "positions": [
+        1,
+        3,
+        6,
+        10
+      ],
+      "explanation": "With jumps [1,2,3,4] and forbidden {2,4,7}, find a valid ordering."
+    },
+    {
+      "name": "Consecutive jumps",
+      "jumps": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "forbidden": [
+        9,
+        3,
+        12,
+        6
+      ],
+      "total_sum": 15,
+      "ordering": [
+        1,
+        3,
+        4,
+        2,
+        5
+      ],
+      "positions": [
+        1,
+        4,
+        8,
+        10,
+        15
+      ],
+      "explanation": "Consecutive integers as jumps with multiples of 3 forbidden."
+    }
+  ],
+  "proof_insights": [
+    "1. The problem always has a solution (the theorem to prove).",
+    "2. There are at most n-1 forbidden positions but n! possible orderings.",
+    "3. Each ordering creates n-1 intermediate positions (excluding start and final).",
+    "4. The constraint |M| = n-1 is crucial - there are 'enough' orderings.",
+    "5. A greedy/constructive approach often works: choose jumps to avoid forbidden positions.",
+    "6. The final position (sum of all jumps) is guaranteed not to be in M.",
+    "7. Different orderings create different sets of intermediate positions."
+  ],
+  "metrics": {
+    "runtime_ms": 25.77,
+    "status": "success",
+    "cases_tested": 60
+  }
+}

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2001 P3 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            margin: 20px;
+            border-left: 5px solid #7A9D8F;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .controls {
+            padding: 20px;
+            background: #f0f2f5;
+            border-bottom: 2px solid var(--border-primary);
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 200px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid var(--border-primary);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius:  8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .content {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #7A9D8F;
+            border-bottom: 1px solid #7A9D8F;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .matrix {
+            overflow-x: auto;
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 15px;
+            background: #fafafa;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid var(--border-primary);
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background: #7A9D8F;
+            color: white;
+            font-weight: 600;
+        }
+        .solved {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        .not-solved {
+            background: #f0f0f0;
+            color: #999;
+        }
+        .chart {
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            min-height: 300px;
+        }
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            border-bottom: 2px solid #333;
+            padding: 10px;
+        }
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            margin: 0 2px;
+        }
+        .bar {
+            width: 100%;
+            background: #F8FAFC;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .bar:hover {
+            opacity: 0.8;
+        }
+        .bar.satisfies {
+            background: #F8FAFC;
+        }
+        .bar-label {
+            margin-top: 5px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .bar-value {
+            padding: 2px;
+            font-size: 10px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .insight {
+            background: #e7f3ff;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .insight h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+        .proof-strategy {
+            background: #F5F7FA;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+        .proof-strategy h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+        .result-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        .result-success {
+            background: #4CAF50;
+            color: white;
+        }
+        .result-fail {
+            background: #f44336;
+            color: white;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .bipartite-graph {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            min-height: 400px;
+        }
+        .participants {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .participant {
+            width: 60px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: white;
+        }
+        .girl {
+            background: #e91e63;
+        }
+        .boy {
+            background: #2196F3;
+        }
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .visualization {
+                grid-template-columns: 1fr;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2001 Problem 3</h1>
+                <p class="subtitle">Overlapping Solutions</p>
+            </div>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <strong>Problem:</strong> Twenty-one girls and twenty-one boys took part in a mathematical competition.
+            It turned out that each contestant solved at most six problems, and for each pair of a girl and a boy,
+            there was at least one problem that was solved by both the girl and the boy.
+            <strong>Show that there is a problem that was solved by at least three girls and at least three boys.</strong>
+        </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <p>We prove that there exists at least one problem that was solved by at least 3 girls AND at least 3 boys.</p>
+        </div>
+        <div class="controls">
+            <h3 style="margin-bottom: 15px;">Simulation Controls</h3>
+            <div class="control-group">
+                <label>Number of Girls:</label>
+                <input type="number" id="numGirls" value="21" min="2" max="30">
+            </div>
+            <div class="control-group">
+                <label>Number of Boys:</label>
+                <input type="number" id="numBoys" value="21" min="2" max="30">
+            </div>
+            <div class="control-group">
+                <label>Max Problems/Person:</label>
+                <input type="number" id="maxProblems" value="6" min="1" max="10">
+            </div>
+            <div class="control-group">
+                <label>Number of Problems:</label>
+                <input type="number" id="numProblemPool" value="15" min="5" max="50">
+            </div>
+            <div style="margin-top: 20px;">
+                <button onclick="runSimulation()">Run Simulation</button>
+                <button onclick="runExtremalConfig()">Generate Extremal Configuration</button>
+                <button onclick="showPigeonholeAnalysis()">Show Pigeonhole Analysis</button>
+                <button onclick="loadGroundTruth()">Load Ground Truth Data</button>
+            </div>
+        </div>
+        <div class="content">
+            <div id="results" class="section">
+                <h2>Simulation Results</h2>
+                <div id="results-content">
+                    <p style="color: var(--text-secondary); font-style: italic;">Run a simulation to see results...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Store current configuration
+        let currentConfig = null;
+        // Ground truth data from simulation.py results
+        const groundTruthData = {
+            "problem_parameters": {
+                "num_girls": 21,
+                "num_boys": 21,
+                "max_problems_per_person": 6
+            },
+            "pigeonhole_analysis": {
+                "total_pairs": 441,
+                "max_girl_problem_pairs": 126,
+                "max_boy_problem_pairs": 126,
+                "min_pair_coverage_needed": 441,
+                "key_insight": "If all problems had min(girls, boys) <= 2, we could not cover all 441 pairs. With min(g,b) <= 2, the maximum pair coverage is 2 * min(126, 126) = 252 < 441. Therefore, at least one problem must have min(girls, boys) >= 3."
+            },
+            "proof_strategy": "1. Count total girl-boy pairs: 21 * 21 = 441\n2. Each pair must share at least one problem\n3. For problem p solved by g_p girls and b_p boys, it covers g_p * b_p pairs\n4. We need: sum over all p of (g_p * b_p) >= 441\n5. Constraint: sum(g_p) <= 21*6 = 126, sum(b_p) <= 21*6 = 126\n6. If all problems have min(g_p, b_p) <= 2:\n   - Maximum pair coverage <= 2 * max(sum(g_p), sum(b_p)) = 2 * 126 = 252\n   - But 252 < 441, contradiction!\n7. Therefore, at least one problem must have g_p >= 3 AND b_p >= 3"
+        };
+        function generateConfiguration(numGirls, numBoys, maxProblemsPerPerson, numProblems) {
+            const girlSolutions = [];
+            const boySolutions = [];
+            // Initialize random solutions
+            for (let i = 0; i < numGirls; i++) {
+                const numToSolve = Math.floor(Math.random() * maxProblemsPerPerson) + 1;
+                const solutions = new Set();
+                while (solutions.size < numToSolve) {
+                    solutions.add(Math.floor(Math.random() * numProblems));
+                }
+                girlSolutions.push(solutions);
+            }
+            for (let i = 0; i < numBoys; i++) {
+                const numToSolve = Math.floor(Math.random() * maxProblemsPerPerson) + 1;
+                const solutions = new Set();
+                while (solutions.size < numToSolve) {
+                    solutions.add(Math.floor(Math.random() * numProblems));
+                }
+                boySolutions.push(solutions);
+            }
+            // Fix violations (pairs with no common problems)
+            const maxIterations = 10000;
+            for (let iter = 0; iter < maxIterations; iter++) {
+                let hasViolation = false;
+                for (let i = 0; i < numGirls; i++) {
+                    for (let j = 0; j < numBoys; j++) {
+                        const intersection = new Set([...girlSolutions[i]].filter(x => boySolutions[j].has(x)));
+                        if (intersection.size === 0) {
+                            hasViolation = true;
+                            // Add a common problem
+                            if (boySolutions[j].size > 0 && girlSolutions[i].size < maxProblemsPerPerson) {
+                                const problem = [...boySolutions[j]][0];
+                                girlSolutions[i].add(problem);
+                            } else if (girlSolutions[i].size > 0 && boySolutions[j].size < maxProblemsPerPerson) {
+                                const problem = [...girlSolutions[i]][0];
+                                boySolutions[j].add(problem);
+                            } else if (girlSolutions[i].size < maxProblemsPerPerson && boySolutions[j].size < maxProblemsPerPerson) {
+                                const newProblem = Math.floor(Math.random() * numProblems);
+                                girlSolutions[i].add(newProblem);
+                                boySolutions[j].add(newProblem);
+                            }
+                        }
+                    }
+                }
+                if (!hasViolation) {
+                    console.log(`Configuration fixed after ${iter} iterations`);
+                    break;
+                }
+            }
+            return { girlSolutions, boySolutions };
+        }
+        function analyzeConfiguration(girlSolutions, boySolutions) {
+            const problemStats = {};
+            const allProblems = new Set();
+            girlSolutions.forEach(sols => sols.forEach(p => allProblems.add(p)));
+            boySolutions.forEach(sols => sols.forEach(p => allProblems.add(p)));
+            allProblems.forEach(problem => {
+                const girlsCount = girlSolutions.filter(sols => sols.has(problem)).length;
+                const boysCount = boySolutions.filter(sols => sols.has(problem)).length;
+                problemStats[problem] = {
+                    girls: girlsCount,
+                    boys: boysCount,
+                    total: girlsCount + boysCount,
+                    satisfies: girlsCount >= 3 && boysCount >= 3
+                };
+            });
+            const conclusionHolds = Object.values(problemStats).some(s => s.satisfies);
+            // Verify constraints
+            let valid = true;
+            let validationMessage = "Valid configuration";
+            girlSolutions.forEach((sols, i) => {
+                if (sols.size > parseInt(document.getElementById('maxProblems').value)) {
+                    valid = false;
+                    validationMessage = `Girl ${i} solved too many problems`;
+                }
+            });
+            boySolutions.forEach((sols, i) => {
+                if (sols.size > parseInt(document.getElementById('maxProblems').value)) {
+                    valid = false;
+                    validationMessage = `Boy ${i} solved too many problems`;
+                }
+            });
+            // Check pair constraint
+            for (let i = 0; i < girlSolutions.length; i++) {
+                for (let j = 0; j < boySolutions.length; j++) {
+                    const intersection = new Set([...girlSolutions[i]].filter(x => boySolutions[j].has(x)));
+                    if (intersection.size === 0) {
+                        valid = false;
+                        validationMessage = `Girl ${i} and Boy ${j} share no problems`;
+                    }
+                }
+            }
+            return {
+                problemStats,
+                conclusionHolds,
+                valid,
+                validationMessage,
+                numProblems: allProblems.size
+            };
+        }
+        function visualizeResults(config, analysis) {
+            const resultsDiv = document.getElementById('results-content');
+            let html = '<div class="stats" role="status" aria-live="polite">';
+            // Stats cards
+            html += `
+                <div class="stat-card">
+                    <div class="stat-label">Total Girl-Boy Pairs</div>
+                    <div class="stat-value">${config.girlSolutions.length * config.boySolutions.length}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Problems Used</div>
+                    <div class="stat-value">${analysis.numProblems}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Configuration Valid</div>
+                    <div class="stat-value">${analysis.valid ? '✓' : '✗'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Conclusion Holds</div>
+                    <div class="stat-value">${analysis.conclusionHolds ? '✓' : '✗'}</div>
+                </div>
+            `;
+            html += '</div>';
+            // Result badge
+            if (analysis.valid) {
+                html += `<div class="result-badge ${analysis.conclusionHolds ? 'result-success' : 'result-fail'}">
+                    ${analysis.conclusionHolds ?
+                        '✓ Conclusion holds: At least one problem solved by ≥3 girls and ≥3 boys' :
+                        '✗ Conclusion does not hold (this should not happen with valid constraints!)'}
+                </div>`;
+            } else {
+                html += `<div class="result-badge result-fail">Invalid configuration: ${analysis.validationMessage}</div>`;
+            }
+            // Problem statistics chart
+            html += '<div class="section"><h3>Problem Statistics</h3>';
+            html += '<div class="legend">';
+            html += '<div class="legend-item"><div class="legend-color" style="background: #F8FAFC;"></div><span>Satisfies conclusion (≥3 girls AND ≥3 boys)</span></div>';
+            html += '<div class="legend-item"><div class="legend-color" style="background: #F8FAFC;"></div><span>Does not satisfy</span></div>';
+            html += '</div>';
+            html += '<div class="bar-chart">';
+            const sortedProblems = Object.keys(analysis.problemStats).sort((a, b) => parseInt(a) - parseInt(b));
+            sortedProblems.forEach(problem => {
+                const stats = analysis.problemStats[problem];
+                const maxHeight = 200;
+                const maxCount = Math.max(...Object.values(analysis.problemStats).map(s => Math.max(s.girls, s.boys)));
+                const girlHeight = (stats.girls / maxCount) * maxHeight;
+                const boyHeight = (stats.boys / maxCount) * maxHeight;
+                html += `<div class="bar-container">`;
+                html += `<div class="bar ${stats.satisfies ? 'satisfies' : ''}" style="height: ${Math.max(girlHeight, boyHeight)}px;">`;
+                html += `<div class="bar-value">G:${stats.girls}</div>`;
+                html += `<div class="bar-value">B:${stats.boys}</div>`;
+                html += `</div>`;
+                html += `<div class="bar-label">P${problem}</div>`;
+                html += `</div>`;
+            });
+            html += '</div></div>';
+            // Detailed table
+            html += '<div class="section"><h3>Detailed Problem Analysis</h3>';
+            html += '<div style="overflow-x: auto;"><table>';
+            html += '<tr><th>Problem</th><th>Girls</th><th>Boys</th><th>Total</th><th>Satisfies Conclusion</th></tr>';
+            sortedProblems.forEach(problem => {
+                const stats = analysis.problemStats[problem];
+                html += `<tr style="${stats.satisfies ? 'background: #e8f5e9;' : ''}">`;
+                html += `<td><strong>Problem ${problem}</strong></td>`;
+                html += `<td>${stats.girls}</td>`;
+                html += `<td>${stats.boys}</td>`;
+                html += `<td>${stats.total}</td>`;
+                html += `<td>${stats.satisfies ? '✓ Yes' : '✗ No'}</td>`;
+                html += `</tr>`;
+            });
+            html += '</table></div></div>';
+            // Show solution matrix (if not too large)
+            if (config.girlSolutions.length <= 10 && config.boySolutions.length <= 10) {
+                html += '<div class="section"><h3>Solution Matrix</h3>';
+                html += '<div class="visualization">';
+                // Girls matrix
+                html += '<div class="matrix"><h4>Girls\' Solutions</h4><table>';
+                html += '<tr><th>Girl</th>';
+                sortedProblems.forEach(p => html += `<th>P${p}</th>`);
+                html += '</tr>';
+                config.girlSolutions.forEach((sols, i) => {
+                    html += `<tr><th>Girl ${i}</th>`;
+                    sortedProblems.forEach(p => {
+                        html += `<td class="${sols.has(parseInt(p)) ? 'solved' : 'not-solved'}">${sols.has(parseInt(p)) ? '✓' : ''}</td>`;
+                    });
+                    html += '</tr>';
+                });
+                html += '</table></div>';
+                // Boys matrix
+                html += '<div class="matrix"><h4>Boys\' Solutions</h4><table>';
+                html += '<tr><th>Boy</th>';
+                sortedProblems.forEach(p => html += `<th>P${p}</th>`);
+                html += '</tr>';
+                config.boySolutions.forEach((sols, i) => {
+                    html += `<tr><th>Boy ${i}</th>`;
+                    sortedProblems.forEach(p => {
+                        html += `<td class="${sols.has(parseInt(p)) ? 'solved' : 'not-solved'}">${sols.has(parseInt(p)) ? '✓' : ''}</td>`;
+                    });
+                    html += '</tr>';
+                });
+                html += '</table></div>';
+                html += '</div>';
+            }
+            resultsDiv.innerHTML = html;
+        }
+        function runSimulation() {
+            const numGirls = parseInt(document.getElementById('numGirls').value);
+            const numBoys = parseInt(document.getElementById('numBoys').value);
+            const maxProblems = parseInt(document.getElementById('maxProblems').value);
+            const numProblemPool = parseInt(document.getElementById('numProblemPool').value);
+            const config = generateConfiguration(numGirls, numBoys, maxProblems, numProblemPool);
+            const analysis = analyzeConfiguration(config.girlSolutions, config.boySolutions);
+            currentConfig = config;
+            visualizeResults(config, analysis);
+        }
+        function runExtremalConfig() {
+            const numGirls = parseInt(document.getElementById('numGirls').value);
+            const numBoys = parseInt(document.getElementById('numBoys').value);
+            const maxProblems = parseInt(document.getElementById('maxProblems').value);
+            // Try to create a configuration that minimizes max(min(girls, boys))
+            // This is a greedy approach
+            const numProblems = Math.max(numGirls, numBoys);
+            const girlSolutions = [];
+            const boySolutions = [];
+            // Each girl solves problems in a pattern
+            for (let i = 0; i < numGirls; i++) {
+                const solutions = new Set();
+                for (let k = 0; k < maxProblems; k++) {
+                    solutions.add((i * maxProblems + k) % numProblems);
+                }
+                girlSolutions.push(solutions);
+            }
+            // Each boy needs to cover all girls with their problems
+            for (let j = 0; j < numBoys; j++) {
+                const solutions = new Set();
+                let uncoveredGirls = new Set([...Array(numGirls).keys()]);
+                while (uncoveredGirls.size > 0 && solutions.size < maxProblems) {
+                    // Find problem that covers most uncovered girls
+                    let bestProblem = null;
+                    let bestCoverage = 0;
+                    for (let p = 0; p < numProblems; p++) {
+                        if (solutions.has(p)) continue;
+                        const coverage = [...uncoveredGirls].filter(g => girlSolutions[g].has(p)).length;
+                        if (coverage > bestCoverage) {
+                            bestCoverage = coverage;
+                            bestProblem = p;
+                        }
+                    }
+                    if (bestProblem !== null && bestCoverage > 0) {
+                        solutions.add(bestProblem);
+                        uncoveredGirls = new Set([...uncoveredGirls].filter(g => !girlSolutions[g].has(bestProblem)));
+                    } else {
+                        break;
+                    }
+                }
+                boySolutions.push(solutions);
+            }
+            const config = { girlSolutions, boySolutions };
+            const analysis = analyzeConfiguration(girlSolutions, boySolutions);
+            currentConfig = config;
+            visualizeResults(config, analysis);
+        }
+        function showPigeonholeAnalysis() {
+            const resultsDiv = document.getElementById('results-content');
+            const numGirls = parseInt(document.getElementById('numGirls').value);
+            const numBoys = parseInt(document.getElementById('numBoys').value);
+            const maxProblems = parseInt(document.getElementById('maxProblems').value);
+            const totalPairs = numGirls * numBoys;
+            const maxGirlProblemPairs = numGirls * maxProblems;
+            const maxBoyProblemPairs = numBoys * maxProblems;
+            const maxPairCoverageWith2 = 2 * Math.min(maxGirlProblemPairs, maxBoyProblemPairs);
+            let html = '<div class="insight">';
+            html += '<h3>Pigeonhole Principle Analysis</h3>';
+            html += `<p><strong>Total girl-boy pairs:</strong> ${numGirls} × ${numBoys} = ${totalPairs}</p>`;
+            html += `<p><strong>Maximum (girl, problem) pairs:</strong> ${numGirls} × ${maxProblems} = ${maxGirlProblemPairs}</p>`;
+            html += `<p><strong>Maximum (boy, problem) pairs:</strong> ${numBoys} × ${maxProblems} = ${maxBoyProblemPairs}</p>`;
+            html += `<p><strong>Key Insight:</strong> If every problem had at most 2 girls OR at most 2 boys solving it,
+                     the maximum pair coverage would be 2 × ${Math.min(maxGirlProblemPairs, maxBoyProblemPairs)} = ${maxPairCoverageWith2}.</p>`;
+            if (maxPairCoverageWith2 < totalPairs) {
+                html += `<p style="color: #d32f2f; font-weight: bold;">Since ${maxPairCoverageWith2} < ${totalPairs},
+                         we CANNOT cover all pairs with min(girls, boys) ≤ 2!</p>`;
+                html += `<p style="color: #388e3c; font-weight: bold;">Therefore, at least one problem MUST have ≥3 girls AND ≥3 boys solving it.</p>`;
+            } else {
+                html += `<p style="color: #f57c00;">Note: With these parameters, the pigeonhole argument is not tight enough.
+                         Try increasing the number of participants or analyze specific configurations.</p>`;
+            }
+            html += '</div>';
+            html += '<div class="proof-strategy">';
+            html += '<h3>Proof Strategy</h3>';
+            html += groundTruthData.proof_strategy;
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+        function loadGroundTruth() {
+            const resultsDiv = document.getElementById('results-content');
+            let html = '<div class="insight">';
+            html += '<h3>Ground Truth Data (From Python Simulation)</h3>';
+            html += '<h4>Problem Parameters</h4>';
+            html += `<p>Girls: ${groundTruthData.problem_parameters.num_girls},
+                     Boys: ${groundTruthData.problem_parameters.num_boys},
+                     Max Problems: ${groundTruthData.problem_parameters.max_problems_per_person}</p>`;
+            html += '<h4>Pigeonhole Analysis</h4>';
+            html += `<p>Total pairs: ${groundTruthData.pigeonhole_analysis.total_pairs}</p>`;
+            html += `<p>Max (girl, problem) pairs: ${groundTruthData.pigeonhole_analysis.max_girl_problem_pairs}</p>`;
+            html += `<p>Max (boy, problem) pairs: ${groundTruthData.pigeonhole_analysis.max_boy_problem_pairs}</p>`;
+            html += `<p><strong>Key Insight:</strong> ${groundTruthData.pigeonhole_analysis.key_insight}</p>`;
+            html += '</div>';
+            html += '<div class="proof-strategy">';
+            html += '<h3>Complete Proof Strategy</h3>';
+            html += groundTruthData.proof_strategy;
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+        // Show pigeonhole analysis on page load
+        window.onload = function() {
+            showPigeonholeAnalysis();
+        };
+        </script>
+</body>
+</html>

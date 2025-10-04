@@ -1,0 +1,306 @@
+{
+  "problem": "Determine all m\u00d7n rectangles that can be tiled with hooks",
+  "hook_description": "A hook is made of 6 unit squares in an L-shape",
+  "total_tested": 55,
+  "tileable_count": 0,
+  "not_tileable_count": 55,
+  "tileable_rectangles": [],
+  "not_tileable_rectangles": [
+    {
+      "m": 1,
+      "n": 1,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 2,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 3,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 4,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 5,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 1,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 9,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 1,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 2,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 3,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 2,
+      "n": 4,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 5,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 2,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 2,
+      "n": 9,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 2,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 3,
+      "n": 3,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 3,
+      "n": 4,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 3,
+      "n": 5,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 3,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 3,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 3,
+      "n": 8,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 3,
+      "n": 9,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 3,
+      "n": 10,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 4,
+      "n": 4,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 4,
+      "n": 5,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 4,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 4,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 4,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 4,
+      "n": 9,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 4,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 5,
+      "n": 5,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 5,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 5,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 5,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 5,
+      "n": 9,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 5,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 6,
+      "n": 6,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 6,
+      "n": 7,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 6,
+      "n": 8,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 6,
+      "n": 9,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 6,
+      "n": 10,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 7,
+      "n": 7,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 7,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 7,
+      "n": 9,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 7,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 8,
+      "n": 8,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 8,
+      "n": 9,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 8,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 9,
+      "n": 9,
+      "reason": "Area not divisible by 6"
+    },
+    {
+      "m": 9,
+      "n": 10,
+      "reason": "No tiling found"
+    },
+    {
+      "m": 10,
+      "n": 10,
+      "reason": "Area not divisible by 6"
+    }
+  ],
+  "patterns": {
+    "observations": [
+      {
+        "type": "modulo_2",
+        "tileable_cases": []
+      },
+      {
+        "type": "modulo_3",
+        "tileable_cases": []
+      }
+    ],
+    "min_tileable_dimension": null,
+    "3\u00d72k_rectangles": [],
+    "2\u00d73k_rectangles": []
+  },
+  "conjecture": "Based on the simulation, it appears that NO m\u00d7n rectangle can be tiled with hooks of this shape. The answer may be that no such rectangles exist, or only very specific large rectangles can be tiled.",
+  "metrics": {
+    "runtime_ms": 25.2,
+    "status": "success",
+    "cases_tested": 55
+  }
+}
