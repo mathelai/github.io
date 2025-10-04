@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathel.org/schemas/results.json",
+  "title": "MathEL Simulation Results Schema",
+  "description": "Unified schema for all IMO problem simulation results",
+  "type": "object",
+  "required": ["problem_id", "params", "method", "metrics", "seed", "environment", "status"],
+  "properties": {
+    "problem_id": {
+      "type": "string",
+      "description": "Problem identifier in format IMO-YYYY-PN",
+      "pattern": "^IMO-\\d{4}-P\\d+$"
+    },
+    "params": {
+      "type": "object",
+      "description": "Input parameters for the simulation",
+      "additionalProperties": true
+    },
+    "method": {
+      "type": "string",
+      "description": "Simulation method/algorithm name and version"
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Problem-specific quantitative outputs",
+      "additionalProperties": true
+    },
+    "seed": {
+      "description": "Random seed(s) used for reproducibility",
+      "oneOf": [
+        {"type": "integer"},
+        {"type": "string"},
+        {"type": "array", "items": {"type": "integer"}}
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "description": "Execution environment metadata",
+      "required": ["python_version", "platform", "timestamp"],
+      "properties": {
+        "python_version": {"type": "string"},
+        "platform": {"type": "string"},
+        "timestamp": {"type": "string", "format": "date-time"},
+        "git_commit": {"type": "string"},
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        }
+      }
+    },
+    "status": {
+      "enum": ["success", "timeout", "failed", "partial"],
+      "description": "Execution status"
+    },
+    "runtime_ms": {
+      "type": "number",
+      "description": "Execution time in milliseconds",
+      "minimum": 0
+    },
+    "artifacts": {
+      "type": "object",
+      "description": "Paths to generated figures, tables, or supplementary files",
+      "additionalProperties": {"type": "string"}
+    },
+    "ground_truth": {
+      "type": "object",
+      "description": "Ground truth data for proof development",
+      "additionalProperties": true
+    },
+    "analysis": {
+      "type": "object",
+      "description": "Analysis results, patterns, and insights",
+      "additionalProperties": true
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if status is 'failed'"
+    }
+  },
+  "additionalProperties": false
+}
