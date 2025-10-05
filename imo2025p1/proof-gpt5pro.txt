@@ -1,0 +1,113 @@
+**Answer.** For every integer (n\ge 3), the possible values of (k) are exactly
+[
+\boxed{k\in{0,1,3}}.
+]
+
+We prove necessity and sufficiency.
+
+---
+
+### Notation
+
+Let
+[
+T_n={(a,b)\in\mathbb Z_{>0}^2:\ a+b\le n+1}.
+]
+For (s=2,3,\dots,n+1) write (\ell_s) for the line (x+y=s).
+A line is *sunny* if it is not parallel to the (x)-axis, (y)-axis, or (\ell_0) (i.e. not of slope (0,\infty,-1)).
+
+---
+
+## 1. A key geometric lemma (“peeling the top side”)
+
+> **Lemma 1.** If (n\ge 4) and (n) lines cover all points in (T_n), then the top side (\ell_{n+1}) must be one of these lines.
+
+*Proof.* The boundary of (T_n) consists of the (n) points on each of the three sides (x=1), (y=1), and (\ell_{n+1}), with the three vertices double-counted. Thus there are (3n-3) distinct boundary lattice points.
+
+Any line that is not (\ell_{n+1}) intersects the boundary of the triangle in at most two points, hence can cover at most two boundary lattice points. If none of the (n) lines equals (\ell_{n+1}), then at most (2n) boundary points are covered. But for (n\ge 4),
+[
+2n<3n-3,
+]
+a contradiction. (\square)
+
+A useful consequence is an iteration:
+
+> **Corollary 2.** If a family (\mathcal L) of (n) lines covers (T_n) with (n\ge 5), then (\ell_{n+1}\in\mathcal L); removing (\ell_{n+1}), the remaining (n-1) lines cover (T_{n-1}). In particular, for any solution with (n\ge 5), the lines (\ell_s) appear for every (s=5,6,\dots,n+1).
+
+Thus for (n\ge 5), any solution can be obtained from a solution for (n=4) by adding the non-sunny lines (\ell_5,\ell_6,\dots,\ell_{n+1}). Note also that removing (\ell_{n+1}) does not change the number (k) of sunny lines. Hence:
+
+> **Reduction.** For (n\ge 4), the admissible values of (k) are exactly the admissible values of (k) for (n=4).
+> We will therefore determine (k) for (n=3) and (n=4), and then use the reduction.
+
+---
+
+## 2. Base case (n=3)
+
+Here (T_3={(1,1),(1,2),(2,1),(1,3),(2,2),(3,1)}).
+
+### 2.1. Constructions (sufficiency)
+
+* (k=0): take the three non-sunny lines (\ell_2,\ell_3,\ell_4).
+* (k=1): take (\ell_3,\ell_4) and the sunny line (y=x) (which covers ((1,1))).
+* (k=3): take the three sunny lines
+  [
+  y=x,\qquad 2x+y=5,\qquad x+2y=5,
+  ]
+  which cover ((1,1),(2,2)), ((1,3),(2,1)), and ((1,2),(3,1)), respectively.
+
+### 2.2. Impossibility of (k=2)
+
+Suppose three lines cover (T_3), exactly two of which are sunny.
+
+* If the unique non-sunny line is (\ell_4), then the two sunny lines must cover ((1,1),(1,2),(2,1)). But any two of these three points lie on a line of slope (0,\infty), or (-1); no sunny line can contain two of them. Hence two sunny lines cannot cover all three points — contradiction.
+
+* If the unique non-sunny line is (\ell_3) or (\ell_2), then the two sunny lines must cover the three collinear points ((1,3),(2,2),(3,1)) on (\ell_4); each sunny line meets (\ell_4) in at most one of these lattice points, so two sunny lines can cover at most two of the three — contradiction.
+
+* If the unique non-sunny line is vertical or horizontal, say (x=1) (other cases are similar), then the two sunny lines must cover ((2,1),(2,2),(3,1)). Again, any two of these three points lie on a non-sunny line (vertical, horizontal, or slope (-1)), so two sunny lines cannot cover all three — contradiction.
+
+Thus (k=2) is impossible when (n=3).
+
+Combining 2.1 and 2.2, the admissible (k) for (n=3) are exactly ({0,1,3}).
+
+---
+
+## 3. The case (n=4)
+
+By Lemma 1, (\ell_5) must be among the four lines. Removing it, the remaining three lines must cover (T_3), and the number of sunny lines among them equals the original (k). From the classification for (n=3), we get exactly (k\in{0,1,3}) for (n=4).
+
+Conversely, the following explicit constructions show sufficiency:
+
+* (k=0): (\ell_2,\ell_3,\ell_4,\ell_5).
+* (k=1): (\ell_3,\ell_4,\ell_5) and (y=x).
+* (k=3): (\ell_5) and the three sunny lines (y=x,;2x+y=5,;x+2y=5).
+
+---
+
+## 4. General (n\ge 5)
+
+By Corollary 2, any solution for (n) contains (\ell_5,\ell_6,\dots,\ell_{n+1}). Removing these (n-3) non-sunny lines reduces to a solution for (n=3) with the same number (k) of sunny lines. Hence the admissible (k) for all (n\ge 5) are the same as for (n=3), i.e. (k\in{0,1,3}).
+
+Conversely, start from any of the three constructions for (n=3) and add the lines (\ell_5,\ell_6,\dots,\ell_{n+1}); this yields (n) lines covering (T_n) with (k=0,1,3), respectively.
+
+---
+
+## 5. Final explicit constructions for all (n\ge 3)
+
+* **(k=0).** Take the (n) non-sunny lines (\ell_2,\ell_3,\dots,\ell_{n+1}).
+* **(k=1).** Take (\ell_3,\ell_4,\dots,\ell_{n+1}) and the sunny line (y=x).
+* **(k=3).** Take (\ell_5,\ell_6,\dots,\ell_{n+1}) and the three sunny lines
+  [
+  y=x,\qquad 2x+y=5,\qquad x+2y=5,
+  ]
+  which together cover all points with (a+b\le 4); the lines (\ell_s) cover all points with (a+b\ge 5).
+
+Each of these families consists of (n) distinct lines and satisfies the covering condition.
+
+---
+
+## 6. Conclusion
+
+For every integer (n\ge 3), the set of integers (k) such that there exist (n) distinct lines covering all ((a,b)\in T_n) with exactly (k) sunny lines is
+[
+\boxed{{0,1,3}}.
+]
