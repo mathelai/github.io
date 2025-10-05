@@ -1,4 +1,4 @@
-# DRAFT TEMPLATE ONLY
+# DESIGN DRAFT TEMPLATE ONLY
 # MathEL: Autonomous Self-Improving AI for IMO Combinatorics
 
 A comprehensive collection of simulations, visualizations, and analyses for 39 International Mathematical Olympiad (IMO) combinatorics problems spanning 2000-2025.
@@ -109,9 +109,6 @@ All problems are **combinatorics** with subcategories including:
 - ✅ **Experimental evidence** - Verified for small cases (labeled as "Experimental")
 - 🟡 **Sketches** - Partial proofs with key ideas (labeled as "Sketch")
 - ⚠️ **Unverified claims** - Require mathematical review
-
-### Recent Corrections
-- **IMO 2025 P1**: Corrected answer is k ∈ {0, 1, n-2} (previously incorrectly claimed as k ∈ {0, 1}). Simulation and proof have been updated to reflect the correct triangular pattern construction.
 
 ## Results Schema
 
