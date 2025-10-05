@@ -68,4 +68,21 @@ and consider (A^{a}B^{b}A^{b}B^{a}).
 **Your turn (one quick check):** What is (2a+2b) in terms of (n)? (This confirms the total length is (2n).)
 
 Student:
+(2a+2b = 2(k-n-1) + 2(2n-k+1) = (2k - 2n - 2) + (4n - 2k + 2) = 2n.)
+So the total length is (2n), as required.
+
+Teacher:
+Nice computation.
+
+**Checkpoint 2b (finish the counterexample):**
+In the four‑block layout (A^{a}B^{b}A^{b}B^{a}), the cumulative block endpoints are
+[
+a,\quad a+b,\quad a+2b,\quad 2n.
+]
+Given (k>2b+a), **which block contains the (k)-th coin** at the start?
+
+*Hint:* Compare (k) to (a), (a+b), and (a+2b).
+
+Student:
+
 
