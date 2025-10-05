@@ -1,0 +1,56 @@
+[
+\boxed{k=100}
+]
+
+**Chessboard coloring.** Color the (20\times 20) grid in the usual black–white way, so that ((x,y)) is black iff (x+y) is even. A distance (\sqrt5) between two lattice points means the coordinate difference is ((\pm1,\pm2)) or ((\pm2,\pm1)), i.e. a knight’s move. Such a move always changes color, so **no two sites of the same color are at distance (\sqrt5)**.
+
+There are (200) black and (200) white sites.
+
+---
+
+### Lower bound: Amy can ensure (100).
+
+Amy adopts the strategy: **always place on black sites**. Because no two black sites are at distance (\sqrt5), this is always legal as long as there is an unoccupied black site.
+
+Ben can occupy at most one black site per turn, and Amy moves first. Among the (200) black sites, on each pair of moves (Amy+Ben) at most two black sites are consumed. Hence Amy secures at least half of the black sites, i.e.
+[
+\text{Amy places at least } \frac{200}{2} = 100 \text{ red stones.}
+]
+
+---
+
+### Upper bound: Ben can hold Amy to at most (100).
+
+Ben uses the **copy-color strategy**:
+
+> After Amy places a red stone on some color (c\in{\text{black},\text{white}}), Ben places a blue stone on any unoccupied site of the same color (c) (if any such site remains). If that color is already full, he plays anywhere (this choice won’t matter).
+
+Let (R_c) and (B_c) be the numbers of red and blue stones on color (c).
+
+**Claim (invariant).** After each of Ben’s moves we have
+[
+B_{\text{black}} \ge R_{\text{black}}\quad\text{and}\quad B_{\text{white}} \ge R_{\text{white}}.
+]
+*Proof.* Initially, it holds trivially. Suppose it holds after some Ben move. Amy plays on color (c), increasing (R_c) by (1).
+
+* If there is an unoccupied site of color (c), Ben also plays on color (c), increasing (B_c) by (1), restoring (B_c\ge R_c).
+* If color (c) has no unoccupied site after Amy’s move, then before her move exactly one such site remained, so (R_c+B_c=99) before, and by the inductive hypothesis (B_c\ge R_c), which forces (B_c\ge 50) and (R_c\le 49). After Amy’s move, (R_c) becomes at most (50) and (B_c\ge 50); hence (B_c\ge R_c) still holds. The other color is unchanged, so its inequality persists. (\square)
+
+At the end of the game, in each color (c) there are at most (100) occupied sites, so
+[
+R_c + B_c \le 100\quad\text{and}\quad B_c \ge R_c ;\Rightarrow; 2R_c \le 100 ;\Rightarrow; R_c \le 50.
+]
+Summing over both colors gives
+[
+R_{\text{black}} + R_{\text{white}} \le 50 + 50 = 100.
+]
+Thus Ben can always keep Amy to at most (100) red stones.
+
+*(Note: The game necessarily ends on Amy’s turn—Ben can always move unless the board is full—but the argument above does not rely on who moves last.)*
+
+---
+
+Combining the lower and upper bounds, the greatest (k) that Amy can guarantee is
+[
+\boxed{100}.
+]
