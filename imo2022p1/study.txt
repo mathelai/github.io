@@ -1,3 +1,13 @@
+Problem:
+The Bank of Oslo issues two types of coin: aluminium (denoted $A$ ) and bronze (denoted $B$ ). Marianne has $n$ aluminium coins and $n$ bronze coins, arranged in a row in some arbitrary initial order. A chain is any subsequence of consecutive coins of the same type. Given a fixed positive integer $k \leqslant 2 n$, Marianne repeatedly performs the following operation: she identifies the longest chain containing the $k^{\text {th }}$ coin from the left, and moves all coins in that chain to the left end of the row. For example, if $n=4$ and $k=4$, the process starting from the ordering $A A B B B A B A$ would be
+
+$$
+A A B \underline{B} B A B A \rightarrow B B B \underline{A} A A B A \rightarrow A A A \underline{B} B B B A \rightarrow B B B \underline{B} A A A A \rightarrow B B B \underline{B} A A A A \rightarrow \cdots .
+$$
+
+Find all pairs $(n, k)$ with $1 \leqslant k \leqslant 2 n$ such that for every initial ordering, at some moment during the process, the leftmost $n$ coins will all be of the same type.
+
+Teacher:
 Love this problem—let’s turn it into something you can *re-derive* confidently.
 
 **Big idea (one line):** Track the number of “blocks” (maximal runs of equal coins); the operation never increases this number, and for the good range of (k) we can force it to eventually *decrease* until only two blocks remain (all (A)’s then all (B/C)’s, or vice versa).
