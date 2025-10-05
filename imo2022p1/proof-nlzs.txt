@@ -1,0 +1,63 @@
+The problem asks for all pairs $(n, k)$ such that for any initial configuration of $n$ aluminium (A) and $n$ bronze (B) coins, the process eventually reaches a sorted state (i.e., $A^n B^n$ or $B^n A^n$).
+
+Let $C$ be a configuration of the $2n$ coins. Let $N(C)$ be the number of maximal chains in $C$. A state is sorted if and only if $N(C)=2$.
+
+We analyze how $N(C)$ evolves during the operation. The operation moves the chain $X$ containing the $k^{th}$ coin to the front. Let $C=PXS$ and $C'=XPS$.
+
+1.  If $P$ and $S$ are non-empty (internal move), the last chain of $P$ and the first chain of $S$ have the same type (opposite to $X$) and thus merge in $C'$. This strictly decreases the number of chains: $N(C') \le N(C)-1$.
+2.  If $P$ is empty (fixed point), $C'=C$. $N(C')=N(C)$.
+3.  If $S$ is empty (rotation), $C'=XP$. $N(C') \le N(C)$. Equality holds if $X$ and the first chain of $P$ have different types.
+
+Since $N(C)$ is a non-increasing positive integer, the process must eventually enter a limit set (a fixed point or a cycle) where $N(C)$ is constant. We require that this limit set consists only of sorted states.
+
+### 1. Analysis of Fixed Points
+
+A configuration $C$ is a fixed point if the $k^{th}$ coin is in the first chain $X_1$, i.e., $k \le |X_1|$.
+
+If $n=1$, the states are $AB$ and $BA$, both sorted. So $(1, 1)$ and $(1, 2)$ are solutions.
+
+If $n \ge 2$. We want to avoid unsorted fixed points (where $|X_1|<n$).
+If $k < n$, consider the configuration $C = A^k B^n A^{n-k}$. This is unsorted. The first chain is $A^k$. Since the $k^{th}$ coin is in this chain, $C$ is a fixed point.
+Thus, we must have $k \ge n$.
+
+If $k \ge n$, a fixed point requires $|X_1| \ge k \ge n$. Since $|X_1| \le n$, we must have $|X_1|=n$. Thus $C$ is sorted.
+
+### 2. Analysis of Cycles
+
+In a cycle, $N(C)$ must be constant. This implies that only rotations that preserve $N(C)$ can occur (internal moves are forbidden).
+
+Let $C=X_1 \dots X_m$. Since $k \ge n$ (for $n \ge 2$), if $C$ is unsorted ($|X_1|<n$), the $k^{th}$ coin is not in $X_1$. Thus, the operation must move the last chain $X_m$. $C'=X_m X_1 \dots X_{m-1}$.
+
+For $N(C')=N(C)$, $X_m$ and $X_1$ must have different types. This implies $m$ must be even. Let $m=2r$.
+We are looking for unsorted cycles, so $m \ge 4$ ($r \ge 2$).
+
+The cycle consists of cyclic shifts of the chains. The $k^{th}$ coin must always be in the last chain.
+Let $L_i=|X_i|$. When $X_i$ is the last chain, it starts at position $2n-L_i+1$.
+We need $k \ge 2n-L_i+1$ for all $i$.
+Let $L_{min} = \min_i L_i$. The condition for the existence of such a cycle is $k \ge 2n-L_{min}+1$.
+
+We want to prevent such cycles. So, for any configuration with $m=2r \ge 4$ chains, we must have $k \le 2n-L_{min}$.
+
+This must hold for the configuration that maximizes $L_{min}$. We have $r$ chains of A and $r$ chains of B, summing to $n$ each. So $L_{min} \le n/r$.
+The maximum is attained when $r=2$ ($m=4$). The maximum value of $L_{min}$ is $\lfloor n/2 \rfloor$.
+
+To avoid unsorted cycles, we must have $k \le 2n - \lfloor n/2 \rfloor$.
+
+### 3. Conclusion and Sufficiency
+
+The necessary conditions are $k \ge n$ and $k \le 2n - \lfloor n/2 \rfloor$.
+The upper bound can be rewritten as $n + (n - \lfloor n/2 \rfloor) = n + \lceil n/2 \rceil$.
+The condition is $n \le k \le n + \lceil n/2 \rceil$. This formula also covers the $n=1$ case.
+
+We verify the sufficiency. If the conditions hold, all fixed points are sorted. Suppose an unsorted cycle exists. It requires $m \ge 4$ chains and $L_{min} \ge 2n-k+1$.
+Since $k \le 2n - \lfloor n/2 \rfloor$, we have $2n-k \ge \lfloor n/2 \rfloor$.
+So $L_{min} \ge \lfloor n/2 \rfloor + 1$.
+The total length is $2n = \sum L_i \ge m \cdot L_{min} \ge 4(\lfloor n/2 \rfloor + 1)$.
+$n \ge 2\lfloor n/2 \rfloor + 2$.
+
+If $n=2q$, $2q \ge 2q+2$, which is impossible.
+If $n=2q+1$, $2q+1 \ge 2q+2$, which is impossible.
+
+Thus, no unsorted cycle exists. Since the process must terminate in a fixed point or a cycle, it must reach a sorted state.
+
+The pairs $(n, k)$ are those satisfying $n \le k \le n + \lceil n/2 \rceil$.
