@@ -1,1 +1,58 @@
-Let n\ge2 be an integer. Consider an n× n chessboard consisting of n^2 unit squares. A configuration of n rooks on this board is \textit{peaceful} if every row and every column contains exactly one rook. Find the greatest positive integer k such that, for each peaceful configuration of n rooks, there is a k× k square which does not contain a rook on any of its k^2 squares.
+Let $S$ be the set of all pairs of non-negative integers $(h,k)$ such that $h+k < n$. We are given a coloring of $S$ in red and blue. Let $R$ be the set of red elements and $B$ be the set of blue elements. The condition that if $(h,k) \in R$ and $h' \le h, k' \le k$, then $(h',k') \in R$, implies that $R$ forms a Young diagram contained in $S$.
+
+A type 1 subset consists of $n$ blue elements with distinct first members ($h$). Since $h$ ranges from $0$ to $n-1$, a type 1 subset must contain exactly one blue element for each $h$.
+A type 2 subset consists of $n$ blue elements with distinct second members ($k$). Similarly, a type 2 subset must contain exactly one blue element for each $k$.
+
+Let $R_h$ be the number of red elements with the first coordinate $h$, and $C_k$ be the number of red elements with the second coordinate $k$.
+
+The total number of elements in $S$ with the first coordinate $h$ is $n-h$. The number of blue elements with the first coordinate $h$ is $B_h = n-h-R_h$.
+The total number of type 1 subsets, denoted by $N_1(R)$, is:
+$N_1(R) = \prod_{h=0}^{n-1} B_h = \prod_{h=0}^{n-1} (n-h-R_h)$.
+
+The total number of elements in $S$ with the second coordinate $k$ is $n-k$. The number of blue elements with the second coordinate $k$ is $D_k = n-k-C_k$.
+The total number of type 2 subsets, denoted by $N_2(R)$, is:
+$N_2(R) = \prod_{k=0}^{n-1} D_k = \prod_{k=0}^{n-1} (n-k-C_k)$.
+
+We prove that $N_1(R) = N_2(R)$ by induction on the number of red elements $|R|$.
+
+**Base Case:** $|R|=0$. The set $R$ is empty. $R_h=0$ and $C_k=0$ for all $h,k$.
+$N_1(\emptyset) = \prod_{h=0}^{n-1} (n-h) = n!$.
+$N_2(\emptyset) = \prod_{k=0}^{n-1} (n-k) = n!$.
+The equality holds for the base case.
+
+**Inductive Step:** Assume that $N_1(R) = N_2(R)$ for a Young diagram $R \subset S$. Consider a new configuration $R^+$ obtained by adding exactly one cell $(h_0, k_0)$ to $R$, such that $R^+$ is still a Young diagram contained in $S$.
+
+For $R^+$ to be a Young diagram, $(h_0, k_0)$ must be an outer corner of $R$. This means $(h_0, k_0) \notin R$, and if $h_0>0$, $(h_0-1, k_0) \in R$; if $k_0>0$, $(h_0, k_0-1) \in R$.
+
+This condition implies specific values for $R_{h_0}$ and $C_{k_0}$.
+Since the red cells with first coordinate $h_0$ are $(h_0, 0), \dots, (h_0, R_{h_0}-1)$:
+$(h_0, k_0) \notin R$ implies $R_{h_0} \le k_0$.
+If $k_0>0$, $(h_0, k_0-1) \in R$ implies $R_{h_0} \ge k_0$.
+Thus, $R_{h_0} = k_0$. (This holds even if $k_0=0$).
+
+Similarly, considering the red cells with second coordinate $k_0$:
+$(h_0, k_0) \notin R$ implies $C_{k_0} \le h_0$.
+If $h_0>0$, $(h_0-1, k_0) \in R$ implies $C_{k_0} \ge h_0$.
+Thus, $C_{k_0} = h_0$.
+
+Since $(h_0, k_0) \in S$, we have $h_0+k_0 < n$, so $n-h_0-k_0 \ge 1$.
+
+Now we examine how $N_1$ and $N_2$ change when moving from $R$ to $R^+$.
+The parameters of $R^+$ are $R^+_h = R_h + \delta_{h, h_0}$ and $C^+_k = C_k + \delta_{k, k_0}$.
+
+$N_1(R^+)$ differs from $N_1(R)$ only in the factor corresponding to $h=h_0$.
+The old factor was $B_{h_0} = n-h_0-R_{h_0} = n-h_0-k_0$.
+The new factor is $B^+_{h_0} = n-h_0-R^+_{h_0} = n-h_0-(k_0+1) = B_{h_0}-1$.
+Thus, $N_1(R^+) = N_1(R) \cdot \frac{B_{h_0}-1}{B_{h_0}}$.
+
+$N_2(R^+)$ differs from $N_2(R)$ only in the factor corresponding to $k=k_0$.
+The old factor was $D_{k_0} = n-k_0-C_{k_0} = n-k_0-h_0$.
+The new factor is $D^+_{k_0} = n-k_0-C^+_{k_0} = n-k_0-(h_0+1) = D_{k_0}-1$.
+Thus, $N_2(R^+) = N_2(R) \cdot \frac{D_{k_0}-1}{D_{k_0}}$.
+
+Crucially, we observe that $B_{h_0} = n-h_0-k_0 = D_{k_0}$. Therefore, the multiplicative factors are the same:
+$\frac{B_{h_0}-1}{B_{h_0}} = \frac{D_{k_0}-1}{D_{k_0}}$.
+
+Since $N_1(R)=N_2(R)$ by the inductive hypothesis, it follows that $N_1(R^+) = N_2(R^+)$.
+
+Since any Young diagram $R$ contained in $S$ can be constructed from the empty configuration by successively adding cells one by one while maintaining the Young diagram property, the equality $N_1(R)=N_2(R)$ holds for all valid colorings by the principle of mathematical induction.
