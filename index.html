@@ -552,7 +552,7 @@
                         <div class="card-links">
                             <a href="${basePath}/index.html" class="card-link" onclick="event.stopPropagation()">Sim</a>
                             <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()">Proof</a>
-                            <a href="${basePath}/proof.lean" class="card-link" onclick="event.stopPropagation()">Lean</a>
+                            <a href="#" class="card-link" onclick="event.preventDefault(); event.stopPropagation(); openLeanEditor('${basePath}')">Lean</a>
                             <a href="${basePath}/grade.txt" class="card-link icon-only" onclick="event.stopPropagation()" title="Grade">✓</a>
                         </div>
                     </div>
@@ -627,6 +627,50 @@
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
+
+        // Function to open Lean 4 web editor with proof.lean contents
+        async function openLeanEditor(basePath) {
+            try {
+                // Load LZ-String library if not already loaded
+                if (typeof LZString === 'undefined') {
+                    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js');
+                }
+
+                // Dynamically load the proof.js file
+                const proofScript = await loadScript(basePath + '/proof.js');
+
+                // Wait a moment for the script to execute
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Get the leanProof from the loaded script
+                if (typeof leanProof === 'undefined') {
+                    throw new Error('Lean proof not found');
+                }
+
+                // Compress and open
+                const compressed = LZString.compressToBase64(leanProof);
+                const url = `https://live.lean-lang.org/#codez=${compressed}`;
+                window.open(url, '_blank');
+
+                // Clean up the global variable
+                delete window.leanProof;
+
+            } catch (e) {
+                console.error('Error loading Lean proof:', e);
+                alert('Error loading Lean proof. Please try again.');
+            }
+        }
+
+        // Helper function to load external scripts
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+                document.head.appendChild(script);
+            });
+        }
 
         // Initialize
         loadProblems();
