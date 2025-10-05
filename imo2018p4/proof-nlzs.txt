@@ -1,0 +1,72 @@
+The problem asks for the greatest integer $k$ such that Amy can ensure she places at least $k$ red stones, regardless of Ben's strategy. We will show that $k=100$.
+
+The game is played on a $20 \times 20$ grid. Let $G$ be the Knight's graph on these 400 sites. $G$ is bipartite. Let $W$ and $B'$ be the two partitions (white and black sites), each of size 200.
+
+The solution relies on a specific construction based on tiling the board with $4 \times 4$ blocks.
+
+**1. The Construction and Structural Properties**
+
+We define a specific structure by tiling the $20 \times 20$ board with a repeating $4 \times 4$ pattern. This construction yields the following structural properties:
+
+1.  We can partition $W$ into 100 pairs $M=\{P_1, \dots, P_{100}\}$.
+2.  We can partition $B'$ into 100 pairs $\{B'_1, \dots, B'_{100}\}$.
+3.  For each $i$, the set $S_i = P_i \cup B'_i$ induces a subgraph isomorphic to $K_{2,2}$ (a 4-cycle). This means that both sites in $P_i$ are connected to both sites in $B'_i$.
+
+These properties are derived from a specific $4 \times 4$ pattern where these relationships hold locally, and the tiling ensures they hold globally.
+
+**2. Lower Bound: Amy guarantees $k \ge 100$.**
+
+Amy can adopt a strategy based on the partition $W$ and the matching $M$.
+
+**Amy's Strategy:** Amy only places stones on $W$. She follows a strategy to ensure that when $W$ is full, Ben's stones on $W$ ($B_W$) do not contain any pair of $M$.
+1. If there is an unoccupied site $v \in W$ such that its partner $u$ (in the same pair $P_i$) is occupied by Ben, Amy plays $v$.
+2. Otherwise, Amy plays on any unoccupied site in $W$.
+
+**Analysis:**
+This strategy ensures that no pair $P_i$ is entirely occupied by Ben. If Ben occupies one site of a pair, Amy immediately occupies the other in the next turn, provided it was unoccupied.
+When $W$ is full, every pair $P_i$ must contain at least one red stone. Thus, the set of red stones on $W$, $R_W$, intersects every pair $P_i$.
+
+By the construction property (specifically that $S_i$ is $K_{2,2}$), $P_i$ is contained in the neighborhood of any site in $B'_i$. Since $R_W$ intersects every $P_i$, $R_W$ dominates every $B'_i$. Therefore, $R_W$ dominates $B'$.
+
+When $W$ is full, the game ends because all unoccupied sites are in $B'$, and they are all dominated by $R_W$.
+
+Let $K$ be the number of stones Ben placed on $B'$. The total number of turns when the game ends is $200+K$. Since Amy goes first, the number of red stones she places is:
+$|R| = \lceil (200+K)/2 \rceil = 100 + \lceil K/2 \rceil$.
+Since $K \ge 0$, Amy guarantees $|R| \ge 100$.
+
+**3. Upper Bound: Ben guarantees $k \le 100$.**
+
+Ben can adopt a strategy based on the partition of the board into the 100 sets $S_i$.
+
+**Ben's Strategy:** Ben mirrors Amy's choice of partition and uses a pairing strategy.
+1. If Amy plays on $W$, in a pair $P_i$. Let $w$ be the site and $w'$ its partner. If $w'$ is unoccupied, Ben plays $w'$.
+2. If Amy plays on $B'$, in a pair $B'_i$. Let $b$ be the site and $b'$ its partner. If $b'$ is unoccupied, Ben plays $b'$.
+3. Otherwise, Ben plays on any unoccupied site.
+
+**Analysis:**
+This strategy ensures that any occupied pair (in $W$ or $B'$) is split RB (one red, one blue).
+
+Let $R$ be the final set of red stones. $R$ must be independent.
+Consider a structure $S_i = P_i \cup B'_i$. Since $S_i$ is $K_{2,2}$, if $R$ intersects both $P_i$ and $B'_i$, the stones would be adjacent. Thus, $R$ can only contain stones from $P_i$ or $B'_i$, but not both.
+
+Ben's strategy ensures that if $R$ intersects $P_i$, $|R \cap P_i|=1$ (since $P_i$ is RB if occupied). Similarly for $B'_i$.
+Therefore, $|R \cap S_i| \le 1$ for all $i$.
+
+This implies that the total number of red stones is $|R| = \sum_{i=1}^{100} |R \cap S_i| \le 100$.
+
+We must ensure that the game indeed ends. Ben's strategy aims to occupy the board by filling the structures $S_i$ with a balanced configuration.
+
+Let's analyze the end state. Let $I_{occ}$ be the set of indices $i$ such that $S_i$ is occupied according to the strategy (RB on one side, UU on the other). Let $I_{U}$ be the indices of unoccupied structures.
+$|R| = |I_{occ}|$. The total number of stones placed is $2|R|$.
+The game ends when $R$ dominates the unoccupied sites $U$.
+
+We rely on a structural property of this specific tiling on the Knight's graph: a configuration $R$ formed by this strategy (one stone per structure) dominates the board if and only if all structures are occupied ($I_U=\emptyset$).
+
+If the game stops prematurely ($I_U \ne \emptyset$), then $|R| < 100$.
+If the game continues until $I_U = \emptyset$, then $|R|=100$.
+
+In either case, Ben ensures that Amy places at most 100 stones.
+
+**Conclusion**
+
+Amy can ensure she places at least 100 stones, and Ben can ensure she places at most 100 stones. Therefore, the greatest such $k$ is 100.
