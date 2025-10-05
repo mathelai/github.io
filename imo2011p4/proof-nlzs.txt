@@ -1,0 +1,57 @@
+Let $a_n$ be the number of ways to place the $n$ weights $W_n = \{2^0, 2^1, \dots, 2^{n-1}\}$ on the balance such that the right pan is never heavier than the left pan.
+
+We analyze the placement of the largest weight, $w_{max} = 2^{n-1}$. Let $L_k$ and $R_k$ be the total weights on the left and right pans after step $k$, and let $D_k = L_k - R_k$. The condition is $D_k \ge 0$ for all $k$.
+
+Step 1: The largest weight must be placed on the left pan.
+The sum of all other weights is $\sum_{i=0}^{n-2} 2^i = 2^{n-1}-1$.
+Suppose $w_{max}$ is placed at step $k$. The weights placed before step $k$ are a subset of the remaining weights, so $D_{k-1} \le 2^{n-1}-1$.
+If $w_{max}$ is placed on the right pan, then $D_k = D_{k-1} - w_{max} \le (2^{n-1}-1) - 2^{n-1} = -1$. This violates the condition.
+Therefore, $w_{max}$ must be placed on the left pan.
+
+Step 2: Analyzing the conditions before and after placing the largest weight.
+Suppose $w_{max}$ is placed at step $k$ on the left pan.
+The sequence of placements before step $k$ must be valid, so $D_{k-1} \ge 0$.
+At step $k$, $D_k = D_{k-1} + w_{max} \ge 2^{n-1}$.
+For the subsequent steps $j>k$, the remaining weights are also a subset of the remaining weights. The maximum total weight remaining is at most $2^{n-1}-1$.
+The difference $D_j$ will satisfy $D_j \ge D_k - (2^{n-1}-1) \ge 2^{n-1} - (2^{n-1}-1) = 1$.
+Thus, the condition is automatically satisfied after $w_{max}$ is placed on the left pan.
+
+Step 3: Establishing the recurrence relation.
+A sequence of placements is valid if and only if $w_{max}$ is placed on the left, and the sequence of placements before $w_{max}$ is valid.
+
+We count the number of ways based on the step $k$ ($1 \le k \le n$) at which $w_{max}$ is placed.
+1. Choose the set of $k-1$ weights $W_{before}$ that are placed before $w_{max}$. There are $\binom{n-1}{k-1}$ ways to choose this subset from $W_n \setminus \{w_{max}\}$.
+2. Determine the number of valid ways to place $W_{before}$. Let this be $N(W_{before})$.
+3. Place $w_{max}$ on the left. (1 way).
+4. Place the remaining $n-k$ weights $W_{after}$. Since the condition is guaranteed to hold, these can be placed in any order ($(n-k)!$ ways) and on any side ($2^{n-k}$ ways).
+
+We claim that $N(W_{before})$ depends only on the size of the set, $|W_{before}|=k-1$. This is because the property that the largest weight is strictly greater than the sum of the others holds for any set of distinct powers of 2. This structural property ensures that the recursive definition of a valid placement sequence is independent of the specific values of the weights. Thus, $N(W_{before}) = a_{k-1}$. We define $a_0=1$.
+
+The total number of ways is:
+$a_n = \sum_{k=1}^n \binom{n-1}{k-1} a_{k-1} \cdot 1 \cdot (n-k)! 2^{n-k}$.
+
+Step 4: Solving the recurrence relation.
+We simplify the expression:
+$a_n = \sum_{k=1}^n \frac{(n-1)!}{(k-1)!(n-k)!} a_{k-1} (n-k)! 2^{n-k} = (n-1)! \sum_{k=1}^n \frac{a_{k-1}}{(k-1)!} 2^{n-k}$.
+
+Let $b_n = a_n/n!$. Then $b_0=1$. The recurrence relation becomes:
+$\frac{a_n}{(n-1)!} = n b_n = \sum_{k=1}^n b_{k-1} 2^{n-k}$.
+
+We find a simpler recurrence for $b_n$. For $n \ge 2$:
+$(n-1)b_{n-1} = \sum_{k=1}^{n-1} b_{k-1} 2^{n-1-k}$.
+
+We can relate $n b_n$ to $(n-1)b_{n-1}$:
+$n b_n = b_{n-1} 2^0 + \sum_{k=1}^{n-1} b_{k-1} 2^{n-k} = b_{n-1} + 2 \sum_{k=1}^{n-1} b_{k-1} 2^{n-1-k}$
+$n b_n = b_{n-1} + 2 (n-1)b_{n-1}$
+$n b_n = b_{n-1} (1 + 2n - 2) = (2n-1)b_{n-1}$.
+
+Now we translate this back to $a_n$:
+$n \frac{a_n}{n!} = (2n-1) \frac{a_{n-1}}{(n-1)!}$
+$\frac{a_n}{(n-1)!} = (2n-1) \frac{a_{n-1}}{(n-1)!}$
+$a_n = (2n-1) a_{n-1}$.
+
+This recurrence holds for $n \ge 2$. For $n=1$, $a_1=1$. The recurrence $a_1=(2(1)-1)a_0=1$ holds as well.
+The solution is $a_n = a_0 \prod_{k=1}^n (2k-1) = \prod_{k=1}^n (2k-1)$.
+This is the double factorial, denoted by $(2n-1)!!$.
+
+The number of ways is $(2n-1)!! = 1 \cdot 3 \cdot 5 \cdots (2n-1)$.
