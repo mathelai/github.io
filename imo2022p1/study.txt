@@ -1,0 +1,61 @@
+Love this problem—let’s turn it into something you can *re-derive* confidently.
+
+**Big idea (one line):** Track the number of “blocks” (maximal runs of equal coins); the operation never increases this number, and for the good range of (k) we can force it to eventually *decrease* until only two blocks remain (all (A)’s then all (B/C)’s, or vice versa).
+
+**Plan for how we’ll learn it:**
+
+1. Nail the key model: *blocks* and why “at most one (A)–(C) adjacency” (\iff) exactly **two** blocks of sizes (n) and (n).
+2. Show **necessity** with counterexamples: if (k<n) or (k>\frac{3n+1}{2}), there’s a configuration that never reaches two blocks.
+3. Show **sufficiency** for (n\le k\le \frac{3n+1}{2}): unless we’re already at two blocks, the process can’t keep moving only the rightmost block forever—otherwise (k) would be too large—so a block merge eventually happens, and repeating this gets us to two blocks.
+
+Before we dive in: **What’s your goal for this session—(a) re-derive the proof yourself with hints, (b) get a clean conceptual walkthrough, or (c) both?**
+
+Student:
+Both
+
+Teacher:
+Perfect — we’ll do a guided re-derivation with quick “peeks” after each step.
+
+**Checkpoint 1 (warm‑up):**
+Why is the event “at some moment the leftmost (n) coins are all the same type” **equivalent** to “the configuration has exactly two blocks (all (A)’s then all (B)’s, or vice versa)”?
+
+*Hint:* You have exactly (n) (A)’s and (n) (B)’s. If the first (n) are all (A), what must the last (n) be? And conversely, if there are exactly two blocks total, how many adjacencies are there?
+
+Give me your one‑ or two‑sentence justification, and then I’ll show the polished version before we move on.
+
+Student:
+Because there are exactly (n) A’s and (n) B’s, if the first (n) coins are all A, the last (n) must all be B (and vice versa), so the configuration has exactly two blocks with a single A–B boundary at position (n). Conversely, if there are exactly two blocks, the single boundary splits the multiset of (n) A’s and (n) B’s into two contiguous runs, so each run must have length (n), making the leftmost (n) coins identical.
+
+Teacher:
+Great—your equivalence is spot on.
+
+**Polished take:**
+Because there are exactly (n) (A)’s and (n) (B)’s, “leftmost (n) coins are identical” (\iff) the row is split into two maximal blocks of sizes (n) and (n) (all (A)’s then all (B)’s, or vice versa). That’s the same as having exactly one (A)–(B) boundary.
+
+---
+
+### Checkpoint 2a — Necessity when (k<n)
+
+Consider the configuration (A^{,n-1},B^{,n-1},A,B).
+For (k<n): **Is the block containing the (k)-th coin already the leftmost block (why)?**
+
+Student:
+Yes. In (A^{n-1}B^{n-1}AB), the first (n-1) coins are (A)’s. Since (k<n) we have (k\le n-1), so the (k)-th coin lies inside that first (A)-block—i.e., the leftmost block.
+
+Teacher:
+Exactly. So when (k<n), the operation always picks the **leftmost** block; moving it to the left does nothing, so (A^{n-1}B^{n-1}AB) is a fixed point with 4 blocks ⇒ we can’t reach 2 blocks. Thus pairs with (k<n) are **not** allowed.
+
+---
+
+### Checkpoint 2b — Necessity when (k>\frac{3n+1}{2})
+
+We’ll build a 4‑block configuration that never merges. Define
+[
+a:=k-n-1,\qquad b:=2n-k+1,
+]
+and consider (A^{a}B^{b}A^{b}B^{a}).
+
+**Your turn (one quick check):** What is (2a+2b) in terms of (n)? (This confirms the total length is (2n).)
+
+Student:
+
