@@ -1,0 +1,110 @@
+The problem asks for the greatest positive integer $k$ such that, for every peaceful configuration of $n$ rooks on an $n \times n$ chessboard, there is an empty $k \times k$ square. We will prove that this integer is $k = \lfloor\sqrt{n-1}\rfloor$.
+
+Let $m = \lfloor\sqrt{n-1}\rfloor$. By definition, $m^2 \le n-1$, so $n \ge m^2+1$. Since $n \ge 2$, we have $m \ge 1$.
+
+The proof consists of two parts:
+1. Proving that for any peaceful configuration, there is an empty $m \times m$ square.
+2. Constructing a peaceful configuration such that there is no empty $(m+1) \times (m+1)$ square.
+
+**Part 1: Existence of an empty $m \times m$ square**
+
+We proceed by contradiction. Assume there is a peaceful configuration where every $m \times m$ square is occupied. We use 1-indexed coordinates $\{1, \dots, n\}$.
+
+Consider any horizontal strip of $m$ consecutive rows. Let $H$ be such a strip. There are exactly $m$ rooks in $H$. Let their column indices be $y_1 < y_2 < \dots < y_m$.
+
+We define the gaps between these columns:
+$g_0 = y_1-1$.
+$g_i = y_{i+1}-y_i-1$ for $i=1, \dots, m-1$.
+$g_m = n-y_m$.
+
+The sum of the $m+1$ gaps is $\sum_{i=0}^m g_i = n-m$.
+
+If any gap $g_i \ge m$, there is an empty $m \times m$ square within $H$. By our assumption, we must have $g_i \le m-1$ for all $i$.
+
+These constraints restrict the possible values for $y_i$.
+$y_1 = g_0+1 \le m$.
+$y_m = n-g_m \ge n-m+1$.
+
+We can derive bounds for each $y_i$.
+Upper bound: $y_i = y_1 + \sum_{j=1}^{i-1}(g_j+1) \le m + (i-1)m = im$.
+Lower bound: $y_m-y_i = \sum_{j=i}^{m-1}(g_j+1) \le (m-i)m$.
+$y_i \ge y_m - (m-i)m \ge n-m+1 - (m-i)m$.
+
+Let $R_i$ be the interval of possible values for the $i$-th smallest column index $y_i$ in any strip of $m$ rows:
+$R_i = [n-m+1-(m-i)m, im]$.
+
+The length of this interval, $L = |R_i|$, is:
+$L = im - (n-m+1-m^2+im) + 1 = m^2+m-n$.
+
+Since $n \ge m^2+1$, we have $L \le m^2+m-(m^2+1) = m-1$.
+
+This analysis applies to any strip of $m$ consecutive rows.
+Let $(r, c)$ be the position of any rook in the configuration. Row $r$ belongs to at least one strip of $m$ consecutive rows, say $H$. Let $C_H=\{y_1, \dots, y_m\}$ be the corresponding columns. If $c=y_i$, then $c \in R_i$.
+Therefore, all rooks in the configuration must be placed in columns belonging to the union of these ranges $U = \cup_{i=1}^m R_i$.
+
+The total number of available columns in $U$ is bounded by:
+$|U| \le \sum_{i=1}^m |R_i| = mL = m(m^2+m-n)$.
+
+We compare the number of rooks $n$ with the number of available columns $mL$.
+We want to check if $n > mL$.
+$n > m(m^2+m-n)$
+$n > m^3+m^2-mn$
+$n(1+m) > m^2(1+m)$
+Since $m \ge 1$, we can divide by $1+m$:
+$n > m^2$.
+
+Since $n \ge m^2+1$, we indeed have $n > m^2$.
+Thus, the $n$ rooks must be placed in a set of columns $U$ such that $|U| < n$. By the Pigeonhole Principle, at least one column must contain more than one rook. This contradicts the assumption that the configuration is peaceful.
+
+Therefore, there must be an empty $m \times m$ square.
+
+**Part 2: Construction of a configuration with no empty $(m+1) \times (m+1)$ square**
+
+Let $k=m+1$. We have $k^2 > n-1$, so $k^2 \ge n$.
+
+We first construct a configuration on an $N \times N$ board where $N=k^2$.
+We define the configuration $C_N$ by placing rooks at positions $R_{i,j} = ((i-1)k+j, (j-1)k+i)$ for $i, j \in \{1, \dots, k\}$. This is a peaceful configuration, as every row and every column index corresponds to a unique pair $(i, j)$.
+
+We show that every $k \times k$ square $S$ in this $N \times N$ board is occupied.
+Let $S$ be a $k \times k$ square starting at $(r, c)$. $S$ covers rows $[r, r+k-1]$ and columns $[c, c+k-1]$.
+We define $i, j, a, b$ such that $r=(i-1)k+a$ and $c=(j-1)k+b$, where $1 \le a, b \le k$. $i=\lceil r/k \rceil, j=\lceil c/k \rceil$.
+
+Since $S$ is within the board, $r+k-1 \le N$ and $c+k-1 \le N$.
+$r+k-1 = (i-1)k+a+k-1 = ik+a-1$.
+$ik+a-1 \le k^2$. If $i=k$, then $k^2+a-1 \le k^2$, which implies $a=1$. Similarly, if $j=k$, then $b=1$.
+
+We analyze when the rooks near $S$ are contained in $S$. We consider the rooks $R_{I,J}$ where $I \in \{i, i+1\}, J \in \{j, j+1\}$, provided $I, J \le k$.
+
+1. $R_{i,j} \in S$ iff $j \ge a$ AND $i \ge b$.
+2. $R_{i+1,j} \in S$ iff $j \le a-1$ AND $i+1 \ge b$. (Requires $i<k$).
+3. $R_{i,j+1} \in S$ iff $j+1 \ge a$ AND $i \le b-1$. (Requires $j<k$).
+4. $R_{i+1,j+1} \in S$ iff $j+1 \le a-1$ AND $i+1 \le b-1$. (Requires $i<k, j<k$).
+
+Suppose $S$ is empty.
+
+Case A: $i<k$ and $j<k$. All four rooks exist. The negation of the conditions must hold:
+1. $j < a$ OR $i < b$.
+2. $j \ge a$ OR $i+1 < b$.
+3. $j+1 < a$ OR $i \ge b$.
+4. $j+1 \ge a$ OR $i+1 \ge b$.
+
+If $j < a$. From (2), we must have $i+1 < b$. This implies $i < b$. From (3), we must have $j+1 < a$.
+So we have $j+1 < a$ AND $i+1 < b$. This contradicts (4).
+
+Case B: $i=k$ and $j<k$. We must have $a=1$. Rooks $R_{k,j}, R_{k,j+1}$ exist.
+1. $R_{k,j} \notin S$. $j < a$ OR $k < b$. Implies $j < 1$. Impossible.
+
+Case C: $i<k$ and $j=k$. We must have $b=1$. Rooks $R_{i,k}, R_{i+1,k}$ exist.
+1. $R_{i,k} \notin S$. $k < a$ OR $i < b$. Implies $i < 1$. Impossible.
+
+Case D: $i=k$ and $j=k$. We must have $a=1, b=1$. Rook $R_{k,k}$ exists.
+1. $R_{k,k} \in S$ since $k \ge 1$ AND $k \ge 1$.
+
+In all cases, $S$ is occupied.
+
+For general $n \le k^2$. Let $N=k^2$. We construct a configuration $C_n$ on the $n \times n$ board by taking the subset of rooks $C'_n$ from $C_N$ that fall within the top-left $n \times n$ sub-board, and completing $C'_n$ to a peaceful configuration $C_n$.
+
+Let $S$ be a $k \times k$ square in the $n \times n$ board. $S$ is also a $k \times k$ square in the $N \times N$ board, so it contains a rook $(x, y) \in C_N$. Since $S$ is within the $n \times n$ board, $x \le n$ and $y \le n$. Thus $(x, y) \in C'_n \subset C_n$.
+So every $k \times k$ square in $C_n$ is occupied.
+
+The greatest such integer is $\lfloor\sqrt{n-1}\rfloor$.
