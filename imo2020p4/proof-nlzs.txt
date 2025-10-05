@@ -1,0 +1,61 @@
+Let $N=n^2$ be the total number of stations. Let $S$ be the set of stations, ordered by altitude.
+
+The conditions on the cable cars of a company (say A) imply that the graph of connections $G_A=(S, E_A)$ is a collection of vertex-disjoint paths, directed towards higher altitudes. This is because each station has an in-degree and out-degree of at most 1 (due to distinct starting and finishing points), and the connections always go upwards.
+
+Two stations are linked by A if and only if they lie on the same path of $G_A$. We want to find the smallest $k$ such that there exist two stations that lie on the same path of $G_A$ and the same path of $G_B$.
+
+Let us consider the partition of the set of stations $S$ induced by the graph $G_A$. This partition consists of the paths of $G_A$, including isolated stations as paths of length 1. Let $w_A$ be the number of paths in this partition.
+
+Let $k$ be the number of edges (cable cars). We can calculate $w_A$. Let $m_A$ be the number of paths with at least one edge, and $V_A$ be the set of vertices covered by these paths. We have $k = |V_A| - m_A$. Let $I_A$ be the set of isolated stations. $|I_A| = N - |V_A|$.
+The total number of paths is $w_A = m_A + |I_A| = m_A + N - |V_A| = N - (|V_A| - m_A) = N-k$.
+
+So, $S$ is partitioned into $w_A = N-k$ disjoint paths of A, denoted by $\mathcal{C}_A = \{C_1, \dots, C_{w_A}\}$. Similarly, $S$ is partitioned into $w_B = N-k$ disjoint paths of B, denoted by $\mathcal{D}_B = \{D_1, \dots, D_{w_B}\}$.
+
+If there are two stations linked by both companies, it means there exist $i, j$ such that a path of A, $C_i$, and a path of B, $D_j$, share at least two stations. That is, $|C_i \cap D_j| \ge 2$.
+
+Suppose there are no two stations linked by both companies. Then, every path of A intersects every path of B in at most one station. $|C_i \cap D_j| \le 1$ for all $i, j$.
+
+We can calculate the total number of stations by summing the sizes of these intersections:
+$N = |S| = \sum_{i=1}^{w_A} \sum_{j=1}^{w_B} |C_i \cap D_j|$.
+Under the assumption of no common link, we have:
+$N \le \sum_{i=1}^{w_A} \sum_{j=1}^{w_B} 1 = w_A w_B$.
+Substituting $w_A=w_B=N-k$:
+$N \le (N-k)^2$.
+
+We are looking for the smallest $k$ that guarantees a common link, which means the smallest $k$ for which this inequality is violated. We want $N > (N-k)^2$.
+
+Substituting $N=n^2$:
+$n^2 > (n^2-k)^2$.
+Taking the square root (since $n>1$ and $k\ge 1$, both sides are positive):
+$n > |n^2-k|$.
+Since the maximum number of cable cars is $N-1=n^2-1$, we have $k < n^2$. So $n^2-k > 0$.
+$n > n^2-k$.
+$k > n^2-n$.
+
+The smallest integer $k$ satisfying this is $k = n^2-n+1$.
+
+If $k=n^2-n+1$, then $N-k = n-1$. The condition for no common link is $n^2 \le (n-1)^2 = n^2-2n+1$. This implies $2n \le 1$, or $n \le 1/2$. This contradicts the given condition $n>1$. Thus, $k=n^2-n+1$ guarantees a common link.
+
+We must now show that for $k=n^2-n$, there exists a configuration with no common link, satisfying all the conditions.
+
+We identify the $n^2$ stations with an $n \times n$ grid, $(i, j)$ for $1\le i, j \le n$. We order them lexicographically: $(i, j) < (i', j')$ if $i<i'$ or ($i=i'$ and $j<j'$).
+
+Let company A operate the horizontal connections:
+$E_A = \{((i, j), (i, j+1)) \mid 1\le i \le n, 1\le j < n\}$.
+$|E_A| = n(n-1) = k$.
+Let company B operate the vertical connections:
+$E_B = \{((i, j), (i+1, j)) \mid 1\le i < n, 1\le j \le n\}$.
+$|E_B| = (n-1)n = k$.
+
+We verify the conditions. Distinct starting and finishing points are satisfied. The connections go upwards in the lexicographical order. We must verify the monotonicity condition: if a car starts higher, it finishes higher.
+
+For A: If $(i_1, j_1) < (i_2, j_2)$, we must check if $(i_1, j_1+1) < (i_2, j_2+1)$.
+If $i_1 < i_2$, the inequality holds. If $i_1=i_2$, then $j_1 < j_2$, so $j_1+1 < j_2+1$, and the inequality holds.
+
+For B: If $(i_1, j_1) < (i_2, j_2)$, we must check if $(i_1+1, j_1) < (i_2+1, j_2)$.
+If $i_1 < i_2$, then $i_1+1 < i_2+1$, so the inequality holds. If $i_1=i_2$, then $j_1 < j_2$. Then $(i_1+1, j_1) < (i_1+1, j_2)$, so the inequality holds.
+
+The paths of A are the rows $C_i$. The paths of B are the columns $D_j$.
+The intersection $C_i \cap D_j$ is exactly the station $(i, j)$. Since the intersection size is 1, there are no two stations linked by both companies.
+
+Therefore, the smallest positive integer $k$ is $n^2-n+1$.
