@@ -1,0 +1,1 @@
+$n \leqslant k \leqslant \left\lceil3n/2\right\rceil$

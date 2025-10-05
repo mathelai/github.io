@@ -1,0 +1,28 @@
+The Bank of Oslo issues coins made out of two types of metal: aluminium (denoted $A$ ) and copper (denoted $C$ ). Morgane has $n$ aluminium coins, and $n$ copper coins, and arranges her $2 n$ coins in a row in some arbitrary initial order. Given a fixed positive integer $k \leqslant 2 n$, she repeatedly performs the following operation: identify the largest subsequence containing the $k$-th coin from the left which consists of consecutive coins made of the same metal, and move all coins in that subsequence to the left end of the row. For example, if $n=4$ and $k=4$, the process starting from the configuration $A A C C C A C A$ would be
+
+$$
+A A C C C A C A \rightarrow C C C A A A C A \rightarrow A A A C C C C A \rightarrow C C C C A A A A \rightarrow \cdots
+$$
+
+Find all pairs $(n, k)$ with $1 \leqslant k \leqslant 2 n$ such that for every initial configuration, at some point of the process there will be at most one aluminium coin adjacent to a copper coin.\\
+
+Answer: All pairs $(n, k)$ such that $n \leqslant k \leqslant \frac{3 n+1}{2}$.\\
+Solution. Define a block to be a maximal subsequence of consecutive coins made out of the same metal, and let $M^{b}$ denote a block of $b$ coins of metal $M$. The property that there is at most one aluminium coin adjacent to a copper coin is clearly equivalent to the configuration having two blocks, one consisting of all $A$-s and one consisting of all $C$-s.
+
+First, notice that if $k<n$, the sequence $A^{n-1} C^{n-1} A C$ remains fixed under the operation, and will therefore always have 4 blocks. Next, if $k>\frac{3 n+1}{2}$, let $a=k-n-1, b=2 n-k+1$. Then $k>2 a+b, k>2 b+a$, so the configuration $A^{a} C^{b} A^{b} C^{a}$ will always have four blocks:
+
+$$
+A^{a} C^{b} A^{b} C^{a} \rightarrow C^{a} A^{a} C^{b} A^{b} \rightarrow A^{b} C^{a} A^{a} C^{b} \rightarrow C^{b} A^{b} C^{a} A^{a} \rightarrow A^{a} C^{b} A^{b} C^{a} \rightarrow \ldots
+$$
+
+Therefore a pair $(n, k)$ can have the desired property only if $n \leqslant k \leqslant \frac{3 n+1}{2}$. We claim that all such pairs in fact do have the desired property. Clearly, the number of blocks in a configuration cannot increase, so whenever the operation is applied, it either decreases or remains constant. We show that unless there are only two blocks, after a finite amount of steps the number of blocks will decrease.
+
+Consider an arbitrary configuration with $c \geqslant 3$ blocks. We note that as $k \geqslant n$, the leftmost block cannot be moved, because in this case all $n$ coins of one type are in the leftmost block, meaning there are only two blocks. If a block which is not the leftmost or rightmost block is moved, its neighbor blocks will be merged, causing the number of blocks to decrease.
+
+Hence the only case in which the number of blocks does not decrease in the next step is if the rightmost block is moved. If $c$ is odd, the leftmost and the rightmost blocks are made of the same metal, so this would merge two blocks. Hence $c \geqslant 4$ must be even. Suppose there is a configuration of $c$ blocks with the $i$-th block having size $a_{i}$ so that the operation always moves the rightmost block:
+
+$$
+A^{a_{1}} \ldots A^{a_{c-1}} C^{a_{c}} \rightarrow C^{a_{c}} A^{a_{1}} \ldots A^{a_{c-1}} \rightarrow A^{a_{c-1}} C^{a_{c}} A^{a_{1}} \ldots C^{a_{c-2}} \rightarrow \ldots
+$$
+
+Because the rightmost block is always moved, $k \geqslant 2 n+1-a_{i}$ for all $i$. Because $\sum a_{i}=2 n$, summing this over all $i$ we get $c k \geqslant 2 c n+c-\sum a_{i}=2 c n+c-2 n$, so $k \geqslant 2 n+1-\frac{2 n}{c} \geqslant \frac{3 n}{2}+1$. But this contradicts $k \leqslant \frac{3 n+1}{2}$. Hence at some point the operation will not move the rightmost block, meaning that the number of blocks will decrease, as desired.
