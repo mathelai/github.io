@@ -1,58 +1,71 @@
-Let $S$ be the set of all pairs of non-negative integers $(h,k)$ such that $h+k < n$. We are given a coloring of $S$ in red and blue. Let $R$ be the set of red elements and $B$ be the set of blue elements. The condition that if $(h,k) \in R$ and $h' \le h, k' \le k$, then $(h',k') \in R$, implies that $R$ forms a Young diagram contained in $S$.
+This is a proof of the statement: Let $S = \{1, 2, 3, \dots ,1000000\}$. For any subset $A$ of $S$ with $101$ elements, we can find $100$ distinct elements $x_i$ of $S$, such that the sets $\{a + x_i \mid a \in A\}$ are all pairwise disjoint.
 
-A type 1 subset consists of $n$ blue elements with distinct first members ($h$). Since $h$ ranges from $0$ to $n-1$, a type 1 subset must contain exactly one blue element for each $h$.
-A type 2 subset consists of $n$ blue elements with distinct second members ($k$). Similarly, a type 2 subset must contain exactly one blue element for each $k$.
+**Proof:**
 
-Let $R_h$ be the number of red elements with the first coordinate $h$, and $C_k$ be the number of red elements with the second coordinate $k$.
+Let $S = \{1, 2, \dots, 1000000\}$. Let $A$ be an arbitrary subset of $S$ with $|A|=101$. We aim to construct a set $X = \{x_1, x_2, \dots, x_{100}\} \subset S$ consisting of 100 distinct elements, such that the translated sets $A+x_i = \{a+x_i \mid a \in A\}$ are pairwise disjoint.
 
-The total number of elements in $S$ with the first coordinate $h$ is $n-h$. The number of blue elements with the first coordinate $h$ is $B_h = n-h-R_h$.
-The total number of type 1 subsets, denoted by $N_1(R)$, is:
-$N_1(R) = \prod_{h=0}^{n-1} B_h = \prod_{h=0}^{n-1} (n-h-R_h)$.
+**1. Condition for Disjointness**
 
-The total number of elements in $S$ with the second coordinate $k$ is $n-k$. The number of blue elements with the second coordinate $k$ is $D_k = n-k-C_k$.
-The total number of type 2 subsets, denoted by $N_2(R)$, is:
-$N_2(R) = \prod_{k=0}^{n-1} D_k = \prod_{k=0}^{n-1} (n-k-C_k)$.
+We first analyze the condition required for the sets to be disjoint. Two sets $A+x_i$ and $A+x_j$ are disjoint if and only if their intersection is empty. If $i \neq j$, the condition $(A+x_i) \cap (A+x_j) = \emptyset$ means that for all $a, b \in A$, $a+x_i \neq b+x_j$.
 
-We prove that $N_1(R) = N_2(R)$ by induction on the number of red elements $|R|$.
+Rearranging this inequality, we get $x_i - x_j \neq b-a$.
 
-**Base Case:** $|R|=0$. The set $R$ is empty. $R_h=0$ and $C_k=0$ for all $h,k$.
-$N_1(\emptyset) = \prod_{h=0}^{n-1} (n-h) = n!$.
-$N_2(\emptyset) = \prod_{k=0}^{n-1} (n-k) = n!$.
-The equality holds for the base case.
+Let $D$ be the set of all differences between elements of $A$:
+$D = \{b-a \mid a, b \in A\}$.
+The condition for the sets $A+x_i$ to be pairwise disjoint is equivalent to requiring that for all distinct $i, j$, the difference $x_i - x_j$ does not belong to $D$.
 
-**Inductive Step:** Assume that $N_1(R) = N_2(R)$ for a Young diagram $R \subset S$. Consider a new configuration $R^+$ obtained by adding exactly one cell $(h_0, k_0)$ to $R$, such that $R^+$ is still a Young diagram contained in $S$.
+**2. Estimating the Size of the Difference Set D**
 
-For $R^+$ to be a Young diagram, $(h_0, k_0)$ must be an outer corner of $R$. This means $(h_0, k_0) \notin R$, and if $h_0>0$, $(h_0-1, k_0) \in R$; if $k_0>0$, $(h_0, k_0-1) \in R$.
+We estimate the maximum possible size of the set $D$. Since $|A|=101$, there are $101 \times 101$ ordered pairs $(a, b)$, so there are at most $101^2 = 10201$ differences.
 
-This condition implies specific values for $R_{h_0}$ and $C_{k_0}$.
-Since the red cells with first coordinate $h_0$ are $(h_0, 0), \dots, (h_0, R_{h_0}-1)$:
-$(h_0, k_0) \notin R$ implies $R_{h_0} \le k_0$.
-If $k_0>0$, $(h_0, k_0-1) \in R$ implies $R_{h_0} \ge k_0$.
-Thus, $R_{h_0} = k_0$. (This holds even if $k_0=0$).
+We can obtain a tighter bound by considering the structure of $D$. Let $D^+$ be the set of positive differences, $D^+ = \{b-a \mid a, b \in A, b>a\}$. The number of ways to choose two distinct elements $a, b$ from $A$ is $\binom{101}{2}$. Thus,
+$|D^+| \le \binom{101}{2} = \frac{101 \times 100}{2} = 5050$.
 
-Similarly, considering the red cells with second coordinate $k_0$:
-$(h_0, k_0) \notin R$ implies $C_{k_0} \le h_0$.
-If $h_0>0$, $(h_0-1, k_0) \in R$ implies $C_{k_0} \ge h_0$.
-Thus, $C_{k_0} = h_0$.
+The set $D$ consists of the positive differences $D^+$, the corresponding negative differences $-D^+ = \{a-b \mid a, b \in A, b>a\}$, and the element 0 (since $a-a=0$).
+$D = D^+ \cup (-D^+) \cup \{0\}$.
+Since $D^+$ and $-D^+$ are disjoint, the maximum size of $D$ is:
+$|D| \le 2|D^+| + 1 \le 2(5050) + 1 = 10101$.
 
-Since $(h_0, k_0) \in S$, we have $h_0+k_0 < n$, so $n-h_0-k_0 \ge 1$.
+**3. Constructing the Set X using a Greedy Approach**
 
-Now we examine how $N_1$ and $N_2$ change when moving from $R$ to $R^+$.
-The parameters of $R^+$ are $R^+_h = R_h + \delta_{h, h_0}$ and $C^+_k = C_k + \delta_{k, k_0}$.
+We will construct the set $X=\{x_1, \dots, x_{100}\}$ sequentially using a greedy algorithm. We will show that at each step, there is at least one available choice in $S$.
 
-$N_1(R^+)$ differs from $N_1(R)$ only in the factor corresponding to $h=h_0$.
-The old factor was $B_{h_0} = n-h_0-R_{h_0} = n-h_0-k_0$.
-The new factor is $B^+_{h_0} = n-h_0-R^+_{h_0} = n-h_0-(k_0+1) = B_{h_0}-1$.
-Thus, $N_1(R^+) = N_1(R) \cdot \frac{B_{h_0}-1}{B_{h_0}}$.
+Step 1: Choose $x_1 \in S$ arbitrarily (e.g., $x_1=1$).
 
-$N_2(R^+)$ differs from $N_2(R)$ only in the factor corresponding to $k=k_0$.
-The old factor was $D_{k_0} = n-k_0-C_{k_0} = n-k_0-h_0$.
-The new factor is $D^+_{k_0} = n-k_0-C^+_{k_0} = n-k_0-(h_0+1) = D_{k_0}-1$.
-Thus, $N_2(R^+) = N_2(R) \cdot \frac{D_{k_0}-1}{D_{k_0}}$.
+Step $k$ (for $k=2, \dots, 100$): Suppose we have already chosen $k-1$ distinct elements $X_{k-1} = \{x_1, \dots, x_{k-1}\} \subset S$ such that $x_i-x_j \notin D$ for all distinct $i, j \in \{1, \dots, k-1\}$.
 
-Crucially, we observe that $B_{h_0} = n-h_0-k_0 = D_{k_0}$. Therefore, the multiplicative factors are the same:
-$\frac{B_{h_0}-1}{B_{h_0}} = \frac{D_{k_0}-1}{D_{k_0}}$.
+We want to choose $x_k \in S$ such that the condition remains satisfied for the set $X_k = X_{k-1} \cup \{x_k\}$. This requires that for all $i=1, \dots, k-1$, $x_k-x_i \notin D$ and $x_i-x_k \notin D$. Since $D$ is symmetric (if $d \in D$, then $-d \in D$), these two conditions are equivalent. So we require $x_k-x_i \notin D$ for all $i < k$.
 
-Since $N_1(R)=N_2(R)$ by the inductive hypothesis, it follows that $N_1(R^+) = N_2(R^+)$.
+We analyze the set of forbidden values for $x_k$. A value $y \in S$ is forbidden if $y-x_i \in D$ for some $i < k$. That is, $y = x_i+d$ for some $i < k$ and $d \in D$.
+Let $F_k$ be the set of forbidden values:
+$F_k = \{x_i+d \mid i=1, \dots, k-1, d \in D\}$.
 
-Since any Young diagram $R$ contained in $S$ can be constructed from the empty configuration by successively adding cells one by one while maintaining the Young diagram property, the equality $N_1(R)=N_2(R)$ holds for all valid colorings by the principle of mathematical induction.
+We need to show that there is at least one element in $S$ that is not forbidden, i.e., $S \setminus F_k \neq \emptyset$.
+
+We estimate the size of $F_k$. The number of forbidden values is bounded by the number of pairs $(i, d)$:
+$|F_k| \le (k-1)|D|$.
+
+Note that since $0 \in D$ (because $A$ is non-empty, we can take $a-a=0$), $x_i+0=x_i$ is in $F_k$ for all $i < k$. Thus, any choice $x_k \in S \setminus F_k$ will automatically be distinct from the previously chosen elements $x_1, \dots, x_{k-1}$.
+
+**4. Ensuring the Construction is Possible**
+
+We must ensure that we can complete the construction up to $k=100$. We check the constraints at the final step, when we choose $x_{100}$. The set of forbidden values is $F_{100}$.
+$|F_{100}| \le (100-1)|D| = 99|D|$.
+
+Using the bound $|D| \le 10101$, we have:
+$|F_{100}| \le 99 \times 10101$.
+
+We calculate the product:
+$99 \times 10101 = (100-1) \times 10101 = 1010100 - 10101 = 999999$.
+
+So, the total number of forbidden values for $x_{100}$ is at most 999999.
+
+We are choosing $x_{100}$ from the set $S$, which has $|S|=1000000$. The number of available choices for $x_{100}$ in $S$ is $|S \setminus F_{100}|$.
+We know that $|S \setminus F_{100}| = |S| - |S \cap F_{100}|$. Since $|S \cap F_{100}| \le |F_{100}|$, we have:
+$|S \setminus F_{100}| \ge |S| - |F_{100}| \ge 1000000 - 999999 = 1$.
+
+Since there is at least one available choice at the final step (and similarly for all preceding steps, as the number of forbidden values is even smaller), the greedy construction succeeds.
+
+**Conclusion**
+
+We have shown that for any subset $A$ of $S$ with 101 elements, we can construct a set $X \subset S$ of 100 distinct elements $\{x_1, \dots, x_{100}\}$ such that the differences between any two distinct elements of $X$ do not belong to the difference set $D$ of $A$. This guarantees that the sets $\{a + x_i \mid a \in A\}$ are all pairwise disjoint.
