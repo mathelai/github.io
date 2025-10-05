@@ -320,6 +320,7 @@
 
         .card-links {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             align-items: center;
             margin-top: 16px;
@@ -550,7 +551,8 @@
                         </div>
                         <div class="card-links">
                             <a href="${basePath}/index.html" class="card-link" onclick="event.stopPropagation()">Sim</a>
-                            <a href="${basePath}/proof-nlzs.txt" class="card-link" onclick="event.stopPropagation()">Proof NLZS</a>
+                            <a href="${basePath}/proof-deepthink.txt" class="card-link" onclick="event.stopPropagation()">Proof Deep Think</a>
+                            <a href="${basePath}/proof-gpt5pro.txt" class="card-link" onclick="event.stopPropagation()">Proof GPT 5 Pro</a>
                             <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSim</a>
                             <a href="${basePath}/proof-nlsimlean.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSimLean</a>
                             <a href="#" class="card-link" onclick="event.preventDefault(); event.stopPropagation(); openLeanEditor('${basePath}')">Lean</a>
