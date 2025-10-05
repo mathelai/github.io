@@ -1,0 +1,1 @@
+$\lfloor\sqrt{n-1}\rfloor$.

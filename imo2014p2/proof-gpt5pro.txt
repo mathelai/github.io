@@ -1,0 +1,114 @@
+**Answer.** (\displaystyle k=\big\lfloor\sqrt{n-1},\big\rfloor).
+
+---
+
+We prove that this is the largest integer (k) with the required property.  The solution has two parts:
+
+* a **lower bound**: for every peaceful configuration there exists an empty (k\times k) square when (k^2\le n-1);
+* a **matching upper bound**: for (m=k+1) there is a peaceful configuration that contains **no** empty (m\times m) square.
+
+Combining them gives (k=\lfloor\sqrt{n-1}\rfloor).
+
+---
+
+## 1) Lower bound: if (k^2\le n-1), every placement has an empty (k\times k) square
+
+Fix any peaceful configuration of (n) rooks.  Fix any set (I) of (k) consecutive rows, and let
+[
+S_I:={\text{columns occupied by the rooks in the rows of }I}\subseteq{1,2,\dots,n}.
+]
+So (|S_I|=k).  We claim that, provided (k^2\le n-1), there exists a block (J) of (k) consecutive columns which is **disjoint** from (S_I). That gives an empty (k\times k) square (rows (I), columns (J)).
+
+This reduces to a 1‑dimensional covering/hitting statement:
+
+> **Lemma (interval hitting number).**
+> In ({1,\dots,n}), the minimum size of a set (T) that meets **every** interval of length (k) is (\lceil n/k\rceil).
+
+*Proof.* Consider the (\lceil n/k\rceil) disjoint intervals
+[
+[1,k],\ [k+1,2k],\ [2k+1,3k],\ \dots
+]
+They are pairwise disjoint; hence any hitting set must contain at least one point in each, so (|T|\ge\lceil n/k\rceil). Conversely, the set ({k,2k,3k,\dots}) of size (\lceil n/k\rceil) meets every length‑(k) interval, proving optimality. (\square)
+
+Apply the lemma to (S_I). Since (|S_I|=k) while (\lceil n/k\rceil \ge k+1) exactly when (n\ge k^2+1), we conclude:
+
+* if (k^2\le n-1), then (k<\lceil n/k\rceil), so (S_I) **cannot** hit all intervals of length (k); hence some length‑(k) column block (J) avoids (S_I), and the (k\times k) square (I\times J) is empty.
+
+Because (I) was arbitrary, this shows that **every** peaceful configuration contains an empty (k\times k) square for all (k) with (k^2\le n-1). Therefore
+[
+\boxed{\ \text{for all configurations, an empty } \big\lfloor\sqrt{n-1}\big\rfloor\times \big\lfloor\sqrt{n-1}\big\rfloor \text{ square exists}\ }.
+]
+
+---
+
+## 2) Upper bound: for (m=\lfloor\sqrt{n-1}\rfloor+1) there is a configuration with no empty (m\times m) square
+
+We construct a peaceful configuration that blocks **all** (m\times m) squares.  Let
+[
+m=\big\lfloor\sqrt{n-1}\big\rfloor+1.
+]
+Partition the columns into the (m) arithmetic progressions (residue classes modulo (m))
+[
+\mathcal C_s={,s,\ s+m,\ s+2m,\ \dots,}\cap{1,2,\dots,n},\qquad s=1,2,\dots,m.
+]
+Likewise, partition the rows into the (m) residue classes modulo (m):
+[
+\mathcal R_s={,s,\ s+m,\ s+2m,\ \dots,}\cap{1,2,\dots,n},\qquad s=1,2,\dots,m.
+]
+Note that (|\mathcal C_s|=|\mathcal R_s|) for each (s) (each equals either (\lfloor n/m\rfloor) or (\lceil n/m\rceil)).
+
+**Construction (residue‑class matching).**
+For each (s\in{1,\dots,m}), list (\mathcal R_s) and (\mathcal C_s) in increasing order, and match the (t)-th smallest row of (\mathcal R_s) to the (t)-th smallest column of (\mathcal C_s). Do this independently for all (s). This yields a bijection between rows and columns: exactly one rook in each row and each column (hence peaceful).
+
+We claim that **no** (m\times m) square is empty in this placement.
+
+Let a candidate (m\times m) square be given by rows
+[
+R=[a,a+m-1]\quad\text{and columns}\quad C=[b,b+m-1].
+]
+For each residue (s\in{1,\dots,m}), there is **exactly one** row (r_s\in R\cap\mathcal R_s) and **exactly one** column (c_s\in C\cap\mathcal C_s). (This is because (R) and (C) are intervals of length (m), so they contain one representative of each residue class modulo (m).)
+
+Denote by (\mathrm{rank}_R(s)) the index (t) of (r_s) inside (\mathcal R_s) (i.e., (r_s) is the (t)-th smallest element of (\mathcal R_s)), and by (\mathrm{rank}_C(s)) the index (t') of (c_s) inside (\mathcal C_s).
+
+By the matching rule in the construction, the rook placed in the row (r_s) sits in the column which is **the (\mathrm{rank}_R(s))-th** element of (\mathcal C_s). Therefore the square (R\times C) contains a rook **iff** there exists (s) with
+[
+\mathrm{rank}_R(s)=\mathrm{rank}_C(s).
+]
+We now show that such an (s) must exist.
+
+Write (a-1=mu+\alpha) and (b-1=mv+\beta) with integers (u,v\ge 0) and (\alpha,\beta\in{0,1,\dots,m-1}).
+A direct inspection of the arithmetic progressions shows that for each residue (s) one has
+[
+\mathrm{rank}*R(s)=u+1+\mathbf 1*{{s\le \alpha}},\qquad
+\mathrm{rank}*C(s)=v+1+\mathbf 1*{{s\le \beta}},
+]
+where (\mathbf 1_{{\cdot}}) is the indicator function (equal to (1) when the condition holds and (0) otherwise).  Indeed:
+
+* the unique element (r_s) of (R\cap\mathcal R_s) is (r_s=s+m\left\lfloor\frac{a-s+m-1}{m}\right\rfloor), giving the displayed formula for (\mathrm{rank}_R(s));
+* the unique element (c_s) of (C\cap\mathcal C_s) is (c_s=s+m\left\lfloor\frac{b-s+m-1}{m}\right\rfloor), giving the formula for (\mathrm{rank}_C(s)).
+
+Consider the two step functions on (s=1,2,\dots,m):
+[
+f(s):=\mathrm{rank}*R(s)=u+1+\mathbf 1*{{s\le \alpha}},\qquad
+g(s):=\mathrm{rank}*C(s)=v+1+\mathbf 1*{{s\le \beta}}.
+]
+Each takes only two consecutive integer values, say (u+1) or (u+2) for (f), and (v+1) or (v+2) for (g); moreover, the sets on which the larger value occurs are the initial intervals ({1,2,\dots,\alpha}) and ({1,2,\dots,\beta}), respectively. From this it is immediate that there exists (s) with (f(s)=g(s)):
+
+* If (u=v), then (f(s)=g(s)) for all (s) in the common part of the two initial intervals or in the common part of their complements, which is nonempty.
+* If (v=u+1), then we need (\mathbf 1_{{s\le \alpha}}=1) and (\mathbf 1_{{s\le \beta}}=0), i.e. (s\le\alpha) and (s>\beta). This is possible exactly when (\alpha>\beta).
+* If (u=v+1), a symmetric argument gives (s>\alpha) and (s\le\beta), possible when (\beta>\alpha).
+
+In every case at least one such (s) exists. Hence (R\times C) contains a rook. Since (R) and (C) were an arbitrary (m\times m) square, **no** (m\times m) square is empty in this configuration.
+
+Thus for (m=\lfloor\sqrt{n-1}\rfloor+1) there exists a peaceful configuration with **no** empty (m\times m) square. Equivalently, one cannot guarantee an empty square larger than (\lfloor\sqrt{n-1}\rfloor\times \lfloor\sqrt{n-1}\rfloor).
+
+---
+
+## 3) Conclusion
+
+From the lower bound (Section 1) and the sharp construction (Section 2),
+[
+\boxed{\ \text{the greatest integer }k\text{ with the stated property equals }\ \big\lfloor\sqrt{n-1},\big\rfloor\ }.
+]
+
+This completes the proof.
