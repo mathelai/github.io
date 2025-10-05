@@ -1,0 +1,50 @@
+This is a proof of the statement: Let $n_1, n_2, \dots , n_m$ be integers where $m>1$ is odd. Let $x = (x_1, \dots , x_m)$ denote a permutation of the integers $1, 2, \dots , m$. Let $f(x) = x_1n_1 + x_2n_2 + \dots + x_mn_m$. Show that for some distinct permutations $a, b$ the difference $f(a) - f(b)$ is a multiple of $m!$.
+
+Let $S_m$ denote the set of all permutations of $\{1, 2, \dots, m\}$. The size of this set is $|S_m| = m!$. We are considering the values $f(x)$ for $x \in S_m$. We want to show that there exist distinct permutations $a, b \in S_m$ such that $f(a) \equiv f(b) \pmod{m!}$.
+
+We proceed by contradiction. Assume that the values $\{f(x) \mid x \in S_m\}$ are all distinct modulo $m!$.
+
+Since there are $m!$ such values, this assumption implies that the set of values forms a complete residue system modulo $m!$. That is, the set $\{f(x) \pmod{m!} \mid x \in S_m\}$ is equal to the set $\{0, 1, 2, \dots, m!-1\}$.
+
+Let $S$ be the sum of these values: $S = \sum_{x \in S_m} f(x)$.
+
+We calculate $S$ modulo $m!$ using the assumption that the values form a complete residue system:
+$$ S \equiv \sum_{k=0}^{m!-1} k = \frac{(m!-1)m!}{2} \pmod{m!} $$
+We analyze the expression $\frac{(m!-1)m!}{2}$.
+$$ \frac{(m!-1)m!}{2} = \frac{(m!)^2 - m!}{2} = m! \cdot \frac{m!}{2} - \frac{m!}{2} $$
+Since $m>1$, $m \ge 2$, so $m!$ is an even integer. Thus, $\frac{m!}{2}$ is an integer.
+Modulo $m!$, the term $m! \cdot \frac{m!}{2}$ is congruent to 0. Therefore,
+$$ S \equiv -\frac{m!}{2} \pmod{m!} $$
+Since $-\frac{m!}{2} \equiv m! - \frac{m!}{2} = \frac{m!}{2} \pmod{m!}$, we have:
+$$ S \equiv \frac{m!}{2} \pmod{m!} \quad (1)$$
+
+Now, we calculate the sum $S$ directly using the definition of $f(x)$:
+$$ S = \sum_{x \in S_m} f(x) = \sum_{x \in S_m} \sum_{i=1}^m x_i n_i $$
+We can swap the order of summation:
+$$ S = \sum_{i=1}^m n_i \left( \sum_{x \in S_m} x_i \right) $$
+Consider the inner sum $\sum_{x \in S_m} x_i$. This is the sum of the $i$-th component over all permutations. By symmetry, this sum is independent of the index $i$.
+To calculate this sum, we determine how many permutations $x$ have $x_i = k$ for a specific value $k \in \{1, 2, \dots, m\}$. If the $i$-th position is fixed to $k$, the remaining $m-1$ positions can be permuted in $(m-1)!$ ways.
+Therefore, the sum of the $i$-th components is:
+$$ \sum_{x \in S_m} x_i = \sum_{k=1}^m k \cdot (m-1)! = (m-1)! \sum_{k=1}^m k = (m-1)! \frac{m(m+1)}{2} $$
+This simplifies to:
+$$ \sum_{x \in S_m} x_i = m! \frac{m+1}{2} $$
+Now we substitute this back into the expression for the total sum $S$:
+$$ S = \sum_{i=1}^m n_i \left( m! \frac{m+1}{2} \right) = m! \frac{m+1}{2} \sum_{i=1}^m n_i $$
+
+We now use the crucial condition that $m$ is odd. Since $m$ is odd, $m+1$ is even. Therefore, $\frac{m+1}{2}$ is an integer.
+Since $n_1, \dots, n_m$ are integers, the sum $N = \sum_{i=1}^m n_i$ is an integer.
+Let $K = \frac{m+1}{2} N$. $K$ is an integer.
+Then, $S = m! \cdot K$.
+This implies that $S$ is a multiple of $m!$:
+$$ S \equiv 0 \pmod{m!} \quad (2)$$
+
+We have reached a contradiction by comparing (1) and (2). The assumption that the values are distinct modulo $m!$ requires $S \equiv \frac{m!}{2} \pmod{m!}$, while the calculation based on the definition of $f(x)$ and the fact that $m$ is odd shows $S \equiv 0 \pmod{m!}$.
+
+For these to be equal, we must have $0 \equiv \frac{m!}{2} \pmod{m!}$. This means that $m!$ divides $\frac{m!}{2}$.
+So, $\frac{m!}{2} = C \cdot m!$ for some integer $C$.
+Since $m>1$, $m!>0$. We can divide by $m!$ to get $C = \frac{1}{2}$.
+This is a contradiction because $C$ must be an integer.
+
+Therefore, the initial assumption that the values $\{f(x) \mid x \in S_m\}$ are all distinct modulo $m!$ must be false.
+This means there exist at least two distinct permutations $a$ and $b$ such that $f(a) \equiv f(b) \pmod{m!}$.
+Equivalently, the difference $f(a) - f(b)$ is a multiple of $m!$.
