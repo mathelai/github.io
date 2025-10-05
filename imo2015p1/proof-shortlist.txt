@@ -1,0 +1,32 @@
+Let $\mathcal{V}$ be a finite set of points in the plane. We say that $\mathcal{V}$ is balanced if for any two distinct points $A, B \in \mathcal{V}$, there exists a point $C \in \mathcal{V}$ such that $A C=B C$. We say that $\mathcal{V}$ is center-free if for any distinct points $A, B, C \in \mathcal{V}$, there does not exist a point $P \in \mathcal{V}$ such that $P A=P B=P C$.\\
+(a) Show that for all $n \geqslant 3$, there exists a balanced set consisting of $n$ points.\\
+(b) For which $n \geqslant 3$ does there exist a balanced, center-free set consisting of $n$ points?\\
+(Netherlands)\\
+Answer for part (b). All odd integers $n \geqslant 3$.
+
+\section*{Solution.}
+Part ( $\boldsymbol{a}$ ). Assume that $n$ is odd. Consider a regular $n$-gon. Label the vertices of the $n$-gon as $A_{1}, A_{2}, \ldots, A_{n}$ in counter-clockwise order, and set $\mathcal{V}=\left\{A_{1}, \ldots, A_{n}\right\}$. We check that $\mathcal{V}$ is balanced. For any two distinct vertices $A_{i}$ and $A_{j}$, let $k \in\{1,2, \ldots, n\}$ be the solution of $2 k \equiv i+j(\bmod n)$. Then, since $k-i \equiv j-k(\bmod n)$, we have $A_{i} A_{k}=A_{j} A_{k}$, as required.
+
+Now assume that $n$ is even. Consider a regular $(3 n-6)$-gon, and let $O$ be its circumcenter. Again, label its vertices as $A_{1}, \ldots, A_{3 n-6}$ in counter-clockwise order, and choose $\mathcal{V}=$ $\left\{O, A_{1}, A_{2}, \ldots, A_{n-1}\right\}$. We check that $\mathcal{V}$ is balanced. For any two distinct vertices $A_{i}$ and $A_{j}$, we always have $O A_{i}=O A_{j}$. We now consider the vertices $O$ and $A_{i}$. First note that the triangle $O A_{i} A_{n / 2-1+i}$ is equilateral for all $i \leqslant \frac{n}{2}$. Hence, if $i \leqslant \frac{n}{2}$, then we have $O A_{n / 2-1+i}=A_{i} A_{n / 2-1+i}$; otherwise, if $i>\frac{n}{2}$, then we have $O A_{i-n / 2+1}=A_{i} A_{i-n / 2+1}$. This completes the proof.
+
+An example of such a construction when $n=10$ is shown in the Figure.
+
+\setlength{\fboxsep}{2pt}
+\begin{center}
+\fcolorbox{black}{white}
+{\includegraphics[width=0.5\textwidth]{figure.png}}
+\end{center}
+
+
+Comment ( $a$ ). There are many ways to construct an example by placing equilateral triangles in a circle. Here we present one general method.
+
+Let $O$ be the center of a circle and let $A_{1}, B_{1}, \ldots, A_{k}, B_{k}$ be distinct points on the circle such that the triangle $O A_{i} B_{i}$ is equilateral for each $i$. Then $\mathcal{V}=\left\{O, A_{1}, B_{1}, \ldots, A_{k}, B_{k}\right\}$ is balanced. To construct a set of even cardinality, put extra points $C, D, E$ on the circle such that triangles $O C D$ and $O D E$ are equilateral (see Figure 2). Then $\mathcal{V}=\left\{O, A_{1}, B_{1}, \ldots, A_{k}, B_{k}, C, D, E\right\}$ is balanced.
+
+Part (b). We now show that there exists a balanced, center-free set containing $n$ points for all odd $n \geqslant 3$, and that one does not exist for any even $n \geqslant 3$.
+
+If $n$ is odd, then let $\mathcal{V}$ be the set of vertices of a regular $n$-gon. We have shown in part ( $a$ ) that $\mathcal{V}$ is balanced. We claim that $\mathcal{V}$ is also center-free. Indeed, if $P$ is a point such that\\
+$P A=P B=P C$ for some three distinct vertices $A, B$ and $C$, then $P$ is circumcenter of the $n$-gon, which is not contained in $\mathcal{V}$.
+
+Now suppose that $\mathcal{V}$ is a balanced, center-free set of even cardinality $n$. We will derive a contradiction. For a pair of distinct points $A, B \in \mathcal{V}$, we say that a point $C \in \mathcal{V}$ is associated with the pair $\{A, B\}$ if $A C=B C$. Since there are $\frac{n(n-1)}{2}$ pairs of points, there exists a point $P \in \mathcal{V}$ which is associated with at least $\left\lceil\frac{n(n-1)}{2} / n\right\rceil=\frac{n}{2}$ pairs. Note that none of these $\frac{n}{2}$ pairs can contain $P$, so that the union of these $\frac{n}{2}$ pairs consists of at most $n-1$ points. Hence there exist two such pairs that share a point. Let these two pairs be $\{A, B\}$ and $\{A, C\}$. Then $P A=P B=P C$, which is a contradiction.
+
+Comment (b). We can rephrase the argument in graph theoretic terms as follows. Let $\mathcal{V}$ be a balanced, center-free set consisting of $n$ points. For any pair of distinct vertices $A, B \in \mathcal{V}$ and for any $C \in \mathcal{V}$ such that $A C=B C$, draw directed edges $A \rightarrow C$ and $B \rightarrow C$. Then all pairs of vertices generate altogether at least $n(n-1)$ directed edges; since the set is center-free, these edges are distinct. So we must obtain a graph in which any two vertices are connected in both directions. Now, each vertex has exactly $n-1$ incoming edges, which means that $n-1$ is even. Hence $n$ is odd.
