@@ -441,10 +441,10 @@
             <div class="filter-group">
                 <label for="sortBy">Sort:</label>
                 <select id="sortBy">
+                    <option value="difficulty-asc">Difficulty (Easy)</option>
                     <option value="year-desc">Year (Newest)</option>
                     <option value="year-asc">Year (Oldest)</option>
                     <option value="difficulty-desc">Difficulty (Hard)</option>
-                    <option value="difficulty-asc">Difficulty (Easy)</option>
                     <option value="problem-asc">Problem Number</option>
                 </select>
             </div>
@@ -476,8 +476,7 @@
                 allProblems = allProblemsData;
 
                 populateFilters();
-                displayProblems(allProblems);
-                updateStats(allProblems);
+                filterAndSort(); // Apply default sorting on initial load
             } catch (error) {
                 console.error('Error loading problems:', error);
                 document.getElementById('problemsGrid').innerHTML =
