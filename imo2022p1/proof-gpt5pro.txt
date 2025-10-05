@@ -1,0 +1,102 @@
+**Answer.**
+The desired pairs are exactly
+[
+\boxed{; (n,k)\ \text{ with }\ n\le k\le \big\lfloor \tfrac{3n+1}{2}\big\rfloor ;}
+]
+(i.e. (2k\le 3n+1)).
+
+Below “chain” means a maximal block of consecutive coins of the same type. The operation at each step takes the (unique) chain containing the (k)-th coin and moves that *entire* chain to the very left, preserving the internal order of that chain and the order of the remaining coins.
+
+---
+
+## 1. Necessity
+
+### (a) (k\le n-1) is impossible.
+
+Take any (s) with (k\le s<n), and start from a row whose first chain has length (s) (e.g. put (s) aluminium coins first). Then the (k)-th coin already lies in the first chain, so the operation does nothing forever; hence the leftmost (n) coins never become monochromatic. Thus we must have (k\ge n).
+
+### (b) (k\ge \lfloor(3n+3)/2\rfloor) is impossible.
+
+Write (n=a+b) with (a,b\ge1) and choose
+[
+\text{initial row }=\ A^a B^b A^a B^b .
+]
+If (k\ge n+\max{a,b}+1), then the (k)-th coin lies in the *last* block. Moving that last block to the front gives
+[
+B^b A^a B^b A^a.
+]
+Now the (k)-th coin lies in the last block again (now an (A)-block), so moving that last block to the front brings us back to (A^a B^b A^a B^b). The process cycles with period (2), and the leftmost chain has length (\max{a,b}<n) at every time; hence the leftmost (n) coins are never all the same.
+
+Choosing (a=\lfloor n/2\rfloor,\ b=\lceil n/2\rceil) minimizes (\max{a,b}). Then the above condition on (k) is
+[
+k\ \ge\ n+\Big\lceil \frac n2\Big\rceil+1\ =\ \Big\lfloor \frac{3n+3}{2}\Big\rfloor,
+]
+so for all (k\ge\lfloor(3n+3)/2\rfloor) the property fails.
+
+Combining (a)–(b) shows that a necessary condition is
+[
+n\le k\le \Big\lfloor \frac{3n+1}{2}\Big\rfloor .
+]
+
+---
+
+## 2. Sufficiency
+
+Fix (n\le k\le \lfloor(3n+1)/2\rfloor). We must show that **for every** initial arrangement, *at some time* during the process the leftmost (n) coins are monochromatic.
+
+Let us follow the evolution from an arbitrary initial arrangement. Because there are only finitely many arrangements, along the forward orbit we either reach a configuration with the desired monochromatic left half, or else we eventually fall into a periodic cycle with no such configuration. We will show that the latter is impossible under the present bound on (k), which will complete the proof.
+
+Two simple observations will be used repeatedly:
+
+* (**Fixed points.**) If ever the (k)-th coin lies in the first chain, then that chain is exactly the chain moved by the operation; hence the arrangement does not change afterwards. In that case the first chain has length (\ge k\ge n), so we have already succeeded. Thus on any hypothetical cycle without success, at every step the (k)-th coin lies *strictly to the right* of the first chain.
+
+* (**Fusion.**) If two consecutive moves bring chains of the *same* color to the front, those two chains fuse into a longer first chain. Thus along a cycle in which the leftmost chain never reaches length (n), **colors of moved chains must alternate at every step**; otherwise the length of the first chain would strictly increase at some step, which is impossible on a cycle.
+
+Hence along any cycle with no success, from some point on the moved colors alternate, and the (k)-th coin never lies in the first chain.
+
+### Lemma (structure of an alternating cycle).
+
+In any configuration that lies on a cycle with the two properties above (alternating colors of moved chains, and the (k)-th coin not in the first chain), the row has **exactly four chains**, namely
+[
+\text{(up to swapping (A,B))}\qquad A^a, B^b, A^a, B^b
+]
+for some positive integers (a,b) with (a+b=n); furthermore, at that moment the (k)-th coin lies in the *last* block.
+
+**Proof.** Let the first chain have color (X) and the other color be (Y). Since the moved colors alternate and we are not at a fixed point, the next chain to be moved is of color (Y) and must lie to the right of the first chain. Suppose there were at least two (Y)-chains to the right of the first chain. Let (C) be the leftmost among them. Because the (k)-th coin lies to the right of the first chain, it belongs to some (Y)-chain; but among the (Y)-chains to the right, the coin is in (C) (the leftmost such chain containing that position). Moving (C) to the front gives a new row that begins with a (Y)-chain followed immediately by an (X)-chain taken from the old prefix. For colors to alternate again at the next step, the chain to be moved next must be of color (X) and must contain the (new) (k)-th coin. If there were at least two (X)-chains to the right in the new row, then by the same reasoning the chain moved next would be the *leftmost* such (X)-chain; but that chain is precisely the *last* chain of the previous row. Iterating this argument forces that, in every configuration on the cycle, to the right of the first chain there are **at most one** chain of each color. Hence the total number of chains is exactly four, arranged (X,Y,X,Y). Finally, the chain to be moved must be the last one (of color (Y)), because otherwise after moving a middle (Y)-chain to the front, the next move could not pick an (X)-chain containing the (k)-th coin without violating the same “at most one chain of each color to the right” condition. (\square)
+
+Thus any alternating cycle without success must be (up to swapping (A,B))
+[
+A^a, B^b, A^a, B^b \quad\text{with} \ a,b\ge1,\ a+b=n,
+]
+and at every step the chain moved is the *last* one (which alternates between (B^b) and (A^a)).
+
+In such a cycle the (k)-th coin always lies in the last block, both before and after the move. That yields the inequalities
+[
+k \ \ge \ 2a+b+1 \quad\text{and}\quad k \ \ge \ 2b+a+1,
+]
+because in (A^aB^bA^aB^b) the last block occupies positions (2a+b+1,\dots,2a+2b=2n), and in (B^bA^aB^bA^a) the last block occupies positions (2b+a+1,\dots,2b+2a=2n).
+
+Hence necessarily
+[
+k \ \ge\ n+\max{a,b}+1 \ \ge\ n+\Big\lceil\frac n2\Big\rceil+1 \ = \ \Big\lfloor \frac{3n+3}{2}\Big\rfloor,
+]
+which **contradicts** our assumption (k\le \lfloor(3n+1)/2\rfloor).
+
+Therefore an alternating cycle without success cannot exist when (n\le k\le \lfloor(3n+1)/2\rfloor). As argued above, if at some time two consecutive moved chains have the same color, they fuse and the length of the first chain strictly increases; repeating, within finitely many steps the first chain reaches length at least (n). In either case, for every initial arrangement, *at some moment* the leftmost (n) coins are all the same. This proves sufficiency.
+
+---
+
+## 3. Conclusion
+
+Combining the necessity and sufficiency parts, the required pairs are exactly
+[
+\boxed{; (n,k)\ \text{ such that }\ n\le k\le \big\lfloor \tfrac{3n+1}{2}\big\rfloor ; } .
+]
+
+*Remark.* The extremal obstruction for larger (k) is the simple 2‑cycle
+[
+A^{\lfloor n/2\rfloor} B^{\lceil n/2\rceil} A^{\lfloor n/2\rfloor} B^{\lceil n/2\rceil}
+\ \longleftrightarrow
+B^{\lceil n/2\rceil} A^{\lfloor n/2\rfloor} B^{\lceil n/2\rceil} A^{\lfloor n/2\rfloor},
+]
+which traps the (k)-th coin in the last block whenever (k\ge n+\lceil n/2\rceil+1).
