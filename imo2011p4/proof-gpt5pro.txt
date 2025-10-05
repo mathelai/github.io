@@ -1,0 +1,99 @@
+[
+\textbf{Answer: } \boxed{(2n-1)!!=1\cdot 3\cdot 5\cdots(2n-1)} .
+]
+
+---
+
+### 1) A key reduction (why powers of two are special)
+
+Let the weights be (2^0,2^1,\dots,2^{n-1}). Call a placement **legal** if after each step the right pan is not heavier than the left pan.
+
+A crucial property of powers of two is that
+[
+2^k>\sum_{i<k}2^i=2^k-1.
+]
+More generally, for any subset of powers of two, each weight is larger than the sum of all smaller ones in that subset. This “superincreasing” property implies the following.
+
+**Lemma.** For any legal process with weights (2^0,\dots,2^{n-1}), at every step the largest weight **among those already placed** must lie on the left. Conversely, any sequence in which, at each step, the largest-so-far weight is put on the left is legal.
+
+**Proof.**
+
+* If at some moment the largest-so-far weight (2^k) were on the right, then the total on the left (being a sum of smaller weights) would be at most (2^k-1), so the right would be heavier—a contradiction.
+* Conversely, if at every step the largest-so-far weight is on the left, then at that moment that weight exceeds the total of all smaller weights on both pans; hence the left pan is strictly heavier and the condition holds. ∎
+
+Thus, legality depends only on **the order in which weights appear** (via their indices (0,1,\dots,n-1)) and, for each appearance, whether we put it left/right, with the single restriction:
+
+> **Whenever a new left-to-right maximum (a “record”) appears in the order of indices, it must be placed on the left.**
+
+Formally, let (\pi\in S_n) be the permutation giving the order of the exponents (i.e., we place (2^{\pi(1)},2^{\pi(2)},\dots)). At position (t), if (\pi(t)>\max{\pi(1),\dots,\pi(t-1)}) (a record of (\pi)), then that weight must go to the left; at non-record positions we may choose left or right freely.
+
+If (r(\pi)) denotes the number of records of (\pi), then for the fixed order (\pi) there are exactly (2^{n-r(\pi)}) legal choices of sides. Therefore
+[
+F(n):=#{\text{legal placement sequences}}
+;=;\sum_{\pi\in S_n}2^{,n-r(\pi)}
+;=;2^n\sum_{\pi\in S_n}\left(\tfrac12\right)^{r(\pi)}.
+\tag{1}
+]
+
+So it remains to evaluate (\displaystyle \sum_{\pi\in S_n} x^{r(\pi)}) at (x=\tfrac12).
+
+---
+
+### 2) Counting permutations by number of records
+
+Let
+[
+A_n(x):=\sum_{\pi\in S_n}x^{r(\pi)}.
+]
+There is a simple product formula:
+[
+\boxed{A_n(x)=x(x+1)(x+2)\cdots(x+n-1).}
+\tag{2}
+]
+
+**Proof (insertion/bijection).** There is a standard bijection between permutations and “insertion codes”: start with the one-element permutation ((1)). For (k=2,3,\dots,n), insert the new largest element (k) into one of the (k) possible positions (counted from left to right). Every choice sequence ((K_2,\dots,K_n)) with (1\le K_k\le k) yields a unique permutation, and every permutation arises uniquely this way.
+
+In the final permutation, (k) is a record **iff** it was inserted at the last position (i.e., (K_k=k)). Hence the number of records of the permutation equals
+[
+1+#{k\in{2,\dots,n}:K_k=k}.
+]
+Therefore
+[
+\begin{aligned}
+A_n(x)
+&=\sum_{K_2=1}^2\cdots\sum_{K_n=1}^n
+x^{,1+\sum_{k=2}^n \mathbf{1}*{{K_k=k}}}
+\
+&=x\prod*{k=2}^n\left(\sum_{j=1}^k \bigl( x^{\mathbf{1}*{{j=k}}}\bigr)\right)
+;=;x\prod*{k=2}^n\bigl((k-1)+x\bigr)
+;=;x(x+1)\cdots(x+n-1).
+\end{aligned}
+]
+∎
+
+Now set (x=\tfrac12) in (2):
+[
+A_n!\left(\tfrac12\right)
+=\prod_{k=1}^n\left(k-\tfrac12\right)
+=\frac{1\cdot 3\cdot 5\cdots (2n-1)}{2^n}
+=\frac{(2n-1)!!}{2^n}.
+]
+
+---
+
+### 3) Finish
+
+Plug this into (1):
+[
+F(n)=2^n\cdot A_n!\left(\tfrac12\right)
+=2^n\cdot \frac{(2n-1)!!}{2^n}
+=(2n-1)!!.
+]
+
+This matches the small cases:
+(n=1:\ 1);
+(n=2:\ 3);
+(n=3:\ 15);
+etc.
+
+(\boxed{\text{There are }(2n-1)!!\text{ legal ways.}})
