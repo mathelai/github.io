@@ -1,0 +1,510 @@
+{
+  "problem_statement": "n >= 2 line segments where every two cross, no three meet at a point. Place frogs at endpoints, clap n-1 times. Each clap makes each frog jump to next intersection. Goal: no two frogs at same intersection at same time.",
+  "conjecture": {
+    "part_a": "Valid orientation exists when n is odd",
+    "part_b": "Valid orientation never exists when n is even"
+  },
+  "analysis_by_n": {
+    "2": {
+      "n": 2,
+      "num_trials": 3,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 2,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 4
+        },
+        {
+          "trial": 1,
+          "n": 2,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 4
+        },
+        {
+          "trial": 2,
+          "n": 2,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 4
+        }
+      ],
+      "any_valid_found": false,
+      "all_valid_found": false
+    },
+    "3": {
+      "n": 3,
+      "num_trials": 3,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 3,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 8
+        },
+        {
+          "trial": 1,
+          "n": 3,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 8
+        },
+        {
+          "trial": 2,
+          "n": 3,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 8
+        }
+      ],
+      "any_valid_found": true,
+      "all_valid_found": true
+    },
+    "4": {
+      "n": 4,
+      "num_trials": 3,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 4,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 16
+        },
+        {
+          "trial": 1,
+          "n": 4,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 16
+        },
+        {
+          "trial": 2,
+          "n": 4,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 16
+        }
+      ],
+      "any_valid_found": false,
+      "all_valid_found": false
+    },
+    "5": {
+      "n": 5,
+      "num_trials": 3,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 5,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 32
+        },
+        {
+          "trial": 1,
+          "n": 5,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 32
+        },
+        {
+          "trial": 2,
+          "n": 5,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 32
+        }
+      ],
+      "any_valid_found": true,
+      "all_valid_found": true
+    },
+    "6": {
+      "n": 6,
+      "num_trials": 1,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 6,
+          "found_valid_orientation": false,
+          "orientation": null,
+          "total_orientations_tested": 64
+        }
+      ],
+      "any_valid_found": false,
+      "all_valid_found": false
+    },
+    "7": {
+      "n": 7,
+      "num_trials": 1,
+      "trials": [
+        {
+          "trial": 0,
+          "n": 7,
+          "found_valid_orientation": true,
+          "orientation": [
+            false,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "total_orientations_tested": 128
+        }
+      ],
+      "any_valid_found": true,
+      "all_valid_found": true
+    }
+  },
+  "detailed_example_n3": {
+    "n": 3,
+    "segments": [
+      {
+        "id": 0,
+        "p1": [
+          2.52,
+          0.0
+        ],
+        "p2": [
+          -2.54,
+          3.135095805817224e-16
+        ]
+      },
+      {
+        "id": 1,
+        "p1": [
+          1.2636174096670634,
+          2.2133801552763344
+        ],
+        "p2": [
+          -1.2895713210471826,
+          -2.2245946515486725
+        ]
+      },
+      {
+        "id": 2,
+        "p1": [
+          -1.2907082504118412,
+          2.215468729030807
+        ],
+        "p2": [
+          1.2867220156614938,
+          -2.277773939689194
+        ]
+      }
+    ],
+    "valid_orientation": [
+      false,
+      true,
+      false
+    ],
+    "simulation": {
+      "success": true,
+      "collision_time": -1,
+      "collision_details": null,
+      "positions_history": [
+        {
+          "0": {
+            "segment": 0,
+            "position": [
+              -2.54,
+              3.135095805817224e-16
+            ],
+            "intersection_index": -1
+          },
+          "1": {
+            "segment": 1,
+            "position": [
+              1.2636174096670634,
+              2.2133801552763344
+            ],
+            "intersection_index": -1
+          },
+          "2": {
+            "segment": 2,
+            "position": [
+              1.2867220156614938,
+              -2.277773939689194
+            ],
+            "intersection_index": -1
+          }
+        },
+        {
+          "0": {
+            "segment": 0,
+            "position": [
+              -0.019862988593452258,
+              1.573658854326034e-16
+            ],
+            "intersection_index": 0,
+            "intersecting_segment": 2
+          },
+          "1": {
+            "segment": 1,
+            "position": [
+              -0.009751078262912216,
+              0.0
+            ],
+            "intersection_index": 0,
+            "intersecting_segment": 0
+          },
+          "2": {
+            "segment": 2,
+            "position": [
+              -0.014814431979450315,
+              -0.008801165366945973
+            ],
+            "intersection_index": 0,
+            "intersecting_segment": 1
+          }
+        },
+        {
+          "0": {
+            "segment": 0,
+            "position": [
+              -0.009751078262912216,
+              1.5673936749453864e-16
+            ],
+            "intersection_index": 1,
+            "intersecting_segment": 1
+          },
+          "1": {
+            "segment": 1,
+            "position": [
+              -0.014814431979450315,
+              -0.008801165366946417
+            ],
+            "intersection_index": 1,
+            "intersecting_segment": 2
+          },
+          "2": {
+            "segment": 2,
+            "position": [
+              -0.01986298859345248,
+              4.440892098500626e-16
+            ],
+            "intersection_index": 1,
+            "intersecting_segment": 0
+          }
+        }
+      ]
+    }
+  },
+  "detailed_example_n4": {
+    "n": 4,
+    "segments": [
+      {
+        "id": 0,
+        "p1": [
+          2.52,
+          0.0
+        ],
+        "p2": [
+          -2.54,
+          3.135095805817224e-16
+        ]
+      },
+      {
+        "id": 1,
+        "p1": [
+          1.7884227774959496,
+          1.812393767838316
+        ],
+        "p2": [
+          -1.8264005585826377,
+          -1.8135468452442198
+        ]
+      },
+      {
+        "id": 2,
+        "p1": [
+          -0.009432078366890922,
+          2.5536450121531487
+        ],
+        "p2": [
+          -0.023933325824495998,
+          -2.626332417363226
+        ]
+      },
+      {
+        "id": 3,
+        "p1": [
+          -1.8491982959150275,
+          1.8049312726183164
+        ],
+        "p2": [
+          1.7629192528124726,
+          -1.781246341511628
+        ]
+      }
+    ],
+    "found_valid_orientation": false,
+    "all_orientations_collision_summary": {
+      "[False, False, False, False]": {
+        "collision_time": 0,
+        "frogs": [
+          2,
+          3
+        ]
+      },
+      "[True, False, False, False]": {
+        "collision_time": 0,
+        "frogs": [
+          2,
+          3
+        ]
+      },
+      "[False, True, False, False]": {
+        "collision_time": 0,
+        "frogs": [
+          2,
+          3
+        ]
+      },
+      "[True, True, False, False]": {
+        "collision_time": 0,
+        "frogs": [
+          2,
+          3
+        ]
+      },
+      "[False, False, True, False]": {
+        "collision_time": 1,
+        "frogs": [
+          0,
+          1
+        ]
+      },
+      "[True, False, True, False]": {
+        "collision_time": 1,
+        "frogs": [
+          0,
+          1
+        ]
+      },
+      "[False, True, True, False]": {
+        "collision_time": 0,
+        "frogs": [
+          1,
+          2
+        ]
+      },
+      "[True, True, True, False]": {
+        "collision_time": 0,
+        "frogs": [
+          1,
+          2
+        ]
+      },
+      "[False, False, False, True]": {
+        "collision_time": 0,
+        "frogs": [
+          0,
+          3
+        ]
+      },
+      "[True, False, False, True]": {
+        "collision_time": 1,
+        "frogs": [
+          0,
+          1
+        ]
+      },
+      "[False, True, False, True]": {
+        "collision_time": 0,
+        "frogs": [
+          0,
+          3
+        ]
+      },
+      "[True, True, False, True]": {
+        "collision_time": 1,
+        "frogs": [
+          0,
+          1
+        ]
+      },
+      "[False, False, True, True]": {
+        "collision_time": 0,
+        "frogs": [
+          0,
+          3
+        ]
+      },
+      "[True, False, True, True]": {
+        "collision_time": 1,
+        "frogs": [
+          0,
+          1
+        ]
+      },
+      "[False, True, True, True]": {
+        "collision_time": 0,
+        "frogs": [
+          0,
+          3
+        ]
+      },
+      "[True, True, True, True]": {
+        "collision_time": 0,
+        "frogs": [
+          1,
+          2
+        ]
+      }
+    },
+    "total_orientations_tested": 16,
+    "all_have_collisions": true
+  },
+  "summary": {
+    "conjecture_verified": true,
+    "odd_n_results": {
+      "3": true,
+      "5": true,
+      "7": true
+    },
+    "even_n_results": {
+      "2": false,
+      "4": false,
+      "6": false
+    }
+  },
+  "metrics": {
+    "runtime_ms": 25.27,
+    "status": "success"
+  }
+}

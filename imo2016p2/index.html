@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2016 P2 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .problem-statement {
+            background: #f8f9fa;
+            padding: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .problem-statement h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .problem-statement p, .problem-statement ul {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .problem-statement ul {
+            margin-left: 30px;
+        }
+
+        .controls {
+            background: #fff;
+            padding: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        input[type="number"], select {
+            padding: 8px 15px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            overflow: auto;
+        }
+
+        .grid {
+            display: inline-grid;
+            gap: 2px;
+            background: #ccc;
+            padding: 2px;
+            border-radius: 5px;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 3px;
+            transition: transform 0.2s;
+        }
+
+        .cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .cell-A {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .cell-B {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .cell-C {
+            background: #ffe66d;
+            color: #333;
+        }
+
+        .stats {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .stat-item {
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .ground-truth {
+            grid-column: 1 / -1;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .results-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .results-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .results-table tr:hover {
+            background: #f0f0f0;
+        }
+
+        .valid-row {
+            background: #d4edda;
+        }
+
+        .invalid-row {
+            background: #f8d7da;
+        }
+
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .note-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .note-box p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+            /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <h1>IMO 2016 Problem 2</h1>
+            <p>Fill N\u00d7N Table with I,M,O Equally</p>
+        </header>
+
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <p>Find all integers <em>n</em> for which each cell of an <em>n × n</em> table can be filled with one of the letters <strong>A</strong>, <strong>B</strong>, and <strong>C</strong> in such a way that:</p>
+            <ul>
+                <li>In each row and each column, one third of the entries are A, one third are B, and one third are C; and</li>
+                <li>In any diagonal, if the number of entries on the diagonal is a multiple of three, then one third of the entries are A, one third are B, and one third are C.</li>
+            </ul>
+            <p><strong>Note:</strong> The rows and columns of an <em>n × n</em> table are each labelled 1 to <em>n</em> in a natural order. For <em>n ≥ 2</em>, the table has <em>4n-2</em> diagonals of two types:</p>
+            <ul>
+                <li>Type 1: All cells (i,j) for which <em>i-j</em> is constant</li>
+                <li>Type 2: All cells (i,j) for which <em>i+j</em> is constant</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="nValue">Grid Size (n):</label>
+                <input type="number" id="nValue" min="3" max="30" value="9" step="3">
+            </div>
+            <button onclick="generateGrid()">Generate Grid</button>
+            <button onclick="loadFromResults()">Load from Results</button>
+            <div class="control-group">
+                <label for="constructionMethod">Method:</label>
+                <select id="constructionMethod">
+                    <option value="pattern1">(i + j) % 3</option>
+                    <option value="pattern2">(i + 2j) % 3</option>
+                    <option value="pattern3">(2i + j) % 3</option>
+                    <option value="pattern4">(i - j) % 3</option>
+                    <option value="pattern5">(i // 3 + j) % 3</option>
+                    <option value="pattern6">(i + j // 3) % 3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <h3>Grid Visualization</h3>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color cell-A"></div>
+                        <span>Letter A</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color cell-B"></div>
+                        <span>Letter B</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color cell-C"></div>
+                        <span>Letter C</span>
+                    </div>
+                </div>
+                <div class="grid-container">
+                    <div id="gridDisplay" class="grid"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Validation Results</h3>
+                <div id="validationResults"></div>
+                <div class="stats" id="statsDisplay">
+                    <h4>Grid Statistics</h4>
+                    <div class="stats-grid" id="statsContent"></div>
+                </div>
+            </div>
+
+            <div class="section ground-truth">
+                <h3>Ground Truth Data from Simulation</h3>
+                <div class="note-box">
+                    <h4>Theoretical Result</h4>
+                    <p>According to the IMO solution, <em>n</em> is valid if and only if <em>n ≡ 0 (mod 3)</em> and <em>n ≢ 0 (mod 9)</em>.</p>
+                    <p>This means valid values are: n = 3, 6, 12, 15, 21, 24, 30, ...</p>
+                </div>
+                <div id="groundTruthDisplay"></div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+  <script>
+        // Embedded results data (will be populated from results.json)
+        const resultsData = {
+  "problem": "IMO 2016 Problem 2",
+  "summary": {
+    "valid_n_values": [9, 18, 27],
+    "invalid_n_values": [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30],
+    "pattern": "All valid n are divisible by 9",
+    "conjecture": "n is valid if and only if n is divisible by 9",
+    "note": "According to the IMO solution, n works iff n ≡ 0 (mod 3) and n ≢ 0 (mod 9)",
+    "invalid_multiples_of_3": [3, 6, 12, 15, 21, 24, 30]
+  },
+  "cases": {}
+        };
+
+        let currentGrid = null;
+        let currentN = 9;
+
+        function generateGrid() {
+            const n = parseInt(document.getElementById('nValue').value);
+            const method = document.getElementById('constructionMethod').value;
+
+            if (n % 3 !== 0) {
+                showValidationMessage('n must be divisible by 3 for row/column constraints', 'error');
+                return;
+            }
+
+            currentN = n;
+            const letters = ['A', 'B', 'C'];
+            const grid = [];
+
+            // Generate grid based on selected pattern
+            for (let i = 0; i < n; i++) {
+                const row = [];
+                for (let j = 0; j < n; j++) {
+                    let idx;
+                    switch(method) {
+                        case 'pattern1':
+                            idx = (i + j) % 3;
+                            break;
+                        case 'pattern2':
+                            idx = (i + 2*j) % 3;
+                            break;
+                        case 'pattern3':
+                            idx = (2*i + j) % 3;
+                            break;
+                        case 'pattern4':
+                            idx = ((i - j) % 3 + 3) % 3;
+                            break;
+                        case 'pattern5':
+                            idx = (Math.floor(i / 3) + j) % 3;
+                            break;
+                        case 'pattern6':
+                            idx = (i + Math.floor(j / 3)) % 3;
+                            break;
+                        default:
+                            idx = (i + j) % 3;
+                    }
+                    row.push(letters[idx]);
+                }
+                grid.push(row);
+            }
+
+            currentGrid = grid;
+            displayGrid(grid);
+            validateGrid(grid);
+        }
+
+        function displayGrid(grid) {
+            const container = document.getElementById('gridDisplay');
+            const n = grid.length;
+
+            // Set grid template
+            container.style.gridTemplateColumns = `repeat(${n}, 40px)`;
+            container.innerHTML = '';
+
+            // Adjust cell size for large grids
+            const cellSize = n > 15 ? 30 : (n > 10 ? 35 : 40);
+            container.style.gridTemplateColumns = `repeat(${n}, ${cellSize}px)`;
+
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = `cell cell-${grid[i][j]}`;
+                    cell.textContent = grid[i][j];
+                    cell.style.width = `${cellSize}px`;
+                    cell.style.height = `${cellSize}px`;
+                    cell.style.fontSize = `${cellSize * 0.45}px`;
+                    cell.title = `(${i+1}, ${j+1}): ${grid[i][j]}`;
+                    container.appendChild(cell);
+                }
+            }
+        }
+
+        function validateGrid(grid) {
+            const n = grid.length;
+            const rowColValid = checkRowColumnConstraints(grid);
+            const diagValid = checkDiagonalConstraints(grid);
+            const overall = rowColValid && diagValid;
+
+            let message = '';
+            if (overall) {
+                message = `Grid is VALID! All constraints satisfied for n=${n}`;
+                showValidationMessage(message, 'success');
+            } else {
+                message = `Grid is INVALID for n=${n}. `;
+                if (!rowColValid) message += 'Row/column constraints violated. ';
+                if (!diagValid) message += 'Diagonal constraints violated.';
+                showValidationMessage(message, 'error');
+            }
+
+            // Display statistics
+            displayStats(grid);
+        }
+
+        function checkRowColumnConstraints(grid) {
+            const n = grid.length;
+            if (n % 3 !== 0) return false;
+
+            const target = n / 3;
+
+            // Check rows
+            for (let i = 0; i < n; i++) {
+                const counts = {A: 0, B: 0, C: 0};
+                for (let j = 0; j < n; j++) {
+                    counts[grid[i][j]]++;
+                }
+                if (counts.A !== target || counts.B !== target || counts.C !== target) {
+                    return false;
+                }
+            }
+
+            // Check columns
+            for (let j = 0; j < n; j++) {
+                const counts = {A: 0, B: 0, C: 0};
+                for (let i = 0; i < n; i++) {
+                    counts[grid[i][j]]++;
+                }
+                if (counts.A !== target || counts.B !== target || counts.C !== target) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function getDiagonalsType1(n) {
+            const diagonals = [];
+            for (let diff = -(n-1); diff < n; diff++) {
+                const diagonal = [];
+                for (let i = 0; i < n; i++) {
+                    const j = i - diff;
+                    if (j >= 0 && j < n) {
+                        diagonal.push([i, j]);
+                    }
+                }
+                if (diagonal.length > 0) {
+                    diagonals.push(diagonal);
+                }
+            }
+            return diagonals;
+        }
+
+        function getDiagonalsType2(n) {
+            const diagonals = [];
+            for (let sum = 0; sum < 2*n - 1; sum++) {
+                const diagonal = [];
+                for (let i = 0; i < n; i++) {
+                    const j = sum - i;
+                    if (j >= 0 && j < n) {
+                        diagonal.push([i, j]);
+                    }
+                }
+                if (diagonal.length > 0) {
+                    diagonals.push(diagonal);
+                }
+            }
+            return diagonals;
+        }
+
+        function checkDiagonalConstraints(grid) {
+            const n = grid.length;
+
+            // Check type 1 diagonals
+            const diags1 = getDiagonalsType1(n);
+            for (const diag of diags1) {
+                if (diag.length % 3 === 0) {
+                    const counts = {A: 0, B: 0, C: 0};
+                    for (const [i, j] of diag) {
+                        counts[grid[i][j]]++;
+                    }
+                    const target = diag.length / 3;
+                    if (counts.A !== target || counts.B !== target || counts.C !== target) {
+                        return false;
+                    }
+                }
+            }
+
+            // Check type 2 diagonals
+            const diags2 = getDiagonalsType2(n);
+            for (const diag of diags2) {
+                if (diag.length % 3 === 0) {
+                    const counts = {A: 0, B: 0, C: 0};
+                    for (const [i, j] of diag) {
+                        counts[grid[i][j]]++;
+                    }
+                    const target = diag.length / 3;
+                    if (counts.A !== target || counts.B !== target || counts.C !== target) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        function showValidationMessage(message, type) {
+            const container = document.getElementById('validationResults');
+            container.innerHTML = `<div class="status-message status-${type}">${message}</div>`;
+        }
+
+        function displayStats(grid) {
+            const n = grid.length;
+            const diags1 = getDiagonalsType1(n);
+            const diags2 = getDiagonalsType2(n);
+
+            const constrainedDiags1 = diags1.filter(d => d.length % 3 === 0);
+            const constrainedDiags2 = diags2.filter(d => d.length % 3 === 0);
+
+            const statsHTML = `
+                <div class="stat-item">
+                    <div class="stat-label">Grid Size</div>
+                    <div class="stat-value">${n} × ${n}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total Cells</div>
+                    <div class="stat-value">${n * n}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Type 1 Diagonals</div>
+                    <div class="stat-value">${diags1.length}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Type 2 Diagonals</div>
+                    <div class="stat-value">${diags2.length}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Constrained Type 1</div>
+                    <div class="stat-value">${constrainedDiags1.length}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Constrained Type 2</div>
+                    <div class="stat-value">${constrainedDiags2.length}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Divisible by 3</div>
+                    <div class="stat-value">${n % 3 === 0 ? 'Yes' : 'No'}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Divisible by 9</div>
+                    <div class="stat-value">${n % 9 === 0 ? 'Yes' : 'No'}</div>
+                </div>
+            `;
+
+            document.getElementById('statsContent').innerHTML = statsHTML;
+        }
+
+        function loadFromResults() {
+            const n = parseInt(document.getElementById('nValue').value);
+            const caseData = resultsData.cases[n.toString()];
+
+            if (!caseData) {
+                showValidationMessage(`No data available for n=${n}`, 'info');
+                return;
+            }
+
+            if (caseData.grid) {
+                currentGrid = caseData.grid;
+                currentN = n;
+                displayGrid(caseData.grid);
+                validateGrid(caseData.grid);
+
+                const methodNote = caseData.construction_method ?
+                    ` (Method: ${caseData.construction_method})` : '';
+                showValidationMessage(
+                    `Loaded grid for n=${n} from simulation results${methodNote}`,
+                    caseData.valid_grid_found ? 'success' : 'info'
+                );
+            } else {
+                showValidationMessage(
+                    `No valid grid found for n=${n}. ${caseData.reason || caseData.theory_note || ''}`,
+                    'error'
+                );
+            }
+        }
+
+        function displayGroundTruth() {
+            const summary = resultsData.summary;
+            const cases = resultsData.cases;
+
+            let html = `
+                <div class="stats" role="status" aria-live="polite">
+                    <h4>Simulation Summary</h4>
+                    <p><strong>Pattern Found:</strong> ${summary.pattern}</p>
+                    <p><strong>Conjecture:</strong> ${summary.conjecture || 'N/A'}</p>
+                    <p><strong>Valid n values found:</strong> ${summary.valid_n_values.join(', ')}</p>
+                    <p><strong>Invalid multiples of 3:</strong> ${summary.invalid_multiples_of_3.join(', ')}</p>
+                </div>
+
+                <div class="note-box" style="background: #f8d7da; border-color: #dc3545;">
+                    <h4>Discrepancy Warning!</h4>
+                    <p>The simulation found n = 9, 18, 27 work, which contradicts the theoretical answer that n divisible by 9 should NOT work.</p>
+                    <p>This suggests the construction method found satisfies all constraints for these values, which warrants further investigation.</p>
+                </div>
+
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>n</th>
+                            <th>÷3</th>
+                            <th>÷9</th>
+                            <th>Valid</th>
+                            <th>Method</th>
+                            <th>Constrained Diagonals</th>
+                            <th>Theory Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('groundTruthDisplay').innerHTML = html;
+
+            const tbody = document.getElementById('resultsTableBody');
+            for (let n = 1; n <= 30; n++) {
+                const caseData = cases[n.toString()];
+                if (!caseData) continue;
+
+                const row = document.createElement('tr');
+                row.className = caseData.valid_grid_found ? 'valid-row' : 'invalid-row';
+
+                row.innerHTML = `
+                    <td><strong>${n}</strong></td>
+                    <td>${caseData.divisible_by_3 ? 'Yes' : 'No'}</td>
+                    <td>${caseData.divisible_by_9 ? 'Yes' : 'No'}</td>
+                    <td>${caseData.valid_grid_found ? '✓' : '✗'}</td>
+                    <td>${caseData.construction_method || 'N/A'}</td>
+                    <td>${caseData.diagonal_info.total_constrained}</td>
+                    <td style="font-size: 0.9em;">${caseData.theory_note || caseData.reason || ''}</td>
+                `;
+
+                tbody.appendChild(row);
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            generateGrid();
+            displayGroundTruth();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1314 @@
+{
+  "problem": "IMO 2016 Problem 2",
+  "summary": {
+    "valid_n_values": [
+      9,
+      18,
+      27
+    ],
+    "invalid_n_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      28,
+      29,
+      30
+    ],
+    "pattern": "All valid n are divisible by 9",
+    "conjecture": "n is valid if and only if n is divisible by 9",
+    "note": "According to the IMO solution, n works iff n \u2261 0 (mod 3) and n \u2262 0 (mod 9)",
+    "invalid_multiples_of_3": [
+      3,
+      6,
+      12,
+      15,
+      21,
+      24,
+      30
+    ]
+  },
+  "cases": {
+    "1": {
+      "n": 1,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 1,
+        "total_type2": 1,
+        "constrained_type1": 0,
+        "constrained_type2": 0,
+        "total_constrained": 0,
+        "type1_lengths": [],
+        "type2_lengths": []
+      }
+    },
+    "2": {
+      "n": 2,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 3,
+        "total_type2": 3,
+        "constrained_type1": 0,
+        "constrained_type2": 0,
+        "total_constrained": 0,
+        "type1_lengths": [],
+        "type2_lengths": []
+      }
+    },
+    "3": {
+      "n": 3,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 5,
+        "total_type2": 5,
+        "constrained_type1": 1,
+        "constrained_type2": 1,
+        "total_constrained": 2,
+        "type1_lengths": [
+          3
+        ],
+        "type2_lengths": [
+          3
+        ]
+      }
+    },
+    "4": {
+      "n": 4,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 7,
+        "total_type2": 7,
+        "constrained_type1": 2,
+        "constrained_type2": 2,
+        "total_constrained": 4,
+        "type1_lengths": [
+          3,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          3
+        ]
+      }
+    },
+    "5": {
+      "n": 5,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 9,
+        "total_type2": 9,
+        "constrained_type1": 2,
+        "constrained_type2": 2,
+        "total_constrained": 4,
+        "type1_lengths": [
+          3,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          3
+        ]
+      }
+    },
+    "6": {
+      "n": 6,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 11,
+        "total_type2": 11,
+        "constrained_type1": 3,
+        "constrained_type2": 3,
+        "total_constrained": 6,
+        "type1_lengths": [
+          3,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          3
+        ]
+      }
+    },
+    "7": {
+      "n": 7,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 13,
+        "total_type2": 13,
+        "constrained_type1": 4,
+        "constrained_type2": 4,
+        "total_constrained": 8,
+        "type1_lengths": [
+          3,
+          6,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          6,
+          3
+        ]
+      }
+    },
+    "8": {
+      "n": 8,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 15,
+        "total_type2": 15,
+        "constrained_type1": 4,
+        "constrained_type2": 4,
+        "total_constrained": 8,
+        "type1_lengths": [
+          3,
+          6,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          6,
+          3
+        ]
+      }
+    },
+    "9": {
+      "n": 9,
+      "divisible_by_3": true,
+      "divisible_by_9": true,
+      "valid_grid_found": true,
+      "construction_method": "latin_square_pattern",
+      "reason": "",
+      "theory_note": "n divisible by 9: Known to be impossible",
+      "diagonal_info": {
+        "total_type1": 17,
+        "total_type2": 17,
+        "constrained_type1": 5,
+        "constrained_type2": 5,
+        "total_constrained": 10,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          6,
+          3
+        ]
+      },
+      "grid": [
+        [
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B",
+          "C",
+          "A",
+          "B"
+        ]
+      ]
+    },
+    "10": {
+      "n": 10,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 19,
+        "total_type2": 19,
+        "constrained_type1": 6,
+        "constrained_type2": 6,
+        "total_constrained": 12,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "11": {
+      "n": 11,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 21,
+        "total_type2": 21,
+        "constrained_type1": 6,
+        "constrained_type2": 6,
+        "total_constrained": 12,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "12": {
+      "n": 12,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 23,
+        "total_type2": 23,
+        "constrained_type1": 7,
+        "constrained_type2": 7,
+        "total_constrained": 14,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "13": {
+      "n": 13,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 25,
+        "total_type2": 25,
+        "constrained_type1": 8,
+        "constrained_type2": 8,
+        "total_constrained": 16,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "14": {
+      "n": 14,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 27,
+        "total_type2": 27,
+        "constrained_type1": 8,
+        "constrained_type2": 8,
+        "total_constrained": 16,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "15": {
+      "n": 15,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 29,
+        "total_type2": 29,
+        "constrained_type1": 9,
+        "constrained_type2": 9,
+        "total_constrained": 18,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "16": {
+      "n": 16,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 31,
+        "total_type2": 31,
+        "constrained_type1": 10,
+        "constrained_type2": 10,
+        "total_constrained": 20,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "17": {
+      "n": 17,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 33,
+        "total_type2": 33,
+        "constrained_type1": 10,
+        "constrained_type2": 10,
+        "total_constrained": 20,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "18": {
+      "n": 18,
+      "divisible_by_3": true,
+      "divisible_by_9": true,
+      "valid_grid_found": true,
+      "construction_method": "latin_square_pattern",
+      "reason": "",
+      "theory_note": "n divisible by 9: Known to be impossible",
+      "diagonal_info": {
+        "total_type1": 35,
+        "total_type2": 35,
+        "constrained_type1": 11,
+        "constrained_type2": 11,
+        "total_constrained": 22,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "19": {
+      "n": 19,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 37,
+        "total_type2": 37,
+        "constrained_type1": 12,
+        "constrained_type2": 12,
+        "total_constrained": 24,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "20": {
+      "n": 20,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 39,
+        "total_type2": 39,
+        "constrained_type1": 12,
+        "constrained_type2": 12,
+        "total_constrained": 24,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "21": {
+      "n": 21,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 41,
+        "total_type2": 41,
+        "constrained_type1": 13,
+        "constrained_type2": 13,
+        "total_constrained": 26,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "22": {
+      "n": 22,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 43,
+        "total_type2": 43,
+        "constrained_type1": 14,
+        "constrained_type2": 14,
+        "total_constrained": 28,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "23": {
+      "n": 23,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 45,
+        "total_type2": 45,
+        "constrained_type1": 14,
+        "constrained_type2": 14,
+        "total_constrained": 28,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "24": {
+      "n": 24,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 47,
+        "total_type2": 47,
+        "constrained_type1": 15,
+        "constrained_type2": 15,
+        "total_constrained": 30,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "25": {
+      "n": 25,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 49,
+        "total_type2": 49,
+        "constrained_type1": 16,
+        "constrained_type2": 16,
+        "total_constrained": 32,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "26": {
+      "n": 26,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 51,
+        "total_type2": 51,
+        "constrained_type1": 16,
+        "constrained_type2": 16,
+        "total_constrained": 32,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "27": {
+      "n": 27,
+      "divisible_by_3": true,
+      "divisible_by_9": true,
+      "valid_grid_found": true,
+      "construction_method": "latin_square_pattern",
+      "reason": "",
+      "theory_note": "n divisible by 9: Known to be impossible",
+      "diagonal_info": {
+        "total_type1": 53,
+        "total_type2": 53,
+        "constrained_type1": 17,
+        "constrained_type2": 17,
+        "total_constrained": 34,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "28": {
+      "n": 28,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 55,
+        "total_type2": 55,
+        "constrained_type1": 18,
+        "constrained_type2": 18,
+        "total_constrained": 36,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "29": {
+      "n": 29,
+      "divisible_by_3": false,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "n must be divisible by 3 for row/column constraints",
+      "theory_note": "",
+      "diagonal_info": {
+        "total_type1": 57,
+        "total_type2": 57,
+        "constrained_type1": 18,
+        "constrained_type2": 18,
+        "total_constrained": 36,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    },
+    "30": {
+      "n": 30,
+      "divisible_by_3": true,
+      "divisible_by_9": false,
+      "valid_grid_found": false,
+      "construction_method": null,
+      "reason": "",
+      "theory_note": "n \u2261 3 or 6 (mod 9): Should be possible",
+      "diagonal_info": {
+        "total_type1": 59,
+        "total_type2": 59,
+        "constrained_type1": 19,
+        "constrained_type2": 19,
+        "total_constrained": 38,
+        "type1_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "type2_lengths": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30,
+          27,
+          24,
+          21,
+          18,
+          15,
+          12,
+          9,
+          6,
+          3
+        ]
+      }
+    }
+  },
+  "metrics": {
+    "runtime_ms": 32.85,
+    "status": "success"
+  }
+}

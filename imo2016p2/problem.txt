@@ -1,0 +1,11 @@
+Find all integers n for which each cell of an n × n table can be filled with one of the letters A, B, and C in such a way that:
+
+
+\begin{itemize}
+\item in each row and each column, one third of the entries are A, one third are B, and one third are C; and
+\item in any diagonal, if the number of entries on the diagonal is a multiple of three, then one third of the entries are A, one third are B, and one third are C.
+\end{itemize}
+
+
+
+\textbf{Note.} The rows and columns of an n × n table are each labelled 1 to n in a natural order. Thus each cell corresponds to a pair of positive integers (i,j) with 1 ≤ i,j ≤ n. For n ≥ 2, the table has 4n-2 diagonals of two types. A diagonal of the first type consists of all cells (i,j) for which i-j is a constant, and a diagonal of the second type consists of all cells (i,j) for which i+j is constant.

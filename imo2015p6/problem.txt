@@ -1,0 +1,8 @@
+The sequence a_{1}, a_{2}, ... of integers satisfies the conditions:\\
+(i) 1 ≤ a_{j} ≤ 2015 for all j ≥ 1,\\
+(ii) k+a_{k} ≠ \ell+a_{\ell} for all 1 ≤ k<\ell.
+Prove that there exist two positive integers b and N for which
+$
+\left|\sum_{j=m+1}^{n}\left(a_{j}-b\right)\right| ≤ 1007^{2}
+
+for all integers m and n such that n>m ≥ N$.

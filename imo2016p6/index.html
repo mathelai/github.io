@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2016 P6 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+        .panel {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #7A9D8F;
+            padding-bottom: 8px;
+        }
+        .problem-statement {
+            background: #F5F7FA;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            line-height: 1.6;
+        }
+        .conjecture {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .conjecture-item {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        canvas {
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9em;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #7A9D8F;
+            cursor: pointer;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #7A9D8F;
+            cursor: pointer;
+            border: none;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius:  8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background: #7A9D8F;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5A8070;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .orientation-display {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+            border: 1px solid var(--border-primary);
+        }
+        .result-box {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 2px solid var(--border-primary);
+        }
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .failure {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: #7A9D8F;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-primary);
+        }
+        .data-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+        .check-mark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .cross-mark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            line-height: 1.6;
+        }
+        .segment-orientation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .orientation-btn {
+            padding: 8px 16px;
+            border: 2px solid #7A9D8F;
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .orientation-btn.active-true {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .orientation-btn.active-false {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        .orientation-btn:hover {
+            transform: scale(1.05);
+        }
+        .value-display {
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: #7A9D8F;
+        }
+        .animation-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2016 Problem 6</h1>
+                <p class="subtitle">Circular Game on N\u00d7N Board</p>
+            </div>
+        </header>
+        <div class="content">
+            <div class="panel full-width">
+                <h2 id="problem-title">Problem Statement</h2>
+                <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+                    <p><strong>Problem:</strong> There are <em>n ≥ 2</em> line segments in the plane such that every two segments cross and no three segments meet at a point. Geoff has to choose an endpoint of each segment and place a frog on it facing the other endpoint. Then he will clap his hands <em>n-1</em> times. Every time he claps, each frog will immediately jump forward to the next intersection point on its segment. Frogs never change the direction of their jumps. Geoff wishes to place the frogs in such a way that no two of them will ever occupy the same intersection point at the same time.</p>
+                </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <p><strong>(a)<strong> When n is odd, Geoff can always find a valid orientation (choice of endpoints) such that no two frogs ever collide.</p>
+            <p><strong>(b)<strong> When n is even, no valid orientation exists - there will always be a collision regardless of how Geoff places the frogs.</p>
+        </div>
+                <div class="conjecture">
+                    <strong>Conjecture:</strong>
+                    <div class="conjecture-item"><strong>(a)</strong> Geoff can always fulfill his wish if <em>n</em> is odd.</div>
+                    <div class="conjecture-item"><strong>(b)</strong> Geoff can never fulfill his wish if <em>n</em> is even.</div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Interactive Simulation</h2>
+                <canvas id="simulationCanvas" width="600" height="600"></canvas>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Number of Segments (n): <span class="value-display" id="nValue">3</span></label>
+                        <input type="range" id="nSlider" min="2" max="7" value="3" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="1" max="10" value="5" step="1">
+                    </div>
+                </div>
+                <div class="animation-controls">
+                    <button class="btn-primary" id="generateBtn">Generate New Configuration</button>
+                    <button class="btn-success" id="findValidBtn">Find Valid Orientation</button>
+                    <button class="btn-primary" id="playBtn">Play Animation</button>
+                    <button class="btn-secondary" id="resetBtn">Reset</button>
+                </div>
+                <div class="info-box" id="statusBox">
+                    Click "Generate New Configuration" to create a random set of intersecting segments.
+                </div>
+                <div id="orientationDisplay"></div>
+                <div id="resultDisplay"></div>
+            </div>
+            <div class="panel">
+                <h2>Simulation Results</h2>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #333;"></div>
+                        <span>Line Segments</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff6b6b; border-radius: 50%;"></div>
+                        <span>Frog Positions</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4ecdc4;"></div>
+                        <span>Intersections</span>
+                    </div>
+                </div>
+                <div id="simulationLog"></div>
+            </div>
+            <div class="panel full-width">
+                <h2>Ground Truth Data from Simulation</h2>
+                <p>Results from comprehensive analysis testing the conjecture:</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>n</th>
+                            <th>Parity</th>
+                            <th>Valid Orientation Found?</th>
+                            <th>Matches Conjecture?</th>
+                            <th>Example Orientation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="groundTruthTable">
+                        <tr><td colspan="5">Loading data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Embedded simulation results (from simulation.py output)
+        const SIMULATION_RESULTS = {"problem_statement": "n >= 2 line segments where every two cross, no three meet at a point. Place frogs at endpoints, clap n-1 times. Each clap makes each frog jump to next intersection. Goal: no two frogs at same intersection at same time.", "conjecture": {"part_a": "Valid orientation exists when n is odd", "part_b": "Valid orientation never exists when n is even"}, "analysis_by_n": {"2": {"n": 2, "num_trials": 3, "trials": [{"trial": 0, "n": 2, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 4}, {"trial": 1, "n": 2, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 4}, {"trial": 2, "n": 2, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 4}], "any_valid_found": false, "all_valid_found": false}, "3": {"n": 3, "num_trials": 3, "trials": [{"trial": 0, "n": 3, "found_valid_orientation": true, "orientation": [false, true, false], "total_orientations_tested": 8}, {"trial": 1, "n": 3, "found_valid_orientation": true, "orientation": [false, true, false], "total_orientations_tested": 8}, {"trial": 2, "n": 3, "found_valid_orientation": true, "orientation": [false, true, false], "total_orientations_tested": 8}], "any_valid_found": true, "all_valid_found": true}, "4": {"n": 4, "num_trials": 3, "trials": [{"trial": 0, "n": 4, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 16}, {"trial": 1, "n": 4, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 16}, {"trial": 2, "n": 4, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 16}], "any_valid_found": false, "all_valid_found": false}, "5": {"n": 5, "num_trials": 3, "trials": [{"trial": 0, "n": 5, "found_valid_orientation": true, "orientation": [false, true, false, true, false], "total_orientations_tested": 32}, {"trial": 1, "n": 5, "found_valid_orientation": true, "orientation": [false, true, false, true, false], "total_orientations_tested": 32}, {"trial": 2, "n": 5, "found_valid_orientation": true, "orientation": [false, true, false, true, false], "total_orientations_tested": 32}], "any_valid_found": true, "all_valid_found": true}, "6": {"n": 6, "num_trials": 1, "trials": [{"trial": 0, "n": 6, "found_valid_orientation": false, "orientation": null, "total_orientations_tested": 64}], "any_valid_found": false, "all_valid_found": false}, "7": {"n": 7, "num_trials": 1, "trials": [{"trial": 0, "n": 7, "found_valid_orientation": true, "orientation": [false, true, false, true, false, true, false], "total_orientations_tested": 128}], "any_valid_found": true, "all_valid_found": true}}, "detailed_example_n3": {"n": 3, "segments": [{"id": 0, "p1": [2.52, 0.0], "p2": [-2.54, 3.135095805817224e-16]}, {"id": 1, "p1": [1.2636174096670634, 2.2133801552763344], "p2": [-1.2895713210471826, -2.2245946515486725]}, {"id": 2, "p1": [-1.2907082504118412, 2.215468729030807], "p2": [1.2867220156614938, -2.277773939689194]}], "valid_orientation": [false, true, false], "simulation": {"success": true, "collision_time": -1, "collision_details": null, "positions_history": [{"0": {"segment": 0, "position": [-2.54, 3.135095805817224e-16], "intersection_index": -1}, "1": {"segment": 1, "position": [1.2636174096670634, 2.2133801552763344], "intersection_index": -1}, "2": {"segment": 2, "position": [1.2867220156614938, -2.277773939689194], "intersection_index": -1}}, {"0": {"segment": 0, "position": [-0.019862988593452258, 1.573658854326034e-16], "intersection_index": 0, "intersecting_segment": 2}, "1": {"segment": 1, "position": [-0.009751078262912216, 0.0], "intersection_index": 0, "intersecting_segment": 0}, "2": {"segment": 2, "position": [-0.014814431979450315, -0.008801165366945973], "intersection_index": 0, "intersecting_segment": 1}}, {"0": {"segment": 0, "position": [-0.009751078262912216, 1.5673936749453864e-16], "intersection_index": 1, "intersecting_segment": 1}, "1": {"segment": 1, "position": [-0.014814431979450315, -0.008801165366946417], "intersection_index": 1, "intersecting_segment": 2}, "2": {"segment": 2, "position": [-0.01986298859345248, 4.440892098500626e-16], "intersection_index": 1, "intersecting_segment": 0}}]}}, "detailed_example_n4": {"n": 4, "segments": [{"id": 0, "p1": [2.52, 0.0], "p2": [-2.54, 3.135095805817224e-16]}, {"id": 1, "p1": [1.7884227774959496, 1.812393767838316], "p2": [-1.8264005585826377, -1.8135468452442198]}, {"id": 2, "p1": [-0.009432078366890922, 2.5536450121531487], "p2": [-0.023933325824495998, -2.626332417363226]}, {"id": 3, "p1": [-1.8491982959150275, 1.8049312726183164], "p2": [1.7629192528124726, -1.781246341511628]}], "found_valid_orientation": false, "all_orientations_collision_summary": {"[False, False, False, False]": {"collision_time": 0, "frogs": [2, 3]}, "[True, False, False, False]": {"collision_time": 0, "frogs": [2, 3]}, "[False, True, False, False]": {"collision_time": 0, "frogs": [2, 3]}, "[True, True, False, False]": {"collision_time": 0, "frogs": [2, 3]}, "[False, False, True, False]": {"collision_time": 1, "frogs": [0, 1]}, "[True, False, True, False]": {"collision_time": 1, "frogs": [0, 1]}, "[False, True, True, False]": {"collision_time": 0, "frogs": [1, 2]}, "[True, True, True, False]": {"collision_time": 0, "frogs": [1, 2]}, "[False, False, False, True]": {"collision_time": 0, "frogs": [0, 3]}, "[True, False, False, True]": {"collision_time": 1, "frogs": [0, 1]}, "[False, True, False, True]": {"collision_time": 0, "frogs": [0, 3]}, "[True, True, False, True]": {"collision_time": 1, "frogs": [0, 1]}, "[False, False, True, True]": {"collision_time": 0, "frogs": [0, 3]}, "[True, False, True, True]": {"collision_time": 1, "frogs": [0, 1]}, "[False, True, True, True]": {"collision_time": 0, "frogs": [0, 3]}, "[True, True, True, True]": {"collision_time": 0, "frogs": [1, 2]}}, "total_orientations_tested": 16, "all_have_collisions": true}, "summary": {"conjecture_verified": true, "odd_n_results": {"3": true, "5": true, "7": true}, "even_n_results": {"2": false, "4": false, "6": false}}};
+        // Canvas setup
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const scale = 100; // Scale factor for drawing
+        // State
+        let currentSegments = [];
+        let currentOrientation = [];
+        let animationStep = 0;
+        let animationInterval = null;
+        let currentSimulationResult = null;
+        // Line segment class
+        class LineSegment {
+            constructor(id, p1, p2) {
+                this.id = id;
+                this.p1 = p1;
+                this.p2 = p2;
+            }
+        }
+        // Generate segments
+        function generateSegments(n) {
+            const segments = [];
+            for (let i = 0; i < n; i++) {
+                const angle = Math.PI * i / n;
+                const angleOffset = 0.005 * Math.sin(i * 2.718);
+                const centerOffsetX = 0.02 * Math.cos(i * 1.414);
+                const centerOffsetY = 0.02 * Math.sin(i * 1.732);
+                const r1 = 2.5 + 0.03 * (i % 5);
+                const r2 = 2.5 + 0.03 * ((i + 2) % 5);
+                const p1 = [
+                    centerOffsetX + r1 * Math.cos(angle + angleOffset),
+                    centerOffsetY + r1 * Math.sin(angle + angleOffset)
+                ];
+                const oppositeAngle = angle + Math.PI + angleOffset * 0.5;
+                const p2 = [
+                    centerOffsetX + r2 * Math.cos(oppositeAngle),
+                    centerOffsetY + r2 * Math.sin(oppositeAngle)
+                ];
+                segments.push(new LineSegment(i, p1, p2));
+            }
+            return segments;
+        }
+        // Find intersection of two line segments
+        function lineIntersection(seg1, seg2) {
+            const [x1, y1] = seg1.p1;
+            const [x2, y2] = seg1.p2;
+            const [x3, y3] = seg2.p1;
+            const [x4, y4] = seg2.p2;
+            const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            if (Math.abs(denom) < 1e-10) return null;
+            const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+            const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+            if (t > 0 && t < 1 && u > 0 && u < 1) {
+                return [x1 + t * (x2 - x1), y1 + t * (y2 - y1)];
+            }
+            return null;
+        }
+        // Compute intersections on a segment
+        function computeIntersectionsOnSegment(segment, allSegments) {
+            const intersections = [];
+            for (const other of allSegments) {
+                if (other.id === segment.id) continue;
+                const pt = lineIntersection(segment, other);
+                if (pt) {
+                    const dist = Math.sqrt(
+                        Math.pow(pt[0] - segment.p1[0], 2) +
+                        Math.pow(pt[1] - segment.p1[1], 2)
+                    );
+                    intersections.push({ dist, point: pt, otherId: other.id });
+                }
+            }
+            intersections.sort((a, b) => a.dist - b.dist);
+            return intersections;
+        }
+        // Simulate frog jumping
+        function simulate(segments, orientations) {
+            const n = segments.length;
+            const segmentIntersections = {};
+            for (const seg of segments) {
+                segmentIntersections[seg.id] = computeIntersectionsOnSegment(seg, segments);
+            }
+            const frogPositions = Array(n).fill(-1);
+            const positionsHistory = [];
+            // Initial state
+            const initialState = {};
+            for (let i = 0; i < n; i++) {
+                const seg = segments[i];
+                const pos = orientations[i] ? seg.p1 : seg.p2;
+                initialState[i] = {
+                    segment: i,
+                    position: pos,
+                    intersectionIndex: -1
+                };
+            }
+            positionsHistory.push(initialState);
+            // Simulate n-1 claps
+            for (let clap = 0; clap < n - 1; clap++) {
+                const newPositions = [];
+                const currentState = {};
+                for (let i = 0; i < n; i++) {
+                    frogPositions[i]++;
+                    const idx = frogPositions[i];
+                    let intersections = segmentIntersections[segments[i].id];
+                    if (!orientations[i]) {
+                        intersections = [...intersections].reverse();
+                    }
+                    if (idx >= intersections.length) {
+                        return {
+                            success: false,
+                            collisionTime: clap,
+                            collisionDetails: { error: `Frog ${i} ran out of intersections` },
+                            positionsHistory
+                        };
+                    }
+                    const pos = intersections[idx].point;
+                    newPositions.push(pos);
+                    currentState[i] = {
+                        segment: i,
+                        position: pos,
+                        intersectionIndex: frogPositions[i],
+                        intersectingSegment: intersections[idx].otherId
+                    };
+                }
+                positionsHistory.push(currentState);
+                // Check collisions
+                for (let i = 0; i < n; i++) {
+                    for (let j = i + 1; j < n; j++) {
+                        const pi = newPositions[i];
+                        const pj = newPositions[j];
+                        if (Math.abs(pi[0] - pj[0]) < 1e-6 && Math.abs(pi[1] - pj[1]) < 1e-6) {
+                            return {
+                                success: false,
+                                collisionTime: clap,
+                                collisionDetails: { frogs: [i, j], position: pi },
+                                positionsHistory
+                            };
+                        }
+                    }
+                }
+            }
+            return {
+                success: true,
+                collisionTime: -1,
+                collisionDetails: null,
+                positionsHistory
+            };
+        }
+        // Find valid orientation
+        function findValidOrientation(segments) {
+            const n = segments.length;
+            const totalOrientations = Math.pow(2, n);
+            for (let bits = 0; bits < totalOrientations; bits++) {
+                const orientations = [];
+                for (let i = 0; i < n; i++) {
+                    orientations.push(((bits >> i) & 1) === 1);
+                }
+                const result = simulate(segments, orientations);
+                if (result.success) {
+                    return { found: true, orientation: orientations, result };
+                }
+            }
+            return { found: false, orientation: null, result: null };
+        }
+        // Drawing functions
+        function toCanvasCoords(x, y) {
+            return [centerX + x * scale, centerY - y * scale];
+        }
+        function drawSegments(segments, highlightIntersections = true) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw segments
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            for (const seg of segments) {
+                const [x1, y1] = toCanvasCoords(...seg.p1);
+                const [x2, y2] = toCanvasCoords(...seg.p2);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                // Label segment
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+                ctx.fillStyle = '#7A9D8F';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(`S${seg.id}`, midX + 10, midY);
+            }
+            // Draw intersections
+            if (highlightIntersections) {
+                for (let i = 0; i < segments.length; i++) {
+                    for (let j = i + 1; j < segments.length; j++) {
+                        const pt = lineIntersection(segments[i], segments[j]);
+                        if (pt) {
+                            const [cx, cy] = toCanvasCoords(...pt);
+                            ctx.fillStyle = '#4ecdc4';
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
+                            ctx.fill();
+                        }
+                    }
+                }
+            }
+        }
+        function drawFrogs(segments, orientations, step) {
+            if (!currentSimulationResult || !currentSimulationResult.positionsHistory) return;
+            const state = currentSimulationResult.positionsHistory[step];
+            if (!state) return;
+            // Draw frogs
+            for (let i = 0; i < segments.length; i++) {
+                const frogState = state[i];
+                if (!frogState) continue;
+                const [cx, cy] = toCanvasCoords(...frogState.position);
+                // Draw frog
+                ctx.fillStyle = '#ff6b6b';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                // Draw frog label
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 10px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i.toString(), cx, cy);
+            }
+            // Check for collision in this step
+            if (!currentSimulationResult.success &&
+                currentSimulationResult.collisionTime === step - 1 &&
+                currentSimulationResult.collisionDetails) {
+                const details = currentSimulationResult.collisionDetails;
+                if (details.position) {
+                    const [cx, cy] = toCanvasCoords(...details.position);
+                    ctx.strokeStyle = '#dc3545';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 20, 0, 2 * Math.PI);
+                    ctx.stroke();
+                }
+            }
+        }
+        function updateDisplay() {
+            drawSegments(currentSegments);
+            if (currentOrientation.length > 0 && currentSimulationResult) {
+                drawFrogs(currentSegments, currentOrientation, animationStep);
+            }
+        }
+        // Event handlers
+        document.getElementById('nSlider').addEventListener('input', (e) => {
+            document.getElementById('nValue').textContent = e.target.value;
+        });
+        document.getElementById('generateBtn').addEventListener('click', () => {
+            const n = parseInt(document.getElementById('nSlider').value);
+            currentSegments = generateSegments(n);
+            currentOrientation = [];
+            currentSimulationResult = null;
+            animationStep = 0;
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            updateDisplay();
+            document.getElementById('statusBox').innerHTML =
+                `Generated ${n} line segments. Click "Find Valid Orientation" to search for a valid frog placement.`;
+            document.getElementById('orientationDisplay').innerHTML = '';
+            document.getElementById('resultDisplay').innerHTML = '';
+            document.getElementById('simulationLog').innerHTML = '';
+        });
+        document.getElementById('findValidBtn').addEventListener('click', () => {
+            if (currentSegments.length === 0) {
+                alert('Please generate a configuration first!');
+                return;
+            }
+            document.getElementById('statusBox').innerHTML = 'Searching for valid orientation...';
+            // Use setTimeout to allow UI to update
+            setTimeout(() => {
+                const result = findValidOrientation(currentSegments);
+                if (result.found) {
+                    currentOrientation = result.orientation;
+                    currentSimulationResult = result.result;
+                    animationStep = 0;
+                    const orientationStr = currentOrientation.map((o, i) =>
+                        `Segment ${i}: ${o ? 'p1→p2' : 'p2→p1'}`
+                    ).join('<br>');
+                    document.getElementById('orientationDisplay').innerHTML = `
+                        <div class="orientation-display">
+                            <strong>Valid Orientation Found:</strong><br>${orientationStr}
+                        </div>
+                    `;
+                    document.getElementById('resultDisplay').innerHTML = `
+                        <div class="result-box success">
+                            <strong>✓ Success!</strong> No collisions will occur.
+                        </div>
+                    `;
+                    document.getElementById('statusBox').innerHTML =
+                        `Valid orientation found for n=${currentSegments.length} (odd). Click "Play Animation" to see the frogs jump.`;
+                } else {
+                    document.getElementById('orientationDisplay').innerHTML = `
+                        <div class="orientation-display">
+                            <strong>No Valid Orientation Exists</strong><br>
+                            Tried all ${Math.pow(2, currentSegments.length)} possible orientations.
+                        </div>
+                    `;
+                    document.getElementById('resultDisplay').innerHTML = `
+                        <div class="result-box failure">
+                            <strong>✗ No Solution</strong> Every orientation leads to a collision.
+                        </div>
+                    `;
+                    document.getElementById('statusBox').innerHTML =
+                        `No valid orientation exists for n=${currentSegments.length} (even). This confirms part (b) of the conjecture.`;
+                }
+                updateDisplay();
+            }, 100);
+        });
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (!currentSimulationResult) {
+                alert('Please find a valid orientation first!');
+                return;
+            }
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                document.getElementById('playBtn').textContent = 'Play Animation';
+                return;
+            }
+            animationStep = 0;
+            const speed = parseInt(document.getElementById('speedSlider').value);
+            const delay = 2000 / speed;
+            document.getElementById('playBtn').textContent = 'Pause Animation';
+            animationInterval = setInterval(() => {
+                updateDisplay();
+                const logDiv = document.getElementById('simulationLog');
+                logDiv.innerHTML = `
+                    <div class="info-box">
+                        <strong>Step ${animationStep}:</strong>
+                        ${animationStep === 0 ? 'Initial positions' : `After clap ${animationStep}`}
+                    </div>
+                `;
+                animationStep++;
+                if (animationStep >= currentSimulationResult.positionsHistory.length) {
+                    clearInterval(animationInterval);
+                    animationInterval = null;
+                    animationStep = 0;
+                    document.getElementById('playBtn').textContent = 'Play Animation';
+                    if (currentSimulationResult.success) {
+                        logDiv.innerHTML += `
+                            <div class="result-box success">
+                                <strong>Animation Complete!</strong> No collisions occurred.
+                            </div>
+                        `;
+                    }
+                }
+            }, delay);
+        });
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            animationStep = 0;
+            updateDisplay();
+            document.getElementById('playBtn').textContent = 'Play Animation';
+        });
+        // Populate ground truth table
+        function populateGroundTruthTable() {
+            const tbody = document.getElementById('groundTruthTable');
+            tbody.innerHTML = '';
+            for (let n = 2; n <= 7; n++) {
+                const data = SIMULATION_RESULTS.analysis_by_n[n];
+                const isOdd = n % 2 === 1;
+                const expectedValid = isOdd;
+                const actualValid = data.any_valid_found;
+                const matches = expectedValid === actualValid;
+                const exampleOrientation = data.trials[0].orientation
+                    ? data.trials[0].orientation.map(o => o ? '1' : '0').join('')
+                    : 'None';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${n}</strong></td>
+                    <td>${isOdd ? 'Odd' : 'Even'}</td>
+                    <td>${actualValid ? '<span class="check-mark">✓ Yes</span>' : '<span class="cross-mark">✗ No</span>'}</td>
+                    <td>${matches ? '<span class="check-mark">✓ Yes</span>' : '<span class="cross-mark">✗ No</span>'}</td>
+                    <td><code>${exampleOrientation}</code></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        // Initialize
+        populateGroundTruthTable();
+        currentSegments = generateSegments(3);
+        updateDisplay();
+        document.getElementById('statusBox').innerHTML =
+            'Default configuration loaded with n=3. Click "Find Valid Orientation" to start.';
+        </script>
+</body>
+</html>

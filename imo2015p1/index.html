@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2015 P1 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            margin: 20px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .problem-statement h3 {
+            color: #7A9D8F;
+            margin-bottom: 10px;
+        }
+        .problem-statement p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            border: 2px solid #28a745;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .answer-box h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .controls {
+            grid-column: 1 / -1;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-radius:  12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        input[type="range"] {
+            width: 200px;
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid var(--border-primary);
+            border-radius: 3px;
+        }
+        select {
+            padding: 8px;
+            border: 1px solid var(--border-primary);
+            border-radius: 3px;
+            background: var(--bg-secondary);
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #7A9D8F;
+            color: white;
+            border: none;
+            border-radius:  8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5A8070;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        canvas {
+            border: 2px solid var(--border-primary);
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            display: block;
+            width: 100%;
+        }
+        .info-panel {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .info-panel h3 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        .status.balanced {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.not-balanced {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.centre-free {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .status.not-centre-free {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .stats {
+            margin-top: 15px;
+        }
+        .stats p {
+            margin: 8px 0;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+        .legend {
+            margin-top: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        @media (max-width: 968px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2015 Problem 1</h1>
+                <p class="subtitle">Balanced and Centre-Free Sets</p>
+            </div>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h3>Problem Statement</h3>
+            <p><strong>Balanced:</strong> A finite set S in the plane is balanced if, for any two different points A, B in S, there is a point C in S such that AC = BC.</p>
+            <p><strong>Centre-free:</strong> S is centre-free if for any three points A, B, C in S, there is no point P in S such that PA = PB = PC.</p>
+            <p><strong>Part 1:</strong> Show that for all integers n ≥ 3, there exists a balanced set consisting of n points.</p>
+            <p><strong>Part 2:</strong> Determine all integers n ≥ 3 for which there exists a balanced centre-free set consisting of n points.</p>
+        </div>
+        <div class="answer-box">
+            <h3>Answer</h3>
+            <p>All <strong>odd integers n ≥ 3</strong> admit a balanced centre-free set (regular n-gons)</p>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label>Configuration Type:</label>
+                <select id="configType">
+                    <option value="regular">Regular Polygon</option>
+                    <option value="line">Points on Line</option>
+                    <option value="random">Random Points</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Number of Points (n): <span id="nValue">5</span></label>
+                <input type="range" id="nSlider" min="3" max="15" value="5" step="1">
+                <input type="number" id="nInput" min="3" max="20" value="5">
+            </div>
+            <div class="control-group">
+                <button id="generateBtn">Generate</button>
+                <button id="randomizeBtn">Randomize</button>
+            </div>
+        </div>
+        <div class="content">
+            <div>
+                <canvas id="canvas" width="600" height="600" role="img" aria-label="Interactive visualization of the mathematical problem"></canvas>
+            </div>
+            <div class="info-panel">
+                <h3>Configuration Status</h3>
+                <div id="status"></div>
+                <div class="stats" role="status" aria-live="polite">
+                    <h3>Statistics</h3>
+                    <div id="stats"></div>
+                </div>
+                <div class="legend">
+                    <h3>Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #7A9D8F;"></div>
+                        <span>Points in the set</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #28a745; opacity: 0.3;"></div>
+                        <span>Perpendicular bisector (for selected pair)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #dc3545; opacity: 0.5;"></div>
+                        <span>Circumcircle (for selected triple)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const configType = document.getElementById('configType');
+        const nSlider = document.getElementById('nSlider');
+        const nInput = document.getElementById('nInput');
+        const nValue = document.getElementById('nValue');
+        const generateBtn = document.getElementById('generateBtn');
+        const randomizeBtn = document.getElementById('randomizeBtn');
+        const statusDiv = document.getElementById('status');
+        const statsDiv = document.getElementById('stats');
+        let points = [];
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 200;
+        function distance(p1, p2) {
+            return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+        }
+        function isBalanced(pts, epsilon = 1e-6) {
+            const n = pts.length;
+            if (n < 3) return false;
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    let found = false;
+                    for (let k = 0; k < n; k++) {
+                        if (k !== i && k !== j) {
+                            const distAC = distance(pts[i], pts[k]);
+                            const distBC = distance(pts[j], pts[k]);
+                            if (Math.abs(distAC - distBC) < epsilon) {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!found) return false;
+                }
+            }
+            return true;
+        }
+        function isCentreFree(pts, epsilon = 1e-6) {
+            const n = pts.length;
+            if (n < 4) return true;
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    for (let k = j + 1; k < n; k++) {
+                        for (let m = 0; m < n; m++) {
+                            if (m !== i && m !== j && m !== k) {
+                                const d1 = distance(pts[m], pts[i]);
+                                const d2 = distance(pts[m], pts[j]);
+                                const d3 = distance(pts[m], pts[k]);
+                                if (Math.abs(d1 - d2) < epsilon && Math.abs(d2 - d3) < epsilon) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        function generateRegularPolygon(n) {
+            const pts = [];
+            for (let i = 0; i < n; i++) {
+                const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+                pts.push({
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle)
+                });
+            }
+            return pts;
+        }
+        function generateLinePoints(n) {
+            const pts = [];
+            const spacing = (2 * radius) / (n + 1);
+            for (let i = 0; i < n; i++) {
+                pts.push({
+                    x: centerX - radius + spacing * (i + 1),
+                    y: centerY
+                });
+            }
+            return pts;
+        }
+        function generateRandomPoints(n) {
+            const pts = [];
+            for (let i = 0; i < n; i++) {
+                const angle = Math.random() * 2 * Math.PI;
+                const r = Math.random() * radius;
+                pts.push({
+                    x: centerX + r * Math.cos(angle),
+                    y: centerY + r * Math.sin(angle)
+                });
+            }
+            return pts;
+        }
+        function drawPoints() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw connections
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < points.length; i++) {
+                for (let j = i + 1; j < points.length; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(points[i].x, points[i].y);
+                    ctx.lineTo(points[j].x, points[j].y);
+                    ctx.stroke();
+                }
+            }
+            // Draw points
+            points.forEach((point, idx) => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = '#7A9D8F';
+                ctx.fill();
+                ctx.strokeStyle = '#4c51bf';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Label
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.fillText(`P${idx + 1}`, point.x + 12, point.y - 12);
+            });
+        }
+        function updateStatus() {
+            const balanced = isBalanced(points);
+            const centreFree = isCentreFree(points);
+            let html = '<div>';
+            html += balanced
+                ? '<span class="status balanced">✓ BALANCED</span>'
+                : '<span class="status not-balanced">✗ NOT BALANCED</span>';
+            html += centreFree
+                ? '<span class="status centre-free">✓ CENTRE-FREE</span>'
+                : '<span class="status not-centre-free">✗ NOT CENTRE-FREE</span>';
+            html += '</div>';
+            statusDiv.innerHTML = html;
+            // Update stats
+            const n = points.length;
+            let statsHtml = `<p><strong>Number of points:</strong> ${n}</p>`;
+            statsHtml += `<p><strong>Point pairs:</strong> ${n * (n - 1) / 2}</p>`;
+            statsHtml += `<p><strong>Point triples:</strong> ${n * (n - 1) * (n - 2) / 6}</p>`;
+            if (balanced && centreFree) {
+                statsHtml += `<p style="color: #28a745; font-weight: bold;">✓ This is a BALANCED CENTRE-FREE set!</p>`;
+                if (n % 2 === 1) {
+                    statsHtml += `<p style="color: #7A9D8F;">n = ${n} is ODD (matches the pattern!)</p>`;
+                } else {
+                    statsHtml += `<p style="color: #dc3545;">n = ${n} is EVEN (counter-example?)</p>`;
+                }
+            } else if (balanced) {
+                statsHtml += `<p style="color: #ffc107;">This is BALANCED but not centre-free</p>`;
+            } else if (centreFree) {
+                statsHtml += `<p style="color: #ffc107;">This is CENTRE-FREE but not balanced</p>`;
+            }
+            statsDiv.innerHTML = statsHtml;
+        }
+        function generate() {
+            const n = parseInt(nInput.value);
+            const type = configType.value;
+            switch (type) {
+                case 'regular':
+                    points = generateRegularPolygon(n);
+                    break;
+                case 'line':
+                    points = generateLinePoints(n);
+                    break;
+                case 'random':
+                    points = generateRandomPoints(n);
+                    break;
+            }
+            drawPoints();
+            updateStatus();
+        }
+        // Event listeners
+        nSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            nValue.textContent = val;
+            nInput.value = val;
+        });
+        nInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            nValue.textContent = val;
+            nSlider.value = val;
+        });
+        generateBtn.addEventListener('click', generate);
+        randomizeBtn.addEventListener('click', () => {
+            configType.value = 'random';
+            generate();
+        });
+        configType.addEventListener('change', generate);
+        // Initialize
+        generate();
+        </script>
+</body>
+</html>
