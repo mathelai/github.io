@@ -1,4 +1,5 @@
--- IMO 2002 Problem 1
+// Lean proof for imo2002p1
+const leanProof = `-- IMO 2002 Problem 1
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Tactic
@@ -184,3 +185,4 @@ theorem imo2002p1_symmetric (n : ℕ) (c : Coloring n)
     exact eq_points
 
 end IMO2002P1
+`;
