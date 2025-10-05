@@ -1,0 +1,119 @@
+Below is a complete solution. We use only elementary geometry and a simple double–counting argument.
+
+---
+
+## Definitions and a basic observation
+
+For distinct points (A,B,C) in the plane,
+[
+AC=BC \quad\Longleftrightarrow\quad C\ \text{lies on the perpendicular bisector of }AB.
+]
+Thus a finite set (\mathcal S) is **balanced** iff for every unordered pair ({A,B}\subset\mathcal S) the perpendicular bisector of (AB) contains at least one point of (\mathcal S).
+
+A set (\mathcal S) is **centre-free** iff no point of (\mathcal S) is equidistant from three (distinct) points of (\mathcal S). Equivalently, for any fixed (P\in\mathcal S), the multiset of distances ({PQ:Q\in\mathcal S\setminus{P}}) has no value occurring three or more times; each distance can occur at most twice.
+
+---
+
+## Part I — For every (n\ge 3) there exists a balanced set of (n) points
+
+Fix a point (O) and a circle (\omega) of radius (r) centered at (O).
+Let (m=n-1). Write
+[
+m=2a+3b\qquad(a,b\in\mathbb Z_{\ge0}),
+]
+which is always possible for (m\ge 2) (take (b=0) if (m) is even; take (b=1) and (a=(m-3)/2) if (m) is odd).
+
+On (\omega), choose:
+
+* (a) disjoint pairs ((U_i,V_i)) with (\angle U_iOV_i=60^\circ);
+* (b) disjoint triples ((X_j,Y_j,Z_j)) with (\angle X_jOY_j=\angle Y_jOZ_j=60^\circ)
+  (i.e. three consecutive vertices of a regular hexagon).
+
+Let
+[
+\mathcal S={O}\ \cup\ {U_i,V_i:1\le i\le a}\ \cup\ {X_j,Y_j,Z_j:1\le j\le b}.
+]
+Then (|\mathcal S|=1+2a+3b = n).
+
+**Claim.** (\mathcal S) is balanced.
+
+* If (A,B\in\omega), then (OA=OB=r), so (O) lies on the perpendicular bisector of (AB) and witnesses (AC=BC).
+* If the pair is ({O,U_i}), choose (C=V_i). Since (\angle U_iOV_i=60^\circ), by the law of cosines
+  [
+  U_iV_i^2=OU_i^2+OV_i^2-2\cdot OU_i\cdot OV_i\cos 60^\circ
+  =r^2+r^2-2r^2\cdot\frac12=r^2,
+  ]
+  hence (OU_i=OV_i=U_iV_i=r), so (V_i) is equidistant to (O) and (U_i).
+* Similarly, if the pair is ({O,Y_j}), take (C=X_j) (or (Z_j)); again (\angle X_jOY_j=60^\circ) so (OX_j=Y_jX_j=r).
+
+Thus every unordered pair from (\mathcal S) has a witness in (\mathcal S), and (\mathcal S) is balanced.
+(For (n\ge4) this construction is not centre‑free because (O) is equidistant from any three chosen points on (\omega).)
+
+Hence **for all (n\ge3) a balanced set of size (n) exists**.
+
+---
+
+## Part II — Balanced and centre‑free sets: determination of all sizes
+
+We prove:
+
+> **Theorem.** There exists a balanced centre‑free set of (n) points **iff (n) is odd**.
+
+We split this into existence for odd (n) and impossibility for even (n).
+
+### 1) Existence for odd (n)
+
+Let (n\ge3) be odd. Take (\mathcal S) to be the vertex set of a regular (n)-gon (V_0,V_1,\dots,V_{n-1}) inscribed in a circle with center (O).
+
+* **Balanced.** For any (a,b\in{0,\dots,n-1}), let (j) be the unique residue mod (n) with
+  [
+  2j\equiv a+b\pmod n.
+  ]
+  (Uniqueness/existence holds because (2) is invertible mod (n) when (n) is odd.)
+  Then the central angles satisfy (\angle V_aOV_j=\angle V_bOV_j), so the chords (V_aV_j) and (V_bV_j) have equal length, i.e. (V_j) is equidistant from (V_a) and (V_b). Thus (\mathcal S) is balanced.
+
+* **Centre‑free.** Fix (P=V_0). For each (k=1,\dots,\frac{n-1}{2}), the two vertices (V_k) and (V_{n-k}) are symmetric about the line (OV_0) and hence are at the same distance from (V_0). Since (n) is odd, there is **no** opposite vertex at distance occurring once; every distance from (V_0) occurs exactly twice. Therefore there are never three distinct vertices at the same distance from (V_0). The same holds for any choice of (P\in\mathcal S). Hence (\mathcal S) is centre‑free.
+
+Thus for every odd (n\ge3) there exists a balanced centre‑free set of (n) points (e.g. a regular (n)-gon).
+
+### 2) Impossibility for even (n)
+
+Assume (\mathcal S) is balanced and centre‑free with (|\mathcal S|=n).
+
+For each (P\in\mathcal S), partition (\mathcal S\setminus{P}) by equal distances from (P).
+Since (\mathcal S) is centre‑free, each distance class has size at most (2). Let (m(P)) be the number of size‑(2) classes (i.e. the number of unordered pairs ({A,B}\subset\mathcal S\setminus{P}) with (PA=PB)).
+
+* **Upper bound.** For each (P),
+  [
+  n-1=\sum_{\text{classes}}(\text{class size})\le 2,m(P)+1\cdot\bigl((\text{# of classes})-m(P)\bigr),
+  ]
+  which immediately yields (m(P)\le \left\lfloor\frac{n-1}{2}\right\rfloor). Summing over (P),
+  [
+  \sum_{P\in\mathcal S} m(P)\ \le\ n\left\lfloor\frac{n-1}{2}\right\rfloor.
+  ]
+
+* **Lower bound (by balancedness).** Let (T) be the set of all pairs ((P,{A,B})) with (P,A,B\in\mathcal S) distinct and (PA=PB). Then
+  [
+  |T|=\sum_{P\in\mathcal S} m(P).
+  ]
+  Balancedness says: for every unordered pair ({A,B}\subset\mathcal S) there exists at least one (P\in\mathcal S) with (PA=PB). Hence
+  [
+  |T|\ \ge\ \binom{n}{2}=\frac{n(n-1)}{2}.
+  ]
+
+Combining,
+[
+\frac{n(n-1)}{2}\ \le\ \sum_{P} m(P)\ \le\ n\left\lfloor\frac{n-1}{2}\right\rfloor.
+]
+If (n) is even, then (\left\lfloor\frac{n-1}{2}\right\rfloor=\frac{n-2}{2}), so the right-hand side equals (\frac{n(n-2)}{2}), strictly less than (\frac{n(n-1)}{2}). Contradiction.
+
+Therefore, **no balanced centre‑free set of even size exists**.
+
+---
+
+## Conclusion
+
+* For **every** (n\ge3) there is a balanced set of (n) points (explicit construction above).
+* A balanced **centre‑free** set of size (n) exists **iff (n) is odd** (take a regular (n)-gon when (n) is odd; and even (n) is impossible by the double–counting argument).
+
+So your proposed answer for the second part — **“all odd integers (\ge 3)”** — is correct.
