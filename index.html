@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathEL - IMO Problems</title>
+    <title>MathEL</title>
     <style>
         :root {
             /* Light theme colors */
@@ -550,7 +550,9 @@
                         </div>
                         <div class="card-links">
                             <a href="${basePath}/index.html" class="card-link" onclick="event.stopPropagation()">Sim</a>
-                            <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()">Proof</a>
+                            <a href="${basePath}/proof-nlzs.txt" class="card-link" onclick="event.stopPropagation()">Proof NLZS</a>
+                            <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSim</a>
+                            <a href="${basePath}/proof-nlsimlean.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSimLean</a>
                             <a href="#" class="card-link" onclick="event.preventDefault(); event.stopPropagation(); openLeanEditor('${basePath}')">Lean</a>
                             <a href="${basePath}/grade.txt" class="card-link icon-only" onclick="event.stopPropagation()" title="Grade">✓</a>
                         </div>
