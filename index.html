@@ -321,7 +321,7 @@
         .card-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 3px;
             align-items: center;
             margin-top: 16px;
             padding-top: 16px;
@@ -332,33 +332,30 @@
 
         .card-link {
             text-align: center;
-            padding: 8px 12px;
-            background: var(--accent-primary);
-            border-radius: 6px;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: white;
+            background: transparent;
+            border-radius: 10px;
             text-decoration: none;
             transition: all 0.2s;
             border: none;
-            flex: 1;
-        }
-
-        .card-link:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-link.icon-only {
             flex: 0 0 auto;
-            width: 36px;
-            height: 34px;
-            padding: 0;
+            width: 115px;
+            height: 115px;
+            padding: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+        }
+
+        .card-link img.btn-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .card-link:hover {
+            background: rgba(122, 157, 143, 0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .score-info {
@@ -550,15 +547,33 @@
                             <span style="margin-left: auto;">Avg: ${problem.human_score.mean.toFixed(2)}/7</span>
                         </div>
                         <div class="card-links">
-                            <a href="${basePath}/answer.txt" class="card-link" onclick="event.stopPropagation()">Answer</a>
-                            <a href="${basePath}/proof-shortlist.txt" class="card-link" onclick="event.stopPropagation()">Proof Shortlist</a>
-                            <a href="${basePath}/proof-deepthink.txt" class="card-link" onclick="event.stopPropagation()">Proof Deep Think</a>
-                            <a href="${basePath}/proof-gpt5pro.txt" class="card-link" onclick="event.stopPropagation()">Proof GPT 5 Pro</a>
-                            <a href="${basePath}/index.html" class="card-link" onclick="event.stopPropagation()">Sim</a>
-                            <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSim</a>
-                            <a href="${basePath}/proof-nlsimlean.txt" class="card-link" onclick="event.stopPropagation()">Proof NLSimLean</a>
-                            <a href="#" class="card-link" onclick="event.preventDefault(); event.stopPropagation(); openLeanEditor('${basePath}')">Proof Lean</a>
-                            <a href="${basePath}/grade.txt" class="card-link icon-only" onclick="event.stopPropagation()" title="Grade">✓</a>
+                            <a href="${basePath}/answer.txt" class="card-link" onclick="event.stopPropagation()" title="Answer">
+                                <img src="icons/icon-answer.png" alt="Answer" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/proof-shortlist.txt" class="card-link" onclick="event.stopPropagation()" title="Proof Shortlist">
+                                <img src="icons/icon-proof-shortlist.png" alt="Proof Shortlist" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/study.txt" class="card-link" onclick="event.stopPropagation()" title="Study">
+                                <img src="icons/icon-study.png" alt="Study" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/proof-deepthink.txt" class="card-link" onclick="event.stopPropagation()" title="Proof Deep Think">
+                                <img src="icons/icon-proof-deepthink.png" alt="Proof Deep Think" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/proof-gpt5pro.txt" class="card-link" onclick="event.stopPropagation()" title="Proof GPT 5 Pro">
+                                <img src="icons/icon-proof-gpt5pro.png" alt="Proof GPT 5 Pro" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/index.html" class="card-link" onclick="event.stopPropagation()" title="Sim">
+                                <img src="icons/icon-sim.png" alt="Sim" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/proof-lean.txt" class="card-link" onclick="event.stopPropagation()" title="Proof Lean">
+                                <img src="icons/icon-proof-lean.png" alt="Proof Lean" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/proof.txt" class="card-link" onclick="event.stopPropagation()" title="Proof All">
+                                <img src="icons/icon-proof-all.png" alt="Proof All" class="btn-icon">
+                            </a>
+                            <a href="${basePath}/grade.txt" class="card-link" onclick="event.stopPropagation()" title="Grade">
+                                <img src="icons/icon-grade.png" alt="Grade" class="btn-icon">
+                            </a>
                         </div>
                     </div>
                 `;
