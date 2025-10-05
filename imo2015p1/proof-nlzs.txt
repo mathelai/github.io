@@ -1,0 +1,72 @@
+This solution addresses the two parts of the problem: proving the existence of a balanced set for all $n\geq 3$, and determining all $n\geq 3$ for which a balanced centre-free set exists.
+
+**Definitions:**
+A finite set $\mathcal{S}$ in the plane is **balanced** if, for any two different points $A, B$ in $\mathcal{S}$, there is a point $C$ in $\mathcal{S}$ such that $AC=BC$. Note that $C$ must be distinct from $A$ and $B$, otherwise $AC=0$ implies $BC=0$, so $A=B$, contradicting that $A$ and $B$ are different.
+$\mathcal{S}$ is **centre-free** if for any three distinct points $A, B, C$ in $\mathcal{S}$, there is no point $P$ in $\mathcal{S}$ such that $PA=PB=PC$. This is equivalent to saying that no point in $\mathcal{S}$ is the circumcenter of any triangle formed by three other points in $\mathcal{S}$, or that for any $P \in \mathcal{S}$, there are at most two other points in $\mathcal{S}$ at the same distance from $P$.
+
+### Part 1: Existence of a balanced set for all $n\geq 3$
+
+We provide a construction for any $n\geq 3$. Let $O$ be the origin. Let $\mathcal{C}$ be the unit circle centered at $O$. We construct a set $\mathcal{S} = \{O\} \cup \mathcal{P}$, where $\mathcal{P}$ is a set of $m=n-1$ points on $\mathcal{C}$. Since $n\geq 3$, $m\geq 2$.
+
+Let us analyze the balanced condition for $\mathcal{S}$.
+1. If $A, B \in \mathcal{P}$. Then $OA=OB=1$. We can choose $C=O \in \mathcal{S}$.
+2. If $A=O$ and $B \in \mathcal{P}$. We need a point $C \in \mathcal{S}$ (distinct from $O$ and $B$) such that $CO=CB$. $C$ must be in $\mathcal{P}$. Since $C \in \mathcal{P}$, $CO=1$. Thus we need $CB=1$.
+
+The set $\mathcal{S}$ is balanced if and only if every point in $\mathcal{P}$ has at least one neighbor in $\mathcal{P}$ at distance 1. On the unit circle, this corresponds to an angle difference of $60^\circ$.
+
+We construct $\mathcal{P}$. Let $k = \lfloor m/2 \rfloor$. Since $m\geq 2$, $k\geq 1$.
+Let $\epsilon = 30^\circ/k$. We define $k$ pairs of points identified by their angles:
+$A_{pairs} = \{(i-1)\epsilon, 60^\circ+(i-1)\epsilon\}_{i=1}^k$.
+
+We verify that these $2k$ points are distinct. The angles are in the range $[0, (k-1)\epsilon] \cup [60^\circ, 60^\circ+(k-1)\epsilon]$.
+Since $(k-1)\epsilon = 30^\circ(k-1)/k < 30^\circ$, the angles are in $[0, 30^\circ) \cup [60^\circ, 90^\circ)$. These ranges are disjoint, so all $2k$ points are distinct.
+
+Case 1: $m$ is even ($m=2k$). Let $\mathcal{P}$ correspond to $A_{pairs}$. Every point belongs to a pair with $60^\circ$ separation, so the condition is satisfied.
+
+Case 2: $m$ is odd ($m=2k+1$). Let $\mathcal{P}$ correspond to $A_{pairs} \cup \{300^\circ\}$. The points in $A_{pairs}$ are in $[0, 90^\circ)$, so they are distinct from the point $P$ at $300^\circ$. The points in the pairs satisfy the condition. The point $P$ at $300^\circ$ is at distance 1 from the point at $0^\circ$ (which is in $A_{pairs}$ since $k\geq 1$).
+
+In both cases, $\mathcal{S}$ is a balanced set of $n$ points.
+
+### Part 2: Determining integers $n\geq 3$ for which a balanced centre-free set exists
+
+We claim that such a set exists if and only if $n$ is odd.
+
+**Existence for odd $n$:**
+Let $n\geq 3$ be odd. Let $\mathcal{S}$ be the set of vertices of a regular $n$-gon.
+1. **Balanced:** Let $A, B \in \mathcal{S}$. The perpendicular bisector of $AB$ is an axis of symmetry of the $n$-gon. Since $n$ is odd, this axis passes through a vertex $C \in \mathcal{S}$. Thus $CA=CB$. $\mathcal{S}$ is balanced.
+2. **Centre-free:** Let $A, B, C \in \mathcal{S}$ be distinct. A point $P$ satisfies $PA=PB=PC$ if and only if $P$ is the circumcenter of $\triangle ABC$. The circumcenter of any three vertices of a regular polygon is the center $O$ of the polygon. Since $n\geq 3$, $O \notin \mathcal{S}$. Thus, $\mathcal{S}$ is centre-free.
+
+**Necessity of $n$ being odd:**
+Let $\mathcal{S}$ be a balanced centre-free set of size $n$. We use a counting argument on the number of incidences $I$, defined as the number of triplets $(P, \{A, B\})$ such that $P, A, B \in \mathcal{S}$ are distinct and $PA=PB$.
+
+Since $\mathcal{S}$ is balanced, every pair $\{A, B\}$ contributes at least one incidence. Thus,
+$I \geq \binom{n}{2} = \frac{n(n-1)}{2}$.
+
+Now we analyze the incidences from the perspective of the points $P$. Let $I_P$ be the number of pairs $\{A, B\}$ balanced by $P$. $I = \sum_{P \in \mathcal{S}} I_P$.
+
+Since $\mathcal{S}$ is centre-free, for any $P \in \mathcal{S}$, there are at most 2 points in $\mathcal{S}$ at any given distance from $P$.
+We look at the $n-1$ points in $\mathcal{S}\setminus\{P\}$. $I_P$ is the number of pairs of points equidistant from $P$. To maximize $I_P$, we maximize the number of pairs.
+$I_P \leq \lfloor \frac{n-1}{2} \rfloor$.
+
+We can now bound the total number of incidences $I$:
+$I = \sum_{P \in \mathcal{S}} I_P \leq \sum_{P \in \mathcal{S}} \lfloor \frac{n-1}{2} \rfloor = n \lfloor \frac{n-1}{2} \rfloor$.
+
+Combining the inequalities:
+$\frac{n(n-1)}{2} \leq n \lfloor \frac{n-1}{2} \rfloor$.
+
+Since $n\geq 3$, we can divide by $n$:
+$\frac{n-1}{2} \leq \lfloor \frac{n-1}{2} \rfloor$.
+
+Let $x = \frac{n-1}{2}$. The inequality is $x \leq \lfloor x \rfloor$. Since it is always true that $\lfloor x \rfloor \leq x$, the equality must hold: $x = \lfloor x \rfloor$.
+This means $x$ must be an integer. So $\frac{n-1}{2}$ is an integer, which implies that $n-1$ is even, and thus $n$ must be odd.
+
+To explicitly show the contradiction when $n$ is even, let $n=2m$. Since $n\geq 3$ and $n$ is even, $n\geq 4$, so $m\geq 2$.
+The required lower bound is $I \geq \binom{2m}{2} = m(2m-1) = 2m^2-m$.
+The maximum possible upper bound is $I \leq 2m \lfloor \frac{2m-1}{2} \rfloor = 2m(m-1) = 2m^2-2m$.
+We must have $2m^2-m \leq 2m^2-2m$, which implies $m \leq 0$. This contradicts $m\geq 2$.
+Therefore, there are no balanced centre-free sets of size $n$ when $n$ is even.
+
+### Conclusion
+
+For all integers $n\geq 3$, there exists a balanced set consisting of $n$ points.
+The integers $n\geq 3$ for which there exists a balanced centre-free set consisting of $n$ points are exactly the odd integers $n\geq 3$.
