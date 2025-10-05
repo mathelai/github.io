@@ -18,12 +18,16 @@ A type 2 subset of S has n blue elements with different second coordinates.
 
 **Theorem:** The number of type 1 subsets equals the number of type 2 subsets.
 
-## Solution Strategy
+## Solution Strategy (for symmetric colorings)
 We prove that for symmetric colorings (where swapping coordinates preserves color),
 there is a bijection between Type1 and Type2 subsets via coordinate swapping.
+
+**Note:** This is a special case of the full IMO problem. The general case requires
+a different bijection via the Ferrers boundary path of the down-set.
 -/
 
 open Finset
+open Classical
 
 namespace IMO2002P1
 
@@ -55,132 +59,132 @@ structure Type2Subset (n : ℕ) (c : Coloring n) where
   card_eq : points.card = n
   distinct_snd : ∀ p q, p ∈ points → q ∈ points → p ≠ q → p.2 ≠ q.2
 
-/-- Helper lemma: swapping coordinates preserves S membership -/
-lemma S_symmetric {n : ℕ} {p : ℕ × ℕ} (hp : p ∈ S n) : (p.2, p.1) ∈ S n := by
-  simp [S, mem_filter, mem_product, mem_range] at hp ⊢
+/-- Swap coordinates of a pair -/
+def swapPair (p : ℕ × ℕ) : ℕ × ℕ := (p.2, p.1)
+
+/-- Swapping twice is the identity -/
+lemma swap_involutive : Function.LeftInverse swapPair swapPair := by
+  intro p; cases p; rfl
+
+/-- Coordinate swapping is injective -/
+lemma swap_injective : Function.Injective swapPair := by
+  intro p q h
+  have := congrArg swapPair h
+  simpa [swapPair] using this
+
+/-- Swapping coordinates preserves S membership -/
+lemma S_symmetric {n : ℕ} {p : ℕ × ℕ} (hp : p ∈ S n) : swapPair p ∈ S n := by
+  simp [swapPair, S, mem_filter, mem_product, mem_range] at hp ⊢
   omega
 
-/-- For symmetric colorings, coordinate swapping is injective on pairs -/
-lemma swap_injective : Function.Injective (fun (p : ℕ × ℕ) => (p.2, p.1)) := by
-  intro p q h
-  cases p; cases q
-  simp at h
-  ext <;> omega
+/-- Extensionality for Type1Subset: equality of points implies equality of structures -/
+@[ext] lemma Type1Subset.ext {n : ℕ} {c : Coloring n}
+    {t₁ t₂ : Type1Subset n c} (h : t₁.points = t₂.points) : t₁ = t₂ := by
+  cases t₁; cases t₂; cases h; rfl
+
+/-- Extensionality for Type2Subset: equality of points implies equality of structures -/
+@[ext] lemma Type2Subset.ext {n : ℕ} {c : Coloring n}
+    {t₁ t₂ : Type2Subset n c} (h : t₁.points = t₂.points) : t₁ = t₂ := by
+  cases t₁; cases t₂; cases h; rfl
+
+/-- Map Type1 to Type2 by swapping coordinates -/
+def toType2 {n : ℕ} {c : Coloring n} (hsym : ∀ p, c p = c (swapPair p))
+    (t1 : Type1Subset n c) : Type2Subset n c where
+  points := t1.points.image swapPair
+  in_S := fun _ hp => by
+    rcases mem_image.mp hp with ⟨q, hq, rfl⟩
+    exact S_symmetric (t1.in_S hq)
+  all_blue := by
+    intro _ hp
+    rcases mem_image.mp hp with ⟨q, hq, rfl⟩
+    simpa [hsym q, swapPair] using t1.all_blue q hq
+  card_eq := by
+    classical
+    rw [card_image_of_injective]
+    · exact t1.card_eq
+    · exact swap_injective
+  distinct_snd := fun p q hp hq hpq => by
+    rcases mem_image.mp hp with ⟨p', hp', rfl⟩
+    rcases mem_image.mp hq with ⟨q', hq', rfl⟩
+    simp only [swapPair]
+    have neq : p' ≠ q' := by
+      intro h
+      apply hpq
+      rw [h]
+    exact t1.distinct_fst p' q' hp' hq' neq
+
+/-- Map Type2 to Type1 by swapping coordinates -/
+def toType1 {n : ℕ} {c : Coloring n} (hsym : ∀ p, c p = c (swapPair p))
+    (t2 : Type2Subset n c) : Type1Subset n c where
+  points := t2.points.image swapPair
+  in_S := fun _ hp => by
+    rcases mem_image.mp hp with ⟨q, hq, rfl⟩
+    exact S_symmetric (t2.in_S hq)
+  all_blue := by
+    intro _ hp
+    rcases mem_image.mp hp with ⟨q, hq, rfl⟩
+    simpa [hsym q, swapPair] using t2.all_blue q hq
+  card_eq := by
+    classical
+    rw [card_image_of_injective]
+    · exact t2.card_eq
+    · exact swap_injective
+  distinct_fst := fun p q hp hq hpq => by
+    rcases mem_image.mp hp with ⟨p', hp', rfl⟩
+    rcases mem_image.mp hq with ⟨q', hq', rfl⟩
+    simp only [swapPair]
+    have neq : p' ≠ q' := by
+      intro h
+      apply hpq
+      rw [h]
+    exact t2.distinct_snd p' q' hp' hq' neq
+
+/-- Double swap gives back the original set -/
+lemma double_image (s : Finset (ℕ × ℕ)) :
+    (s.image swapPair).image swapPair = s := by
+  ext p
+  simp only [mem_image, swapPair]
+  constructor
+  · intro ⟨q, ⟨r, hr, eq1⟩, eq2⟩
+    -- eq1: (r.2, r.1) = q
+    -- eq2: (q.2, q.1) = p
+    rw [← eq1] at eq2
+    simp at eq2
+    rwa [← eq2]
+  · intro hp
+    use (p.2, p.1)
+    constructor
+    · use p, hp
+    · cases p; rfl
+
+/-- toType1 is a left inverse of toType2 -/
+lemma leftInv {n : ℕ} {c : Coloring n} (hsym : ∀ p, c p = c (swapPair p)) :
+    Function.LeftInverse (toType1 hsym) (toType2 hsym) := by
+  intro t1
+  apply Type1Subset.ext
+  simp [toType1, toType2, double_image]
+
+/-- toType1 is a right inverse of toType2 -/
+lemma rightInv {n : ℕ} {c : Coloring n} (hsym : ∀ p, c p = c (swapPair p)) :
+    Function.RightInverse (toType1 hsym) (toType2 hsym) := by
+  intro t2
+  apply Type2Subset.ext
+  simp [toType1, toType2, double_image]
 
 /-- Main theorem: For symmetric colorings, Type1 and Type2 subsets are in bijection -/
 theorem imo2002p1_symmetric (n : ℕ) (c : Coloring n)
-    (hsym : ∀ p, c p = c (p.2, p.1)) :
+    (hsym : ∀ p, c p = c (swapPair p)) :
     ∃ f : Type1Subset n c → Type2Subset n c, Function.Bijective f := by
-  -- The bijection swaps coordinates
-  use fun t1 => {
-    points := t1.points.image (fun p => (p.2, p.1))
-    in_S := fun _ hp => by
-      rw [mem_image] at hp
-      obtain ⟨q, hq, rfl⟩ := hp
-      exact S_symmetric (t1.in_S hq)
-    all_blue := fun _ hp => by
-      rw [mem_image] at hp
-      obtain ⟨q, hq, rfl⟩ := hp
-      rw [← hsym]
-      exact t1.all_blue q hq
-    card_eq := by
-      rw [card_image_of_injective t1.points swap_injective]
-      exact t1.card_eq
-    distinct_snd := fun p q hp hq hpq => by
-      rw [mem_image] at hp hq
-      obtain ⟨p', hp', rfl⟩ := hp
-      obtain ⟨q', hq', rfl⟩ := hq
-      have : p' ≠ q' := fun h => hpq (by rw [h])
-      exact t1.distinct_fst p' q' hp' hq' this
-  }
+  use toType2 hsym
   constructor
-  · -- Injectivity
-    intro t1 t2 h
-    have : t1.points = t2.points := by
-      have eq_img : t1.points.image (fun p => (p.2, p.1)) =
-                    t2.points.image (fun p => (p.2, p.1)) := congrArg Type2Subset.points h
-      ext p
-      constructor
-      · intro hp
-        have : (p.2, p.1) ∈ t2.points.image (fun q => (q.2, q.1)) := by
-          rw [← eq_img, mem_image]
-          exact ⟨p, hp, rfl⟩
-        rw [mem_image] at this
-        obtain ⟨q, hq, heq⟩ := this
-        have : p = q := swap_injective heq.symm
-        rwa [this]
-      · intro hp
-        have : (p.2, p.1) ∈ t1.points.image (fun q => (q.2, q.1)) := by
-          rw [eq_img, mem_image]
-          exact ⟨p, hp, rfl⟩
-        rw [mem_image] at this
-        obtain ⟨q, hq, heq⟩ := this
-        have : p = q := swap_injective heq.symm
-        rwa [this]
-    cases t1; cases t2
-    simp only [Type1Subset.mk.injEq]
+  · -- Injective
+    intros t1 t2 h
+    have := congrArg (toType1 hsym) h
+    rw [leftInv hsym t1, leftInv hsym t2] at this
     exact this
-  · -- Surjectivity
+  · -- Surjective
     intro t2
-    use {
-      points := t2.points.image (fun p => (p.2, p.1))
-      in_S := fun _ hp => by
-        rw [mem_image] at hp
-        obtain ⟨q, hq, rfl⟩ := hp
-        exact S_symmetric (t2.in_S hq)
-      all_blue := fun _ hp => by
-        rw [mem_image] at hp
-        obtain ⟨q, hq, rfl⟩ := hp
-        rw [hsym]
-        exact t2.all_blue q hq
-      card_eq := by
-        rw [card_image_of_injective t2.points swap_injective]
-        exact t2.card_eq
-      distinct_fst := fun p q hp hq hpq => by
-        rw [mem_image] at hp hq
-        obtain ⟨p', hp', eq_p⟩ := hp
-        obtain ⟨q', hq', eq_q⟩ := hq
-        -- eq_p: (p'.2, p'.1) = p, so p.1 = p'.2
-        -- eq_q: (q'.2, q'.1) = q, so q.1 = q'.2
-        -- Need to show: p.1 ≠ q.1, i.e., p'.2 ≠ q'.2
-        rw [← eq_p, ← eq_q]
-        simp only
-        have neq : p' ≠ q' := by
-          intro h
-          apply hpq
-          rw [← eq_p, ← eq_q, h]
-        exact t2.distinct_snd p' q' hp' hq' neq
-    }
-    have eq_points : (t2.points.image fun p => (p.2, p.1)).image (fun p => (p.2, p.1)) = t2.points := by
-      ext p
-      constructor
-      · intro hp
-        rw [mem_image] at hp
-        obtain ⟨q, hq, heq1⟩ := hp
-        rw [mem_image] at hq
-        obtain ⟨r, hr, heq2⟩ := hq
-        -- heq2: (r.2, r.1) = q
-        -- heq1: (q.2, q.1) = p
-        -- We need to show p ∈ t2.points
-        -- Substituting heq2 into heq1: ((r.2, r.1).2, (r.2, r.1).1) = p
-        -- This simplifies to (r.1, r.2) = p
-        -- But r = (r.1, r.2) by eta, so p = r and hr gives us p ∈ t2.points
-        rw [← heq2] at heq1
-        simp at heq1
-        -- Now heq1 : (r.1, r.2) = p
-        have : r = (r.1, r.2) := by cases r; rfl
-        rw [this] at hr
-        rw [← heq1]
-        exact hr
-      · intro hp
-        rw [mem_image]
-        use (p.2, p.1)
-        constructor
-        · rw [mem_image]
-          exact ⟨p, hp, rfl⟩
-        · rfl
-    cases t2
-    simp only [Type2Subset.mk.injEq]
-    exact eq_points
+    use toType1 hsym t2
+    exact rightInv hsym t2
 
 end IMO2002P1
