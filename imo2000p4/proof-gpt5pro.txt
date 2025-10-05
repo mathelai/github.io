@@ -1,0 +1,154 @@
+**Answer: (\boxed{12})**
+
+---
+
+### Reformulation
+
+Let the three (nonempty) boxes be (A,B,C\subset{1,2,\dots,100}) forming a partition.
+For two boxes (X,Y), write
+[
+X+Y:={x+y:;x\in X,;y\in Y}.
+]
+The trick “always works” iff the audience’s announced sum determines **which** pair of boxes was used, hence **which** box was *not* used. Equivalently,
+[
+(A+B),\ (A+C),\ (B+C)\quad\text{are pairwise disjoint.}
+\tag{*}
+]
+
+We will count all partitions (A\sqcup B \sqcup C={1,\dots,100}) with ((*)).
+
+---
+
+### A basic sumset inequality (with equality case)
+
+> **Lemma.** For finite nonempty (X,Y\subset\mathbb Z),
+> [
+> |X+Y|\ \ge\ |X|+|Y|-1.
+> ]
+> Moreover, equality holds iff (X) and (Y) are arithmetic progressions with the **same** common difference.
+
+*Proof (sketch).* List (X={x_1<\cdots<x_m}), (Y={y_1<\cdots<y_n}).
+Consider the “staircase” sequence
+[
+s_1=x_1+y_1,\quad s_2=\min(x_2+y_1,\ x_1+y_2),\ \dots,\ s_{m+n-1}=x_m+y_n,
+]
+always stepping one index to the right or down by choosing the smaller next sum. One checks (s_1<s_2<\cdots<s_{m+n-1}\in X+Y), giving (|X+Y|\ge m+n-1).
+
+If equality holds, then *only* these (m+n-1) sums occur. In any (2\times2) block
+[
+\begin{matrix}
+x_i+y_j & x_i+y_{j+1}\
+x_{i+1}+y_j & x_{i+1}+y_{j+1}
+\end{matrix}
+]
+the two middle sums must be equal (else they would give two distinct values strictly between the corners, creating at least (m+n) distinct sums). Thus
+[
+x_{i+1}-x_i ;=; y_{j+1}-y_j
+]
+for all admissible (i,j); hence the consecutive gaps in (X) are all equal to those in (Y), so both are arithmetic progressions with a common difference (d). ∎
+
+---
+
+### Step 1: The sumsets must *partition* ({3,4,\dots,199})
+
+Because ((A+B), (A+C), (B+C)) are disjoint and all sums lie in ({3,\dots,199}) (there are (197) integers there),
+[
+|(A+B)\cup(A+C)\cup(B+C)| \le 197.
+]
+On the other hand, by the lemma,
+[
+|A+B|+|A+C|+|B+C|
+;\ge;
+(|A|+|B|-1)+(|A|+|C|-1)+(|B|+|C|-1)
+=2\cdot 100-3=197.
+]
+Hence equality holds everywhere. In particular,
+
+* each of (A+B,\ A+C,\ B+C) has cardinality (|\cdot|+|\cdot|-1) and hence (by the lemma) each pair consists of arithmetic progressions with the **same** common difference; and
+* the three sets (A+B,\ A+C,\ B+C) are disjoint and together cover **all** sums ({3,4,\dots,199}).
+
+Since every box appears in two pairs, **all three boxes (A,B,C) must be arithmetic progressions with one common difference (d).**
+
+---
+
+### Step 2: Determining the possible common difference (d)
+
+Because the three arithmetic progressions partition ({1,\dots,100}), the common difference (d) cannot exceed (3):
+
+* If (d\ge 4), each box contains numbers in a single residue class modulo (d), so with three boxes we cover at most (3) residue classes—but ({1,\dots,100}) contains **at least 4** residue classes modulo (d). Impossible.
+
+Thus (d\in{1,2,3}). We handle each.
+
+---
+
+#### Case (d=3)
+
+Each box is a progression of step (3), hence consists of numbers congruent to a fixed residue modulo (3). Since there are three nonempty boxes covering all of ({1,\dots,100}), **each box must be exactly one residue class modulo (3)**:
+[
+{1,4,7,\dots,100},\quad {2,5,8,\dots,98},\quad {3,6,9,\dots,99},
+]
+in some order.
+
+For such a placement, sums from two boxes have residues
+[
+(a+b)\bmod 3,\ (a+c)\bmod 3,\ (b+c)\bmod 3,
+]
+which are pairwise distinct when (a,b,c) are distinct residues. Hence (A+B,\ A+C,\ B+C) lie in **three different residue classes mod (3)** and are therefore disjoint; indeed they partition ({3,4,\dots,199}).
+
+There are (3!,=,6) ways to assign these three residue classes to the labeled boxes (red/white/blue).
+
+---
+
+#### Case (d=2) — impossible
+
+An arithmetic progression of step (2) has fixed parity. Thus either:
+
+* one box contains all even numbers and the other two split the odd numbers, or
+* one box contains all odds and the other two split the evens.
+
+In either scenario, consider the two pairs that mix opposite parities. For example, if (O) is the (entire) odd box and (E_1,E_2) split the evens with (\max E_1=2t), (\min E_2=2t+2), then
+[
+O+E_1={3,5,\dots,2t+99},\qquad O+E_2={2t+3,2t+5,\dots,199},
+]
+which **overlap** (since (2t+3\le 2t+99)). Thus the sumsets cannot be disjoint. Hence (d=2) is impossible.
+
+---
+
+#### Case (d=1)
+
+Now each box is an interval of consecutive integers. Up to relabeling along the number line, write
+[
+A={1,2,\dots,r},\quad B={r+1,\dots,w},\quad C={w+1,\dots,100},
+]
+with (1\le r<w\le 99) (all boxes nonempty). Then
+[
+\begin{aligned}
+A+B &= [r+2,\ r+w],\
+A+C &= [w+2,\ r+100],\
+B+C &= [r+w+2,\ w+100],
+\end{aligned}
+]
+each a full interval of integers. Disjointness forces:
+
+* (A+B) disjoint from (A+C): (r+w < w+2), i.e. (r<2), hence (r=1).
+* (A+C) disjoint from (B+C): (r+100 < r+w+2), i.e. (100 < w+2), hence (w\ge 99). Since (w\le 99), we get (w=99).
+
+Thus the only possibility (up to box labels along the line) is
+[
+{1},\quad {2,3,\dots,99},\quad {100}.
+]
+It is easy to check this works: the three sumsets are ([3,100]), ({101}), and ([102,199]), which are disjoint. There are again (3!,=,6) ways to assign these three intervals to the labeled boxes.
+
+---
+
+### Conclusion and count
+
+Exactly two families occur:
+
+1. **Mod 3 classes** (common difference (3)): the three residue classes modulo (3) in any order — (6) ways.
+2. **End-singletons** (common difference (1)): ({1}), ({2,\dots,99}), ({100}) in any order — (6) ways.
+
+Hence the total number of valid placements is
+[
+6+6=\boxed{12}.
+]
