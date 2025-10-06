@@ -84,5 +84,17 @@ Given (k>2b+a), **which block contains the (k)-th coin** at the start?
 *Hint:* Compare (k) to (a), (a+b), and (a+2b).
 
 Student:
+Since the cumulative endpoints are (a,\ a+b,\ a+2b,\ 2n) and (k>a+2b), the (k)-th position lies strictly past the third endpoint but not past (2n). So the (k)-th coin is in the **fourth (rightmost) block (B^{a})**.
 
+Teacher:
+Exactly—the (k)-th coin starts in the **rightmost** block.
+
+**Checkpoint 2b (next tiny step):**
+After we move that rightmost block to the front, the order is
+[
+B^{a}\ \big|\ A^{a}\ \big|\ B^{b}\ \big|\ A^{b},
+]
+whose cumulative endpoints are (a,\ 2a,\ 2a+b,\ 2n).
+
+**Single task:** Compute (2a+b) in terms of (n) and (k). (Just substitute (a=k-n-1) and (b=2n-k+1).)
 
