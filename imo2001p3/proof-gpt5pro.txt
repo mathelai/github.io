@@ -1,0 +1,113 @@
+**Problem.**
+There are (21) girls and (21) boys. Each contestant solved at most (6) problems. For every girl–boy pair, there is at least one problem that both solved. Prove that some problem was solved by at least (3) girls and at least (3) boys.
+
+---
+
+### Proof (by contradiction).
+
+Assume **no** problem was solved by at least (3) girls **and** at least (3) boys; i.e., for every problem (p) with
+[
+g_p:=#{\text{girls who solved }p},\quad b_p:=#{\text{boys who solved }p},
+]
+we have (\min(g_p,b_p)\le 2).
+
+We will assign to **each** of the (21\cdot 21=441) girl–boy pairs ((G,B)) one problem that they both solved (arbitrarily, if there are several). Think of this as **coloring** the edge ((G,B)) by the color “(p)” of that problem.
+
+Let (t) be the number of **colors actually used** by this assignment, i.e., the number of problems that occur as the chosen common problem for at least one pair. For each used problem (p), let (g_p) and (b_p) be as above (these depend only on who solved (p), not on how we colored).
+
+---
+
+#### 1) A counting inequality for the chosen colors.
+
+Let
+[
+T;:=;\sum_{\text{used }p} g_p,b_p .
+]
+By construction of the coloring, the number of edges colored (p) is at most (g_pb_p); summing over all used colors yields
+[
+T ;\ge; 441,
+]
+because we colored exactly (441) edges in total (one per girl–boy pair).
+
+On the other hand, using (\min(g_p,b_p)\le 2) for every used (p), we have for each such (p) the inequality
+[
+g_p b_p ;\le;
+\begin{cases}
+2g_p+2b_p-2 & \text{if }\min(g_p,b_p)=1,\
+2g_p+2b_p-4 & \text{if }\min(g_p,b_p)=2.
+\end{cases}
+]
+(Simply check: if (g_p=1), then (g_pb_p=b_p\le 2b_p=2g_p+2b_p-2); if (g_p=2), then (g_pb_p=2b_p=2g_p+2b_p-4); similarly if (b_p\in{1,2}).)
+
+Let (t_1) (resp. (t_2)) be the number of used colors with (\min(g_p,b_p)=1) (resp. (=2)). Then (t=t_1+t_2), and summing the above bounds gives
+[
+T ;\le; 2\sum_{\text{used }p} g_p ;+; 2\sum_{\text{used }p} b_p ;-;2t_1;-;4t_2 .
+]
+Each girl solves at most (6) problems, so (\sum g_p\le 126); each boy solves at most (6) problems, so (\sum b_p\le 126). Hence
+[
+T ;\le; 2\cdot 126 + 2\cdot 126 - 2t_1 - 4t_2 ;=; 504 - 2t - 2t_2.
+]
+Combining with (T\ge 441) yields
+[
+441 ;\le; 504 - 2t - 2t_2 \quad\Rightarrow\quad t + t_2 ;\le; 31. \tag{★}
+]
+
+---
+
+#### 2) Many colors must appear from the girls’ and from the boys’ sides.
+
+Look at the coloring around a **fixed girl** (G). She is incident with (21) colored edges (to the (21) boys), and those edges use at most (6) colors (because she solved at most (6) problems). By the pigeonhole principle, **some** color appears on at least (\lceil 21/6\rceil=4) of her edges. Call any such color a **major color for (G)**.
+
+Let (\mathcal{C}_G) be the set of colors that are major for **at least one** girl. For any color (p\in\mathcal{C}_G), at least (4) boys solved (p) (since a girl has (\ge 4) edges of color (p)). Under our standing assumption (no (3)-by-(3)), this forces (g_p\le 2). Consequently, a single color (p) can be major for at most (g_p\le 2) girls. Since there are (21) girls, we must have
+[
+|\mathcal{C}_G| ;\ge; \left\lceil \frac{21}{2}\right\rceil ;=; 11. \tag{1}
+]
+
+Moreover, among these colors (\mathcal{C}_G), some may have (g_p=1) and some (g_p=2). Let (s_G) be the number of colors in (\mathcal{C}_G) with (g_p=2). Since a color with (g_p=1) can be major for **at most one** girl, while a color with (g_p=2) can be major for **at most two** girls, covering all (21) girls forces
+[
+2 s_G + 1\cdot\big(|\mathcal{C}_G|-s_G\big) ;\ge; 21
+\quad\Rightarrow\quad
+s_G ;\ge; 21 - |\mathcal{C}_G|.
+]
+Using ((1)), we get
+[
+s_G ;\ge; 21 - 11 ;=; 10. \tag{2}
+]
+Every such color counted in (s_G) has (g_p=2) and (since it is major for a girl) (b_p\ge 4); thus it is of **type (\min(g_p,b_p)=2)** (i.e., contributes to (t_2)).
+
+By symmetry for the boys: define (\mathcal{C}_B) as the set of colors that are major for at least one boy (again a color appears at least (4) times around that boy). Exactly the same reasoning gives
+[
+|\mathcal{C}_B| ;\ge; 11,
+\qquad
+s_B ;\ge; 10,
+]
+where (s_B) counts colors in (\mathcal{C}_B) with (b_p=2) (hence also of type (\min(g_p,b_p)=2), so they too contribute to (t_2)).
+
+If (\mathcal{C}_G \cap \mathcal{C}_B \neq \emptyset), then there is a color (problem) with at least (4) boys (since it is in (\mathcal{C}_G)) **and** at least (4) girls (since it is in (\mathcal{C}_B)); that immediately gives a problem with (\ge 3) girls and (\ge 3) boys, contradicting our assumption. Therefore we must have
+[
+\mathcal{C}_G \cap \mathcal{C}_B = \emptyset.
+]
+In particular,
+[
+t ;\ge; |\mathcal{C}_G| + |\mathcal{C}_B| ;\ge; 11 + 11 ;=; 22, \tag{3}
+]
+and for the number (t_2) of colors with (\min(g_p,b_p)=2),
+[
+t_2 ;\ge; s_G + s_B ;\ge; 10 + 10 ;=; 20. \tag{4}
+]
+
+---
+
+#### 3) Contradiction.
+
+Combine ((3))–((4)) with ((★)):
+[
+t + t_2 ;\ge; 22 + 20 ;=; 42
+\quad\text{but}\quad
+t + t_2 ;\le; 31,
+]
+a contradiction.
+
+Therefore our initial assumption was false. Hence **there exists a problem solved by at least (3) girls and at least (3) boys.**
+
+(\boxed{})
