@@ -98,3 +98,47 @@ whose cumulative endpoints are (a,\ 2a,\ 2a+b,\ 2n).
 
 **Single task:** Compute (2a+b) in terms of (n) and (k). (Just substitute (a=k-n-1) and (b=2n-k+1).)
 
+Student:
+2a+b=2(k−n−1)+(2n−k+1)=(2k−2n−2)+(2n−k+1)=k−1.
+
+Teacher:
+Nice—since (2a+b=k-1), in the post‑move layout with endpoints (a,,2a,,2a+b,,2n), we have (k>2a+b).
+
+**Single check:** In that layout, **which block** contains the (k)-th coin?
+
+Student:
+** The **fourth (rightmost) block (A^b)** again.
+
+Teacher:
+Yep — fourth block again.
+
+**One more micro‑check to finish the cycle:**
+From (B^{a},|,A^{a},|,B^{b},|,A^{b}), we move the rightmost block (A^{b}) to the front:
+[
+A^{b}\ \big|\ B^{a}\ \big|\ A^{a}\ \big|\ B^{b}.
+]
+Compute (2b+a) (in terms of (n,k)) and compare it to (k). This tells you whether the (k)-th coin is still in the rightmost block.
+
+*Hint:* You already found (2a+b=k-1). Now do (2b+a). If (k>\tfrac{3n+1}{2}), what inequality do you get?
+
+Student:
+(2b+a=2(2n-k+1)+(k-n-1)=3n-k+1.)
+Since (k>\frac{3n+1}{2}), we have (2k>3n+1\Rightarrow k>3n-k+1=2b+a).
+Therefore the (k)-th coin lies past the third boundary, i.e., it’s **still in the fourth (rightmost) block** (here, (B^{,b}) in (A^{b}\mid B^{a}\mid A^{a}\mid B^{b})).
+
+Teacher:
+Excellent—so for (k>\frac{3n+1}{2}) we’ve built a 4‑block configuration where the (k)-th coin keeps landing in the **rightmost** block every step, so the process cycles and never merges. That completes **necessity**.
+
+---
+
+## Sufficiency: (n \le k \le \frac{3n+1}{2})
+
+We’ll now show that in this range, starting from any arrangement, we must eventually reach 2 blocks.
+
+**Checkpoint 3 — Monotonicity.**
+After one move, can the **number of blocks** ever **increase**? Why or why not?
+
+*Hint:* Moving one entire block to the front can only (i) keep two different-type blocks adjacent or (ii) make two same-type neighbors touch and merge. It can’t split a block into more pieces.
+
+Student:
+No—moving one **entire** block can’t increase the number of blocks. Removing the chosen block decreases the count by 1, and if its two former neighbors are the same type they merge, making it −2. When we place the block at the front, it either merges with the first block (adds 0) or sits next to a different type (adds +1). Hence the net change is in ({0,-1,-2}), never positive (edge cases at the ends fit the same conclusion).
