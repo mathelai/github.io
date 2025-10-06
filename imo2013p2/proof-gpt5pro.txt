@@ -1,0 +1,64 @@
+**Answer: (k=2013).**
+
+We prove two things:
+
+1. For **every** Colombian configuration (2013 red, 2014 blue, no three collinear) there is a good arrangement of **at most** 2013 lines.
+2. There exists a Colombian configuration for which any good arrangement needs **at least** 2013 lines.
+
+Together these imply the least such (k) is (2013).
+
+---
+
+## A convenient viewpoint: cut a large circle
+
+Fix a circle (\Gamma) that strictly contains all 4027 points, and choose its center (O) generically so that no ray from (O) passes through two points (this is always possible). Going once around (\Gamma) we obtain a **circular order** of the 4027 points, hence a cyclic 2‑color sequence (C) of length (4027).
+
+Call a **color change** any place in the circular order where two consecutive points have different colors. Let (T) be the number of color changes of (C) (so (T) is the number of occurrences of an (R\leftrightarrow B) adjacency around the circle).
+
+Two basic facts we will use:
+
+* **(F1)** (T) is **even** and (T\le 2\cdot 2013=4026).
+  Indeed, in any binary cyclic sequence with (r) Rs and (b=r+1) Bs, each maximal red block contributes two color changes, so (T=2\cdot(#\text{ red blocks})\le 2r).
+
+* **(F2)** If an arrangement of lines does **not** pass through any of the points, then the intersection points of the lines with (\Gamma) (there are at most (2k) of them for (k) lines) cut (\Gamma) into at most (2k) open arcs. For any such arc (A), all points whose rays from (O) meet (\Gamma) inside (A) lie in the **same region** of the arrangement.
+  (Reason: as the angle varies within a fixed arc (A), a ray from (O) meets exactly the same set of lines in the same order. Travelling along such a ray from (\Gamma) inwards cannot cross any line, so all those points lie in one and the same face.)
+
+We’ll use this circle picture both for the upper and lower bounds.
+
+---
+
+## Upper bound: 2013 lines always suffice
+
+Let (T) be the number of color changes in the circular order around (\Gamma). By (F1), (T) is even and (T\le 2\cdot 2013).
+
+Between every two consecutive points where a color change happens, mark one point on (\Gamma) in the middle of that small arc. We thus mark exactly (T) points on (\Gamma). Pair these marked points arbitrarily into (T/2) pairs; for each pair, draw the unique straight line through the two marked points.
+
+We can (slightly) move our marked points along their respective arcs, if necessary, to make sure that none of the resulting lines passes through a configuration point (only finitely many forbidden positions exist, so this is always possible).
+
+Let (\mathcal{L}) be the set of the resulting (T/2) lines; note that (T/2\le 2013).
+
+Now consider (\Gamma) cut by (\mathcal{L}). By construction, the (T) marked points are exactly the intersection points of (\Gamma) with (\mathcal{L}), so (\Gamma) is split into at most (T) open arcs; moreover, **no** color change of the circular sequence lies in the interior of any such arc (we placed an intersection exactly at each color change). Hence each arc contains only points of a **single** color.
+
+By (F2), each arc corresponds to a single region of the arrangement, and since no arc contains both colors, **no region contains points of both colors**. Also, by construction, no line passes through a configuration point. Therefore, (\mathcal{L}) is a good arrangement of (\frac{T}{2}\le 2013) lines.
+
+Thus **2013 lines always suffice**.
+
+---
+
+## Lower bound: sometimes you need at least 2013 lines
+
+Place all 4027 points on a circle in **alternating** order (B,R,B,R,\dots) around the circle, with one extra (B) (this is allowed and satisfies the “no three collinear” condition). For this configuration, in the circular order we have a color change at every step **except** between the last and first blue, hence (T=4026=2\cdot 2013).
+
+Consider any good arrangement of (k) lines. Each line intersects (\Gamma) in (at most) two points, so altogether there are at most (2k) intersection points, cutting (\Gamma) into at most (2k) arcs. By (F2), each such arc must contain points of only one color (otherwise the corresponding region would contain both colors), so the number of color changes (T) cannot exceed the number of arc endpoints, i.e., (T\le 2k). Here (T=4026), hence (2k\ge 4026) and therefore (k\ge 2013).
+
+So **no fewer than 2013 lines** can work for this configuration.
+
+---
+
+## Conclusion
+
+For any Colombian configuration there exists a good arrangement of at most (2013) lines, and for some Colombian configuration at least (2013) lines are necessary. Therefore the least such (k) is
+
+[
+\boxed{2013}.
+]
