@@ -1,0 +1,51 @@
+**Claim.** Let (m>1) be odd, (n_1,\dots,n_m\in\mathbb Z), and for a permutation (x=(x_1,\dots,x_m)) of ({1,2,\dots,m}) define
+[
+f(x)=\sum_{i=1}^m x_i n_i.
+]
+Then there exist distinct permutations (a,b) such that (m!\mid f(a)-f(b)).
+
+---
+
+### Proof
+
+Define an involution (c) on the set of permutations of ({1,\dots,m}) by **complementing the values**
+[
+(c(x))_i ;=; m+1-x_i\qquad(1\le i\le m).
+]
+Clearly (c) is a bijection and (c(c(x))=x). Moreover, (c) has **no fixed point**: if (c(x)=x), then (x_i=m+1-x_i) for all (i), hence (x_i=\frac{m+1}{2}) for all (i), which is impossible since the entries of (x) are distinct.
+
+Set (S=\sum_{i=1}^m n_i) and (C=(m+1)S). For any permutation (x),
+[
+f(c(x))=\sum_{i=1}^m (m+1-x_i)n_i=(m+1)\sum_{i=1}^m n_i - \sum_{i=1}^m x_in_i
+= C - f(x).
+]
+In particular, modulo (m!) we have
+[
+f(c(x)) \equiv C - f(x) \pmod{m!}. \tag{1}
+]
+
+Since (m) is odd, (m+1) is even, hence (C) is **even**. Because (m!) is even as well, the congruence
+[
+2r \equiv C \pmod{m!}
+]
+has exactly **two** solutions (r) modulo (m!) (the number of solutions is (\gcd(2,m!)=2)).
+
+Now argue by contradiction. Suppose **no two distinct permutations** give the same value of (f) modulo (m!). There are (m!) permutations and (m!) residue classes modulo (m!), so this assumption would force the set ({f(x)\bmod m! : x \text{ a permutation}}) to be the entire residue system.
+
+In particular, each of the two solutions (r) of (2r\equiv C \pmod{m!}) must be attained: there exists a permutation (a) with (f(a)\equiv r\pmod{m!}). But then, by (1),
+[
+f(c(a)) \equiv C - f(a) \equiv r \pmod{m!}.
+]
+Since (c) has no fixed points, (c(a)\neq a), so we have found **two distinct permutations** (a) and (c(a)) with
+[
+f(a)\equiv f\bigl(c(a)\bigr) \pmod{m!},
+]
+contradicting the assumption.
+
+Therefore, our assumption was false, and there **must exist** distinct permutations (a,b) with (f(a)\equiv f(b)\pmod{m!}), i.e., (m!\mid f(a)-f(b)).
+
+(\square)
+
+---
+
+*Remark.* The oddness of (m) is essential: for (m=2), taking (n_1=0,n_2=1) yields the two values (f(1,2)=2) and (f(2,1)=1), whose difference is not divisible by (2!=2).
