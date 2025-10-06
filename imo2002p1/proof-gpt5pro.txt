@@ -1,0 +1,93 @@
+**Solution.**
+Let
+[
+S={(h,k)\in\mathbb Z_{\ge 0}^2:; h+k<n}.
+]
+Assume the coloring condition:
+
+> If ((h,k)) is red and (h'\le h,\ k'\le k), then ((h',k')) is also red.
+
+Equivalently, the set of red points is *downward closed* (an order ideal in the product order), hence the set of blue points is *upward closed*.
+
+---
+
+### Step 1: Reduce the problem to a product over columns/rows
+
+For (h=0,1,\dots,n-1), let
+[
+c_h=#{k:\ 0\le k\le n-1-h,\ (h,k)\text{ is blue}}
+]
+be the number of blue points in column (h).
+For (k=0,1,\dots,n-1), let
+[
+r_k=#{h:\ 0\le h\le n-1-k,\ (h,k)\text{ is blue}}
+]
+be the number of blue points in row (k).
+
+Because red is downward closed, in every fixed column (h) the blue points (if any) form a contiguous top segment; likewise, in every fixed row (k) the blue points form a contiguous right segment. Therefore:
+
+* A **type 1** subset consists of choosing one blue point in each column (h=0,1,\dots,n-1), independently. Hence the number of type 1 subsets is
+  [
+  N_1=\prod_{h=0}^{n-1} c_h.
+  ]
+
+* A **type 2** subset consists of choosing one blue point in each row (k=0,1,\dots,n-1), independently. Hence the number of type 2 subsets is
+  [
+  N_2=\prod_{k=0}^{n-1} r_k.
+  ]
+
+It remains to prove (\prod_h c_h=\prod_k r_k).
+
+---
+
+### Step 2: A key equality via diagonals
+
+For (t=0,1,\dots,n-1), let the **diagonal**
+[
+\Delta_t={(h,k)\in S:\ h+k=t}.
+]
+Fix (j\in{1,2,\dots,n}). Consider the set of columns that contain at least (j) blue points.
+
+Because the blue points in a column form a contiguous top segment, a column (h) has at least (j) blue points **iff** the (j)-th point from the top of column (h) is blue. The (j)-th from the top in column (h) has coordinates ((h,,n-h-j)) (provided this lies in (S), i.e. (h\le n-j)). Thus:
+
+[
+#{\text{columns with }\ge j\text{ blue}}
+=#{,h:\ 0\le h\le n-j,\ (h,,n-h-j)\text{ is blue},}
+= #\bigl(\Delta_{n-j}\cap\text{blue}\bigr).
+\tag{1}
+]
+
+By the same reasoning in rows: a row (k) has at least (j) blue points **iff** the (j)-th point from the right, ((n-k-j,,k)), is blue; hence
+
+[
+#{\text{rows with }\ge j\text{ blue}}
+=#{,k:\ 0\le k\le n-j,\ (n-k-j,,k)\text{ is blue},}
+= #\bigl(\Delta_{n-j}\cap\text{blue}\bigr).
+\tag{2}
+]
+
+Comparing (1) and (2), we conclude that for every (j),
+[
+#{\text{columns with }\ge j\text{ blue}}
+=#{\text{rows with }\ge j\text{ blue}}.
+\tag{3}
+]
+
+---
+
+### Step 3: Equality of multisets ({c_h}) and ({r_k})
+
+Given any finite multiset of nonnegative integers (x_1,\dots,x_n), the numbers
+[
+F(j)=#{i:\ x_i\ge j}\quad (j\ge 1)
+]
+determine the multiset: indeed, the multiplicity of the value (m) equals (F(m)-F(m+1)).
+
+Apply this with (x_i=c_i) (columns) and with (x_i=r_i) (rows). By (3), the “distribution functions” of ({c_h}) and ({r_k}) coincide for every (j), hence the two multisets ({c_h}) and ({r_k}) are identical. In particular,
+[
+\prod_{h=0}^{n-1} c_h=\prod_{k=0}^{n-1} r_k.
+]
+
+Therefore (N_1=N_2): the number of type (1) subsets equals the number of type (2) subsets.
+
+(\square)
