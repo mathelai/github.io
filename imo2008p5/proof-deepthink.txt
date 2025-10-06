@@ -1,0 +1,47 @@
+Let $L_A = \{1, \dots, n\}$ and $L_B = \{n+1, \dots, 2n\}$ be the two sets of lamps. We are considering sequences of $k$ steps, where at each step one lamp is switched. Let $S$ be such a sequence. Let $x_i(S)$ be the number of times lamp $i$ is switched in the sequence $S$.
+
+The initial state is all lamps off. The desired final state is that all lamps in $L_A$ are on, and all lamps in $L_B$ are off. This requires $x_i(S)$ to be odd for $i \in L_A$, and $x_i(S)$ to be even for $i \in L_B$.
+
+$N$ is the total number of such sequences of length $k$. Let $\mathcal{N}$ be the set of these sequences.
+
+$M$ is the number of sequences in $\mathcal{N}$ such that no lamp in $L_B$ is ever switched on. Since these lamps start off, this implies they are never switched at all. Thus, $M$ counts sequences $S \in \mathcal{N}$ such that $x_i(S)=0$ for all $i \in L_B$. These sequences only involve lamps in $L_A$. The conditions for a sequence $S$ to be counted by $M$ are: $x_i(S)$ is odd for $i \in L_A$, and $\sum_{i \in L_A} x_i(S) = k$. Let $\mathcal{M}$ be the set of these sequences.
+
+We are given that $k \ge n$ and $k-n$ is even. This ensures that it is possible to write $k$ as a sum of $n$ odd positive integers, so $M>0$.
+
+We establish a relationship between $\mathcal{N}$ and $\mathcal{M}$ by defining a projection map.
+Let $\pi: L_A \cup L_B \to L_A$ be defined as:
+$\pi(i) = i$ if $i \in L_A$.
+$\pi(i) = i-n$ if $i \in L_B$.
+
+This induces a map $\pi^*: \mathcal{N} \to \mathcal{M}$. For a sequence $S'=(l'_1, \dots, l'_k) \in \mathcal{N}$, we define $S=\pi^*(S') = (\pi(l'_1), \dots, \pi(l'_k))$.
+
+We first verify that $S \in \mathcal{M}$. By construction, $S$ only contains lamps from $L_A$. We check the counts. For $i \in L_A$, the number of times $i$ appears in $S$ is the sum of the number of times $i$ appears in $S'$ and the number of times $n+i$ appears in $S'$.
+$x_i(S) = x_i(S') + x_{n+i}(S')$.
+Since $S' \in \mathcal{N}$, $x_i(S')$ is odd and $x_{n+i}(S')$ is even. The sum of an odd and an even integer is odd. Thus, $x_i(S)$ is odd for all $i \in L_A$. So $S \in \mathcal{M}$.
+
+Now, we analyze the fibers of the map $\pi^*$. We want to count how many sequences $S' \in \mathcal{N}$ map to a specific sequence $S \in \mathcal{M}$.
+Let $S \in \mathcal{M}$. Let $x_i = x_i(S)$. We know $x_i$ is odd for all $i$, and $\sum x_i = k$.
+
+A sequence $S'$ such that $\pi^*(S')=S$ is obtained by taking $S$ and, for each occurrence of lamp $i$, deciding whether it corresponds to a switch of lamp $i$ or lamp $n+i$ in $S'$.
+
+Let $P_i$ be the set of positions in $S$ where lamp $i$ occurs. $|P_i|=x_i$. To construct $S'$, we choose a subset $C_i \subseteq P_i$. In the positions $j \in C_i$, the corresponding switch in $S'$ is lamp $n+i$. In the positions $j \in P_i \setminus C_i$, the switch is lamp $i$.
+
+We must ensure that $S' \in \mathcal{N}$. The counts in $S'$ are:
+$x_{n+i}(S') = |C_i|$. This must be even.
+$x_i(S') = x_i - |C_i|$. This must be odd.
+
+Since $x_i$ is odd, the condition that $x_i - |C_i|$ is odd is equivalent to $|C_i|$ being even.
+So, for each $i=1, \dots, n$, we must choose a subset $C_i$ of $P_i$ with even cardinality.
+
+For a set of size $m \ge 1$, the number of subsets with even cardinality is $2^{m-1}$. Since $x_i$ is odd, $x_i \ge 1$. The number of ways to choose $C_i$ is $2^{x_i-1}$.
+
+The choices for different lamps $i$ are independent. The total number of preimages $S'$ for a fixed $S$ is the product of the number of choices for each lamp:
+$N_S = \prod_{i=1}^n 2^{x_i-1} = 2^{\sum_{i=1}^n (x_i-1)} = 2^{(\sum_{i=1}^n x_i) - n}$.
+Since $\sum_{i=1}^n x_i = k$, we have $N_S = 2^{k-n}$.
+
+The number of preimages is constant, independent of $S$. The map $\pi^*$ is surjective (for any $S \in \mathcal{M}$, $S$ itself is a preimage in $\mathcal{N}$ corresponding to $C_i=\emptyset$ for all $i$).
+
+Therefore, the total number of sequences in $\mathcal{N}$ is:
+$N = |\mathcal{N}| = \sum_{S \in \mathcal{M}} N_S = \sum_{S \in \mathcal{M}} 2^{k-n} = |\mathcal{M}| \cdot 2^{k-n} = M \cdot 2^{k-n}$.
+
+The ratio is $\frac{N}{M} = 2^{k-n}$.

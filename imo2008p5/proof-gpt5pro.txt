@@ -1,0 +1,73 @@
+[
+\boxed{\displaystyle \frac{N}{M}=2^{,k-n}}
+]
+
+**Proof.**
+Write (2n) lamps as (1,2,\dots,n) (the “good” ones) and (n+1,\dots,2n) (the “forbidden” ones). A sequence of (k) steps is a word of length (k) over the alphabet ({1,\dots,2n}). If lamp (i) is used (m_i) times, then the number of sequences realizing the vector ((m_1,\dots,m_{2n})) (with (\sum m_i=k)) is the multinomial
+[
+\frac{k!}{m_1!\cdots m_{2n}!}.
+]
+
+We will sum these multinomials under the parity constraints using exponential generating functions. Recall
+[
+\sinh x=\sum_{\ell\ge 0}\frac{x^{2\ell+1}}{(2\ell+1)!},\qquad
+\cosh x=\sum_{\ell\ge 0}\frac{x^{2\ell}}{(2\ell)!}.
+]
+Thus, for a single lamp, demanding an **odd** number of uses contributes the series (\sinh x), and demanding an **even** number of uses contributes (\cosh x). (Demanding **zero** uses would contribute (1).)
+
+---
+
+### Counting (M)
+
+For (M), only lamps (1,\dots,n) are ever switched (each an odd number of times), while lamps (n+1,\dots,2n) are never switched at all. Hence
+[
+M=k!,[x^k]\left(\sinh x\right)^n,
+]
+where ([x^k]F(x)) denotes the coefficient of (x^k) in the power series (F(x)).
+
+---
+
+### Counting (N)
+
+For (N), lamps (1,\dots,n) are each used an odd number of times, and lamps (n+1,\dots,2n) an even number of times. Therefore
+[
+N=k!,[x^k]\left(\sinh x\right)^n\left(\cosh x\right)^n.
+]
+
+Use the identity (\sinh x,\cosh x=\tfrac12\sinh(2x)) to obtain
+[
+\left(\sinh x\right)^n\left(\cosh x\right)^n
+=\left(\sinh x,\cosh x\right)^n
+=\left(\tfrac12\sinh(2x)\right)^n
+=2^{-n}\left(\sinh(2x)\right)^n.
+]
+Hence
+[
+N
+=2^{-n}k!,[x^k]\left(\sinh(2x)\right)^n.
+]
+
+Finally, for any power series (H(x)=\sum_{j\ge 0} a_j x^j), one has
+[
+[x^k],H(2x)=2^k,[x^k],H(x),
+]
+so
+[
+[x^k]\left(\sinh(2x)\right)^n
+=2^k,[x^k]\left(\sinh x\right)^n.
+]
+Therefore
+[
+N
+=2^{-n}\cdot 2^k \cdot k!,[x^k]\left(\sinh x\right)^n
+=2^{k-n},M,
+]
+which proves
+[
+\frac{N}{M}=2^{k-n}.
+]
+
+*Remarks.*
+
+* The condition (k\ge n) and (k\equiv n\pmod 2) is exactly the condition for these numbers to be nonzero: each of the (n) good lamps must be toggled an odd number of times, contributing at least (n) steps and fixing the parity of (k).
+* The result can also be written (\frac{N}{M}=4^{(k-n)/2}).
