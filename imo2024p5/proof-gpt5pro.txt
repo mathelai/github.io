@@ -1,0 +1,82 @@
+**Answer: (\boxed{4}).**
+
+---
+
+We prove two things:
+
+1. No strategy can guarantee success by the 3rd attempt (a lower bound (n\ge 4)).
+2. There is a strategy that always succeeds on the 4th attempt (an upper bound (n\le 4)).
+
+Together these imply the minimum (n) is (4).
+
+---
+
+## 1) Lower bound: (3) attempts are not enough
+
+Fix any strategy Turbo may use (possibly adaptive). We will construct a placement of the monsters (consistent with the rules) that defeats Turbo’s first three attempts.
+
+Let Turbo’s first attempt end at a monster in row (r_1) and column (c_1).
+Let his second attempt end at a monster in row (r_2) and column (c_2), with ((r_2,c_2)\ne(r_1,c_1)). WLOG (r_1<r_2).
+
+Consider his third attempt. To go from the first row to the last row, the path must cross every row, in particular all rows strictly between (r_1) and (r_2). In that open horizontal strip
+[
+\mathcal S:={(r,c): r_1<r<r_2}
+]
+we know nothing yet about where the monsters are, except that in each row of (\mathcal S) there is exactly one monster, and none of those monsters lies in columns (c_1) or (c_2) (because rows (r_1,r_2) already contain the monsters of (c_1,c_2)).
+
+Look at Turbo’s third path through (\mathcal S). One of the following must happen first inside (\mathcal S).
+
+* **Case A.** He moves horizontally in some row (r\in(r_1,r_2)) from a column in ({c_1,c_2}) into a different column (d\notin{c_1,c_2}).
+
+* **Case B.** He never enters any other column in (\mathcal S). Then he is confined to columns ({c_1,c_2}) while traversing (\mathcal S). But to avoid ((r_1,c_1)) and ((r_2,c_2)), he must switch from one of these columns to the other somewhere **inside** (\mathcal S); that horizontal step leaves ({c_1,c_2}) immediately, i.e., it enters some column (d\notin{c_1,c_2}) at some row (r\in(r_1,r_2)).
+
+In either case we have a **first** row (r\in(r_1,r_2)) where Turbo’s path steps into a column (d\notin{c_1,c_2}). Put the monster of row (r) in column (d). Then his third attempt hits that monster at that very step and fails.
+
+This placement is legal: (r\neq r_1,r_2) so rows are distinct, and columns (c_1,c_2,d) are distinct, so the “at most one per column” rule is respected. The remaining (2022-3) monsters can be placed injectively in other unused columns, and one column remains empty.
+
+Therefore, **no** strategy can guarantee success in three attempts. Hence (n\ge 4).
+
+---
+
+## 2) Upper bound: a strategy that always succeeds by the 4th attempt
+
+We describe a strategy that guarantees reaching the last row on or before the 4th attempt.
+
+* **Attempt 1–3:** Pick three *distinct* columns and go straight down each time. (If you reach the last row earlier, you are already done.) In the worst case, each of these three attempts ends upon meeting a monster. Record their (row, column) positions:
+  [
+  (r_1,c_1),\quad (r_2,c_2),\quad (r_3,c_3),
+  ]
+  with (2\le r_1<r_2<r_3\le 2023) after reordering by row if necessary. Note that each (c_i) has exactly one monster, namely in row (r_i).
+
+* **Key observation.** In any *known* row (r_i), we know the unique bad cell is ((r_i,c_i)). Hence **every other column is safe in that row**, and Turbo can move horizontally within row (r_i) freely as long as he does not cross ((r_i,c_i)).
+
+* **Fourth attempt (deterministic safe path using only (c_1,c_2,c_3)).**
+  Let (L<M<R) be the three columns (c_1,c_2,c_3) arranged left-to-right, and let their monster rows be (r_L,r_M,r_R) (not necessarily ordered the same way). Among the two *extreme* columns ({L,R}), let (E_1) be the one whose monster row is smaller, and (E_2) the other extreme (so (r_{E_1}<r_{E_2})). The remaining column is (M).
+
+  We now build a path that:
+
+  * moves vertically inside a single discovered column through stretches where that column has no monster;
+  * changes columns only **inside known rows**, and only between columns that lie on the **same side** of the known row’s monster column so that the horizontal motion never has to cross the bad cell.
+
+  Proceed as follows.
+
+  1. **Start column.** If the earliest monster row among ({r_L,r_M,r_R}) belongs to the middle column (M), then start in (E_2). Otherwise, start in (M). In either case you are **not** in the column whose monster appears first, so the descent to the first switch will be safe.
+
+  2. **First switch at row (r_{E_1}).** Descend to row (r_{E_1}). At this row the monster is in the **extreme** column (E_1). The other two columns are (M) and (E_2), and they lie on the same side of (E_1) (both to its left or both to its right). Ensure you are in (E_2) at this row: if you started in (M), move horizontally within row (r_{E_1}) from (M) to (E_2); if you already started in (E_2), do nothing.
+
+     This horizontal move is safe: in row (r_{E_1}) the only forbidden cell is ((r_{E_1},E_1)), and the segment between (M) and (E_2) does not cross it.
+
+  3. **Second switch at row (r_{E_2}).** Go straight down in (E_2) to its monster row (r_{E_2}). There, the monster is in (E_2), so the other two columns (M,E_1) lie on the same side of (E_2). Among ({M,E_1}), choose the one whose monster row is **not below** (r_{E_2}) (at least (E_1) satisfies this, since (r_{E_1}<r_{E_2})). Move horizontally within row (r_{E_2}) to that column.
+
+  4. **Finish.** From there, continue straight down to the last row. This is safe because we have already passed that column’s unique monster row.
+
+  We changed columns only inside known rows (r_{E_1}) and (r_{E_2}), and never crossed a bad cell; and we only moved vertically in columns on stretches where those columns have no monster. Hence the 4th attempt necessarily reaches the last row.
+
+Thus (n\le 4).
+
+---
+
+Combining the two parts, the minimal (n) such that Turbo can **always** guarantee reaching the last row on or before the (n)-th attempt is
+[
+\boxed{4}.
+]
