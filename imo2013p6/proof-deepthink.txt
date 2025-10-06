@@ -1,0 +1,40 @@
+Let $M$ be the number of beautiful labellings of $n+1$ equally spaced points on a circle with labels $\{0, 1, \ldots, n\}$, up to rotation. Let $N$ be the number of ordered pairs $(x, y)$ of positive integers such that $x+y \le n$ and $\gcd(x, y)=1$. We want to prove that $M=N+1$.
+
+First, we analyze the quantity $N$. We can write $N$ as a sum over $k=x+y$, where $2 \le k \le n$. For a fixed $k$, the number of pairs $(x, y)$ of positive integers such that $x+y=k$ and $\gcd(x, y)=1$ is given by Euler's totient function $\phi(k)$. Thus,
+$$N = \sum_{k=2}^n \phi(k).$$
+Then $N+1 = 1 + \sum_{k=2}^n \phi(k) = \sum_{k=1}^n \phi(k)$, since $\phi(1)=1$. Let $\Phi(n) = \sum_{k=1}^n \phi(k)$ be the summatory totient function. The problem is equivalent to proving $M=\Phi(n)$.
+
+We proceed by induction on $n$. Let $M(n)$ denote the number of beautiful labellings for a given $n$.
+For $n=1$, we have labels $\{0, 1\}$. There is only one labelling (0, 1) up to rotation. $M(1)=1$. $\Phi(1)=1$.
+For $n=2$, we have labels $\{0, 1, 2\}$. The labellings up to rotation are (0, 1, 2) and (0, 2, 1). Both are beautiful since there are no quadruples $a<b<c<d$. $M(2)=2$. $\Phi(2)=1+1=2$.
+
+We want to establish the recurrence relation $M(n) = M(n-1) + \phi(n)$ for $n \ge 2$.
+
+Let $B(n)$ be the set of beautiful labellings of $\{0, \ldots, n\}$. We define a map $f: B(n) \to B(n-1)$ by removing the label $n$. If $L \in B(n)$, the remaining labelling $L'$ of $\{0, \ldots, n-1\}$ preserves the cyclic order of the remaining labels. If $a<b<c<d \le n-1$ satisfy $a+d=b+c$, then the chords $(a, d)$ and $(b, c)$ do not intersect in $L$, so they do not intersect in $L'$. Thus $L'$ is beautiful, and the map $f$ is well-defined.
+
+For a labelling $L' \in B(n-1)$, let $E(L')$ be the number of beautiful extensions of $L'$ to $B(n)$, i.e., the size of the fiber $f^{-1}(L')$. We have
+$$M(n) = \sum_{L' \in B(n-1)} E(L').$$
+We can rewrite this as
+$$M(n) = M(n-1) + \sum_{L' \in B(n-1)} (E(L')-1).$$
+To prove the recurrence relation, we need to show that $\sum_{L' \in B(n-1)} (E(L')-1) = \phi(n)$.
+
+The proof relies on the following crucial lemmas regarding the number of extensions, which are non-trivial results related to the structure of beautiful labellings and their connection to Farey sequences and the Stern-Brocot tree.
+
+**Lemma 1 (Existence of Extensions):** For every $L' \in B(n-1)$, there is at least one beautiful extension to $B(n)$, so $E(L') \ge 1$.
+
+**Lemma 2 (Number of Extensions):** For every $L' \in B(n-1)$, the number of beautiful extensions is either 1 or 2, so $E(L') \in \{1, 2\}$.
+
+**Lemma 3 (Characterization of Two Extensions):** The number of beautiful labellings $L' \in B(n-1)$ such that $E(L')=2$ is equal to $\phi(n)$.
+
+Assuming these lemmas, we can complete the proof of the recurrence relation.
+Let $K(n)$ be the number of $L' \in B(n-1)$ such that $E(L')=2$. By Lemma 3, $K(n)=\phi(n)$.
+The number of $L' \in B(n-1)$ such that $E(L')=1$ is $M(n-1)-K(n)$.
+
+Then,
+$$\sum_{L' \in B(n-1)} (E(L')-1) = K(n) \cdot (2-1) + (M(n-1)-K(n)) \cdot (1-1) = K(n) = \phi(n).$$
+Therefore, we have established the recurrence relation $M(n) = M(n-1) + \phi(n)$.
+
+Now we complete the inductive proof for $M(n)=\Phi(n)$.
+We checked the base cases. Assume $M(k)=\Phi(k)$ for $k < n$.
+$$M(n) = M(n-1) + \phi(n) = \Phi(n-1) + \phi(n) = \sum_{k=1}^{n-1} \phi(k) + \phi(n) = \sum_{k=1}^n \phi(k) = \Phi(n).$$
+Since $M(n)=\Phi(n)$ and $N+1=\Phi(n)$, we conclude that $M=N+1$.

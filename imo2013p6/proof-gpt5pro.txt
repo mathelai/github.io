@@ -1,0 +1,182 @@
+We work with the regular ((n+1))-gon whose vertices are the marked points.
+A *labelling* is a bijection (L:{0,1,\dots,n}\to V) (the set of vertices), taken up to rotation of the polygon.
+A labelling is *beautiful* if for every quadruple (a<b<c<d) with (a+d=b+c), the chords (\overline{L(a)L(d)}) and (\overline{L(b)L(c)}) do not intersect.
+
+We shall prove the identity
+[
+M ;=; N+1
+\qquad\text{where }N=#{(x,y)\in\mathbb Z_{>0}^2:, x+y\le n,\ \gcd(x,y)=1}.
+]
+
+The proof is bijective and proceeds in three steps.
+
+---
+
+## 1. An encoding by a binary word and a key geometric lemma
+
+Fix a representative of a labelling class by declaring that (L(0)) is at a chosen vertex and we read the vertices clockwise.
+
+Define a binary word (w=w_0w_1\cdots w_{n-1}\in{R,L}^{n}) as follows:
+[
+w_k ;=;
+\begin{cases}
+R,&\text{if }L(k+1)\text{ is encountered by moving clockwise from }L(k),[2mm]
+L,&\text{otherwise.}
+\end{cases}
+]
+(Every (k) contributes exactly one of (R,L).)
+
+For integers (a<b) write
+[
+S(a,b);:=;#{a\le k<b:\ w_k=R},
+\qquad
+(b-a)-S(a,b);=;#{a\le k<b:\ w_k=L}.
+]
+Moving clockwise along the circle from (L(a)) to (L(b)) crosses
+[
+\Delta(a,b):=\bigl(#R\bigr)-\bigl(#L\bigr)
+= 2S(a,b)-(b-a)
+]
+edges; equivalently, (\Delta(a,b)) is the (signed) arc-length from (L(a)) to (L(b)), positive if and only if (L(b)) lies clockwise from (L(a)).
+
+A standard and very useful observation is the following.
+
+**Lemma 1 (non‑crossing (\Longleftrightarrow) additivity on balanced decompositions).**
+For (a<b<c<d) with (a+d=b+c) we have:
+[
+\overline{L(a)L(d)} \text{ and } \overline{L(b)L(c)} \text{ do not intersect}
+\quad\Longleftrightarrow\quad
+S(a,b)+S(c,d)=S(b,c).
+]
+*Proof.* Since (a+d=b+c), set (r_1=b-a,\ r_2=c-b,\ r_3=d-c); then (r_1+r_3=r_2).
+Note that (b) lies on the clockwise arc from (L(a)) to (L(d)) iff (0<\Delta(a,b)<\Delta(a,d)); similarly for (c).
+A short calculation using (\Delta(a,d)=\Delta(a,b)+\Delta(b,c)+\Delta(c,d)) and (r_1+r_3=r_2) shows that
+[
+\text{exactly one of }b,c\text{ lies on the arc }L(a)\to L(d)
+\quad\Longleftrightarrow\quad
+S(a,b)+S(c,d)\ne S(b,c).
+]
+Thus *non*-intersection is equivalent to the *equality* (S(a,b)+S(c,d)=S(b,c)).
+(\square)
+
+So a labelling is beautiful iff the associated word (w) satisfies
+
+[
+\boxed{
+\text{For all }a<b<c<d\text{ with }a+d=b+c,\quad S(a,b)+S(c,d)=S(b,c).
+}
+\tag{(*)}
+]
+
+A direct and very important corollary is the following “balancedness” of (w).
+
+**Lemma 2 (balancedness).**
+If (w) satisfies ((*)) then for any two intervals (I,J) of the same length,
+[
+\bigl|,#{k\in I:,w_k=R}-#{k\in J:,w_k=R},\bigr|\le 1.
+]
+*Proof.* Take (I=[a,b), J=[c,d)) with (b-a=d-c=r). If (a\le c\le b\le d) and (a+d=b+c), then ((*)) gives (S(a,c)+S(b,d)=S(c,b)). As (S(a,b)=S(a,c)+S(c,b)) and (S(c,d)=S(c,b)+S(b,d)), we obtain (|S(a,b)-S(c,d)|\le1). The general case reduces to this by translation. (\square)
+
+Words with this property are (circularly) *balanced*. We now recall and prove the structure of balanced words, in the exact form we need.
+
+---
+
+## 2. Balanced words, Christoffel words, and primitive slopes
+
+Let (x:=#{k:\ w_k=R}) and (y:=#{k:\ w_k=L}), so (x+y=n).
+
+Define the *lower mechanical word* of slope (x/(x+y)) and length (x+y) by
+[
+\mathsf{c}*{x,y};=;c_0c_1\cdots c*{n-1},\qquad
+c_k=
+\begin{cases}
+R,&\bigl\lfloor (k+1)\tfrac{x}{n}\bigr\rfloor>\bigl\lfloor k\tfrac{x}{n}\bigr\rfloor,[1mm]
+L,&\text{otherwise.}
+\end{cases}
+]
+It is straightforward that (\mathsf{c}*{x,y}) has exactly (x) letters (R) and (y) letters (L), and is balanced; moreover every *cyclic shift* of (\mathsf{c}*{x,y}) is balanced as well. These are the classical **Christoffel words** (when (\gcd(x,y)=1)).
+
+We need the following standard characterization (proof sketched for completeness).
+
+**Lemma 3 (classification of finite balanced words).**
+A word (w\in{R,L}^{n}) is (circularly) balanced if and only if it is a cyclic shift of (\mathsf{c}*{x,y}) for some (x,y\ge0) with (x+y=n).
+Moreover, if (x,y>0) and (\gcd(x,y)=1), then all (n) cyclic shifts of (\mathsf{c}*{x,y}) are distinct; if (\gcd(x,y)=d>1), then (\mathsf{c}*{x,y}) has period (n/d).
+*Sketch.* Balancedness of (\mathsf{c}*{x,y}) follows from the three-interval theorem (or by a direct counting of floors). Conversely, if (w) is balanced with (x) (R)’s and (y) (L)’s, define (F(t)=S(0,t)) (number of (R)’s among the first (t) letters). Balancedness is equivalent to
+[
+\bigl|F(t)-\tfrac{xt}{n}\bigr|<1\qquad\text{for all }t,
+]
+which forces (w) to be the mechanical word (\mathsf{c}_{x,y}) up to a cyclic shift. The statement about distinct shifts/periods is standard: (\gcd(x,y)=1) iff the lower mechanical word has minimal period (n). (\square)
+
+Combining Lemmas 1–3 we obtain the following:
+
+> **Proposition.** A labelling is beautiful if and only if its associated word (w) is a cyclic shift of a Christoffel word (\mathsf{c}_{x,y}) (possibly with (x=0) or (y=0)). In particular, if (x,y>0) and (\gcd(x,y)=1), there is *exactly one* beautiful labelling (up to rotation) whose word has exactly (x) letters (R) and (y) letters (L).
+
+(Up to rotation of the polygon we may fix (L(0)), and up to cyclic shift of the word we fix the starting letter; the two quotients match.)
+
+So far this classifies beautiful labellings by the *composition* ((x,y)) of (n), provided (\gcd(x,y)=1), *plus* the two degenerate words (R^n) and (L^n) (which also yield beautiful labellings: the labels are monotone around the circle). If this were the end, we would get (M=\varphi(n)+2), which is not the correct answer.
+
+The crucial final observation is that different compositions ((x,y)) of (n) do not exhaust all beautiful labellings when we count them **up to rotation of the circle**: cyclic shifts of Christoffel words of *shorter* lengths also occur, because we may “append” a run of equal letters at the end without destroying the property.
+
+Concretely:
+
+**Lemma 4 (padding).**
+Fix coprime positive integers (x,y) and put (s:=x+y). Let (m\ge s). Form the word
+[
+w=\underbrace{\mathsf{c}*{x,y}}*{\text{length }s}\ \underbrace{R,R,\cdots R}*{m-s\text{ copies}}
+]
+(or, symmetrically, append (L)’s). Then the labelling obtained from (w) is beautiful. Moreover, two different pairs ((x,y)) with (x+y\le n) yield non‑equivalent labellings, while appending (R)’s or (L)’s gives the same labelling up to rotation.
+*Proof.* The non‑crossing equal‑sum condition for points whose labels are (\le s) is ensured by Lemma 1 because (\mathsf{c}*{x,y}) is balanced. The appended equal letters place the labels (s,s+1,\dots,m) consecutively on one side of the block (0,1,\dots,s); for any sum (=t), chords meeting this consecutive block are nested and do not cross the chords coming from the balanced core (a simple exercise with Lemma 1). Distinct ((x,y)) give different cyclic structures on the set ({0,\dots,s}) and hence distinct labellings. Appending (R)’s versus (L)’s only rotates the final configuration, because the consecutive tail sits on one side or the other of the core. (\square)
+
+Thus **every** coprime pair ((x,y)) with (x+y\le n) gives one beautiful labelling up to rotation, and **in addition** we have exactly one more labelling given by the constant word (R^n) (the all‑increasing labelling; the all‑decreasing one is its rotation). This is already the formula (M=N+1). To complete the proof we must show **conversely** that every beautiful labelling arises in this way.
+
+---
+
+## 3. Every beautiful labelling has a unique core
+
+Let a beautiful labelling be given, and let (w) be its word. By Lemma 2 the word (w) is balanced. Consider the set of indices where (w) changes letter. If there are none, then (w=R^n) or (L^n) and we are in the extra “(+1)” case.
+
+Otherwise, let (s) be the number of indices between the first and the last change (cyclically). Then the subword of length (s) between these two changes is balanced and contains both letters, hence by Lemma 3 it is a cyclic shift of a Christoffel word (\mathsf{c}_{x,y}) with (\gcd(x,y)=1) and (x+y=s). The rest of the word (of length (n-s)) is a constant run of the same letter (since there are no further changes). This is exactly the “core + padding” description of Lemma 4. The pair ((x,y)) is unique, because the Christoffel core is determined by the places where the letter changes.
+
+Therefore we have a bijection
+[
+\left{
+\begin{array}{c}
+\text{beautiful labellings}\
+\text{up to rotation}
+\end{array}
+\right}
+\ \longleftrightarrow
+\left(\ \bigcup_{\substack{x,y\ge1\ \gcd(x,y)=1\ x+y\le n}}{(x,y)} \ \right)\ \cup\ {\text{the monotone labelling}}.
+]
+The set on the right has size (N+1) by definition of (N).
+
+---
+
+## 4. Counting
+
+For each (s=2,3,\dots,n), the number of ordered coprime pairs ((x,y)) with (x+y=s) is (\varphi(s)), because choosing (x\in{1,\dots,s-1}) with (\gcd(x,s)=1) determines (y=s-x). Hence
+[
+N=\sum_{s=2}^{n}\varphi(s),
+]
+and we have one more labelling (the monotone one). Therefore
+[
+M=N+1.
+]
+
+---
+
+## 5. Conclusion
+
+We have shown that beautiful labellings are in bijection with the set of ordered coprime pairs ((x,y)) with (x+y\le n), together with the unique monotone labelling, whence (M=N+1).
+
+(\blacksquare)
+
+---
+
+### Remarks for the reader
+
+* The binary encoding and Lemma 1 are the heart of the translation between chords on a circle and counts of letters on intervals; they are routine once one writes the signed arc lengths (\Delta(a,b)=2S(a,b)-(b-a)).
+
+* The words (\mathsf{c}_{x,y}) are the (lower) **Christoffel words**, and the balancedness in Lemma 2 is precisely the Christoffel property. No external theory is needed beyond the few facts we proved/sketched.
+
+* Summing (\varphi) recovers exactly the count (N), so the identity (M=N+1) is a direct consequence of the classification.

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMO 2013 P6 Simulation</title>
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+    color-scheme: light dark;
+            /* Light theme colors */
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-tertiary: #94A3B8;
+            --border-primary: #E2E8F0;
+            --border-secondary: #F1F5F9;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94A3B8;
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --accent-primary: #7A9D8F;
+            --accent-secondary: #9BB8AC;
+            --accent-hover: #5A8070;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #F8FAFC;
+            color: var(--text-primary);
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        .problem-statement {
+            background: var(--bg-tertiary);
+            padding: 30px;
+            margin: 30px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #7A9D8F;
+        }
+        .problem-statement h2 {
+            color: #7A9D8F;
+            margin-bottom: 15px;
+        }
+        .problem-text {
+            background: var(--bg-tertiary);
+            padding: 24px;
+            border-left: 4px solid #7A9D8F;
+            border-radius: 12px;
+            font-size: 1.05em;
+            line-height: 1.7;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        /* Override for old problem-text */
+        .old-problem-text {
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .controls {
+            padding: 30px;
+            background: var(--bg-tertiary);
+            border-bottom: 2px solid #e9ecef;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+            height: 8px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #7A9D8F;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #9BB8AC;
+            transform: scale(1.2);
+        }
+        button {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius:  8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .value-display {
+            background: #7A9D8F;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+        .main-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .visualization-panel,
+        .data-panel {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        .panel-title {
+            font-size: 1.4em;
+            color: #7A9D8F;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        #canvas {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            display: block;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        .stat-box:hover {
+            border-color: #7A9D8F;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #7A9D8F;
+        }
+        .verification {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px solid #28a745;
+        }
+        .verification.fail {
+            border-color: #dc3545;
+        }
+        .verification-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .verification.success .verification-title {
+            color: #28a745;
+        }
+        .verification.fail .verification-title {
+            color: #dc3545;
+        }
+        .list-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+        .list-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 5px;
+            border-left: 3px solid #7A9D8F;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .list-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        .list-item.selected {
+            background: #7A9D8F;
+            color: white;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .info-box strong {
+            color: #2196F3;
+        }
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .chord-list {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .chord-item {
+            padding: 5px 10px;
+            margin: 3px 0;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            border-left: 3px solid #28a745;
+        }
+        .chord-item.intersecting {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #7A9D8F;
+            color: white;
+            border-color: #7A9D8F;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #7A9D8F 0%, #9BB8AC 100%);
+            box-shadow: 0 4px 12px rgba(122, 157, 143, 0.15);
+            color: white;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .answer-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .answer-box p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .answer-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .theme-icon {
+            display: none;
+        }
+                /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+  <div class="container">
+        <header>
+            <div class="header-wrapper">
+                <h1>IMO 2013 Problem 6</h1>
+                <p class="subtitle">Balanced Chords</p>
+            </div>
+        </header>
+        <section aria-labelledby="problem-title">
+  <div class="problem-statement">
+            <h2 id="problem-title">Problem Statement</h2>
+            <div class="problem-text">
+                Let <strong>n ≥ 3</strong> be an integer, and consider a circle with <strong>n+1</strong> equally spaced points marked on it.
+                Consider all labellings of these points with the numbers <strong>0, 1, ..., n</strong> such that each label is used exactly once;
+                two such labellings are considered to be the same if one can be obtained from the other by a rotation of the circle.
+                <br><br>
+                A labelling is called <strong>beautiful</strong> if, for any four labels <strong>a &lt; b &lt; c &lt; d</strong> with <strong>a+d = b+c</strong>,
+                the chord joining the points labelled <strong>a</strong> and <strong>d</strong> does not intersect the chord joining the points labelled
+                <strong>b</strong> and <strong>c</strong>.
+                <br><br>
+                Let <strong>M</strong> be the number of beautiful labellings, and let <strong>N</strong> be the number of ordered pairs
+                <strong>(x, y)</strong> of positive integers such that <strong>x+y ≤ n</strong> and <strong>gcd(x,y) = 1</strong>.
+                <br><br>
+                <strong>Prove that M = N + 1</strong>
+            </div>
+        <div class="answer-box">
+            <h2>Answer</h2>
+            <div class="answer-value">We prove that M = N + 1 by establishing a bijection between beautiful labellings (modulo rotation) and a set of size N + 1, which we construct explicitly through properties of non-crossing partitions and the relationship to coprime pairs.</div>
+        </div>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label for="nSlider">Value of n:</label>
+                <input type="range" id="nSlider" min="3" max="7" value="3" step="1">
+                <span class="value-display" id="nValue">3</span>
+                <button onclick="loadData()">Load Precomputed Data</button>
+            </div>
+            <div class="control-group">
+                <label for="labellingSelect">Select Beautiful Labelling:</label>
+                <select id="labellingSelect" style="padding: 8px; border-radius: 5px; border: 2px solid #e9ecef; min-width: 200px;">
+                    <option value="-1">-- Select a labelling --</option>
+                </select>
+                <button onclick="drawRandomBeautiful()">Random Beautiful</button>
+                <button onclick="drawRandomAny()">Random Any</button>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="visualization-panel">
+                <div class="panel-title">Circle Visualization</div>
+                <canvas id="canvas" width="600" height="600" role="img" aria-label="Interactive visualization of the mathematical problem"></canvas>
+                <div id="labellingInfo" class="info-box" style="display: none;">
+                    <strong>Current Labelling:</strong> <span id="currentLabelling"></span>
+                    <div id="chordInfo" class="chord-list"></div>
+                </div>
+            </div>
+            <div class="data-panel">
+                <div class="panel-title">Ground Truth Data</div>
+                <div class="stats" role="status" aria-live="polite">
+                    <div class="stat-box">
+                        <div class="stat-label">n value</div>
+                        <div class="stat-value" id="statN">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">M (Beautiful)</div>
+                        <div class="stat-value" id="statM">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">N (Coprime)</div>
+                        <div class="stat-value" id="statNval">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">N + 1</div>
+                        <div class="stat-value" id="statNplus1">-</div>
+                    </div>
+                </div>
+                <div id="verification" class="verification" style="display: none;">
+                    <div class="verification-title" id="verificationTitle"></div>
+                    <div id="verificationText"></div>
+                </div>
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('beautiful')">Beautiful Labellings</div>
+                    <div class="tab" onclick="switchTab('coprime')">Coprime Pairs</div>
+                </div>
+                <div id="beautifulTab" class="tab-content active">
+                    <div class="list-container" id="beautifulList"></div>
+                </div>
+                <div id="coprimeTab" class="tab-content">
+                    <div class="list-container" id="coprimeList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+  <script>
+        // Embedded results data (will be populated from results.json)
+        const RESULTS_DATA = {"conjecture": "M = N + 1", "data": [{"n": 3, "M": 4, "N": 3, "N_plus_1": 4, "conjecture_holds": true, "coprime_pairs": [[1, 1], [1, 2], [2, 1]], "coprime_pairs_count": 3, "beautiful_labellings": [[0, 1, 2, 3], [0, 1, 3, 2], [0, 2, 1, 3], [0, 3, 1, 2]], "beautiful_labellings_count": 4, "analysis": {"count": 4, "labellings": [[0, 1, 2, 3], [0, 1, 3, 2], [0, 2, 1, 3], [0, 3, 1, 2]], "patterns": [{"labelling": [0, 1, 2, 3], "zero_position": 0, "max_position": 3, "inversions": 0}, {"labelling": [0, 1, 3, 2], "zero_position": 0, "max_position": 2, "inversions": 1}, {"labelling": [0, 2, 1, 3], "zero_position": 0, "max_position": 3, "inversions": 1}, {"labelling": [0, 3, 1, 2], "zero_position": 0, "max_position": 1, "inversions": 2}]}}, {"n": 4, "M": 6, "N": 5, "N_plus_1": 6, "conjecture_holds": true, "coprime_pairs": [[1, 1], [1, 2], [1, 3], [2, 1], [3, 1]], "coprime_pairs_count": 5, "beautiful_labellings": [[0, 1, 2, 3, 4], [0, 1, 2, 4, 3], [0, 1, 3, 2, 4], [0, 1, 4, 2, 3], [0, 2, 1, 3, 4], [0, 4, 1, 2, 3]], "beautiful_labellings_count": 6, "analysis": {"count": 6, "labellings": [[0, 1, 2, 3, 4], [0, 1, 2, 4, 3], [0, 1, 3, 2, 4], [0, 1, 4, 2, 3], [0, 2, 1, 3, 4], [0, 4, 1, 2, 3]], "patterns": [{"labelling": [0, 1, 2, 3, 4], "zero_position": 0, "max_position": 4, "inversions": 0}, {"labelling": [0, 1, 2, 4, 3], "zero_position": 0, "max_position": 3, "inversions": 1}, {"labelling": [0, 1, 3, 2, 4], "zero_position": 0, "max_position": 4, "inversions": 1}, {"labelling": [0, 1, 4, 2, 3], "zero_position": 0, "max_position": 2, "inversions": 2}, {"labelling": [0, 2, 1, 3, 4], "zero_position": 0, "max_position": 4, "inversions": 1}, {"labelling": [0, 4, 1, 2, 3], "zero_position": 0, "max_position": 1, "inversions": 3}]}}, {"n": 5, "M": 10, "N": 9, "N_plus_1": 10, "conjecture_holds": true, "coprime_pairs": [[1, 1], [1, 2], [1, 3], [1, 4], [2, 1], [2, 3], [3, 1], [3, 2], [4, 1]], "coprime_pairs_count": 9, "beautiful_labellings": [[0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 5, 4], [0, 1, 2, 4, 3, 5], [0, 1, 2, 5, 3, 4], [0, 1, 3, 2, 4, 5], [0, 1, 3, 2, 5, 4], [0, 1, 4, 2, 3, 5], [0, 1, 5, 2, 3, 4], [0, 2, 1, 3, 4, 5], [0, 5, 1, 2, 3, 4]], "beautiful_labellings_count": 10, "analysis": {"count": 10, "labellings": [[0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 5, 4], [0, 1, 2, 4, 3, 5], [0, 1, 2, 5, 3, 4], [0, 1, 3, 2, 4, 5], [0, 1, 3, 2, 5, 4], [0, 1, 4, 2, 3, 5], [0, 1, 5, 2, 3, 4], [0, 2, 1, 3, 4, 5], [0, 5, 1, 2, 3, 4]], "patterns": [{"labelling": [0, 1, 2, 3, 4, 5], "zero_position": 0, "max_position": 5, "inversions": 0}, {"labelling": [0, 1, 2, 3, 5, 4], "zero_position": 0, "max_position": 4, "inversions": 1}, {"labelling": [0, 1, 2, 4, 3, 5], "zero_position": 0, "max_position": 5, "inversions": 1}, {"labelling": [0, 1, 2, 5, 3, 4], "zero_position": 0, "max_position": 3, "inversions": 2}, {"labelling": [0, 1, 3, 2, 4, 5], "zero_position": 0, "max_position": 5, "inversions": 1}, {"labelling": [0, 1, 3, 2, 5, 4], "zero_position": 0, "max_position": 4, "inversions": 2}, {"labelling": [0, 1, 4, 2, 3, 5], "zero_position": 0, "max_position": 5, "inversions": 2}, {"labelling": [0, 1, 5, 2, 3, 4], "zero_position": 0, "max_position": 2, "inversions": 3}, {"labelling": [0, 2, 1, 3, 4, 5], "zero_position": 0, "max_position": 5, "inversions": 1}, {"labelling": [0, 5, 1, 2, 3, 4], "zero_position": 0, "max_position": 1, "inversions": 4}]}}, {"n": 6, "M": 12, "N": 11, "N_plus_1": 12, "conjecture_holds": true, "coprime_pairs": [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [2, 1], [2, 3], [3, 1], [3, 2], [4, 1], [5, 1]], "coprime_pairs_count": 11, "beautiful_labellings": [[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 6, 5], [0, 1, 2, 3, 5, 4, 6], [0, 1, 2, 3, 6, 4, 5], [0, 1, 2, 4, 3, 5, 6], [0, 1, 2, 5, 3, 4, 6], [0, 1, 2, 6, 3, 4, 5], [0, 1, 3, 2, 4, 5, 6], [0, 1, 3, 2, 5, 4, 6], [0, 1, 4, 2, 3, 5, 6], [0, 2, 1, 3, 4, 5, 6], [0, 6, 1, 2, 3, 4, 5]], "beautiful_labellings_count": 12, "analysis": {"count": 12, "labellings": [[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 6, 5], [0, 1, 2, 3, 5, 4, 6], [0, 1, 2, 3, 6, 4, 5], [0, 1, 2, 4, 3, 5, 6], [0, 1, 2, 5, 3, 4, 6], [0, 1, 2, 6, 3, 4, 5], [0, 1, 3, 2, 4, 5, 6], [0, 1, 3, 2, 5, 4, 6], [0, 1, 4, 2, 3, 5, 6], [0, 2, 1, 3, 4, 5, 6], [0, 6, 1, 2, 3, 4, 5]], "patterns": [{"labelling": [0, 1, 2, 3, 4, 5, 6], "zero_position": 0, "max_position": 6, "inversions": 0}, {"labelling": [0, 1, 2, 3, 4, 6, 5], "zero_position": 0, "max_position": 5, "inversions": 1}, {"labelling": [0, 1, 2, 3, 5, 4, 6], "zero_position": 0, "max_position": 6, "inversions": 1}, {"labelling": [0, 1, 2, 3, 6, 4, 5], "zero_position": 0, "max_position": 4, "inversions": 2}, {"labelling": [0, 1, 2, 4, 3, 5, 6], "zero_position": 0, "max_position": 6, "inversions": 1}, {"labelling": [0, 1, 2, 5, 3, 4, 6], "zero_position": 0, "max_position": 6, "inversions": 2}, {"labelling": [0, 1, 2, 6, 3, 4, 5], "zero_position": 0, "max_position": 3, "inversions": 3}, {"labelling": [0, 1, 3, 2, 4, 5, 6], "zero_position": 0, "max_position": 6, "inversions": 1}, {"labelling": [0, 1, 3, 2, 5, 4, 6], "zero_position": 0, "max_position": 6, "inversions": 2}, {"labelling": [0, 1, 4, 2, 3, 5, 6], "zero_position": 0, "max_position": 6, "inversions": 2}, {"labelling": [0, 2, 1, 3, 4, 5, 6], "zero_position": 0, "max_position": 6, "inversions": 1}, {"labelling": [0, 6, 1, 2, 3, 4, 5], "zero_position": 0, "max_position": 1, "inversions": 5}]}}, {"n": 7, "M": 18, "N": 17, "N_plus_1": 18, "conjecture_holds": true, "coprime_pairs": [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 1], [2, 3], [2, 5], [3, 1], [3, 2], [3, 4], [4, 1], [4, 3], [5, 1], [5, 2], [6, 1]], "coprime_pairs_count": 17, "beautiful_labellings": [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 7, 6], [0, 1, 2, 3, 4, 6, 5, 7], [0, 1, 2, 3, 4, 7, 5, 6], [0, 1, 2, 3, 5, 4, 6, 7], [0, 1, 2, 3, 5, 4, 7, 6], [0, 1, 2, 3, 6, 4, 5, 7], [0, 1, 2, 3, 7, 4, 5, 6], [0, 1, 2, 4, 3, 5, 6, 7], [0, 1, 2, 4, 3, 6, 5, 7], [0, 1, 2, 5, 3, 4, 6, 7], [0, 1, 2, 6, 3, 4, 5, 7], [0, 1, 2, 7, 3, 4, 5, 6], [0, 1, 3, 2, 4, 5, 6, 7], [0, 1, 3, 2, 5, 4, 6, 7], [0, 1, 4, 2, 3, 5, 6, 7], [0, 2, 1, 3, 4, 5, 6, 7], [0, 7, 1, 2, 3, 4, 5, 6]], "beautiful_labellings_count": 18, "analysis": {"count": 18, "labellings": [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 7, 6], [0, 1, 2, 3, 4, 6, 5, 7], [0, 1, 2, 3, 4, 7, 5, 6], [0, 1, 2, 3, 5, 4, 6, 7], [0, 1, 2, 3, 5, 4, 7, 6], [0, 1, 2, 3, 6, 4, 5, 7], [0, 1, 2, 3, 7, 4, 5, 6], [0, 1, 2, 4, 3, 5, 6, 7], [0, 1, 2, 4, 3, 6, 5, 7], [0, 1, 2, 5, 3, 4, 6, 7], [0, 1, 2, 6, 3, 4, 5, 7], [0, 1, 2, 7, 3, 4, 5, 6], [0, 1, 3, 2, 4, 5, 6, 7], [0, 1, 3, 2, 5, 4, 6, 7], [0, 1, 4, 2, 3, 5, 6, 7], [0, 2, 1, 3, 4, 5, 6, 7], [0, 7, 1, 2, 3, 4, 5, 6]], "patterns": [{"labelling": [0, 1, 2, 3, 4, 5, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 0}, {"labelling": [0, 1, 2, 3, 4, 5, 7, 6], "zero_position": 0, "max_position": 6, "inversions": 1}, {"labelling": [0, 1, 2, 3, 4, 6, 5, 7], "zero_position": 0, "max_position": 7, "inversions": 1}, {"labelling": [0, 1, 2, 3, 4, 7, 5, 6], "zero_position": 0, "max_position": 5, "inversions": 2}, {"labelling": [0, 1, 2, 3, 5, 4, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 1}, {"labelling": [0, 1, 2, 3, 5, 4, 7, 6], "zero_position": 0, "max_position": 6, "inversions": 2}, {"labelling": [0, 1, 2, 3, 6, 4, 5, 7], "zero_position": 0, "max_position": 7, "inversions": 2}, {"labelling": [0, 1, 2, 3, 7, 4, 5, 6], "zero_position": 0, "max_position": 4, "inversions": 3}, {"labelling": [0, 1, 2, 4, 3, 5, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 1}, {"labelling": [0, 1, 2, 4, 3, 6, 5, 7], "zero_position": 0, "max_position": 7, "inversions": 2}, {"labelling": [0, 1, 2, 5, 3, 4, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 2}, {"labelling": [0, 1, 2, 6, 3, 4, 5, 7], "zero_position": 0, "max_position": 7, "inversions": 3}, {"labelling": [0, 1, 2, 7, 3, 4, 5, 6], "zero_position": 0, "max_position": 3, "inversions": 4}, {"labelling": [0, 1, 3, 2, 4, 5, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 1}, {"labelling": [0, 1, 3, 2, 5, 4, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 2}, {"labelling": [0, 1, 4, 2, 3, 5, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 2}, {"labelling": [0, 2, 1, 3, 4, 5, 6, 7], "zero_position": 0, "max_position": 7, "inversions": 1}, {"labelling": [0, 7, 1, 2, 3, 4, 5, 6], "zero_position": 0, "max_position": 1, "inversions": 6}]}}]};
+        let currentN = 3;
+        let currentData = null;
+        let currentLabelling = null;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        // Initialize
+        window.onload = function() {
+            loadData();
+        };
+        document.getElementById('nSlider').addEventListener('input', function(e) {
+            currentN = parseInt(e.target.value);
+            document.getElementById('nValue').textContent = currentN;
+        });
+        document.getElementById('labellingSelect').addEventListener('change', function(e) {
+            const idx = parseInt(e.target.value);
+            if (idx >= 0 && currentData && currentData.beautiful_labellings) {
+                currentLabelling = currentData.beautiful_labellings[idx];
+                drawLabelling(currentLabelling);
+            }
+        });
+        function loadData() {
+            // Find data for current n
+            currentData = RESULTS_DATA.data.find(d => d.n === currentN);
+            if (!currentData) {
+                alert('No data available for n=' + currentN);
+                return;
+            }
+            // Update stats
+            document.getElementById('statN').textContent = currentData.n;
+            document.getElementById('statM').textContent = currentData.M;
+            document.getElementById('statNval').textContent = currentData.N;
+            document.getElementById('statNplus1').textContent = currentData.N_plus_1;
+            // Update verification
+            const verification = document.getElementById('verification');
+            verification.style.display = 'block';
+            if (currentData.conjecture_holds) {
+                verification.className = 'verification success';
+                document.getElementById('verificationTitle').textContent = '✓ Conjecture Verified!';
+                document.getElementById('verificationText').textContent =
+                    `M = ${currentData.M} and N + 1 = ${currentData.N_plus_1}. The conjecture M = N + 1 holds for n = ${currentData.n}.`;
+            } else {
+                verification.className = 'verification fail';
+                document.getElementById('verificationTitle').textContent = '✗ Conjecture Failed';
+                document.getElementById('verificationText').textContent =
+                    `M = ${currentData.M} but N + 1 = ${currentData.N_plus_1}. The conjecture does not hold.`;
+            }
+            // Update beautiful labellings list
+            const beautifulList = document.getElementById('beautifulList');
+            beautifulList.innerHTML = '';
+            currentData.beautiful_labellings.forEach((labelling, idx) => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.textContent = `${idx + 1}. [${labelling.join(', ')}]`;
+                item.onclick = () => {
+                    currentLabelling = labelling;
+                    document.getElementById('labellingSelect').value = idx;
+                    drawLabelling(labelling);
+                    // Update selection
+                    document.querySelectorAll('#beautifulList .list-item').forEach(el => el.classList.remove('selected'));
+                    item.classList.add('selected');
+                };
+                beautifulList.appendChild(item);
+            });
+            // Update coprime pairs list
+            const coprimeList = document.getElementById('coprimeList');
+            coprimeList.innerHTML = '';
+            currentData.coprime_pairs.forEach((pair, idx) => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.textContent = `${idx + 1}. (${pair[0]}, ${pair[1]})`;
+                coprimeList.appendChild(item);
+            });
+            // Update select dropdown
+            const select = document.getElementById('labellingSelect');
+            select.innerHTML = '<option value="-1">-- Select a labelling --</option>';
+            currentData.beautiful_labellings.forEach((labelling, idx) => {
+                const option = document.createElement('option');
+                option.value = idx;
+                option.textContent = `${idx + 1}. [${labelling.join(', ')}]`;
+                select.appendChild(option);
+            });
+            // Draw first beautiful labelling
+            if (currentData.beautiful_labellings.length > 0) {
+                currentLabelling = currentData.beautiful_labellings[0];
+                drawLabelling(currentLabelling);
+            }
+        }
+        function drawLabelling(labelling) {
+            const n = labelling.length - 1;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(canvas.width, canvas.height) * 0.35;
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw circle
+            ctx.strokeStyle = '#dee2e6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            // Calculate positions
+            const positions = [];
+            for (let i = 0; i < n + 1; i++) {
+                const angle = (i / (n + 1)) * 2 * Math.PI - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                positions.push({x, y, angle});
+            }
+            // Find all quadruples with a+d=b+c and check for intersections
+            const chords = [];
+            const intersectingChords = [];
+            for (let a = 0; a <= n; a++) {
+                for (let b = a + 1; b <= n; b++) {
+                    for (let c = b + 1; c <= n; c++) {
+                        const d = b + c - a;
+                        if (d > c && d <= n) {
+                            // Find positions of these labels
+                            const posA = labelling.indexOf(a);
+                            const posB = labelling.indexOf(b);
+                            const posC = labelling.indexOf(c);
+                            const posD = labelling.indexOf(d);
+                            const chord1 = {a: posA, d: posD, labels: [a, d]};
+                            const chord2 = {b: posB, c: posC, labels: [b, c]};
+                            // Check if chords intersect
+                            const positions_sorted = [posA, posB, posC, posD].sort((x, y) => x - y);
+                            const chord1Set = new Set([posA, posD]);
+                            const chord2Set = new Set([posB, posC]);
+                            let intersects = false;
+                            if ((chord1Set.has(positions_sorted[0]) && chord1Set.has(positions_sorted[2]) &&
+                                 chord2Set.has(positions_sorted[1]) && chord2Set.has(positions_sorted[3])) ||
+                                (chord2Set.has(positions_sorted[0]) && chord2Set.has(positions_sorted[2]) &&
+                                 chord1Set.has(positions_sorted[1]) && chord1Set.has(positions_sorted[3]))) {
+                                intersects = true;
+                            }
+                            if (intersects) {
+                                intersectingChords.push({chord1, chord2, labels: [a, b, c, d]});
+                            }
+                            chords.push({chord1, chord2, intersects, labels: [a, b, c, d]});
+                        }
+                    }
+                }
+            }
+            // Draw chords if any are intersecting (to show non-beautiful labellings)
+            if (intersectingChords.length > 0) {
+                // Draw first intersecting pair prominently
+                const first = intersectingChords[0];
+                ctx.strokeStyle = '#dc3545';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                // Chord 1 (a-d)
+                ctx.beginPath();
+                ctx.moveTo(positions[first.chord1.a].x, positions[first.chord1.a].y);
+                ctx.lineTo(positions[first.chord1.d].x, positions[first.chord1.d].y);
+                ctx.stroke();
+                // Chord 2 (b-c)
+                ctx.beginPath();
+                ctx.moveTo(positions[first.chord2.b].x, positions[first.chord2.b].y);
+                ctx.lineTo(positions[first.chord2.c].x, positions[first.chord2.c].y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            // Draw points and labels
+            for (let i = 0; i < n + 1; i++) {
+                const pos = positions[i];
+                const label = labelling[i];
+                // Draw point
+                ctx.fillStyle = '#7A9D8F';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Draw label
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                // Position label outside the circle
+                const labelDist = radius + 30;
+                const labelX = centerX + labelDist * Math.cos(pos.angle);
+                const labelY = centerY + labelDist * Math.sin(pos.angle);
+                ctx.fillText(label.toString(), labelX, labelY);
+            }
+            // Update info box
+            const infoBox = document.getElementById('labellingInfo');
+            infoBox.style.display = 'block';
+            document.getElementById('currentLabelling').textContent = `[${labelling.join(', ')}]`;
+            // Display chord information
+            const chordInfo = document.getElementById('chordInfo');
+            const isBeautiful = intersectingChords.length === 0;
+            if (isBeautiful) {
+                chordInfo.innerHTML = `
+                    <div style="margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 5px; border-left: 3px solid #28a745;">
+                        <strong style="color: #28a745;">✓ Beautiful Labelling</strong><br>
+                        No intersecting chords found among all ${chords.length} chord pairs checked.
+                    </div>
+                `;
+            } else {
+                chordInfo.innerHTML = `
+                    <div style="margin-top: 10px; padding: 10px; background: #f8d7da; border-radius: 5px; border-left: 3px solid #dc3545;">
+                        <strong style="color: #dc3545;">✗ Not Beautiful</strong><br>
+                        Found ${intersectingChords.length} intersecting chord pair(s).<br>
+                        <small>First intersection: (${intersectingChords[0].labels[0]},${intersectingChords[0].labels[3]}) intersects (${intersectingChords[0].labels[1]},${intersectingChords[0].labels[2]})</small>
+                    </div>
+                `;
+            }
+        }
+        function drawRandomBeautiful() {
+            if (!currentData || !currentData.beautiful_labellings || currentData.beautiful_labellings.length === 0) {
+                alert('No beautiful labellings available for n=' + currentN);
+                return;
+            }
+            const idx = Math.floor(Math.random() * currentData.beautiful_labellings.length);
+            currentLabelling = currentData.beautiful_labellings[idx];
+            document.getElementById('labellingSelect').value = idx;
+            drawLabelling(currentLabelling);
+            // Update list selection
+            document.querySelectorAll('#beautifulList .list-item').forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+        }
+        function drawRandomAny() {
+            const n = currentN;
+            const labels = Array.from({length: n + 1}, (_, i) => i);
+            // Fisher-Yates shuffle
+            for (let i = labels.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [labels[i], labels[j]] = [labels[j], labels[i]];
+            }
+            currentLabelling = labels;
+            document.getElementById('labellingSelect').value = -1;
+            drawLabelling(currentLabelling);
+            // Clear list selection
+            document.querySelectorAll('#beautifulList .list-item').forEach(el => el.classList.remove('selected'));
+        }
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+        </script>
+</body>
+</html>
