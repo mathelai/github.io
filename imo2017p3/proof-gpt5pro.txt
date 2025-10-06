@@ -1,0 +1,148 @@
+**Answer: No.**
+There is a strategy for the rabbit (together with the tracker) that defeats *every* possible strategy of the hunter and forces the distance to exceed (100) after (10^9) rounds.
+
+---
+
+## Notation
+
+At the beginning of round (n),
+
+* the rabbit is at (A_{n-1}), the hunter at (B_{n-1});
+* after the rabbit moves, it is at (A_n);
+* the tracker reports (P_n) with (\lvert P_n - A_n\rvert \le 1);
+* the hunter then moves to (B_n) with (\lvert B_n - B_{n-1}\rvert=1).
+
+Let
+[
+d_{n} ;=; \lvert A_n - B_n\rvert,\qquad r ;=; \lvert A_n - B_{n-1}\rvert.
+]
+
+---
+
+## The adversarial strategy
+
+Fix some round (n), and suppose (d_{n-1}=\lvert A_{n-1}-B_{n-1}\rvert = d).
+
+1. **Rabbit’s move.** The rabbit moves directly *away* from (B_{n-1}), so that
+   [
+   r=\lvert A_n - B_{n-1}\rvert = d+1.
+   ]
+
+2. **Tracker’s report.** Consider the two intersection points (S_+), (S_-) of the circles
+   [
+   {X:\lvert X-A_n\rvert=1}\quad\text{and}\quad {X:\lvert X-B_{n-1}\rvert=r}.
+   ]
+   These form an isosceles triangle (B_{n-1}A_nS_{\pm}) with equal sides (r,r) and base (1). Let (e) be the unit vector from (B_{n-1}) to (A_n), and let (\theta) be the angle between the rays (B_{n-1}A_n) and (B_{n-1}S_\pm). By the law of cosines,
+   [
+   \cos\theta ;=; \frac{r^2+r^2-1}{2r^2} ;=; 1-\frac{1}{2r^2}.
+   ]
+   The tracker chooses **whichever** of (S_\pm) will be worse for the hunter’s particular strategy (defined below), i.e. whichever yields the larger final distance after the hunter’s response.
+
+   (The tracker can do this because it knows the hunter’s strategy as a function of the report.)
+
+3. **Hunter’s move.** The hunter, upon seeing the chosen (P_n=S\in{S_+,S_-}), makes some move
+   [
+   B_n ;=; B_{n-1} + u,\qquad \lvert u\rvert=1,
+   ]
+   determined by her (arbitrary) strategy.
+
+We now prove that *no matter how* the hunter chooses (u), this adversarial choice of (A_n) and (P_n) forces a quantitative lower bound for the new distance (d_n).
+
+---
+
+## A one–round lower bound that holds against every hunter move
+
+Write (H=B_{n-1}), (R=A_n), and let (S\in{S_+,S_-}) be the tracker’s choice. Set
+[
+\widehat s ;=; \frac{S-H}{\lvert S-H\rvert},\qquad e ;=; \frac{R-H}{\lvert R-H\rvert}=\frac{R-H}{r}.
+]
+For the two candidates (S_\pm), we have
+[
+\widehat s_\pm ;=; \cos\theta, e ;\pm; \sin\theta, e_\perp,
+]
+so
+[
+\frac{\widehat s_+ + \widehat s_-}{2} ;=; \cos\theta, e.
+]
+Let (u) be the hunter’s unit step. Then among the two choices (S_\pm) we certainly have
+[
+\min{;u!\cdot!\widehat s_+,,, u!\cdot!\widehat s_-;}
+;\le; \frac{u!\cdot!(\widehat s_+ + \widehat s_-)}{2}
+;=; \cos\theta,(u!\cdot!e)
+;\le; \cos\theta.
+]
+Hence the tracker can choose (S\in{S_+,S_-}) so that
+[
+u!\cdot!\widehat s ;\le; \cos\theta. \tag{1}
+]
+
+Now write
+[
+R-B_n ;=; (R-S) ;+; (S-H) ;-; (B_n-H)
+;=; w ;+; r\widehat s ;-; u,
+]
+with (\lvert w\rvert=1) and (by isosceles geometry) (w!\cdot!\widehat s=\cos\angle RS H = \dfrac{1}{2r}).
+
+Compute:
+[
+\begin{aligned}
+\lvert R-B_n\rvert^2
+&= \lvert w\rvert^2 + r^2 + \lvert u\rvert^2 + 2r,w!\cdot!\widehat s ;-; 2,w!\cdot!u ;-; 2r,\widehat s!\cdot!u\
+&= r^2 + 2 ;-; 2,w!\cdot!u ;-; 2r,\widehat s!\cdot!u ;+; 2r\cdot\frac{1}{2r}\
+&= r^2 + 1 ;-; 2,w!\cdot!u ;-; 2r,\widehat s!\cdot!u.
+\end{aligned}
+]
+Since (\lvert w!\cdot!u\rvert\le 1), we get
+[
+\lvert R-B_n\rvert^2 ;\ge; r^2 - 1 ;-; 2r,\widehat s!\cdot!u
+;\ge; r^2 - 1 ;-; 2r,\cos\theta \quad\text{by },(1).
+]
+Therefore
+[
+d_n^2 = \lvert A_n - B_n\rvert^2;\ge; r^2 - 1 - 2r\cos\theta
+= r^2 - 1 - 2r!\left(1-\frac{1}{2r^2}\right)
+= (r-1)^2 + \frac{1}{r}.
+]
+Recalling (r=d+1), we have the **universal one–round inequality**
+[
+\boxed{;d_n^2 ;\ge; d_{n-1}^2 ;+; \frac{1}{d_{n-1}+1};}\tag{(*)}
+]
+which holds **for every hunter strategy** against the described adversarial choice of the rabbit and the tracker.
+
+---
+
+## Growth of a potential and the final bound
+
+From ((*)) with (d_0=0) we get (d_1^2\ge 1), so (d_1\ge 1). For (d\ge 1) set (t=\dfrac{1}{d+1}). Then
+[
+d_n^2 ;\ge; d^2 + t,\qquad
+d_n ;\ge; \sqrt{d^2+t} ;\ge; d + \frac{t}{2d}
+]
+(using (\sqrt{a+t}\ge \sqrt a + \tfrac{t}{2\sqrt a}) for (a,t>0)).
+
+Thus for (d\ge 1),
+[
+\begin{aligned}
+d_n^3 - d^3
+&= (d_n-d),(d_n^2 + d_n d + d^2)
+= \frac{d_n^2 - d^2}{d_n + d},(d_n^2 + d_n d + d^2)\
+&\ge \frac{t}{2d},\cdot, 3d^2 ;=; \frac{3}{2}\cdot\frac{d}{d+1} ;\ge; \frac{3}{4}.
+\end{aligned}
+]
+(We used (d_n\ge d) and (t=\frac{1}{d+1}).)
+
+Therefore, for all (N\ge 1),
+[
+d_N^3 ;\ge; d_1^3 + \sum_{n=2}^{N} \frac{3}{4}
+;\ge; 1 + \frac{3}{4}(N-1) ;\ge; \frac{3}{4}N.
+]
+In particular, for (N=10^9),
+[
+d_{10^9} ;\ge; \biggl(\frac{3}{4}\cdot 10^9\biggr)^{!1/3} ;>; 900 ;>; 100.
+]
+
+---
+
+## Conclusion
+
+Even if the hunter employs *any* strategy (possibly using the full history), the rabbit and the tracker can coordinate as above to force the distance after (10^9) rounds to exceed (100). Hence it is **not** always possible for the hunter to guarantee being within (100) of the rabbit after (10^9) rounds.

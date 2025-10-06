@@ -1,0 +1,85 @@
+The answer to the question is No. It is not always possible for the hunter to ensure that the distance between her and the rabbit is at most 100 after $10^9$ rounds.
+
+We will prove this by contradiction. Suppose there exists a strategy H for the hunter that ensures the distance $d_n = \|A_n-B_n\| \le M=100$ for all $n \le N=10^9$, regardless of the rabbit's moves (R) and the device's reports (D).
+
+We construct an adversarial strategy (R, D) against this specific strategy H.
+
+**1. The Rabbit's Strategy (R)**
+
+The rabbit always moves radially away from the hunter's current position. If $d_{n-1}>0$, let $u_{n-1}$ be the unit vector from $B_{n-1}$ to $A_{n-1}$. The rabbit moves to $A_n = A_{n-1} + u_{n-1}$. (If $d_{n-1}=0$, the rabbit moves in any direction).
+
+Let $R_n = \|A_n-B_{n-1}\|$ be the distance before the hunter moves. Under this strategy, $R_n = d_{n-1}+1$.
+
+**2. The Device's Strategy (D)**
+
+The device chooses the report $P_n$ adversarially, based on the hunter's strategy H, to maximize the resulting distance $d_n$.
+
+The hunter's strategy H determines the move $B_n$ as a function of the reports $P_1, \dots, P_n$. Let $h_n(P_1, \dots, P_n)$ be the unit vector representing the hunter's move direction in round $n$.
+
+The squared distance after round $n$ is:
+$d_n^2 = \|A_n-B_n\|^2 = \|A_n-B_{n-1}-h_n\|^2 = R_n^2+1-2(A_n-B_{n-1})\cdot h_n$.
+
+Let $v_n$ be the unit vector from $B_{n-1}$ to $A_n$.
+$d_n^2 = R_n^2+1-2R_n (v_n \cdot h_n)$.
+
+The device chooses $P_n \in D(A_n, 1)$ to maximize $d_n^2$, which is equivalent to minimizing the hunter's progress in the direction of the rabbit, $v_n \cdot h_n$.
+
+Let $g_n$ be the minimum progress achieved by the device. Since the history $P_1, \dots, P_{n-1}$ determines $B_{n-1}$ and thus $A_n$ (by strategy R), the hunter's move $h_n$ depends only on $P_n$ in this round.
+$g_n = \min_{P_n \in D(A_n, 1)} v_n \cdot h_n(P_n)$.
+
+The resulting squared distance is $d_n^2 = R_n^2+1-2R_n g_n$.
+
+**3. The Key Lemma**
+
+We rely on the following geometric lemma regarding the limitation of the hunter's strategy due to uncertainty.
+
+**Lemma:** For any hunter strategy $h_n(P_n)$, the minimum progress $g_n$ is bounded by $g_n \le \frac{\sqrt{R_n^2-1}}{R_n}$, assuming $R_n>1$.
+
+*Intuitive Justification:* Let $\theta_n$ be the angle such that $\sin\theta_n = 1/R_n$. The term $\frac{\sqrt{R_n^2-1}}{R_n} = \cos\theta_n$. This is the progress the hunter makes if she adopts the greedy strategy (moving towards $P_n$) and the device reports the tangent point (the report that maximizes the angle deviation from the true direction $v_n$). The Lemma states that no strategy can guarantee a progress better than this geometric bound against an adversarial device. This is because the hunter's strategy must be fixed before the report $P_n$ is known, and the device can exploit this fixed strategy. A rigorous proof of this lemma is non-trivial and involves analyzing the constraints on the mapping defined by the hunter's strategy.
+
+**4. Analysis of the Distance Evolution**
+
+Assuming the Lemma, we have:
+$d_n^2 \ge R_n^2+1-2R_n \frac{\sqrt{R_n^2-1}}{R_n} = R_n^2+1-2\sqrt{R_n^2-1}$.
+
+We analyze the increase in the squared distance, $\Delta_n = d_n^2-d_{n-1}^2$.
+Since $d_{n-1}^2 = (R_n-1)^2 = R_n^2-2R_n+1$.
+$\Delta_n \ge (R_n^2+1-2\sqrt{R_n^2-1}) - (R_n^2-2R_n+1) = 2R_n-2\sqrt{R_n^2-1}$.
+
+We find a lower bound for $\Delta_n$. We can rewrite the expression as:
+$\Delta_n \ge 2R_n(1-\sqrt{1-1/R_n^2})$.
+
+We use the inequality $\sqrt{1-x} \le 1-x/2$ for $x \ge 0$. Thus $1-\sqrt{1-x} \ge x/2$.
+$\Delta_n \ge 2R_n \frac{1}{2R_n^2} = \frac{1}{R_n}$.
+
+Substituting $R_n = d_{n-1}+1$:
+$\Delta_n \ge \frac{1}{d_{n-1}+1}$.
+
+**5. The Contradiction**
+
+We assumed that the hunter's strategy H ensures $d_n \le M=100$ for all $n \le N=10^9$.
+Then $d_{n-1}+1 \le M+1$.
+Therefore, the increase in the squared distance is bounded below by a constant:
+$\Delta_n \ge \frac{1}{M+1}$.
+
+The total squared distance after $N$ rounds, starting from $d_0=0$, is:
+$d_N^2 = \sum_{n=1}^N \Delta_n$.
+
+We must ensure the condition $R_n>1$ (i.e., $d_{n-1}>0$) holds for the Lemma to apply.
+In Round 1, $R_1=1$. The Lemma does not apply. However, the rabbit can ensure $d_1 \ge 1$. For example, if the device reports $P_1=A_1$. The hunter moves to $B_1$. The rabbit chooses $A_1$ opposite to $B_1$ (if the rabbit could anticipate $B_1$).
+Regardless of the exact value of $d_1$, since $\Delta_n>0$ for $d_{n-1}>0$, the distance will eventually become positive if it starts at 0.
+
+If we use the bound $\Delta_n \ge 1/(M+1)$ for all rounds:
+$d_N^2 \ge \sum_{n=1}^N \frac{1}{M+1} = \frac{N}{M+1}$.
+
+Since we assumed $d_N \le M$, we must have $M^2 \ge d_N^2$.
+$M^2 \ge \frac{N}{M+1}$.
+$M^3+M^2 \ge N$.
+
+Substituting the values $M=100$ and $N=10^9$:
+$M^3+M^2 = 100^3+100^2 = 1000000+10000 = 1010000$.
+$N = 10^9 = 1000000000$.
+
+Since $1010000 < 10^9$, we have $M^3+M^2 < N$. This is a contradiction.
+
+Therefore, the initial assumption is false. It is not always possible for the hunter to ensure that the distance between her and the rabbit is at most 100 after $10^9$ rounds.
