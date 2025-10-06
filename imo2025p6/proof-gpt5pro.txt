@@ -1,0 +1,57 @@
+[
+\textbf{Answer: } \boxed{4048}
+]
+
+More generally, for an (n\times n) grid the minimum is (2n-2); for (n=2025) this is (2\cdot 2025-2=4048).
+
+---
+
+## Upper bound (a construction with (2n-2) tiles)
+
+Leave the (n) diagonal unit squares ((i,i)) uncovered for (i=1,2,\dots,n).
+Cover the remaining squares as follows:
+
+* For each (i=1,2,\dots,n-1), place a horizontal tile covering the segment of row (i) from column (i+1) to (n).
+* For each (j=1,2,\dots,n-1), place a vertical tile covering the segment of column (j) from row (j+1) to (n).
+
+These two families lie in the disjoint regions ({(r,c): r<c}) and ({(r,c): r>c}), so no tile overlaps another, and exactly the diagonal squares are left uncovered—hence each row and each column has exactly one uncovered square. The number of tiles used is ((n-1)+(n-1)=2n-2).
+
+---
+
+## Lower bound (at least (2n-2) tiles are necessary)
+
+We show that in **any** such arrangement, at least (2n-2) tiles are required.
+
+Let (r(k)) be the (unique) row of the uncovered square in column (k), for (k=1,\dots,n).
+Consider the following (2(n-1)) **witness squares**, all of which are covered:
+
+* For each (j=1,2,\dots,n-1), let
+  [
+  L_j := \text{the square immediately to the left of the uncovered square in column } j+1,
+  ]
+  i.e. (L_j) is the square ((,r(j+1),, j,)).
+* For each (k=1,2,\dots,n-1), let
+  [
+  R_k := \text{the square immediately to the right of the uncovered square in column } k,
+  ]
+  i.e. (R_k) is the square ((,r(k),, k+1,)).
+
+These (2(n-1)) squares are all distinct (indeed (L_j=(r(j+1),j)) can never equal (R_k=(r(k),k+1)) because that would force (r(j+1)=r(k)) and (j=k+1), implying (j+1=k), a contradiction).
+
+We now prove the key incompatibility:
+
+> **Claim.** No single tile can contain two different witness squares among the set ({L_1,\dots,L_{n-1}, R_1,\dots,R_{n-1}}).
+
+**Proof.**
+
+* Two (L)-squares: Suppose a tile contains (L_j=(r(j+1),j)) and (L_{j'}=(r(j'+1),j')) with (j<j'). Then the tile’s column interval contains both (j) and (j'), hence also (j+1). Since its row interval contains (r(j+1)), the tile also contains the square ((r(j+1),j+1)), which is the uncovered square in column (j+1)—impossible.
+
+* Two (R)-squares: Suppose a tile contains (R_k=(r(k),k+1)) and (R_{k'}=(r(k'),k'+1)) with (k<k'). Then the tile’s column interval contains both (k+1) and (k'+1), hence also (k). Since its row interval contains (r(k')), the tile also contains ((r(k'),k)); but ((r(k'),k)) is the uncovered square in column (k)—impossible.
+
+* One (L)-square and one (R)-square: Suppose a tile contains (L_j=(r(j+1),j)) and (R_k=(r(k),k+1)). If (j\le k), then its column interval contains (j) and (k+1), hence also (j+1); with row (r(j+1)) included, it contains ((r(j+1),j+1)), the uncovered square in column (j+1)—impossible. If (j\ge k+1), then its column interval contains (k) and (k+1); with row (r(k)) included, it contains ((r(k),k)), the uncovered square in column (k)—impossible. (\square)
+
+Thus, **each tile can cover at most one witness square**. Since there are (2(n-1)) witness squares and all must be covered, there must be at least (2(n-1)) tiles.
+
+---
+
+Combining the construction (upper bound (2n-2)) with the incompatibility argument (lower bound (2n-2)), we conclude the minimum is exactly (2n-2). For (n=2025), this yields (\boxed{4048}).
