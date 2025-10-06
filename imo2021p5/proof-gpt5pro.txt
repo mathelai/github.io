@@ -1,0 +1,87 @@
+**Solution (works for any odd (n); in particular for (n=2021)).**
+
+Place the walnuts on a circle. For (k=1,2,\dots,n) (with (n=2021)), consider the configuration **just before** the (k)-th move. In that configuration, **color** the walnuts (1,2,\dots,k) blue and the walnuts (k+1,\dots,n) red. Let
+[
+E_k=\text{the number of red–blue adjacencies along the circle.}
+]
+(Equivalently, (E_k) is the number of edges of the circle whose endpoints have different colors.)
+
+Two easy base values:
+
+* Before the first move ((k=1)), the only blue walnut is (1), so exactly the two edges incident to (1) are red–blue. Hence
+  [
+  E_1=2.
+  ]
+* Before the last move ((k=n=2021)), every walnut is blue, so
+  [
+  E_n=0.
+  ]
+
+We now need two simple facts.
+
+---
+
+### Lemma 1 (the (k)-th swap preserves (E_k)).
+
+If we perform the (k)-th move (swapping the two walnuts adjacent to (k)), the number (E_k) (computed with the coloring for that (k)) does **not** change.
+
+*Proof.* Write the local circular neighborhood before the swap as
+[
+\cdots - a - x - k - y - b - \cdots
+]
+and after the swap as
+[
+\cdots - a - y - k - x - b - \cdots.
+]
+All edges except possibly ((a,x),(x,k),(k,y),(y,b)) are unchanged. The edges ((x,k)) and ((k,y)) keep the same endpoints, hence their red–blue status is unchanged. It remains to compare ((a,x),(y,b)) with ((a,y),(x,b)).
+
+* If (x) and (y) have the **same** color, then ((a,x)) and ((a,y)) are simultaneously both monochromatic or both bichromatic; likewise for ((y,b)) and ((x,b)). Thus the total count of red–blue edges is unchanged.
+
+* If (x) and (y) have **different** colors, then among ((a,x)) and ((a,y)) exactly one is red–blue (there are only two colors), and likewise among ((y,b)) and ((x,b)). So the total count again is unchanged.
+
+Hence (E_k) is the same before and after the (k)-th swap. ∎
+
+---
+
+### Lemma 2 (passing from (k) to (k+1)).
+
+Let (r_k\in{0,1,2}) denote the number of **blue neighbors** of the walnut (k+1) in the configuration just before the ((k+1))-st move, when we are still using the (k)-coloring (so (k+1) itself is red at this moment). Then
+[
+E_{k+1}=E_k+2-2r_k \qquad (k=1,2,\dots,n-1).
+]
+
+*Proof.* By Lemma 1, the (k)-th swap does not change (E_k). To obtain (E_{k+1}) from that configuration, we only **recolor** the single vertex (k+1) from red to blue. This toggles the red–blue status of the two edges incident to (k+1): if (r_k) of them were red–blue before, after recoloring there are (2-r_k). Thus the total number of red–blue edges changes by ((2-r_k)-r_k=2-2r_k). ∎
+
+---
+
+Summing Lemma 2 for (k=1,2,\dots,n-1) and using (E_n=0), (E_1=2), we get
+[
+E_n-E_1=\sum_{k=1}^{n-1}(E_{k+1}-E_k)=\sum_{k=1}^{n-1}(2-2r_k),
+]
+hence
+[
+-2=2(n-1)-2\sum_{k=1}^{n-1}r_k
+\quad\Longrightarrow\quad
+\sum_{k=1}^{n-1}r_k=n.
+]
+Now re-interpret (r_k). In the configuration just before the ((k+1))-st move,
+(r_k) is the number of neighbors of walnut (k+1) that are (\le k), i.e., the number of neighbors of (k+1) that are **smaller than (k+1)**. Thus, if we set
+[
+s_m:=\text{number of neighbors of walnut } m \text{ that are } < m \quad\text{(just before the (m)-th move)},
+]
+then
+[
+\sum_{m=2}^{n} s_m = \sum_{k=1}^{n-1} r_k = n.
+]
+
+Each (s_m) can only be (0,1,) or (2). If on every move the two neighbors of the pivot (m) were on the same side of (m) (both (<m) or both (>m)), then every (s_m) would be **even** (either (0) or (2)), and the sum (\sum_{m=2}^{n}s_m) would be even. But we have just shown that this sum equals (n), which is **odd** ((n=2021)). Therefore, at least one (s_m) is **odd**, i.e., equals (1).
+
+For that (m), exactly one neighbor is smaller than (m) and the other is larger than (m) just before the (m)-th move. Equivalently, on the (m)-th move Jumpy swaps two walnuts (a) and (b) with
+[
+a<m<b.
+]
+This is exactly what we had to prove. ∎
+
+---
+
+**Remark.** The oddness of (n) is essential. For even (n), the statement is false; e.g., with (n=4) and initial cyclic order (2,3,1,4) (clockwise), one checks that on each move the two neighbors of the pivot are both smaller or both larger, so no move has (a<k<b).

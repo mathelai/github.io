@@ -1,0 +1,67 @@
+This is a solution to the IMO problem.
+
+Let $N=2021$. We are given a circular arrangement of $N$ walnuts numbered 1 to $N$. Jumpy performs $N$ moves. In the $k$-th move, Jumpy swaps the two walnuts adjacent to walnut $k$. Let $\pi_t$ be the configuration after $t$ moves.
+
+We want to prove that there exists a value of $k$ such that, on the $k$-th move, Jumpy swaps some walnuts $a$ and $b$ such that $a < k < b$ (assuming $a<b$). We call such a move a crossing swap.
+
+We proceed by contradiction. Assume that for all $k \in \{1, \dots, N\}$, the $k$-th move is not a crossing swap. This means that the neighbors of $k$ in $\pi_{k-1}$, say $a$ and $b$, satisfy either ($a<k$ and $b<k$) or ($a>k$ and $b>k$).
+
+We introduce a potential function based on the separation of walnuts. For $k \in \{0, \dots, N\}$, let $S_k = \{1, \dots, k\}$ be the set of the $k$ smallest walnuts, and $L_k = \{k+1, \dots, N\}$ be the remaining walnuts.
+We define $B_k(t)$ as the number of boundaries between $S_k$ and $L_k$ in the configuration $\pi_t$. A boundary is an adjacent pair of walnuts $(x, y)$ such that one belongs to $S_k$ and the other to $L_k$.
+
+We examine the sequence of values $B_0(0), B_1(1), \dots, B_N(N)$.
+For $k=0$, $S_0 = \emptyset$, so $B_0(0) = 0$.
+For $k=N$, $S_N = \{1, \dots, N\}$, so $B_N(N) = 0$.
+
+Let $\Delta B_k = B_k(k) - B_{k-1}(k-1)$ for $k=1, \dots, N$.
+The total change over the entire process is a telescoping sum:
+$$ \sum_{k=1}^N \Delta B_k = B_N(N) - B_0(0) = 0. $$
+
+We analyze the change $\Delta B_k$. This change is composed of two parts: the change due to the redefinition of the sets (from $S_{k-1}$ to $S_k$) and the change due to the swap operation (from $\pi_{k-1}$ to $\pi_k$).
+$$ \Delta B_k = \underbrace{(B_k(k-1) - B_{k-1}(k-1))}_{\Delta B_k^{\text{reclass}}} + \underbrace{(B_k(k) - B_k(k-1))}_{\Delta B_k^{\text{swap}}}. $$
+
+$\Delta B_k^{\text{reclass}}$ is the change in the number of boundaries when walnut $k$ is moved from $L_{k-1}$ to $S_k$, keeping the configuration $\pi_{k-1}$ fixed.
+$\Delta B_k^{\text{swap}}$ is the change in the number of boundaries of $S_k$ when the $k$-th move (swap of neighbors of $k$) is performed.
+
+Let $a$ and $b$ be the neighbors of $k$ in $\pi_{k-1}$. By our assumption, we have two cases:
+
+Case 1: $a, b < k$.
+In this case, $a, b \in S_{k-1}$ (and $S_k$).
+
+Analysis of $\Delta B_k^{\text{reclass}}$:
+When calculating $B_{k-1}(k-1)$, $k \in L_{k-1}$. Since $a, b \in S_{k-1}$, the pairs $(a, k)$ and $(b, k)$ are boundaries.
+When calculating $B_k(k-1)$, $k \in S_k$. Since $a, b \in S_k$, the pairs $(a, k)$ and $(b, k)$ are not boundaries.
+The change is $\Delta B_k^{\text{reclass}} = 0 - 2 = -2$.
+
+Analysis of $\Delta B_k^{\text{swap}}$:
+The swap involves $a$ and $b$. We look at the boundaries of $S_k$. Since $a, b \in S_k$, they belong to the same set. Swapping two elements of the same set does not change the total number of boundaries in the circular arrangement. Thus, $\Delta B_k^{\text{swap}} = 0$.
+
+In Case 1, $\Delta B_k = -2 + 0 = -2$.
+
+Case 2: $a, b > k$.
+In this case, $a, b \in L_k$ (and $L_{k-1}$).
+
+Analysis of $\Delta B_k^{\text{reclass}}$:
+When calculating $B_{k-1}(k-1)$, $k \in L_{k-1}$. Since $a, b \in L_{k-1}$, the pairs $(a, k)$ and $(b, k)$ are not boundaries.
+When calculating $B_k(k-1)$, $k \in S_k$. Since $a, b \in L_k$, the pairs $(a, k)$ and $(b, k)$ are boundaries.
+The change is $\Delta B_k^{\text{reclass}} = 2 - 0 = 2$.
+
+Analysis of $\Delta B_k^{\text{swap}}$:
+The swap involves $a$ and $b$. Since $a, b \in L_k$, they belong to the same set. Swapping them does not change the total number of boundaries of $S_k$. Thus, $\Delta B_k^{\text{swap}} = 0$.
+
+In Case 2, $\Delta B_k = 2 + 0 = 2$.
+
+Under the assumption that there are no crossing swaps, $\Delta B_k$ is always either $-2$ or $2$.
+
+Let $N_S$ be the number of indices $k$ corresponding to Case 1, and $N_L$ be the number of indices $k$ corresponding to Case 2. The total number of moves is $N = N_S + N_L$.
+
+We calculate the total change:
+$$ \sum_{k=1}^N \Delta B_k = N_S \cdot (-2) + N_L \cdot (2) = 2 (N_L - N_S). $$
+Since the total change must be 0, we must have $N_L = N_S$.
+
+The total number of walnuts is $N = N_S + N_L = 2N_L$.
+This implies that $N$ must be an even number.
+
+However, we are given $N=2021$, which is odd. This is a contradiction.
+
+Therefore, the initial assumption must be false. There exists at least one value of $k$ such that the $k$-th move is a crossing swap, i.e., Jumpy swaps some walnuts $a$ and $b$ such that $a < k < b$.
