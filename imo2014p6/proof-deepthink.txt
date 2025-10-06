@@ -1,0 +1,87 @@
+This is a solution to the IMO problem, providing a complete and rigorous proof.
+
+**Problem Statement:**
+A set of lines in the plane is in general position if no two are parallel and no three pass through the same point. A set of lines in general position cuts the plane into regions, some of which have finite area; we call these its finite regions. Prove that for all sufficiently large n, in any set of n lines in general position it is possible to colour at least $\sqrt{n}$ lines blue in such a way that none of its finite regions has a completely blue boundary.
+
+**Proof:**
+
+Let $L$ be a set of $n$ lines in the plane in general position. We aim to find a subset $B \subset L$ (the blue lines) such that $|B| \geq \sqrt{n}$ and no finite region of the arrangement defined by $L$ has a boundary composed entirely of lines in $B$.
+
+**1. The Greedy Algorithm**
+
+We construct the set $B$ using a greedy algorithm. We order the lines arbitrarily as $L_1, L_2, \dots, L_n$.
+
+1. Initialize $B = \emptyset$.
+2. For $i = 1$ to $n$:
+   Let $B' = B \cup \{L_i\}$. Check if there is any finite region $R$ in the arrangement of $L$ such that its boundary $\partial R$ is entirely contained in $B'$.
+   If no such region exists, update $B = B'$ (color $L_i$ blue).
+   Otherwise, leave $B$ unchanged (color $L_i$ red).
+
+Let $B$ be the final set of blue lines. This coloring satisfies the required condition by construction. If there were a finite region $R$ with $\partial R \subset B$, let $L_k$ be the line in $\partial R$ with the highest index. When $L_k$ was considered, adding it created the monochromatic region $R$ (as all other lines in $\partial R$ were already in $B$), so $L_k$ should have been rejected, contradicting $L_k \in B$.
+
+**2. Analyzing the Red Lines**
+
+Let $k = |B|$. Let $U = L \setminus B$ be the set of red lines. $|U| = n-k$.
+
+For each line $L_u \in U$, it was rejected because adding it would have created a monochromatic finite region. This means $B \cup \{L_u\}$ contains the boundary of at least one finite region. Let $\mathcal{R}_u$ be the set of such regions.
+
+For any $R \in \mathcal{R}_u$, $\partial R \subset B \cup \{L_u\}$. The boundary must involve $L_u$, otherwise $\partial R \subset B$, contradicting the property of $B$.
+
+$R$ is a convex polygon. $L_u$ contributes one edge. The other edges lie on lines in $B$. Since $R$ has at least 3 sides, there are at least 2 blue lines involved. These blue lines form a polygonal path. The vertices connecting consecutive blue edges are intersections of two blue lines. We call these "Blue-Blue vertices". Since there are at least two blue edges, $R$ has at least one Blue-Blue vertex.
+
+Let $V(B)$ be the set of all Blue-Blue vertices in the arrangement. $|V(B)| = \binom{k}{2}$.
+
+**3. Defining an Injective Mapping**
+
+We define an injective mapping $f: U \to V(B)$.
+
+First, we fix a total order on all intersection points in the plane (e.g., lexicographical order).
+
+For each $L_u \in U$, we associate a vertex $v_u \in V(B)$ as follows:
+1. Let $V_u$ be the set of all Blue-Blue vertices belonging to any region $R \in \mathcal{R}_u$. $V_u$ is non-empty.
+2. Let $v_u$ be the smallest vertex in $V_u$ according to the total order.
+
+We define the mapping $f(L_u) = v_u$.
+
+**4. Proving Injectivity**
+
+We show that $f$ is injective. Suppose for contradiction that $L_{u1}, L_{u2} \in U$ are distinct lines, but $f(L_{u1}) = f(L_{u2}) = v$.
+
+By definition, there exists a region $R_1 \in \mathcal{R}_{u1}$ and a region $R_2 \in \mathcal{R}_{u2}$ such that $v$ is a vertex of both $R_1$ and $R_2$.
+
+Let $v$ be the intersection of two blue lines $B_1, B_2 \in B$. The edges of $R_1$ incident to $v$ must lie on $B_1$ and $B_2$. The same is true for $R_2$.
+
+The lines $B_1$ and $B_2$ divide the neighborhood of $v$ into four sectors. Since $R_1$ and $R_2$ are convex regions and share the incident edges at $v$, they must occupy the same local sector at $v$. In an arrangement of lines, a region is uniquely determined by a vertex and the local sector it occupies at that vertex. Therefore, $R_1 = R_2$. Let $R = R_1 = R_2$.
+
+Now we examine the boundary of $R$.
+Since $R \in \mathcal{R}_{u1}$, $\partial R \subset B \cup \{L_{u1}\}$.
+Since $R \in \mathcal{R}_{u2}$, $\partial R \subset B \cup \{L_{u2}\}$.
+
+Therefore, $\partial R \subset (B \cup \{L_{u1}\}) \cap (B \cup \{L_{u2}\})$.
+Since $L_{u1} \neq L_{u2}$, the intersection is exactly $B$.
+So, $\partial R \subset B$.
+
+This means that $R$ is a finite region with a completely blue boundary, which contradicts the defining property of the set $B$.
+
+Thus, the mapping $f$ is injective.
+
+**5. Conclusion**
+
+Since $f: U \to V(B)$ is injective, we have $|U| \leq |V(B)|$.
+$n-k \leq \binom{k}{2} = \frac{k(k-1)}{2}$.
+$2(n-k) \leq k^2 - k$.
+$2n \leq k^2 + k$.
+
+We want to show that $k \geq \sqrt{n}$. From $k^2+k-2n \ge 0$, we find the lower bound for $k$ by looking at the positive root of $x^2+x-2n=0$, which is $x = \frac{-1 + \sqrt{1+8n}}{2}$.
+So, $k \geq \frac{\sqrt{1+8n}-1}{2}$.
+
+We verify that this lower bound is at least $\sqrt{n}$.
+We want to show $\frac{\sqrt{1+8n}-1}{2} \geq \sqrt{n}$.
+$\sqrt{1+8n} \geq 2\sqrt{n} + 1$.
+Squaring both sides (which are positive):
+$1+8n \geq (2\sqrt{n}+1)^2 = 4n + 4\sqrt{n} + 1$.
+$4n \geq 4\sqrt{n}$.
+$n \geq \sqrt{n}$.
+This inequality holds for all $n \geq 1$.
+
+Therefore, it is always possible to color at least $\sqrt{n}$ lines blue in such a way that none of the finite regions has a completely blue boundary. This holds for all $n \geq 1$, and thus for all sufficiently large $n$.

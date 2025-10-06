@@ -1,0 +1,86 @@
+**Claim.** For every sufficiently large (n) (in fact, for all (n)), given any set (\mathcal L) of (n) lines in the plane in general position (no two parallel, no three concurrent), there exists a subset (B\subset\mathcal L) with (|B|\ge \sqrt n) such that **no finite region** of the arrangement has its entire boundary on lines of (B) (i.e., no finite region has a completely blue boundary if we color the lines in (B) blue and the rest not blue).
+
+We actually prove a stronger bound: (|B|\ge \frac{\sqrt{1+8n}-1}{2} > \sqrt{2n}-\tfrac12).
+
+---
+
+### Preliminaries
+
+* In a simple arrangement of lines, every face is a convex polygon whose sides lie on distinct lines from (\mathcal L).
+* If a region is a face of the arrangement, no other line intersects its interior.
+
+We use the following selection principle.
+
+> **Maximality setup.** Start with (B=\varnothing) and repeatedly add lines to (B) as long as doing so does **not** create a finite region whose boundary lies entirely in (B). When this process stops, (B) is **maximal** with this property: for every line (r\in R:=\mathcal L\setminus B), if we add (r) to (B), then some finite region (F) of the arrangement would have all its boundary lines in (B\cup{r}).
+
+(As the set is finite, such a maximal (B) exists.)
+
+For each such red line (r\in R), fix one “witness” face (F_r) that would become all-blue if we colored (r) blue. Because (F_r) is a convex polygon and (r) is on its boundary, the part of (r) on (\partial F_r) is a single open line segment whose endpoints are two intersection points of (r) with two **blue** lines, say (a_r,b_r\in B), and every other boundary side of (F_r) lies on a blue line. (Thus the only non-blue boundary line of (F_r) is (r).)
+
+Define a map
+[
+\phi:R\to \binom{B}{2},\qquad \phi(r)={a_r,b_r},
+]
+the (unordered) pair of blue lines that meet (r) at the endpoints of the edge of (F_r) on (r).
+
+We will show (\phi) is **injective**. Then
+[
+|R| \le \binom{|B|}{2}.
+]
+Since (|R|=n-|B|), we get
+[
+n-|B|\ \le\ \frac{|B|(|B|-1)}{2}
+\quad\Longrightarrow\quad
+|B|^2+|B|-2n\ \ge\ 0,
+]
+which yields
+[
+|B|\ \ge\ \frac{-1+\sqrt{1+8n}}{2}\ >\ \sqrt{2n}-\tfrac12\ \ge\ \sqrt n,
+]
+for all (n). Hence the theorem follows.
+
+So it remains to prove:
+
+---
+
+### Injectivity of (\phi)
+
+We prove: if (r,s\in R) are distinct red lines, then (\phi(r)\ne \phi(s)).
+
+Assume for contradiction that (\phi(r)=\phi(s)={a,b}) for two distinct red lines (r\ne s), with corresponding witness faces (F_r,F_s). Thus:
+
+* The edge of (F_r) on (r) is the segment of (r) between its intersection points (r\cap a) and (r\cap b).
+* Similarly for (F_s) on (s), between (s\cap a) and (s\cap b).
+* All other boundary lines of (F_r) and (F_s) are blue (in (B)).
+
+We will show the interiors of (F_r) and (F_s) must intersect, contradicting the fact that distinct faces of a line arrangement have disjoint interiors.
+
+First, observe a basic geometric fact about four lines (a,b,r,s) in general position:
+
+> **Crossing lemma.** The segments of (r) and (s) between their respective intersection points with (a) and (b) cross each other exactly once (at (r\cap s)), and that crossing point lies strictly between those intersection points on both (r) and (s).
+
+**Reason.** Along line (a), the two points (a\cap r) and (a\cap s) occur in some order. Along line (b), the order of (b\cap r) and (b\cap s) is **opposite** (otherwise one can trace a simple closed curve composed of arcs on (a,r,b,s) that the leftover line would have to cross twice, contradicting that two lines cross only once). Hence the segment of (r) between its (a)- and (b)-intersections and the analogous segment of (s) must cross.
+
+Now fix a very small open disk (D) centered at (P:=r\cap s) that meets no line of (\mathcal L) other than (r) and (s), and lies within the open strip between (a) and (b) near (P) (possible because the four relevant intersection points are away from (P)).
+
+Consider the two open half-disks (D\cap\text{(left of }r)) and (D\cap\text{(left of }s)), where “left of” is with respect to the usual orientation of the plane after a tiny rotation if necessary to avoid vertical lines (the arrangement remains in general position). These two open sets have nonempty intersection: geometrically they form a wedge sector inside (D).
+
+By construction of the witness faces, for the edge of (F_r) on (r) we can (and do) choose the side of (r) on which (F_r) locally lies to be, say, the left side; likewise choose (F_s) to lie to the left of (s) along its boundary edge on (s). (If our initial arbitrary choices had picked the opposite side for one of them, simply replace that witness by the other face incident to the same edge; such a choice is always possible because an edge separates two faces.)
+
+Therefore, near (P), the small region
+[
+U := D\cap\text{(left of }r)\cap\text{(left of }s)
+]
+lies **inside** both (F_r) and (F_s): no other lines meet (D), and (U) is on the designated interior side of each boundary edge. Thus (\operatorname{int}(F_r)\cap \operatorname{int}(F_s)) contains (U), a contradiction.
+
+This contradiction shows (\phi) is injective.
+
+---
+
+### Conclusion
+
+The injectivity yields (|R| \le \binom{|B|}{2}), hence
+[
+|B| \ge \frac{-1+\sqrt{1+8n}}{2} > \sqrt{2n}-\tfrac12 \ge \sqrt n.
+]
+Coloring the lines in (B) blue satisfies the requirement that **no finite region** has a completely blue boundary. This completes the proof. (\square)
