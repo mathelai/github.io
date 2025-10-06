@@ -1,0 +1,91 @@
+**Answer: (\displaystyle k=\left\lceil\log_2(n+1)\right\rceil).**
+
+---
+
+### Reformulation
+
+Regard the Japanese triangle of (n) rows as a complete binary tree of depth (n-1) (levels (1,\dots,n)), with one circle at level (i) for each node at that level. A ninja path is a root-to-leaf path. Exactly one circle on each level is red.
+
+Let (f(n)) be the greatest integer such that **every** colouring (one red per level) admits a ninja path containing at least (f(n)) red circles. We will prove
+[
+f(n)=\bigl\lceil\log_2(n+1)\bigr\rceil.
+]
+
+The proof has two parts: a **lower bound** (every colouring has a path with at least that many reds) and a **matching upper bound** (there is a colouring where no path has more).
+
+---
+
+## 1) Lower bound: (f(n)\ge \left\lceil\log_2(n+1)\right\rceil)
+
+Let us look below the top circle (which is red and thus already contributes (1) to any path). The two immediate subtrees under the top are the **left** and **right** subtriangles. Among the remaining (n-1) levels (levels (2,\dots,n)), let
+
+* (a) be the number of levels whose red is in the left subtriangle, and
+* (b=n-1-a) the number with red in the right subtriangle.
+
+A path that first goes left stays within the left subtriangle thereafter (similarly for right). If we **ignore** (i.e., delete) the levels whose red lies in the opposite subtriangle and compress the remaining levels, the left subtriangle becomes (in the obvious sense) a Japanese triangle with (a) rows, one red per row. The set of possible transitions between successive “kept” rows is unaffected by the deleted rows (you still can choose left/right across those deleted rows freely), so the number of reds achievable after stepping left depends only on (a), not on which specific levels those (a) are. Let (f(a)) be the guaranteed number of reds available there. The same holds for the right side with (f(b)).
+
+Therefore **in any colouring** there is a path with at least
+[
+1+\max{f(a),f(b)}.
+]
+Taking the worst split ((a,b)) over all colourings gives the recurrence-type lower bound
+[
+f(n)\ \ge\ 1+\min_{a+b=n-1}\ \max{f(a),f(b)}. \tag{1}
+]
+
+We now claim that (f(m)\ge \lceil\log_2(m+1)\rceil) for all (m), by induction on (n). The base (n=1) is clear: the unique top circle is red, so (f(1)=1=\lceil\log_2 2\rceil).
+
+Assume (f(m)\ge \lceil\log_2(m+1)\rceil) for all (m<n). Then (1) and the induction hypothesis yield
+[
+f(n)\ \ge\ 1+\min_{a+b=n-1}\ \max\bigl{\lceil\log_2(a+1)\rceil,\ \lceil\log_2(b+1)\rceil\bigr}.
+]
+Since (x\mapsto \lceil\log_2(x)\rceil) is increasing, the minimum of the maximum is attained when (a) and (b) are as balanced as possible:
+
+* If (n=2q) (even), take ((a,b)=(q-1,q)), giving (1+\max{\lceil\log_2 q\rceil,\ \lceil\log_2(q+1)\rceil}=1+\lceil\log_2(q+1)\rceil).
+* If (n=2q+1) (odd), take ((a,b)=(q,q)), giving (1+\lceil\log_2(q+1)\rceil).
+
+In both cases one checks the identity
+[
+1+\lceil\log_2(q+1)\rceil ;=; \bigl\lceil \log_2(2q+1)\bigr\rceil \quad\text{(even case: (n=2q)),}
+]
+[
+1+\lceil\log_2(q+1)\rceil ;=; \bigl\lceil \log_2(2q+2)\bigr\rceil \quad\text{(odd case: (n=2q+1)).}
+]
+(The first identity holds because if (t=\lceil\log_2(q+1)\rceil), then (q+1\ge 2^{t-1}+1) so (2q+1=2(q+1)-1\ge 2^t+1), hence (\lceil\log_2(2q+1)\rceil=t+1). The second is immediate since (\log_2(2q+2)=1+\log_2(q+1)).)
+
+Thus
+[
+f(n)\ \ge\ \bigl\lceil\log_2(n+1)\bigr\rceil.
+]
+
+---
+
+## 2) Upper bound: (f(n)\le \left\lceil\log_2(n+1)\right\rceil)
+
+We construct, for each (n), a colouring with one red per row such that **no** path meets more than (\lceil\log_2(n+1)\rceil) red circles.
+
+Proceed by induction on (n). For (n=1) it is trivial. Suppose we have already built extremal colourings (T_m) for all (m<n), each ensuring that every ninja path contains at most (\lceil\log_2(m+1)\rceil) red circles.
+
+For (n), choose (a=\lfloor (n-1)/2\rfloor) and (b=\lceil (n-1)/2\rceil). Colour the top circle red. Among the remaining (n-1) rows, choose any (a) of them to “belong to the left” and place their red circles inside the left subtriangle so that, after deleting the other rows and compressing, the left subtriangle realises the already-constructed extremal pattern (T_a). Do the analogous thing on the right with (b) rows, realising (T_b).
+
+Now any ninja path must first go either left or right.
+
+* If it goes left, it can collect at most (\lceil\log_2(a+1)\rceil) additional reds in the left subtriangle (by the inductive property of (T_a)), hence at most (1+\lceil\log_2(a+1)\rceil) reds in total.
+* If it goes right, the total is at most (1+\lceil\log_2(b+1)\rceil).
+
+Therefore **every** path in this (n)-row construction has at most
+[
+1+\max{\lceil\log_2(a+1)\rceil,\ \lceil\log_2(b+1)\rceil}
+;=; \bigl\lceil\log_2(n+1)\bigr\rceil
+]
+red circles (using the same identity as in the lower bound). This proves the desired upper bound.
+
+---
+
+## Conclusion
+
+Combining the lower and upper bounds, for every positive integer (n),
+[
+\boxed{,f(n)=\left\lceil\log_2(n+1)\right\rceil,}.
+]
+That is, in every Japanese triangle of (n) rows there exists a ninja path containing at least (\lceil\log_2(n+1)\rceil) red circles, and this is best possible.

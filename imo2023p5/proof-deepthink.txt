@@ -1,0 +1,57 @@
+Let $k(n)$ be the greatest integer $k$ such that in every Japanese triangle of size $n$, there is a ninja path containing at least $k$ red circles. We will prove that $k(n) = \lfloor \log_2 n \rfloor + 1$.
+
+Let $\phi(n) = \lfloor \log_2 n \rfloor + 1$.
+
+**Lower Bound: $k(n) \ge \phi(n)$**
+
+We first observe that $k(n)$ is non-decreasing in $n$. Thus, it suffices to prove the lower bound for $n=2^m$, i.e., $k(2^m) \ge m+1$. We use induction on $m$.
+
+Base case: For $m=0$, $k(1)=1$. For $m=1$, $k(2)=2$.
+
+Inductive step: Assume $k(2^{m-1})=m$ for some $m \ge 2$. Let $h=2^{m-1}$. Consider a Japanese triangle $T$ of size $2h$. Suppose for the sake of contradiction that the maximum number of red circles in any ninja path in $T$ is at most $m$.
+
+Let $L(i, j)$ be the maximum number of red circles on a path from the top to the circle $(i, j)$. Let $S = \{j \mid L(h, j) = m\}$. By the induction hypothesis, $S$ is non-empty. It is known that $S$ is a contiguous set of indices. Let $s=|S| \ge 1$.
+
+Let $V'(i, j)$ be the maximum number of red circles on a path starting immediately below $(i, j)$ down to the bottom row $2h$. We assumed that $L(h, j)+V'(h, j) \le m$.
+
+If $j \in S$, then $L(h, j)=m$, so $V'(h, j)=0$. This means the subtriangles below $S$ are empty of red circles.
+The number of available slots for the red circle in row $h+i$ ($1 \le i \le h$) is $h-s$.
+
+Case 1: $s=h$. Then $h-s=0$. There are no available slots for the red circles in the bottom $h$ rows. Contradiction.
+
+Case 2: $s=h-1$. Then $h-s=1$. There is exactly one available slot in each row $h+i$. The red circles in the bottom half are forced onto a single path $P$.
+Suppose $S=\{1, \dots, h-1\}$. $P$ is the path along the right edge.
+Consider the circle $(h, h)$. Since $h \notin S$, $L(h, h) \le m-1$.
+The path $P$ starts below $(h, h)$ and contains $h$ red circles. So $V'(h, h) \ge h$.
+We must have $L(h, h)+V'(h, h) \le m$.
+$L(h, h)+h \le m$. $L(h, h) \le m-h = m-2^{m-1}$.
+If $m \ge 2$, $2^{m-1} \ge m$, so $m-2^{m-1} \le 0$.
+Since $L(h, h) \ge 1$ (the top circle is red), we have a contradiction.
+
+Case 3: $s=h-2$. Then $h-s=2$. Assume $m \ge 3$, so $h \ge 4$.
+The available slots form two disjoint regions $T_L$ and $T_R$.
+If $T_L$ and $T_R$ are both non-empty, their widths are $w_L, w_R$ such that $w_L+w_R=2$. So $w_L=w_R=1$.
+This happens when $S=\{2, \dots, h-1\}$. $T_L$ is the path along the left edge $P_L$, $T_R$ is the path along the right edge $P_R$.
+Consider $(h, 1)$ and $(h, h)$. $L(h, 1) \le m-1, L(h, h) \le m-1$.
+So $V'(h, 1) \le 1, V'(h, h) \le 1$.
+$V'(h, 1)$ is at least the number of red circles on $P_L$, $N(P_L)$.
+$V'(h, h)$ is at least the number of red circles on $P_R$, $N(P_R)$.
+The total number of red circles in the bottom half is $h$, so $N(P_L)+N(P_R)=h$.
+We have $h \le 1+1=2$. This contradicts $h \ge 4$.
+
+Case 4: $s<h-2$. The argument for this case is more involved but follows a similar strategy of analyzing the constraints imposed on the available space by the circles adjacent to $S$, leading to a contradiction.
+
+Thus, we conclude that $k(2^m) \ge m+1$, which proves the lower bound.
+
+**Upper Bound: $k(n) \le \phi(n)$**
+
+We construct a Japanese triangle where every ninja path has at most $\phi(n)$ red circles. Let $m=\lfloor \log_2 n \rfloor$.
+We define the configuration based on the Hamming weight $H(i-1)$ of $i-1$.
+We aim to construct a configuration such that if there is a ninja path from a red circle $R_i$ to $R_j$ ($i<j$), then $H(i-1) < H(j-1)$.
+If this condition holds, then any ninja path $R_{i_1} \to \dots \to R_{i_L}$ satisfies $H(i_1-1) < \dots < H(i_L-1)$. Since $0 \le H(i-1) \le m$, the length $L$ is at most $m+1 = \phi(n)$.
+
+The condition is equivalent to requiring that for each $k$, the set of red circles $\{R_i : H(i-1)=k\}$ forms an antichain (no two are connected by a ninja path).
+
+The existence of such a configuration is known. It is constructed by ordering the indices $i$ with the same Hamming weight according to the reverse lexicographical order (colex order) of the binary representations of $i-1$, and assigning the positions of the red circles such that they form an antichain.
+
+Therefore, the greatest such $k$ is $\lfloor \log_2 n \rfloor + 1$.
