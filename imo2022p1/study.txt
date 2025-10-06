@@ -142,3 +142,56 @@ After one move, can the **number of blocks** ever **increase**? Why or why not?
 
 Student:
 No—moving one **entire** block can’t increase the number of blocks. Removing the chosen block decreases the count by 1, and if its two former neighbors are the same type they merge, making it −2. When we place the block at the front, it either merges with the first block (adds 0) or sits next to a different type (adds +1). Hence the net change is in ({0,-1,-2}), never positive (edge cases at the ends fit the same conclusion).
+
+Teacher:
+Great. So block count never goes up.
+
+**Checkpoint 3b — Who can be moved when (k\ge n)?**
+Explain why, when (k\ge n), the **leftmost block** cannot be the chosen block — *unless* we already have exactly two blocks.
+
+*Hint:* For the leftmost block to contain the (k)-th coin, its length must be (\ge k). What does that force about its size relative to (n) and about where all coins of that type must be?
+
+Student:
+For the leftmost block to be chosen, its length (L) must satisfy (L\ge k). But a block can’t exceed (n) because there are only (n) coins of a given type, so (L\le n). With (k\ge n) this forces (L=n): the leftmost block contains *all* coins of its type, so the remainder are the other type—i.e., exactly two blocks. Thus, unless we’re already at two blocks, the leftmost block cannot be the chosen block (and if (k>n), it’s outright impossible).
+
+Teacher:
+Exactly—so with (k\ge n), unless we’re already at two blocks, the leftmost block can’t be chosen.
+
+---
+
+### Checkpoint 4 — If the block count doesn’t drop
+
+Suppose we’re in a configuration with (c\ge 3) blocks and after the next move the number of blocks **doesn’t** decrease. **Which block must have been moved, and why?**
+(One sentence is enough.)
+
+Student:
+**The rightmost block**—any interior move would merge its two equal‑type neighbors and strictly drop the block count, and with (k\ge n) the leftmost block can’t be chosen unless we already have two blocks.
+
+Teacher:
+Exactly right.
+
+---
+
+### Checkpoint 4a — Parity of the block count
+
+Suppose we’re in a state with (c\ge 3) blocks and the number of blocks **doesn’t** drop on the next move (so we must be moving the **rightmost** block).
+**Question:** Why does this force (c) to be **even**?
+
+*Hint:* If (c) were odd, the leftmost and rightmost blocks would be the **same** type. What happens when you move the rightmost block to the front?
+
+Student:
+Because with (c) blocks the types alternate, so if (c) were **odd** the leftmost and rightmost blocks would be the **same** type; moving the rightmost block to the front would then **merge** with the leftmost block, lowering the block count—contradicting the assumption that it doesn’t drop. Hence (c) must be **even**.
+
+Teacher:
+Great.
+
+### Checkpoint 4b — Forcing a lower bound on (k)
+
+Assume we’re in a (c\ge 4) (even) block configuration and, step after step, the **rightmost block is always the one moved** (so the block count never drops). Label the block sizes (a_1,\dots,a_c) in cyclic order; over (c) steps, each block appears as the rightmost once.
+
+**Single task:**
+When a block of size (a_i) is the **rightmost** block, what inequality must (k) satisfy so that the (k)-th coin lies inside that rightmost block?
+(Answer it as a formula (k \ge \ldots) in terms of (n) and (a_i). *Hint:* the rightmost block occupies positions (2n-a_i+1,\dots,2n).* )
+
+Student:
+(k \ge 2n - a_i + 1), since the rightmost block of size (a_i) occupies positions ([,2n - a_i + 1,, 2n,]).
