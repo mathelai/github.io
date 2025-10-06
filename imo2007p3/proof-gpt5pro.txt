@@ -1,0 +1,65 @@
+**Problem restated (graph language).**
+Let (G) be the (simple) undirected graph whose vertices are the competitors and whose edges are friendships. A *clique* of (G) is a set of pairwise adjacent vertices, and (\omega(G)) denotes the size of a largest clique of (G). We are given that (\omega(G)) is even. We must partition (V(G)) into two parts (two rooms) (A,B) such that
+[
+\omega(G[A])=\omega(G[B]).
+]
+
+Two elementary facts we will use repeatedly:
+
+* Adding a single vertex to an induced subgraph can increase its clique number by **at most 1** (any new maximum clique must include the new vertex).
+* Removing a single vertex can decrease the clique number by **at most 1**.
+
+---
+
+### Proof (by induction on the number of competitors (n=|V(G)|)).
+
+Let (w=\omega(G)), which is even by hypothesis.
+
+**Base case.**
+If (G) is a complete graph on (n) vertices, then (w=n). Since (w) is even, we can split the vertex set into two parts of size (n/2) each; then each room induces a complete graph of size (n/2), so both rooms have maximum clique size (n/2). (If (n\le 2), this is also obvious.)
+
+**Inductive step.**
+Assume the statement holds for all graphs with fewer than (n) vertices and even clique number. Let (G) be a graph on (n) vertices with (\omega(G)=w) even. Choose a fixed maximum clique (K\subseteq V(G)) with (|K|=w).
+
+* If (K=V(G)) (i.e., (G) is complete), the base case applies and we are done.
+* Otherwise, choose a vertex (v\in V(G)\setminus K). Then the graph (G' := G-v) still has clique number (\omega(G')=w) (because (K\subseteq V(G')) is a (w)-clique). By the induction hypothesis (applied to (G')), there exists a partition
+  [
+  V(G')=A\sqcup B
+  ]
+  such that
+  [
+  \omega(G'[A])=\omega(G'[B])=:t.
+  ]
+
+  Note that (K) is disjoint from (v), so it is contained in (G'). Let (a=|K\cap A|) and (b=|K\cap B|). Since (K\cap A) and (K\cap B) are cliques in (G'[A]) and (G'[B]) respectively, we have
+  [
+  t\ge a,\qquad t\ge b,\qquad\text{and}\qquad a+b=w.
+  ]
+  Hence
+  [
+  t\ge \max{a,b}\ge \frac{w}{2}.
+  \tag{$\ast$}
+  ]
+
+  Now we must place (v) into one of the rooms. When we add (v) to room (A), the clique number of (G[A]) becomes either (t) or (t+1); similarly for room (B).
+
+  Suppose (for a contradiction) that **both** rooms would increase, i.e., placing (v) into (A) yields (\omega(G[A\cup{v}])=t+1) and placing (v) into (B) yields (\omega(G[B\cup{v}])=t+1). Then there exist:
+
+  * a (t)-clique (C_A\subseteq A) all of whose vertices are adjacent to (v), and
+  * a (t)-clique (C_B\subseteq B) all of whose vertices are adjacent to (v).
+
+  Consequently, (C_A\cup{v}\cup C_B) is a clique in (G) of size (2t+1). Therefore
+  [
+  \omega(G)\ \ge\ 2t+1.
+  ]
+  Using ((\ast)), we have (t\ge w/2), hence (2t+1\ge w+1), a contradiction to (\omega(G)=w).
+
+  Thus, **at least one** of the rooms does *not* increase when (v) is added. Put (v) into such a room. Then after placing (v), the two rooms still have equal maximum clique sizes, both equal to (t).
+
+This completes the induction.
+
+---
+
+### Conclusion
+
+Whenever the largest clique size (\omega(G)) is even, we can arrange the competitors into two rooms so that the largest clique size in one room equals the largest clique size in the other room. ∎

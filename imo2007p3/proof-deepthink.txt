@@ -1,0 +1,55 @@
+This is a proof of the statement that if the largest clique size in a graph $G$ is even, then the vertices of $G$ can be partitioned into two sets such that the largest clique sizes in the induced subgraphs are equal.
+
+Let $G=(V,E)$ be the graph where vertices represent competitors and edges represent friendships. Let $\omega(H)$ denote the size of the largest clique in a graph $H$. We are given that $\omega(G)=2k$ for some integer $k \ge 1$.
+
+We will use a discrete continuity argument. Let $n=|V|$ and fix an arbitrary ordering of the vertices $(v_1, v_2, \dots, v_n)$. We define a sequence of vertex subsets $V_i = \{v_1, \dots, v_i\}$ for $i=0, \dots, n$, and let $\bar{V}_i = V \setminus V_i$. This defines a sequence of partitions $(V_i, \bar{V}_i)$.
+
+We define the difference function $f(i)$ as:
+$f(i) = \omega(G[V_i]) - \omega(G[\bar{V}_i])$.
+
+We examine the initial and final values of $f(i)$:
+$f(0) = \omega(G[\emptyset]) - \omega(G[V]) = 0 - 2k = -2k$.
+$f(n) = \omega(G[V]) - \omega(G[\emptyset]) = 2k - 0 = 2k$.
+
+We analyze the change in $f(i)$ at each step. When moving from $i-1$ to $i$, the vertex $v_i$ moves from $\bar{V}_{i-1}$ to $V_i$.
+$f(i) - f(i-1) = (\omega(G[V_i]) - \omega(G[V_{i-1}])) + (\omega(G[\bar{V}_{i-1}]) - \omega(G[\bar{V}_i]))$.
+
+Since adding or removing a single vertex changes the clique number by at most 1, we have:
+$0 \le \omega(G[V_i]) - \omega(G[V_{i-1}]) \le 1$.
+$0 \le \omega(G[\bar{V}_{i-1}]) - \omega(G[\bar{V}_i]) \le 1$.
+
+Therefore, the change in the difference function at each step is $f(i) - f(i-1) \in \{0, 1, 2\}$.
+
+We want to show that there exists an index $i$ such that $f(i)=0$. We proceed by contradiction. Suppose $f(i) \neq 0$ for all $i$.
+
+Since $f(0)<0$ and $f(n)>0$, and $f(i)$ changes gradually, there must be an index $j$ such that $f(j-1)<0$ and $f(j)>0$.
+
+Since the maximum change is 2, if $f(j-1) \le -2$, then $f(j) \le f(j-1)+2 \le 0$, which contradicts $f(j)>0$.
+Thus, we must have $f(j-1)=-1$.
+
+Since $f(j)>0$ and $f(j) = f(j-1) + \Delta = -1 + \Delta$, the change $\Delta$ must be 2 (as $\Delta \in \{0, 1, 2\}$).
+So $f(j)=1$.
+
+We analyze the configuration at this step $j$. Let $A = V_{j-1}$, $v = v_j$, and $B = \bar{V}_j$. The graph $G$ is partitioned as $A \cup \{v\} \cup B$. The conditions are:
+1) $f(j-1) = \omega(A) - \omega(B \cup \{v\}) = -1$.
+2) $f(j) = \omega(A \cup \{v\}) - \omega(B) = 1$.
+
+Let $\omega(A)=a$ and $\omega(B)=b$.
+
+If $\omega(B \cup \{v\})=b$, then (1) gives $a-b=-1$, so $b=a+1$. Then (2) gives $\omega(A \cup \{v\}) - (a+1) = 1$, so $\omega(A \cup \{v\}) = a+2$. This is impossible as adding $v$ to $A$ can increase the clique size by at most 1.
+
+Thus, we must have $\omega(B \cup \{v\})=b+1$. Then (1) gives $a-(b+1)=-1$, so $a=b$. Then (2) gives $\omega(A \cup \{v\}) - a = 1$, so $\omega(A \cup \{v\}) = a+1$.
+
+The configuration is therefore: $\omega(A)=\omega(B)=a$. Furthermore, $\omega(A \cup \{v\})=a+1$ (we say $v$ enhances $A$) and $\omega(B \cup \{v\})=a+1$ ($v$ enhances $B$). This means $v$ is connected to an $a$-clique in $A$ and an $a$-clique in $B$.
+
+We now invoke a known result in graph theory, attributed to A. Hajnal.
+
+**Lemma (Hajnal, 1965):** Let $G$ be a graph partitioned into $\{v\} \cup A \cup B$. If $\omega(A)=\omega(B)=a$, and $v$ enhances both $A$ and $B$, then $\omega(G)=2a+1$.
+
+*Proof Sketch:* It is clear that $\omega(G) \le \omega(A)+\omega(B)+1 = 2a+1$. The theorem states that this bound is achieved. This requires proving the existence of $a$-cliques $C_A \subseteq A$ and $C_B \subseteq B$, both connected to $v$, such that $C_A \cup C_B$ is also a clique. Then $C_A \cup C_B \cup \{v\}$ is a $(2a+1)$-clique.
+
+Assuming this Lemma, the configuration found at step $j$ implies that $\omega(G)=2a+1$. This means that $\omega(G)$ is odd.
+
+However, we are given that $\omega(G)=2k$ is even. This is a contradiction.
+
+Therefore, the assumption that $f(i) \neq 0$ for all $i$ must be false. There exists an index $i$ such that $f(i)=0$, which means $\omega(G[V_i]) = \omega(G[\bar{V}_i])$. This proves that the competitors can be arranged in two rooms with the same largest clique size.
