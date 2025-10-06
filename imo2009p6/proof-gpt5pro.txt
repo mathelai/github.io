@@ -1,0 +1,48 @@
+**Claim (stronger form).**
+Let (a_1,\dots,a_n) be **distinct** positive integers with (s=a_1+\cdots+a_n).
+Let (M) be any set of **at most** (n-1) positive integers with (s\notin M).
+Then there exists an order of (a_1,\dots,a_n) so that none of the (n-1) partial sums equals an element of (M).
+
+(The original problem is the special case (|M|=n-1).)
+
+---
+
+### Proof by induction on (n).
+
+**Base case (n=1).**
+There are no partial sums to worry about, so the statement is trivially true.
+
+**Inductive step.**
+Assume the claim holds for all smaller values, and consider (n).
+
+Let (s=a_1+\cdots+a_n), and consider the (n) numbers
+[
+t_i:=s-a_i\qquad (1\le i\le n).
+]
+Because the (a_i) are distinct, the (t_i) are also pairwise distinct. Since (M) has at most (n-1) elements and ({t_1,\dots,t_n}) has (n) distinct elements, there exists an index (k) such that
+[
+t_k=s-a_k\notin M.
+]
+
+We now **plan to use (a_k) as the last jump**. Let
+[
+s' := s-a_k=t_k.
+]
+Before the last jump, the grasshopper will be at the partial sum (s'), which we have ensured is not in (M).
+
+Consider the remaining (n-1) jump lengths ({a_i : i\neq k}), whose total is (s'). Let
+[
+M' := {m\in M : m < s'}.
+]
+Then (|M'|\le n-2) and (s'\notin M'). By the inductive hypothesis applied to the (n-1) distinct positive integers ({a_i : i\neq k}) and the set (M') (of size at most (n-2)), there is an order of these (n-1) jumps such that **none** of their partial sums lies in (M').
+
+Now execute those (n-1) jumps first, then jump (a_k) last. All partial sums before the last jump are (< s'), hence cannot equal any element of (M) that is (\ge s'); and they avoid all elements of (M'<s') by construction. The penultimate sum equals (s'\notin M), and the final position is (s\notin M) by hypothesis. Therefore, in this order the grasshopper never lands on any point in (M).
+
+This completes the induction and the proof. ∎
+
+---
+
+**Remarks.**
+
+* The distinctness of the (a_i) is used exactly once: to ensure the (n) numbers (s-a_i) are distinct, guaranteeing one of them is not in (M).
+* We proved a slightly stronger statement (allowing (|M|\le n-1)), which directly implies the original problem.

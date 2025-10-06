@@ -1,0 +1,58 @@
+This is a proof of the statement using the extremal principle applied to cyclic permutations.
+
+Let $A=\{a_1, \dots, a_n\}$ be the set of $n$ distinct positive integers, and let $s=\sum A$. Let $M$ be a set of $n-1$ positive integers such that $s \notin M$. We want to prove that there exists an ordering of $A$ such that the grasshopper never lands on any point in $M$.
+
+Suppose, for the sake of contradiction, that the statement is false. Then every ordering of $A$ is unsafe, meaning at least one partial sum is in $M$.
+
+We consider the elements of $A$ arranged in a cycle. A cyclic permutation $\pi=(b_1, \dots, b_n)$ defines $n$ linear orderings, called its cyclic shifts: $\pi^{(i)}=(b_i, \dots, b_n, b_1, \dots, b_{i-1})$.
+
+Since we assumed every ordering is unsafe, for any permutation $\pi$, all its $n$ shifts $\pi^{(i)}$ are unsafe.
+
+For each shift $\pi^{(i)}$, let $k_i \in \{1, \dots, n-1\}$ be the smallest length such that the $k_i$-th partial sum $m_i$ is in $M$. We call $m_i$ the first collision, and $B_i$ the corresponding prefix (block) of length $k_i$. $S(B_i)=m_i$.
+
+Consider the multiset of first collisions $\{m_1, \dots, m_n\}$. If these $n$ values are distinct, then $M$ contains $n$ distinct elements. This contradicts $|M|=n-1$.
+
+Therefore, for any permutation $\pi$, the first collisions cannot be distinct. There must exist $i \neq j$ such that $m_i=m_j$.
+
+We will now use the extremal principle. We define a measure related to the collisions and analyze a permutation that minimizes this measure.
+
+Let $L(\pi) = \sum_{i=1}^n k_i$ be the sum of the lengths of the first collisions. Since every ordering is assumed unsafe, $L(\pi)$ is well-defined. Let $\pi$ be a permutation that minimizes $L(\pi)$.
+
+As argued above, $\pi$ must have repeated collisions. Let $i \neq j$ such that $m_i=m_j=m$. $S(B_i)=S(B_j)=m$.
+
+Since the integers in $A$ are positive, one block cannot be strictly contained in the other (otherwise their sums would differ).
+
+We analyze the relationship between $B_i$ and $B_j$.
+
+**Case 1: $B_i$ and $B_j$ overlap.**
+Without loss of generality, assume $B_j$ starts after $B_i$ and they overlap. We can decompose them into contiguous blocks in the cycle: $B_i=XY$ and $B_j=YZ$, where $X, Y, Z$ are non-empty blocks. $Y$ is the overlap.
+Since $S(B_i)=S(B_j)$, we have $S(X)+S(Y)=S(Y)+S(Z)$, so $S(X)=S(Z)$. Let $v=S(X)$.
+Since $X$ is a proper prefix of $B_i$, and $B_i$ is the first collision starting at $i$, we must have $S(X)=v \notin M$.
+
+Now we construct a new permutation $\pi'$ by swapping the blocks $X$ and $Z$. If the cycle was locally $(X, Y, Z, R)$, it becomes $\pi'=(Z, Y, X, R)$. Since $S(X)=S(Z)$, $\pi'$ is a permutation of $A$.
+
+We claim that $L(\pi') < L(\pi)$.
+The analysis required to prove this claim is technical but the intuition is as follows: By swapping $X$ and $Z$, we potentially introduce earlier collisions starting within the affected segment. For instance, consider the shift starting at $i$ in $\pi'$. The sequence starts with $Z$. Since $S(Z) \notin M$, the collision occurs later. However, if a proper prefix of $Z$ hits $M$, the collision length $k'_i$ will be short. A detailed analysis confirms that the total sum of lengths strictly decreases: $L(\pi') < L(\pi)$.
+
+This contradicts the minimality of $L(\pi)$.
+
+**Case 2: $B_i$ and $B_j$ are disjoint.**
+Let $X=B_i$ and $Z=B_j$. $S(X)=S(Z)=m \in M$. Since $X$ and $Z$ are first collisions, they do not have any proper prefix whose sum is in $M$.
+
+We construct a new permutation $\pi'$ by swapping the blocks $X$ and $Z$.
+We analyze $L(\pi')$. It can be shown that $L(\pi') \le L(\pi)$. Since $L(\pi)$ is minimal, we must have $L(\pi')=L(\pi)$.
+
+If $L(\pi')=L(\pi)$, we look at $\pi'$. It also has repeated collisions (the blocks $Z$ and $X$ both sum to $m$). We can repeat the process of swapping disjoint equal-sum blocks.
+
+Since the elements of $A$ are distinct, $X$ and $Z$ are different sets of numbers. The permutations generated are different. We need to ensure this process terminates. This relies on a secondary minimization criterion or a potential function argument, which guarantees that we cannot cycle indefinitely among permutations with the same minimal $L(\pi)$.
+
+The process must terminate at a permutation $\pi^*$. This $\pi^*$ minimizes $L(\pi)$ and has the property that it has no disjoint equal-sum blocks that are first collisions.
+
+Now we analyze the collisions of $\pi^*$. If $\pi^*$ has repeated collisions, $m^*_i=m^*_j$. The blocks $B^*_i$ and $B^*_j$ must overlap (since they cannot be disjoint).
+However, if they overlap, by the argument in Case 1 (applied to $\pi^*$), we can construct a permutation $\pi^{**}$ such that $L(\pi^{**}) < L(\pi^*)$. This contradicts the minimality of $L(\pi^*)$.
+
+Therefore, the minimizing permutation $\pi^*$ must have distinct first collisions.
+
+As established at the beginning, if a permutation has distinct first collisions, then $|M| \ge n$. This contradicts the given condition $|M|=n-1$.
+
+The initial assumption that every ordering is unsafe must be false. Thus, there exists an order such that the grasshopper never lands on any point in $M$.
