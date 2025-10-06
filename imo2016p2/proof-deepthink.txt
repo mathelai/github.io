@@ -1,0 +1,82 @@
+The problem asks for all integers $n$ for which an $n \times n$ table can be filled with A, B, and C satisfying the given conditions.
+
+The conditions are:
+(1) In each row and each column, the entries are balanced (one third A, one third B, one third C).
+(2) In any diagonal, if the length is a multiple of three, the entries are balanced.
+
+**Part 1: Deriving the necessary condition on $n$.**
+
+From Condition (1), $n$ must be a multiple of 3. Let $n=3k$ for some integer $k \ge 1$.
+
+We partition the table into 9 blocks based on the indices modulo 3. Let $C_{r,s}$ be the set of cells $(i,j)$ such that $i \equiv r \pmod 3$ and $j \equiv s \pmod 3$, for $r, s \in \{1, 2, 3\}$. Each block $C_{r,s}$ has size $k^2$.
+
+Let $A_{r,s}$ be the number of A's in $C_{r,s}$. We analyze the constraints on the $3\times 3$ matrix $A=(A_{r,s})$.
+
+Condition (1) implies that the total number of A's in the $k$ rows where $i \equiv r \pmod 3$ is $k \cdot (n/3) = k^2$. These rows are the union $C_{r,1} \cup C_{r,2} \cup C_{r,3}$. Thus, the row sums of $A$ are $k^2$. Similarly, the column sums of $A$ are $k^2$.
+
+Condition (2) concerns diagonals.
+Type 1 diagonals are defined by $i-j=c$. The length is $n-|c|$. Since $n=3k$, the length is a multiple of 3 if and only if $|c|$ is a multiple of 3.
+The union of these diagonals consists of cells $(i,j)$ such that $i-j \equiv 0 \pmod 3$, i.e., $i \equiv j \pmod 3$. This union is $S_1 = C_{1,1} \cup C_{2,2} \cup C_{3,3}$.
+Since these diagonals are disjoint and each must be balanced, their union $S_1$ must be balanced. The size of $S_1$ is $3k^2$, so it must contain $k^2$ A's.
+$A_{1,1}+A_{2,2}+A_{3,3} = k^2$. (Main diagonal sum).
+
+Type 2 diagonals are defined by $i+j=c$. The length is a multiple of 3 if and only if $c \equiv n+1 \equiv 1 \pmod 3$.
+The union of these diagonals consists of cells $(i,j)$ such that $i+j \equiv 1 \pmod 3$. This union is $S_2 = C_{1,3} \cup C_{2,2} \cup C_{3,1}$ (using the convention that $\{1, 2, 3\}$ represent the residue classes).
+$S_2$ must be balanced, so it contains $k^2$ A's.
+$A_{1,3}+A_{2,2}+A_{3,1} = k^2$. (Anti-diagonal sum).
+
+We have a $3\times 3$ matrix $A$ where all row sums, column sums, the main diagonal sum, and the anti-diagonal sum are equal to $S=k^2$. We determine the center element $A_{2,2}$.
+We sum the second row (R2), second column (C2), main diagonal (MD), and anti-diagonal (AD):
+Sum(R2+C2+MD+AD) = $4S$.
+This sum counts $A_{2,2}$ four times and every other entry exactly once. The total sum of all entries in $A$ is $3S$.
+Thus, $3S + 3A_{2,2} = 4S$.
+$3A_{2,2} = S = k^2$.
+
+Since $A_{2,2}$ must be an integer, $k^2$ must be divisible by 3. This implies that $k$ must be divisible by 3. Let $k=3m$.
+Then $n=3k=9m$. Therefore, $n$ must be a multiple of 9.
+
+**Part 2: Construction for $n$ being a multiple of 9.**
+
+Let $n=9m$. We construct such a table. We use 0-based indexing, $i, j \in \{0, 1, \dots, n-1\}$, and identify A, B, C with 0, 1, 2 in $\mathbb{Z}_3$.
+
+We decompose the indices by division by 3. Let $i = 3i_2+i_1$ and $j = 3j_2+j_1$, where $i_1, j_1 \in \{0, 1, 2\}$ and $i_2, j_2 \in \{0, 1, \dots, 3m-1\}$.
+
+We define the table entries as:
+$T_{i,j} = (i_1 + i_2 + j_2) \pmod 3$.
+
+We verify the conditions.
+
+1. Rows and Columns.
+Consider a fixed row $i$ (fixed $i_1, i_2$). $T_{i,j} = C + j_2$, where $C=i_1+i_2$.
+As $j$ varies, $j_1$ ranges over $\{0, 1, 2\}$ and $j_2$ ranges over $\{0, \dots, 3m-1\}$.
+Since $j_2$ covers $3m$ consecutive integers, the distribution of $j_2 \pmod 3$ is uniform (m times each value).
+For any fixed $j_1$, the values $C+j_2 \pmod 3$ are balanced.
+The entire row (union over $j_1$) is balanced (3m times each value).
+
+Consider a fixed column $j$ (fixed $j_2$). $T_{i,j} = C' + i_1+i_2$, where $C'=j_2$.
+As $i$ varies, $i_1 \in \{0, 1, 2\}$ and $i_2 \in \{0, \dots, 3m-1\}$.
+The distribution of $i_2 \pmod 3$ is uniform. The distribution of the pairs $(i_1, i_2 \pmod 3)$ is uniform. Thus, the distribution of the sum $i_1+i_2 \pmod 3$ is uniform (3m times each value). The column is balanced.
+
+2. Diagonals.
+We check diagonals whose length is a multiple of 3.
+
+Type 1 diagonals: $i-j=c$. The length is a multiple of 3 iff $c$ is a multiple of 3. Let $c=3d$.
+$3(i_2-j_2)+(i_1-j_1)=3d$. This implies $i_1=j_1$ and $i_2-j_2=d$.
+The values are $T_{i,j} = i_1+i_2+j_2 = i_1+(j_2+d)+j_2 = i_1+2j_2+d \pmod 3$.
+The diagonal is parameterized by $i_1 \in \{0, 1, 2\}$ and $j_2$ in the valid range $R_d$.
+Crucially, for any $j_2 \in R_d$, all three choices of $i_1$ correspond to valid cells in the table.
+For a fixed $j_2$, the three values $\{i_1+2j_2+d\}_{i_1=0,1,2}$ form a complete residue system modulo 3, so they are balanced.
+The diagonal is a disjoint union of these balanced triplets, hence it is balanced.
+
+Type 2 diagonals: $i+j=c$. In 0-based indexing, the length is a multiple of 3 iff $c \equiv 2 \pmod 3$. Let $c=3d+2$.
+$3(i_2+j_2)+(i_1+j_1)=3d+2$. This implies $i_1+j_1=2$ and $i_2+j_2=d$.
+The values are $T_{i,j} = i_1+i_2+j_2 = i_1+d \pmod 3$.
+The diagonal is parameterized by the pairs $(i_1, j_1) \in \{(0,2), (1,1), (2,0)\}$ and the pairs $(i_2, j_2)$ in the valid range $R'_d$.
+For any $(i_2, j_2) \in R'_d$, all three choices of $(i_1, j_1)$ correspond to valid cells.
+The values taken are $0+d, 1+d, 2+d$. Each value occurs $|R'_d|$ times (once for each pair $(i_2, j_2) \in R'_d$).
+Thus, the diagonal is balanced.
+
+The construction satisfies all conditions for any $n$ that is a multiple of 9.
+
+**Conclusion.**
+The integers $n$ for which such a table exists are exactly the multiples of 9.
