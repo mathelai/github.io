@@ -195,3 +195,101 @@ When a block of size (a_i) is the **rightmost** block, what inequality must (k) 
 
 Student:
 (k \ge 2n - a_i + 1), since the rightmost block of size (a_i) occupies positions ([,2n - a_i + 1,, 2n,]).
+
+Teacher:
+Perfect.
+
+**Single task (wrap the bound):**
+Sum your inequality (k \ge 2n - a_i + 1) over all (i=1,\dots,c). Simplify both sides to get a lower bound on (k) in terms of (n) and (c). What do you get?
+
+*Hint:* (\sum_i a_i = 2n), so the right-hand side becomes (c(2n+1) - 2n).
+
+Student:
+[
+\sum_{i=1}^c k ;\ge; \sum_{i=1}^c (2n - a_i + 1)
+;\Rightarrow; c,k ;\ge; c(2n+1) - \sum_{i=1}^c a_i
+;=; c(2n+1) - 2n,
+]
+so
+[
+k ;\ge; 2n + 1 - \frac{2n}{c}.
+]
+In particular, for even (c\ge 4), (k \ge 2n + 1 - \frac{2n}{4} = \frac{3n}{2} + 1.)
+
+Teacher:
+Beautiful. You’ve just derived the key inequality:
+
+[
+k ;\ge; 2n+1-\frac{2n}{c},.
+]
+
+For even (c\ge 4), this gives (k \ge \frac{3n}{2}+1), which **contradicts** the assumed upper bound (k \le \frac{3n+1}{2}). So it’s impossible to keep moving the **rightmost** block forever when (n \le k \le \frac{3n+1}{2}).
+
+### Wrap‑up of sufficiency
+
+* The number of blocks never increases.
+* With (k\ge n), unless we already have 2 blocks, the **leftmost** block cannot be chosen.
+* If a **middle** block is chosen, its two neighbors merge ⇒ the block count strictly drops.
+* Therefore, if the block count doesn’t drop, the move must take the **rightmost** block. If that happened indefinitely, our inequality forces (k \ge \frac{3n}{2}+1), contradicting (k \le \frac{3n+1}{2}).
+* Hence eventually a **middle** block is chosen, the block count decreases, and repeating this finitely many times we reach exactly **two** blocks.
+* By our first equivalence, that’s exactly the moment when the **leftmost (n)** coins are all the same type.
+
+So the good pairs are precisely
+[
+\boxed{,n \le k \le \frac{3n+1}{2},}.
+]
+
+---
+
+## Polished solution (concise)
+
+* **Blocks & goal.** A block is a maximal run of identical coins. “Leftmost (n) coins are identical” (\iff) there are exactly **two** blocks (one of (A)’s and one of (B)’s).
+
+* **Necessity.**
+
+  * If (k<n), then in (A^{n-1}B^{n-1}AB) the (k)-th coin is in the leftmost block, so the operation fixes the configuration with 4 blocks—never reaches 2.
+  * If (k>\frac{3n+1}{2}), set (a=k-n-1), (b=2n-k+1) and start from (A^{a}B^{b}A^{b}B^{a}). One checks the (k)-th coin remains in the rightmost block step after step; the process cycles through 4 blocks forever.
+
+* **Sufficiency.** Assume (n\le k\le \frac{3n+1}{2}).
+
+  * The number of blocks never increases.
+  * With (k\ge n), unless already at 2 blocks, the leftmost block can’t be chosen; choosing any interior block reduces the number of blocks.
+  * If the number of blocks doesn’t reduce, the rightmost block must be chosen. If that persisted for (c\ge 4) (even) blocks, then at each step the rightmost block has size (a_i) and occupies positions (2n-a_i+1,\dots,2n), so (k\ge 2n-a_i+1). Summing gives (ck\ge c(2n+1)-2n), hence (k\ge 2n+1-\frac{2n}{c}\ge \frac{3n}{2}+1), contradicting (k\le \frac{3n+1}{2}).
+  * Therefore some step picks a **middle** block, the block count drops, and after finitely many drops we reach 2 blocks.
+
+Thus **all and only** pairs ( (n,k) ) with ( n \le k \le \frac{3n+1}{2} ) work.
+
+---
+
+**Quick check for you:** In one or two sentences, can you restate the *monovariant* we used and why the “always move the rightmost block” scenario contradicts the bound on (k)?
+
+Student:
+The monovariant is the **number of blocks**: it never increases and strictly decreases whenever a **middle** block is moved, so if it never drops we must be moving the **rightmost** block every time. But in that case, over a (c\ge 4) (even)–block state we get (k \ge 2n+1-\frac{2n}{c}\ge \frac{3n}{2}+1=\frac{3n+2}{2}), which contradicts the assumed (k\le \frac{3n+1}{2}).
+
+Teacher:
+Exactly right—and nice catch on the strict inequality: from
+[
+k ;\ge; 2n+1-\frac{2n}{c}\quad\text{with even }c\ge4
+]
+we get (k \ge \frac{3n}{2} + 1 = \frac{3n+2}{2}), which is **strictly larger** than (\frac{3n+1}{2}). That’s the contradiction.
+
+---
+
+### 1‑minute recap (what you now “own”)
+
+* **Monovariant:** the **number of blocks** never increases; moving a middle block strictly decreases it.
+* **Edge constraints:**
+  • If (k<n), the configuration (A^{n-1}B^{n-1}AB) is fixed (4 blocks).
+  • If (k>\frac{3n+1}{2}), the 4‑block pattern (A^{a}B^{b}A^{b}B^{a}) with (a=k-n-1), (b=2n-k+1) keeps moving the rightmost block → no merge.
+* **Sufficiency:** For (n\le k\le \frac{3n+1}{2}), the leftmost block can’t be chosen unless we already have 2 blocks; if an interior block is chosen, blocks drop; if the rightmost block were chosen forever, summing positions forces (k\ge \frac{3n}{2}+1), contradicting the range. Hence we must eventually reach 2 blocks ⇔ the leftmost (n) coins are identical.
+
+**Conclusion:** (\boxed{,n \le k \le \frac{3n+1}{2},}) are exactly the good pairs.
+
+---
+
+**Quick practice (one step):**
+For (n=5), what values of (k) are valid according to the theorem? (State the set.)
+
+Student: 
+({5,6,7,8}) (since (5 \le k \le \tfrac{3\cdot 5 + 1}{2} = 8)).
+
