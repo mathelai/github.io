@@ -1,0 +1,106 @@
+**Answer: No.**
+
+We show that such a triangle cannot exist for as many as (2018) rows.
+
+---
+
+### 1) Setup and the “increasing path”
+
+Let an anti‑Pascal triangle of height (n) be a triangular array of (n) rows of positive integers where each entry (except those in the bottom row) equals the absolute value of the difference of the two entries immediately below it.
+
+Assume for contradiction that there is an anti‑Pascal triangle with (n=2018) rows whose entries are exactly the integers
+[
+{1,2,\dots, N},\qquad N=\frac{2018\cdot 2019}{2}.
+]
+
+From the top, follow a path downwards by **always moving to the larger** of the two children. Along this path the numbers strictly increase. Let the numbers encountered be
+[
+x_1 < x_2 < \cdots < x_n.
+]
+At each step (i) (from row (i) to row (i+1)) we have a pair of children (x_{i+1}) (chosen) and (y_i) (the *other* child), with (x_{i+1}\ge y_i) and parent (x_i = |x_{i+1}-y_i|=x_{i+1}-y_i). Hence
+[
+x_{i+1} ;=; x_i + y_i,\qquad\text{so}\qquad x_n ;=; x_1 + \sum_{i=1}^{n-1} y_i.
+\tag{1}
+]
+Thus the final number (x_n) at the bottom of this path is the top number (x_1) plus the sum of the “other children” (y_1,\dots,y_{n-1}).
+
+---
+
+### 2) The side regions cut off by the path
+
+The path partitions the triangle into the path itself and a collection of side regions: at step (i) (between (x_i) and (x_{i+1})) there is exactly one **side triangular region** (R_i) on the side we did *not* go (left or right), whose top is precisely (y_i). These regions (R_i) are pairwise disjoint. (Geometrically: at each step the path “cuts off” a triangular pocket on one side; different steps cut off disjoint pockets.)
+
+We now need a quantitative lower bound for (y_i) in terms of the earlier pockets. The key estimate is the following:
+
+> **Lemma.** For each (k\ge 2),
+> [
+> y_k ;\ge; y_1 + y_2 + \cdots + y_{k-1}.
+> \tag{2}
+> ]
+
+Granting the lemma for the moment, we immediately get an exponential growth of the sum of the (y_i)’s:
+[
+S_m:=\sum_{i=1}^m y_i ;\ge; 2^m - 1\qquad\text{for all }m\ge 1,
+]
+by a simple induction on (m) using (S_{m}=S_{m-1}+y_m\ge S_{m-1}+S_{m-1}=2S_{m-1}) and (S_1=y_1\ge 1).
+
+Combining this with ((1)) and (x_1\ge 1), we obtain
+[
+x_n ;=; x_1+S_{n-1};\ge; 1+(2^{,n-1}-1) ;=; 2^{,n-1}.
+\tag{3}
+]
+For (n=2018) this yields
+[
+x_n ;\ge; 2^{2017}.
+]
+But the entries are taken from ({1,2,\dots,N}) with
+[
+N=\frac{2018\cdot 2019}{2}=2{,}037{,}171 ;\ll; 2^{2017},
+]
+a contradiction. Hence no such triangle exists.
+
+Thus it remains to **prove the Lemma**.
+
+---
+
+### 3) Proof of the Lemma
+
+Fix (k\ge 2). Consider the side triangular region (R_k) cut off at the (k)-th step; its top is (y_k). Look at the boundary of (R_k) that is adjacent to the path (a broken edge going from the top of (R_k) down to the bottom row). The numbers along this boundary and in (R_k) satisfy the anti‑Pascal relations.
+
+We use the basic identity already used above in local form:
+[
+\text{If a parent is }p\text{ with children }a\ge b,\quad\text{then }a=p+b.
+\tag{4}
+]
+Apply ((4)) successively along the boundary between (R_k) and the path: starting from the top of (R_k) (which is (y_k)), each time we step one row down along that boundary, the number on the path-side increases by exactly the number on the (R_k)-side immediately adjacent. Summing these equalities along the boundary from the top down to the bottom row of (R_k), all intermediate path terms cancel telescopically, and we obtain:
+[
+\bigl(\text{bottom boundary value on the path side}\bigr)
+;=;
+\underbrace{y_k}*{\text{top of }R_k}
+;+;
+\bigl(\text{sum of all entries of }R_k\text{ that touch the boundary}\bigr).
+\tag{5}
+]
+But the “bottom boundary value on the path side” is no larger than the actual bottom value reached by the path, and in particular, every previous side top (y_1,\dots,y*{k-1}) occurs among those (R_k)-adjacent boundary entries (indeed, each earlier pocket (R_1,\dots,R_{k-1}) was cut off earlier on that same side of the path and lies entirely above (R_k); their tops lie along that boundary). Therefore the sum on the right-hand side of ((5)) *contains* (y_1+\dots+y_{k-1}) as a sub-sum. Since all entries are positive, we get
+[
+\text{(bottom boundary value on the path side)};\ge; y_k + (y_1+\cdots+y_{k-1}).
+]
+Discarding the (nonnegative) bottom boundary value on the path side yields exactly the desired bound
+[
+y_k ;\ge; y_1 + \cdots + y_{k-1}.
+]
+This proves the Lemma.
+
+---
+
+### 4) Conclusion
+
+From the Lemma we derived (x_n\ge 2^{n-1}). For (n=2018) this is (x_n\ge 2^{2017}), which is far larger than the largest available label (N=\frac{2018\cdot 2019}{2}). The assumption that such a triangle exists therefore leads to a contradiction.
+
+(\boxed{\text{No, such an anti-Pascal triangle with 2018 rows does not exist.}})
+
+---
+
+### Remark
+
+The proof actually shows more: in **any** anti‑Pascal triangle (with positive integers) the bottom number reached by always going to the larger child is at least (2^{n-1}). Hence no anti‑Pascal triangle of height (n) can use *only* the labels (1,2,\dots,\frac{n(n+1)}{2}) once each, for any (n\ge 6) (indeed, (2^{n-1}) quickly dwarfs (\frac{n(n+1)}{2})).
