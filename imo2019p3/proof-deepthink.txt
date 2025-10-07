@@ -1,0 +1,77 @@
+This is a proof of the statement.
+
+**1. Understanding the Setup and Invariants**
+
+Let the social network be represented by a graph $G=(V, E)$ with $|V|=2019$ users. The allowed operation is: Given users A, B, C such that A is friends with B and C, but B and C are not friends, the friendships change by removing (A, B) and (A, C), and adding (B, C).
+
+We analyze the effect of this operation on the degrees of the users. The degree of A decreases by 2, while the degrees of B and C remain unchanged. Consequently, the parity of the degree of every user remains invariant throughout the process.
+
+Initially, we are given 1010 users with degree 1009 (odd) and 1009 users with degree 1010 (even). Let $X$ be the set of 1010 users with odd degrees, and $Y$ be the set of 1009 users with even degrees.
+
+The goal is to reach a state where each user has at most one friend (the graph is a matching). Due to the parity invariants, the final state must have users in $X$ with degree 1 and users in $Y$ with degree 0. The target configuration $G_{target}$ is a perfect matching on $X$, with $Y$ being isolated.
+
+**2. Analyzing the Initial Configuration**
+
+We identify the structure of the initial graph $G_0$. We have $|X|=1010$ and $|Y|=1009$. The degrees are $d(x)=1009$ for $x \in X$ and $d(y)=1010$ for $y \in Y$.
+
+Consider the complete bipartite graph $K_{X, Y}$. In this graph, the degree of any vertex in $X$ is $|Y|=1009$, and the degree of any vertex in $Y$ is $|X|=1010$. This matches the initial configuration. Thus, the initial graph $G_0$ is $K_{X, Y}$. Importantly, $X$ and $Y$ are independent sets in $G_0$.
+
+**3. Construction of the Sequence of Events**
+
+We provide an explicit construction of the sequence of events to reach $G_{target}$.
+Let $X = \{X_1, \dots, X_{1010}\}$ and $Y = \{Y_1, \dots, Y_{1009}\}$.
+We aim to create the following perfect matching $F$ on $X$:
+$F = \{(X_1, X_2), (X_3, X_4), \dots, (X_{1009}, X_{1010})\}$.
+
+**Phase 1: Creating the matching F and isolating $Y_1$.**
+
+We use $Y_1$ to create the edges in $F$. We iterate $i = 1, 2, \dots, 505$.
+In step $i$, we consider the vertices $Y_1, X_{2i-1}, X_{2i}$.
+Initially, $Y_1$ is connected to all vertices in $X$. $X$ is an independent set.
+The operation centered at $Y_1$ with the pair $(X_{2i-1}, X_{2i})$ is valid. It removes $(Y_1, X_{2i-1})$ and $(Y_1, X_{2i})$, and adds the edge $(X_{2i-1}, X_{2i})$.
+
+We repeat this for all 505 pairs. The operations are valid sequentially as we are creating disjoint edges in $X$.
+
+After Phase 1, the resulting graph $G_1$ has the following properties:
+1. The degree of $Y_1$ has decreased by $2 \times 505 = 1010$. Thus, $Y_1$ is isolated.
+2. The edges within $X$ form the perfect matching $F$.
+3. Let $Y' = Y \setminus \{Y_1\}$. $|Y'|=1008$. $Y'$ remains independent.
+4. The edges between $X$ and $Y'$ were unchanged. $G_1$ contains the complete bipartite graph $K_{X, Y'}$.
+
+**Phase 2: Decoupling X from $Y'$.**
+
+We now eliminate the edges of $K_{X, Y'}$ while preserving the structure of $F$ on $X$ and the independence of $Y'$. We use a composite operation called a "switch".
+
+**The Switch Gadget:**
+Consider a pair $(X_a, X_b) \in F$ and a pair $(Y_a, Y_b) \in Y'$. The induced subgraph on these four vertices has the edge $(X_a, X_b)$ and the four edges connecting $\{X_a, X_b\}$ to $\{Y_a, Y_b\}$. $Y_a$ and $Y_b$ are not connected.
+
+We apply the following sequence of 4 operations, $S(X_a, X_b; Y_a, Y_b)$:
+
+1. Center $X_a$, pair $(Y_a, Y_b)$. (Valid since $Y_a/Y_b$).
+   Result: Removes $(X_a, Y_a), (X_a, Y_b)$. Adds $(Y_a, Y_b)$.
+2. Center $X_b$, pair $(X_a, Y_a)$. (Valid since $X_a/Y_a$ after step 1).
+   Result: Removes $(X_b, X_a), (X_b, Y_a)$. Adds $(X_a, Y_a)$.
+3. Center $Y_a$, pair $(X_a, Y_b)$. (Valid since $X_a/Y_b$ after step 1).
+   Result: Removes $(Y_a, X_a), (Y_a, Y_b)$. Adds $(X_a, Y_b)$.
+4. Center $Y_b$, pair $(X_a, X_b)$. (Valid since $X_a/X_b$ after step 2).
+   Result: Removes $(Y_b, X_a), (Y_b, X_b)$. Adds $(X_a, X_b)$.
+
+The net effect of the switch operation is that it removes the four edges connecting $\{X_a, X_b\}$ to $\{Y_a, Y_b\}$, while preserving the edge $(X_a, X_b)$ and keeping $Y_a, Y_b$ disconnected at the end.
+
+**Applying the Switches Systematically:**
+
+We partition $Y'$ (1008 vertices) into 504 pairs:
+$P_Y = \{(Y_2, Y_3), \dots, (Y_{1008}, Y_{1009})\}$.
+
+We partition $F$ (505 pairs) into $F_A$ (the first 504 pairs) and $F_B$ (the last pair $(X_{1009}, X_{1010})$).
+
+Step 2a: Decouple $F_A$ from $Y'$.
+We match the 504 pairs in $F_A$ with the 504 pairs in $P_Y$. For each corresponding match, we apply the switch operation. This removes all edges between the vertices in $F_A$ ($X_1, \dots, X_{1008}$) and $Y'$.
+
+Step 2b: Decouple $F_B$ from $Y'$.
+We apply the switch between the pair $F_B=(X_{1009}, X_{1010})$ and every pair in $P_Y$. This removes all edges between $F_B$ and $Y'$.
+
+**4. Conclusion**
+
+After Phase 1 and Phase 2, all vertices in $X$ are disconnected from all vertices in $Y$. $Y_1$ was isolated in Phase 1, and $Y'$ was decoupled in Phase 2 while remaining independent. The perfect matching $F$ on $X$ is preserved.
+The final graph is $G_{target}$, where every user in $X$ has exactly one friend (in $X$), and every user in $Y$ has zero friends. Thus, each user is friends with at most one other user.
