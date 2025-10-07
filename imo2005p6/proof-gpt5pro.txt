@@ -1,0 +1,145 @@
+**Solution.**
+Let (n) be the number of contestants. For (i\in{1,\dots,6}), let (A_i) be the set of contestants who solved problem (i), and for (i\ne j) let
+[
+s_{ij}=|A_i\cap A_j|\qquad\text{and}\qquad B^i=\text{the set of contestants who did not solve problem }i.
+]
+The hypothesis says
+[
+s_{ij}>\tfrac{2}{5}n\quad\text{for all } i\ne j,
+]
+and no contestant solved all (6) problems.
+
+For a contestant (x), denote by (k_x\in{0,1,\dots,5}) the number of problems solved by (x).
+
+---
+
+### 1) A first double count: At least one (5)-solver exists.
+
+Double-count the total number of triples ((x,{i,j})) with (i<j) and (x\in A_i\cap A_j). On the one hand,
+[
+\sum_{1\le i<j\le 6} s_{ij} ;>; \binom{6}{2}\cdot \frac{2}{5}n ;=;15\cdot \frac{2}{5}n ;=;6n.
+]
+On the other hand,
+[
+\sum_{1\le i<j\le 6} s_{ij}=\sum_{x}\binom{k_x}{2}.
+]
+If every contestant had (k_x\le 4), then (\binom{k_x}{2}\le \binom{4}{2}=6) for all (x), and thus (\sum_x\binom{k_x}{2}\le 6n), contradicting the strict inequality above. Hence **there is at least one contestant who solved exactly 5 problems.**
+
+---
+
+### 2) A second count via “missed pairs”.
+
+For (i\ne j),
+[
+|B^i\cup B^j| = n - s_{ij} < n - \frac{2}{5}n=\frac{3}{5}n.
+]
+Since the left hand side is an integer, we have the uniform bound
+[
+|B^i\cup B^j|\le \left\lfloor\frac{3n-1}{5}\right\rfloor\quad\text{for all }i\ne j.
+]
+Summing over all (\binom{6}{2}=15) pairs gives
+\begin{equation}\label{eq:upper}
+\sum_{i<j} |B^i\cup B^j|;\le;15\left\lfloor\frac{3n-1}{5}\right\rfloor.
+\end{equation}
+
+Now fix a contestant (x). Let (r_x=6-k_x) be the number of problems they **did not** solve. The number of pairs ({i,j}) for which (x\in B^i\cup B^j) equals the number of pairs not entirely solved by (x), namely
+[
+g(r_x):=\binom{6}{2}-\binom{k_x}{2}=15-\binom{6-r_x}{2}.
+]
+Thus
+[
+g(1)=5,\quad g(2)=9,\quad g(3)=12,\quad g(4)=14,\quad g(5)=g(6)=15.
+]
+Summing over contestants,
+\begin{equation}\label{eq:lower}
+\sum_{i<j} |B^i\cup B^j|=\sum_x g(r_x).
+\end{equation}
+
+Let (a_5) be the number of contestants who solved exactly (5) problems (so (r_x=1) for these and (g=5)). For all others, (r_x\ge 2) so (g(r_x)\ge 9). Hence from \eqref{eq:lower},
+\begin{equation}\label{eq:lower2}
+\sum_{i<j} |B^i\cup B^j|;\ge; 5a_5 + 9(n-a_5)=9n-4a_5.
+\end{equation}
+
+---
+
+### 3) If (n\not\equiv 2\pmod 5), then (a_5\ge 2).
+
+Write (n=5q+r) with (r\in{0,1,2,3,4}). A short computation gives
+[
+15\Big\lfloor\frac{3n-1}{5}\Big\rfloor=
+\begin{cases}
+9n-15,&r=0,\
+9n- 9,&r=1,\
+9n- 3,&r=2,\
+9n-12,&r=3,\
+9n- 6,&r=4.
+\end{cases}
+]
+Combining \eqref{eq:upper}–\eqref{eq:lower2} with (a_5\le 1) would give
+[
+9n-4 \le \sum_{i<j}|B^i\cup B^j| \le 9n - c
+]
+with (c\ge 6) for (r\in{0,1,3,4}), a contradiction. Therefore, **if (n\not\equiv 2\pmod 5), then (a_5\ge 2)** and we are done.
+
+---
+
+### 4) The remaining case (n\equiv 2\pmod 5): still (a_5\ge 2).
+
+Assume (n=5q+2) and, for contradiction, that (a_5\le 1).
+
+From \eqref{eq:upper} we have (\sum_{i<j}|B^i\cup B^j|\le 15(3q+1)=9n-3), while \eqref{eq:lower2} yields (\sum_{i<j}|B^i\cup B^j|\ge 9n-4a_5). Thus (a_5\ge 1), and moreover to keep (\le 9n-3) we must have **every other contestant solving exactly 4 problems** (otherwise (g(r_x)\ge 12) for some (x), pushing the sum above (9n-3)). So we are in the extremal situation:
+
+* exactly one contestant (call them (X)) solved (5) problems and missed a unique problem (Q);
+* all other (n-1=5q+1) contestants solved exactly (4) problems (missed exactly two).
+
+Encode those (n-1) contestants by a multigraph on the (6) problems, with one (possibly repeated) edge ({i,j}) for each contestant who missed exactly problems (i) and (j). Let
+
+* (d_i) be the degree of vertex (i) (number of the (n-1) contestants who missed problem (i));
+* (x_{ij}) be the multiplicity of the edge ({i,j}) (number who missed both (i) and (j)).
+
+For (i\ne j), the integer
+[
+|B^i\cup B^j|=
+\begin{cases}
+d_i+d_j-x_{ij},&\text{if neither }i,j\text{ is }Q,\
+1+d_i+d_j-x_{ij},&\text{if }Q\in{i,j},
+\end{cases}
+]
+(the extra (1) accounts for (X), who misses (Q) only).
+
+As noted above, (|B^i\cup B^j|\le 3q+1) for every pair, and
+[
+\sum_{i<j}|B^i\cup B^j|=15n-\Bigl(10+6(n-1)\Bigr)=9n-4=15(3q+1)-1.
+]
+Since the per-pair bound is (3q+1), this forces **exactly one pair** to have union (3q) and the other (14) pairs to have union (3q+1).
+
+Consider the five pairs involving (Q). Write (m=n-1=5q+1). Note that (\sum_{j\ne Q}x_{Qj}=d_Q) (each edge incident to (Q) is counted once). There are two possibilities.
+
+* **Case A.** The unique pair with union (3q) does **not** involve (Q). Then for every (p\ne Q),
+  [
+  1+d_Q+d_p-x_{Qp}=3q+1\quad\Longrightarrow\quad x_{Qp}=d_Q+d_p-3q.
+  ]
+  Summing over (p\ne Q),
+  [
+  d_Q=\sum_{p\ne Q}x_{Qp}=5d_Q+\Bigl(\sum_{p\ne Q}d_p\Bigr)-15q
+  =5d_Q+(2m-d_Q)-15q=4d_Q+2m-15q.
+  ]
+  Hence (3d_Q=2m-15q=(10q+2)-15q=-5q+2<0), impossible.
+
+* **Case B.** The unique pair with union (3q) **does** involve (Q), say ({Q,p_0}). Then
+  [
+  1+d_Q+d_{p_0}-x_{Qp_0}=3q,\qquad 1+d_Q+d_p-x_{Qp}=3q+1\ \ (p\ne p_0).
+  ]
+  Summing over (p\ne Q) gives
+  [
+  d_Q=\sum_{p\ne Q}x_{Qp}
+  =4d_Q+\Bigl(\sum_{p\ne Q}d_p\Bigr)-15q+1
+  =4d_Q+(2m-d_Q)-15q+1,
+  ]
+  so (3d_Q=2m-15q+1=(10q+2)-15q+1=-5q+3<0), again impossible.
+
+Both cases are impossible; hence our assumption that there is exactly one (5)-solver cannot hold. Therefore, **when (n\equiv 2\pmod 5) there are also at least two contestants who solved exactly 5 problems**.
+
+---
+
+Combining all cases, in every competition satisfying the hypothesis there are **at least two** contestants who solved exactly five of the six problems. ∎
