@@ -125,8 +125,8 @@ Each problem includes up to 9 different resources:
 1. **Study** - Study and learn of problem and correct proof
 2. **Answer** - Ground truth answer, not proof
 3. **Proof Shortlist** - Official IMO solution(s)
-4. **Proof Deep Think** - AI-generated proof (DeepThink)
-5. **Proof GPT 5 Pro** - AI-generated proof (GPT-5 Pro)
+4. **Proof Deep Think** - AI-generated proof (Gemini DeepThink)
+5. **Proof GPT 5 Pro** - AI-generated proof (OpenAI GPT-5 Pro)
 6. **Sim** - Interactive simulation
 7. **Proof Lean** - Formal proof in Lean 4 (opens live.lean-lang.org)
 8. **Proof All** - Combined proof
@@ -201,7 +201,7 @@ All problems are **combinatorics** with subcategories:
 - Combinatorial Number Theory
 
 ### By Difficulty
-Problems are graded on IMO scale:
+Problems appear by IMO score means:
 - Easy (≤2.5 mean score)
 - Medium (2.5-5.0 mean score)
 - Hard (>5.0 mean score)
@@ -283,18 +283,10 @@ MIT License - see `LICENSE` file for details.
 
 ## Acknowledgments
 
-- Problem statements © International Mathematical Union
+- Problem statements © International Mathematical Olympiad
 - Lean 4 integration powered by [live.lean-lang.org](https://live.lean-lang.org/)
 - Compression via [LZ-String](https://pieroxy.net/blog/pages/lz-string/index.html)
-- AI proofs generated using OpenAI's GPT-5 and DeepThink models
-
-## Contributing
-
-Contributions are welcome! Please feel free to:
-- Add new problem visualizations
-- Improve existing simulations
-- Submit formal proofs in Lean 4
-- Report issues or suggest enhancements
+- AI proofs generated using OpenAI's GPT-5 Pro and Gemini DeepThink models
 
 ## Status Note
 
