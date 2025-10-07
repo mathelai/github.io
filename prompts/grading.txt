@@ -1,74 +1,75 @@
 # Objective
 
-Evaluate the **correctness and completeness** of two AI-generated IMO proofs by comparing them against the **set of official solutions** in `proof-shortlist.txt`. Do **not** assess final numeric/symbolic answers.
+Evaluate the **correctness and completeness** of two AI-generated IMO proofs by comparing each to the set of official solutions in `proof-shortlist.txt`.
 
 # Checklist (3–7 steps)
 
-1. Verify all required files are present and non-empty.
-2. For each AI (GPT 5 Pro, then DeepThink), identify the **closest-matching official solution** (by structure/lemmas/casework).
-3. Assess **correctness** (logical validity, justified steps) and **completeness** (all necessary cases/lemmas/edge conditions) **relative to that official solution**.
-4. If the AI mixes approaches, grade against the **official solution that yields the fairest/higher valid score**, provided the hybrid is coherent.
-5. Assign an IMO **grade (0–7)** and add a brief justification.
-6. Record any file issues as errors and validate JSON schema/order.
+1. Check all required files are present and non-empty.
+2. For each AI (GPT 5 Pro then DeepThink), identify the closest-matching official solution in approach.
+3. Assess correctness and completeness against that solution.
+4. Account for hybrid/mixed approaches in grading if coherent.
+5. Assign an IMO grade (0–7) with a brief justification.
+6. Document file errors and strictly validate JSON schema/key order.
 
 # Files
 
-* `problem.txt`: IMO problem
-* `proof-shortlist.txt`: Official solutions (may contain multiple proofs)
+* `problem.txt`: The IMO problem statement
+* `proof-shortlist.txt`: Official solutions (possibly multiple approaches)
 * `proof-gpt5pro.txt`: GPT 5 Pro’s proof
 * `proof-deepthink.txt`: DeepThink’s proof
 
-# Procedure (per AI proof; evaluate GPT 5 Pro first)
+# Procedure (repeat for each AI proof; start with GPT 5 Pro)
 
 1. **Map to Official Solution(s)**
-
-   * Scan `proof-shortlist.txt` for solution “families” (e.g., invariants/graph-theoretic/inequality/constructive).
-   * Choose the **best-aligned** official solution as the reference. If ambiguous, evaluate against multiple and keep the **most generous fair** result.
+   - Review `proof-shortlist.txt` for solution types (e.g., invariant, graph-theoretic, inequality, constructive).
+   - Select the best-matching official solution as your reference. If ambiguous, evaluate against several and use the most generous valid mapping for scoring.
 
 2. **Assess Correctness**
-
-   * Check each claim/lemma against the reference solution’s logic (or a valid alternative).
-   * Flag unjustified steps, hidden assumptions, circularity, or non-sequiturs.
+   - Evaluate every assertion relative to the reference solution’s logic or any legitimate approach.
+   - Identify hidden assumptions, unsupported steps, or gaps in reasoning.
 
 3. **Assess Completeness**
-
-   * Confirm all required cases/subcases, boundary conditions, and final deduction are covered to reach the problem’s conclusion.
-   * If the AI takes a valid alternative route not in the shortlist, accept it fully if sound; otherwise award partial credit for substantiated progress.
+   - Confirm all necessary cases/subproblems and deductions are fully addressed.
+   - If a new valid approach appears, give full or partial credit as appropriate.
 
 4. **Grade (IMO 0–7)**
-
-   * **7**: Fully correct and complete proof (possibly via any official approach).
-   * **5–6**: Essentially correct; at most minor omissions/repairable gaps.
-   * **2–4**: Substantial partial progress (key lemmas/cases) but incomplete or with significant gaps.
-   * **1**: Small but relevant idea.
-   * **0**: No meaningful progress.
-   * Prefer the **fairest** grading among plausible mappings; do not penalize for style or for choosing a different valid route.
+   - 7: Fully correct and complete (any valid method).
+   - 5–6: Essentially correct, minor fixable gaps.
+   - 2–4: Notable progress with missing parts or significant errors.
+   - 1: Minor but relevant idea.
+   - 0: No meaningful progress.
+   - Always use the fairest matching; do not penalize for alternative correct approaches.
 
 5. **Comment**
-
-   * One concise sentence explaining the main driver of the score (e.g., “complete except missing extremal-case justification”).
+   - Write a concise sentence explaining the main reason for the grade.
 
 6. **Error Handling**
-
-   * If any required file is missing/empty for a proof, set its `grade` to **null** and describe the issue in `error`.
+   - If a proof's file is missing or empty, set its `grade` to null and specify the issue in `error`. Use null, not empty string, for `error` if no file problem.
 
 7. **Validation**
+   - Ensure output JSON matches schema exactly, strictly preserving key order: `gpt5pro`, then `deepthink`, each containing `grade`, `comment`, `error` in that order.
 
-   * Ensure the final JSON matches the schema exactly and preserves key order.
+## Output Format
 
-# Output Format
+Your output must be a JSON object with these top-level keys, in order: `gpt5pro` and `deepthink`. Each is an object with `grade`, `comment`, `error`, in that order.
+
+- `grade`: integer from 0–7, or null (if file error)
+- `comment`: brief justification, or null (if file error)
+- `error`: a string describing the error, or null (if none)
+
+### Example valid output:
 
 ```json
 {
-"gpt5pro": {
-"grade": 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | null,
-"comment": string | null,
-"error": string | null
-},
-"deepthink": {
-"grade": 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | null,
-"comment": string | null,
-"error": string | null
-}
+  "gpt5pro": {
+    "grade": 6,
+    "comment": "Almost complete; boundary condition for n=2 missing.",
+    "error": null
+  },
+  "deepthink": {
+    "grade": null,
+    "comment": null,
+    "error": "proof-deepthink.txt is missing."
+  }
 }
 ```
