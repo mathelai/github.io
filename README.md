@@ -1,32 +1,32 @@
 # MathEL: Autonomous Self-Improving AI for IMO Combinatorics
 
-A comprehensive collection of interactive visualizations, simulations, formal proofs, and AI-generated solutions for 39 International Mathematical Olympiad (IMO) combinatorics problems spanning 2000-2025.
+A collection of problems, formal proofs, AI-generated proofs, simmulations, interactive visualizations, simulations for 39 International Mathematical Olympiad (IMO) combinatorics problems spanning 2000-2025.
 
 ## Overview
 
 MathEL provides a complete ecosystem for exploring and solving IMO combinatorics problems:
 
-- **Interactive web visualizations** - Explore problems through dynamic, browser-based simulations
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
-- **Python simulations** - Experimental verification and pattern discovery
 - **Automated grading** - GPT-5 powered proof evaluation system
-- **No server required** - All visualizations work offline in the browser
+- **Python simulations** - Experimental verification and pattern discovery
+- **Interactive web visualizations** - Explore problems through dynamic, browser-based simulations
+- **No server required** - Works offline in the browser
 
 ## Quick Start
 
 ### Browse Problems
 
-Simply open `index.html` in your web browser to:
+Open `index.html` in your web browser to:
 - Browse all 39 problems with search, filtering, and sorting
 - View problem metadata (year, difficulty, category, nicknames)
-- Click any problem card to open its interactive visualization
+- Click any problem card to open its proofs and interactive visualization
 
 ### View Individual Problems
 
 Each `imo{YYYY}p{N}/index.html` provides:
-- Interactive problem visualization with controls
 - Direct links to all proof types and study materials
 - Integrated Lean 4 playground launcher
+- Interactive problem visualization with controls
 
 ### Run Simulations (Optional)
 
@@ -85,18 +85,17 @@ app/
     │
     ├── problem.txt             # Problem statement (LaTeX)
     ├── answer.txt              # Ground truth answer
-    ├── study.txt               # Study guide/hints
+    ├── study.txt               # Study and learning of correct proof
     │
     ├── proof-shortlist.txt     # Official solution(s)
-    ├── proof-deepthink.txt     # DeepThink AI proof
+    ├── proof-deepthink.txt     # DeepThink proof
     ├── proof-gpt5pro.txt       # GPT-5 Pro proof
     ├── proof-sim.txt           # Simulation-based insights
-    ├── proof-lean.txt          # Lean 4 formal proof (text)
+    ├── proof.lean              # Lean 4 proof code
+    ├── proof.js                # Generated JS module for opening Lean proof in Lean 4 compiler
     ├── proof.txt               # Combined proof
-    ├── proof.lean              # Lean 4 source code
-    ├── proof.js                # Generated JS module for Lean code
     │
-    └── grade.txt               # AI grading results (JSON)
+    └── grade.txt               # AI grading results
 ```
 
 ## Features
@@ -122,20 +121,20 @@ Problems have memorable nicknames for easy reference:
 ### Multiple Proof Types
 
 Each problem includes up to 9 different resources:
-1. **Study** - Hints and guidance
-2. **Answer** - Ground truth solution
+1. **Study** - Study and learn of problem and correct proof
+2. **Answer** - Ground truth answer, not proof
 3. **Proof Shortlist** - Official IMO solution(s)
-4. **Proof Deep Think** - AI-generated proof (DeepThink model)
+4. **Proof Deep Think** - AI-generated proof (DeepThink)
 5. **Proof GPT 5 Pro** - AI-generated proof (GPT-5 Pro)
 6. **Sim** - Interactive simulation
 7. **Proof Lean** - Formal proof in Lean 4 (opens live.lean-lang.org)
-8. **Proof All** - Combined comprehensive proof
+8. **Proof All** - Combined proof
 9. **Grade** - Automated grading of AI proofs
 
 ### Lean 4 Integration
 
 Problems with formal proofs include:
-- `proof.lean` - Complete Lean 4 formalization
+- `proof.lean` - Lean 4 formalization
 - `proof.js` - Generated JavaScript module
 - Direct integration with [live.lean-lang.org](https://live.lean-lang.org/)
 - One-click loading of proof code with LZ-String compression
