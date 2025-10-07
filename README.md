@@ -1,5 +1,5 @@
 # DRAFT
-# MathEL: Autonomous Self-Improving AI for IMO Combinatorics
+# [MathEL: Autonomous Self-Improving AI for IMO Combinatorics](https://mathelai.github.io)
 
 A collection of problems, proofs, AI-generated proofs, statistics, simulations, and interactive visualizations for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
 
