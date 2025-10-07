@@ -1,0 +1,99 @@
+**Problem (IMO 2011/2 — “Windmill”).**
+Let (\mathcal S) be a finite set of at least two points in the plane, no three collinear. A *windmill* starts with a line (\ell) through a single point (P\in\mathcal S). The line rotates clockwise about (P) until it first meets another point (Q\in\mathcal S). Then (Q) becomes the pivot; the line now rotates clockwise about (Q) until it meets another point, and so on, indefinitely.
+Show that we can choose (P) and (\ell) so that every point of (\mathcal S) occurs as a pivot infinitely many times.
+
+---
+
+We give a complete proof. Write (n:=|\mathcal S|\ge 2).
+
+### A key invariant
+
+For any ordered pair of distinct points (X,Y\in\mathcal S), let
+[
+L(X,Y):=#{\text{points of }\mathcal S\setminus{X,Y}\text{ lying in the \emph{clockwise} open half–plane determined by the oriented line }XY}.
+]
+(“Clockwise side’’ means the side the line sweeps into when rotating clockwise about its current pivot.)
+
+**Invariant.** If in the windmill we pass from the state ((X,Y)) to the state ((Y,Z)), then
+[
+L(X,Y)=L(Y,Z).
+]
+*Reason.* After the pivot switches to (Y), we continue rotating clockwise about (Y). Until we hit the next point (Z), the set of points on the clockwise side does not change; hence their number is constant.
+
+Thus along the entire windmill run, the value (L) at the *discrete moments of pivot change* remains constant.
+
+### Choosing the start so that the invariant is “as balanced as possible’’
+
+We will start the windmill so that this constant is
+[
+k:=\big\lfloor \tfrac{n-2}{2}\big\rfloor.
+]
+
+* **If (n) is odd.** Fix any (P\in\mathcal S). As a line through (P) rotates, the difference between the numbers of points in the two open half–planes changes by (\pm1) only when a point is crossed. Because rotating by (\pi) swaps the two sides, there is an angle at which the two open half–planes contain exactly (\frac{n-1}{2}) points each. Start with such a line (\ell). The first point (Q) we meet lies on the clockwise side, so just before the hit that side contains (\frac{n-1}{2}-1) points; therefore
+  [
+  L(P,Q)=\tfrac{n-1}{2}-1=\tfrac{n-3}{2}=k.
+  ]
+
+* **If (n) is even.** Again fix (P) and rotate a line through it. One of the orientations yields the clockwise side having (\frac n2) points and the other side (\frac n2-1). Start with such a line. The first point (Q) lies on the clockwise side, hence just before the hit that side contains (\frac n2-1) points, giving
+  [
+  L(P,Q)=\tfrac n2-1=k.
+  ]
+
+In either case the first ordered pair ((P,Q)) satisfies (L(P,Q)=k), and by the invariant we have
+[
+\boxed{,L(X,Y)=k\text{ at every pivot change }(X,Y)\text{ thereafter.},}
+]
+
+### What is the “next” point (Z) from a state ((X,Y))?
+
+Fix a state ((X,Y)) with (L(X,Y)=k). Around the pivot (Y), list the points of (\mathcal S\setminus{Y}) in clockwise order, starting at (X). Let “the (j)-th point clockwise from (X) about (Y)” mean the point you reach after skipping (j-1) points in that order.
+
+Consider the line oriented as (YX). Its clockwise side contains (n-2-k) points (the complement, among the (n-2) points off the line). As we rotate clockwise about (Y), each time we pass a point that point leaves the clockwise side, so the number on that side decreases by (1) at each such passing.
+
+We want to reach the next windmill state ((Y,Z)) with (L(Y,Z)=k), i.e. at the moment of meeting (Z) the clockwise side should again contain exactly (k) points. Starting from (n-2-k), we must *decrease* to (k), so we need to pass
+[
+(n-2-k)-k = n-2-2k
+]
+points.
+
+Since (k=\lfloor\tfrac{n-2}{2}\rfloor), there are two cases:
+
+* **(n) odd.** Then (n-2=2k+1), so (n-2-2k=1). Thus **(Z) is the first point clockwise from (X) about (Y)**.
+
+* **(n) even.** Then (n-2=2k), so (n-2-2k=0). At the position (YX) we already have (k) points on the clockwise side; to get to the next event we must first cross one point (dropping to (k-1)), and then cross another point to return to (k). Hence **(Z) is the second point clockwise from (X) about (Y)**.
+
+Summarizing:
+
+[
+\boxed{\text{From }(X,Y)\text{ we move to }(Y,Z)\text{ where }Z\text{ is the }
+\begin{cases}
+\text{first clockwise neighbor of }X\text{ about }Y, & n\text{ odd},\
+\text{second clockwise neighbor of }X\text{ about }Y, & n\text{ even}.
+\end{cases}}
+]
+
+Two immediate consequences:
+
+1. **Reversibility.** The predecessor of ((X,Y)) is uniquely determined: it is ((W,X)) where (W) is the first (respectively, second) *counterclockwise* neighbor of (Y) about (X) in the odd (resp. even) case. Hence the windmill evolution on the finite set of ordered pairs ((A,B)), (A\ne B), is a bijection; the run is periodic. In particular, every state that occurs, including the initial one, recurs infinitely many times.
+
+2. **How the “previous pivot” around (Y) progresses.** Every time (Y) reappears as pivot later in the run, the point that was the previous pivot (the point the line came from) advances by
+   [
+   \Delta=
+   \begin{cases}
+   1\ \text{step clockwise}, & n\text{ odd},\
+   2\ \text{steps clockwise}, & n\text{ even},
+   \end{cases}
+   ]
+   in the cyclic order of (\mathcal S\setminus{Y}) around (Y).
+
+Since the cyclic order around (Y) has length (n-1), and
+[
+\gcd(\Delta,n-1)=1\quad(\text{because }\Delta=1\text{ if }n\text{ odd, and }n-1\text{ is odd if }n\text{ even}),
+]
+successive returns to (Y) sweep the previous pivot through **all** points of (\mathcal S\setminus{Y}).
+
+### Finishing the proof
+
+Start the windmill as above. It produces the first transition ((P,Q)) with (L(P,Q)=k). By the discussion, the evolution is periodic (so continues forever), and whenever some point (Y) occurs as pivot, the *next* pivot will, over successive returns of (Y), run through every other point of (\mathcal S). Therefore **every point of (\mathcal S)** appears as a pivot (namely, as the successor of some (Y)) at least once; by periodicity, in fact **infinitely many times**.
+
+Thus there is a choice of (P) and (\ell) for which the windmill uses each point of (\mathcal S) as a pivot infinitely often. (\square)
