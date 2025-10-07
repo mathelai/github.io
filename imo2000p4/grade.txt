@@ -1,1 +1,13 @@
+{
+"gpt5pro": {
+"grade": 7,
+"comment": "Uses the sumset bound and its equality case to force all three boxes to be arithmetic progressions with a common difference, then identifies exactly the mod‑3 and end‑singleton families—matching the shortlist’s two-case classification—so the proof is complete and correct.  ",
+"error": null
+},
+"deepthink": {
+"grade": 6,
+"comment": "Follows the shortlist’s two‑case scheme (1,2,3 in different boxes ⇒ mod‑3; otherwise the two end singletons) and reaches the right count, but the preliminary claim that “1 and 2 must be in different boxes” contains unjustified steps; the remaining casework is sound.  ",
+"error": null
+}
+}
 
