@@ -1,0 +1,66 @@
+[
+\textbf{Answer: } \boxed{1003}
+]
+
+[
+\textbf{Solution.}
+]
+Let (n=2006). Label the vertices of the regular (n)-gon (P) by (0,1,2,\dots,n-1) in order. Call a chord (sides included) **good** if its endpoints split the boundary into two arcs each having an odd number of sides.
+
+Since (n) is even, a chord (uv) is good iff the boundary distance between (u) and (v) (measured in edges of (P)) is odd. Equivalently, if we color the vertices alternately black/white around the polygon, then a chord is good iff it joins opposite colors.
+
+We are given a triangulation of (P) by (n-3=2003) non‑crossing diagonals, producing (n-2=2004) triangles. We seek the maximum number of **isosceles triangles whose two equal sides are good**.
+
+---
+
+### 1) What can an isosceles triangle with two good sides look like?
+
+Consider any triangle (ABC) of the triangulation which is isosceles with two good sides. Without loss of generality, the equal sides are (AB) and (BC); by goodness, (A,B) are opposite colors and (B,C) are opposite colors, so (A) and (C) have the same color.
+
+In a regular polygon, two chords (BA) and (BC) have equal length iff the (shorter) boundary distances from (B) to (A) and from (B) to (C) are equal. Thus, with our vertex labelling, we may write
+[
+A = B - k,\qquad C = B + k
+]
+for some integer (k) with (1\le k \le \lfloor n/2\rfloor). Since both (BA) and (BC) must be good, these distances must be odd, hence (k) is odd.
+
+Now, when does the triangle (\triangle(B-k,,B,,B+k)) actually appear as a face in a triangulation? In any triangulation, the triangles incident to (B) are exactly of the form ((B,u,v)) where (u) and (v) are **consecutive neighbors of (B)** among the edges (sides or diagonals) incident to (B), ordered by angle inside the polygon.
+
+But (B) is always connected to (B-1) and (B+1) (the two sides of (P)). These lie strictly between the rays to (B-k) and (B+k) unless (k=1). Therefore, ((B-k,B,B+k)) can be a triangle of the triangulation only if (k=1). In that case the triangle is precisely
+[
+\triangle(B-1,,B,,B+1),
+]
+whose two equal sides are the two sides of (P) meeting at (B). (Those sides are good because (1) and (n-1) are odd.)
+
+Thus, **the counted triangles are exactly the “ears”**: triangles formed by two consecutive sides of (P) and the short diagonal between their outer endpoints. Equivalently, they are precisely the triangles (\triangle(v-1, v, v+1)), and they occur exactly at the vertices (v) of degree (2) in the triangulation graph (no diagonals incident to (v)).
+
+---
+
+### 2) Upper bound: at most every other vertex can be an ear
+
+If two adjacent vertices (v) and (v+1) were both ears, then both diagonals ([v-1,v+1]) and ([v,v+2]) would belong to the triangulation, and these two diagonals **cross** in a convex polygon—impossible. Hence no two neighboring vertices can both be ears. Therefore, in an (n)-gon, the number of ears is at most (\lfloor n/2\rfloor).
+
+With (n=2006), this gives the upper bound
+[
+#(\text{isosceles triangles with two good sides}) \le \left\lfloor \frac{2006}{2}\right\rfloor = 1003.
+]
+
+---
+
+### 3) Construction achieving (1003)
+
+We now show this bound is tight.
+
+Draw all (1003) short diagonals joining every pair of consecutive odd-indexed vertices:
+[
+[1,3],\ [3,5],\ \dots,\ [2005,1].
+]
+These are pairwise non‑crossing and form the boundary of the regular (1003)-gon determined by the odd vertices. Each such diagonal ([2k-1,2k+1]) forms together with the sides ([2k-1,2k]) and ([2k,2k+1]) the ear (\triangle(2k-1,,2k,,2k+1)) at the even vertex (2k). Thus we have created **one ear at every even vertex**, i.e. (1003) isosceles triangles with two good sides.
+
+Finally, triangulate the inner (1003)-gon on the odd vertices arbitrarily (this takes (1003-3=1000) additional non‑crossing diagonals among odd vertices). Altogether we use (1003 + 1000 = 2003) diagonals as required, and the (1003) ears at even vertices remain intact (no new diagonals touch those even vertices).
+
+---
+
+Since we have both an upper bound of (1003) and a construction achieving (1003), the maximum possible number is
+[
+\boxed{1003}.
+]
