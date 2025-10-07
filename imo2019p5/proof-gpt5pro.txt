@@ -1,0 +1,89 @@
+We number the coins (1,2,\dots,n) from left to right.
+For a configuration (C), let
+
+* (r(C)) be the number of coins showing (A),
+* (s(C)) be the sum of the indices of the coins showing (A).
+
+Define the potential
+[
+\Phi(C);:=;2s(C)-\bigl(r(C)\bigr)^2.
+]
+
+> **Note on the example in the statement.**
+> With the given rule, starting from (AAB) we have (AAB\to ABB\to BBB), which are **two** flips; thus (f(AAB)=2) and (f(BBB)=0). The text’s “3” appears to be a slip. Everything below uses the natural convention that (f(C)) counts the number of flips.
+
+---
+
+### (a) The process always stops
+
+First, for any configuration with (r) A’s and positions (1\le i_1<\cdots<i_r\le n),
+[
+s=i_1+\cdots+i_r ;\ge; 1+2+\cdots+r ;=; \frac{r(r+1)}{2}.
+]
+Hence
+[
+\Phi(C) ;=; 2s-r^2 ;\ge; r ;\ge; 0,
+]
+with equality (\Phi(C)=0) iff (r=0) (i.e. all coins show (B)).
+
+Now consider one operation. Suppose the current configuration has exactly (r\ge 1) coins showing (A), so the rule flips coin (r).
+
+* If coin (r) shows (A), then (r\mapsto r-1) and (s\mapsto s-r).
+* If coin (r) shows (B), then (r\mapsto r+1) and (s\mapsto s+r).
+
+In either case,
+[
+\Phi\ \mapsto\ \Phi' ;=; 2(s\pm r) - (r\mp 1)^2 ;=; 2s - r^2 - 1 ;=; \Phi - 1.
+]
+Thus **each operation decreases (\Phi) by exactly (1)**. Since (\Phi) is a nonnegative integer, after finitely many steps (\Phi) must reach (0), which by the first paragraph occurs exactly when all coins show (B). Hence Harry always stops after finitely many operations.
+
+A useful corollary is that for every initial configuration (C),
+[
+\boxed{,f(C)=\Phi(C)=2s(C)-\bigl(r(C)\bigr)^2,}.
+]
+Indeed, (\Phi) starts at (\Phi(C)) and goes down by (1) at each flip until it reaches (0).
+
+---
+
+### (b) The average of (f(C)) over all (2^n) configurations
+
+Let the initial configuration be uniformly random among the (2^n) possibilities. For (i=1,\dots,n), let (X_i) be the indicator that coin (i) initially shows (A). Then
+[
+r=\sum_{i=1}^n X_i,\qquad s=\sum_{i=1}^n i,X_i.
+]
+By the corollary above,
+[
+f(C)=2s-r^2.
+]
+So the average of (f(C)) is
+[
+\mathbb{E}[f]=2\mathbb{E}[s]-\mathbb{E}[r^2].
+]
+
+Compute these expectations:
+
+* Each (X_i) equals 1 with probability (\tfrac12). Hence
+  [
+  \mathbb{E}[s]=\sum_{i=1}^n i,\mathbb{E}[X_i]=\frac12\sum_{i=1}^n i=\frac12\cdot \frac{n(n+1)}{2}=\frac{n(n+1)}{4}.
+  ]
+* Since (r=\sum_i X_i) with independent (X_i) and (\mathbb{E}[X_i]=\tfrac12), (\mathbb{E}[X_iX_j]=\tfrac14) for (i\neq j),
+  [
+  \mathbb{E}[r^2]=\sum_i \mathbb{E}[X_i] + 2\sum_{i<j}\mathbb{E}[X_iX_j]
+  = \frac{n}{2} + 2\binom{n}{2}\cdot \frac14
+  = \frac{n}{2}+\frac{n(n-1)}{4}
+  = \frac{n(n+1)}{4}.
+  ]
+
+Therefore
+[
+\boxed{\ \mathbb{E}[f];=;2\cdot \frac{n(n+1)}{4} - \frac{n(n+1)}{4} ;=; \frac{n(n+1)}{4}.\ }
+]
+
+---
+
+**Summary.**
+
+* (a) The process terminates for every initial configuration; in fact, the potential (\Phi=2s-r^2) drops by exactly (1) every flip and is always nonnegative.
+* (b) The average number of flips over all (2^n) initial configurations equals (\dfrac{n(n+1)}{4}).
+
+*Remark.* The identity (f(C)=2s(C)-r(C)^2) also yields extremal values; for example, the maximum (f(C)) is (\binom{n+1}{2}), attained when the (A)’s occupy the rightmost positions.
