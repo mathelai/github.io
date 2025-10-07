@@ -1,7 +1,3 @@
-Great call. Here’s a tightened version that treats the shortlist as **multiple official solutions** and grades each AI proof against the **best-matching official approach** (still proof-only, correctness + completeness).
-
----
-
 # Objective
 
 Evaluate the **correctness and completeness** of two AI-generated IMO proofs by comparing them against the **set of official solutions** in `proof-shortlist.txt`. Do **not** assess final numeric/symbolic answers.
