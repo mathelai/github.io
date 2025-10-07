@@ -45,7 +45,7 @@ The system incorporates IMO 2001-2025 short-lists, full problems, and human stat
 
 The Solver employs three parallel processes that work together in a build-review loop:
 
-1. **Natural Language Proof**: AI-generated proofs in natural language
+1. **Natural Language Proofs**: AI-generated proofs in natural language
 2. **Code Visual Simulation**: Python-based simulation and pattern discovery
 3. **Lean Proof & Repair**: Formal proof verification with automated repair
 
