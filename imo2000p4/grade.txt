@@ -1,3 +1,1 @@
-**Expected Score: 7/7**
 
-Complete characterization of all valid distributions
