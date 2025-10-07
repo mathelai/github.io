@@ -1,0 +1,35 @@
+Let $n$ be an odd integer greater than 1 and let $c_{1}, c_{2}, \ldots, c_{n}$ be integers. For each permutation $a=\left(a_{1}, a_{2}, \ldots, a_{n}\right)$ of $\{1,2, \ldots, n\}$, define $S(a)=\sum_{i=1}^{n} c_{i} a_{i}$. Prove that there exist permutations $a \neq b$ of $\{1,2, \ldots, n\}$ such that $n!$ is a divisor of $S(a)-S(b)$.
+
+Solution. Let $\sum S(a)$ be the sum of $S(a)$ over all $n!$ permutations $a=\left(a_{1}, a_{2}, \ldots, a_{n}\right)$. We compute $\sum S(a) \bmod n!$ two ways, one of which depends on the desired conclusion being false, and reach a contradiction when $n$ is odd.
+
+First way. In $\sum S(a), c_{1}$ is multiplied by each $k \in\{1, \ldots, n\}$ a total of $(n-1)$ ! times, once for each permutation of $\{1, \ldots, n\}$ in which $a_{1}=k$. Thus the coefficient of $c_{1}$ in $\sum S(a)$ is
+
+$$
+(n-1)!(1+2+\cdots+n)=(n+1)!/ 2
+$$
+
+The same is true for all $c_{i}$, so
+
+
+\begin{equation*}
+\sum S(a)=\frac{(n+1)!}{2} \sum_{i=1}^{n} c_{i} \tag{1}
+\end{equation*}
+
+
+Second way. If $n!$ is not a divisor of $S(a)-S(b)$ for any $a \neq b$, then each $S(a)$ must have a different remainder $\bmod n!$. Since there are $n!$ permutations, these remainders must be precisely the numbers $0,1,2, \ldots, n!-1$. Thus
+
+
+\begin{equation*}
+\sum S(a) \equiv \frac{(n!-1) n!}{2} \bmod n! \tag{2}
+\end{equation*}
+
+
+Combining (1) and (2), we get
+
+
+\begin{equation*}
+\frac{(n+1)!}{2} \sum_{i=1}^{n} c_{i} \equiv \frac{(n!-1) n!}{2} \bmod n! \tag{3}
+\end{equation*}
+
+
+Now, for $n$ odd, the left side of (3) is congruent to 0 modulo $n!$, while for $n>1$ the right side is not congruent to 0 ( $n!-1$ is odd). For $n>1$ and odd, we have a contradiction.
