@@ -7,7 +7,7 @@ A collection of problems, proofs, AI-generated proofs, statistics, simmulations,
 MathEL provides an ecosystem for exploring, solving, and learning IMO combinatorics problems:
 
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
-- **Automated grading** - Proof evaluation script
+- **Automated grading** - Proof evaluation compared with ground truth solutions
 - **Study and lean** - Study and learn problems and correct proofs
 - **Python simulations** - Experimental verification and pattern discovery
 - **Interactive web visualizations** - Explore problems through dynamic, browser-based simulations
