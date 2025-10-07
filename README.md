@@ -10,7 +10,7 @@ MathEL provides an ecosystem for exploring, solving, and learning IMO combinator
 - **Automated grading** - Proof evaluation compared with ground truth solutions
 - **Study and lean** - Study and learn problems and correct proofs
 - **Python simulations** - Experimental verification and pattern discovery
-- **Interactive web visualizations** - Explore problems through dynamic, browser-based simulations
+- **Interactive web visualizations** - Explore problems by dynamic, browser-based simulations
 - **No server required** - Works offline in the browser
 
 ## Quick Start
