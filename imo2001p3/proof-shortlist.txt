@@ -1,0 +1,74 @@
+Twenty-one girls and twenty-one boys took part in a mathematical competition. It turned out that\\
+(a) each contestant solved at most six problems, and\\
+(b) for each pair of a girl and a boy, there was at least one problem that was solved by both the girl and the boy.
+
+Show that there is a problem that was solved by at least three girls and at least three boys.
+
+Solution 1. We introduce the following symbols: $G$ is the set of girls at the competition and $B$ is the set of boys, $P$ is the set of problems, $P(g)$ is the set of problems solved by $g \in G$, and $P(b)$ is the set of problems solved by $b \in B$. Finally, $G(p)$ is the set of girls that solve $p \in P$ and $B(p)$ is the set of boys that solve $p$. In terms of this notation, we have that for all $g \in G$ and $b \in B$,
+
+$$
+\text { (a) }|P(g)| \leq 6,|P(b)| \leq 6, \quad \text { (b) } P(g) \cap P(b) \neq \varnothing \text {. }
+$$
+
+We wish to prove that some $p \in P$ satisfies $|G(p)| \geq 3$ and $|B(p)| \geq 3$. To do this, we shall assume the contrary and reach a contradiction by counting (two ways) all ordered triples ( $p, q, r$ ) such that $p \in P(g) \cap P(b)$. With $T=\{(p, g, b): p \in P(g) \cap P(b)\}$, condition (b) yields
+
+
+\begin{equation*}
+|T|=\sum_{g \in G} \sum_{b \in B}|P(g) \cap P(b)| \geq|G| \cdot|B|=21^{2} \tag{1}
+\end{equation*}
+
+
+Assume that no $p \in P$ satisfies $|G(p)| \geq 3$ and $|B(p)| \geq 3$. We begin by noting that
+
+
+\begin{equation*}
+\sum_{p \in P}|G(p)|=\sum_{g \in G}|P(g)| \leq 6|G| \quad \text { and } \quad \sum_{p \in P}|B(p)| \leq 6|B| . \tag{2}
+\end{equation*}
+
+
+(Note. The equality in (2) is obtained by a standard double-counting technique: Let $\chi(g, p)=1$ if $g$ solves $p$ and $\chi(g, p)=0$ otherwise, and interchange the orders of\\
+summation in $\sum_{p \in P} \sum_{g \in G} \chi(g, p)$.) Let
+
+$$
+\begin{aligned}
+& P_{+}=\{p \in P:|G(p)| \geq 3\}, \\
+& P_{-}=\{p \in P:|G(p)| \leq 2\} .
+\end{aligned}
+$$
+
+Claim. $\sum_{p \in P_{-}}|G(p)| \geq|G| ;$ thus $\sum_{p \in P_{+}}|G(p)| \leq 5|G|$. Also $\sum_{p \in P_{+}}|B(p)| \geq|B| ;$ thus $\sum_{p \in P_{-}}|B(b)| \leq 5|B|$.
+
+Proof. Let $g \in G$ be arbitrary. By the Pigeonhole Principle, conditions (a) and (b) imply that $g$ solves some problem $p$ that is solved by at least $\lceil 21 / 6\rceil=4$ boys. By assumption, $|B(p)| \geq 4$ implies that $p \in P_{-}$, so every girl solves at least one problem in $P_{-}$. Thus
+
+
+\begin{equation*}
+\sum_{p \in P_{-}}|G(p)| \geq|G| . \tag{3}
+\end{equation*}
+
+
+In view of (2) and (3) we have
+
+$$
+\sum_{p \in P_{+}}|G(p)|=\sum_{p \in P}|G(p)|-\sum_{p \in P_{-}}|G(p)| \leq 5|G| .
+$$
+
+Also, each boy solves a problem that is solved by at least four girls, so each boy solves a problem $p \in P_{+}$. Thus $\sum_{p \in P_{+}}|B(p)| \geq|B|$, and the calculation proceeds as before using (2).
+
+Using the claim just established, we find
+
+$$
+\begin{aligned}
+|T| & =\sum_{p \in P}|G(p)| \cdot|B(p)| \\
+& =\sum_{p \in P_{+}}|G(p)| \cdot|B(p)|+\sum_{p \in P_{-}}|G(p)| \cdot|B(p)| \\
+& \leq 2 \sum_{p \in P_{+}}|G(p)|+2 \sum_{p \in P_{-}}|B(p)| \\
+& \leq 10|G|+10|B|=20 \cdot 21 .
+\end{aligned}
+$$
+
+This contradicts (1), so the proof is complete.
+
+Solution 2. Let us use some of the notation given in the first solution. Suppose that for every $p \in P$ either $|G(p)| \leq 2$ or $|B(p)| \leq 2$. For each $p \in P$, color $p$ red if $|G(p)| \leq 2$ and otherwise color it black. In this way, if $p$ is red then $|G(p)| \leq 2$ and if $p$ is black then $|B(p)| \leq 2$. Consider a chessboard with 21 rows, each representing one of the girls, and 21 columns, each representing one of the boys. For each $g \in G$ and $b \in B$, color the square corresponding to ( $g, b$ ) as follows: pick $p \in P(g) \cap P(b)$ and assign $p$ 's color to that square. (By condition (b), there is always an available choice.) By the Pigeonhole Principle, one of the two colors is assigned to at least $\lceil 441 / 2\rceil=221$ squares, and thus some row has at least $\lceil 221 / 21\rceil=11$ black squares or some column has at least 11 red squares.
+
+Suppose the row corresponding to $g \in G$ has at least 11 black squares. Then for each of 11 squares, the black problem that was chosen in assigning the color was solved by at most 2 boys. Thus we account for at least $\lceil 11 / 2\rceil=6$ distinct problems solved by $g$. In view of condition (a), $g$ solves only these problems. But then at most 12 boys solve a problem also solved by $g$, in violation of condition (b).
+
+In exactly the same way, a contradiction is reached if we suppose that some column has at least 11 red squares. Hence some $p \in P$ satisfies $|G(p)| \geq 3$ and $|B(p)| \geq 3$.
