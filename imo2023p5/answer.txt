@@ -1,0 +1,2 @@
+$k=\left\lfloor\log _{2} n\right\rfloor + 1$
+
