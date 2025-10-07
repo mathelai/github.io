@@ -1,0 +1,123 @@
+Let ( (a_j)*{j\ge 1} ) be integers with
+[
+1\le a_j\le 2015\quad\text{and}\quad k+a_k\ne \ell+a*\ell\ \ (k<\ell).
+]
+Write (s_j:=j+a_j). Thus the (s_j) are pairwise distinct and satisfy
+[
+j+1\le s_j\le j+2015\quad\text{for all }j.
+]
+
+We will prove there exist integers (b) and (N) such that for all (n>m\ge N),
+[
+\left|\sum_{j=m+1}^n (a_j-b)\right|\le 1007^2.
+]
+
+---
+
+### 1) Eventually every large integer occurs as some (s_j)
+
+For any (T\ge 2015), the indices (j=1,2,\dots,T-2015) satisfy
+[
+s_j\le j+2015\le T,
+]
+and the (s_j) are distinct. Hence among the integers ({1,2,\dots,T}) at most (2015) are missing from the set ({s_j:j\ge 1}). As (T) increases, the number of missing integers is nondecreasing and always (\le 2015), so only finitely many integers are missing in total. Therefore there is an (N_0) such that every integer (t\ge N_0) equals (s_j) for a unique (j).
+
+---
+
+### 2) The number of “active intervals” stabilizes
+
+For an integer (t), define
+[
+A(t):=#{j:\ j\le t<s_j},
+]
+the number of “active” indices at time (t). When time increases by (1), one new index (j=t+1) starts, and there is an end at time (t+1) iff (t+1) equals some (s_j). Thus
+[
+A(t+1)=A(t)+1-\mathbf{1}_{{t+1\in {s_j}}}.
+]
+By Step 1, for all (t\ge N_0) we have (t+1=s_j) for exactly one (j), so the indicator equals (1) and hence
+[
+A(t+1)=A(t)\qquad (t\ge N_0).
+]
+Therefore (A(t)) is constant for all (t\ge N_0); denote this constant by
+[
+b:=A(t)\in{1,2,\dots,2015}\qquad (t\ge N_0).
+]
+
+At each (t\ge N_0) there is exactly one end at (t+1), so among the (b) active intervals at time (t) one has exactly one unit of time left.
+
+---
+
+### 3) A telescoping identity via the “sum of remaining times”
+
+For (t\ge N_0), let
+[
+S(t):=\sum_{j:, j\le t<s_j} (s_j-t)
+]
+be the sum of the remaining times of the (b) active intervals at time (t). From time (t) to (t+1), each of the (b) remaining times decreases by (1), one interval ends, and a new interval starts with remaining time (a_{t+1}). Hence
+[
+S(t+1)-S(t)=a_{t+1}-b\qquad (t\ge N_0).
+]
+Summing from (t=m) to (n-1) gives, for all (n>m\ge N_0),
+[
+\sum_{j=m+1}^n (a_j-b)=S(n)-S(m).\tag{*}
+]
+
+Thus our task reduces to bounding (S(t)) uniformly for (t\ge N_0).
+
+---
+
+### 4) Bounding (S(t))
+
+Fix (t\ge N_0). The set of remaining times at time (t) is
+[
+{,s_j-t:\ j\le t<s_j,}\subset{1,2,\dots,2015}.
+]
+It consists of exactly (b) **distinct** numbers (because the (s_j) are distinct) and, as noted above, it **contains (1)** (since exactly one interval ends at time (t+1)). Let us list these numbers in increasing order as
+[
+1=x_1<x_2<\cdots< x_b\le 2015 .
+]
+Then
+[
+S(t)=x_1+\cdots+x_b.
+]
+The minimum possible value of (S(t)) is when ({x_i}={1,2,\dots,b}), giving
+[
+S(t)\ge \frac{b(b+1)}{2}.
+]
+
+For an upper bound, note that among the (b-1) numbers (x_2,\dots,x_b), the (i)-th smallest (for (i=2,\dots,b)) cannot exceed the (i)-th smallest in the set of the (b-1) largest numbers of ({2,3,\dots,2015}). Hence for (i=2,\dots,b),
+[
+x_i\le (2016-b)+(i-1).
+]
+Therefore
+[
+\begin{aligned}
+S(t)&=1+\sum_{i=2}^b x_i
+\ \le\ 1+\sum_{i=2}^b\bigl((2016-b)+(i-1)\bigr)\
+&=1+(b-1)(2016-b)+\frac{(b-1)b}{2}
+=\frac{b(b+1)}{2}+(b-1)(2015-b).
+\end{aligned}
+]
+Thus, for all (t\ge N_0),
+[
+\frac{b(b+1)}{2}\ \le\ S(t)\ \le\ \frac{b(b+1)}{2}+(b-1)(2015-b).
+]
+In particular, all the values (S(t)) (for (t\ge N_0)) lie in an interval of length at most
+[
+(b-1)(2015-b)\ \le\ \max_{1\le b\le 2015}(b-1)(2015-b)
+=\left(\frac{2014}{2}\right)^2=1007^2.
+]
+
+---
+
+### 5) Conclusion
+
+Choose (N:=N_0) and (b:=A(t)) (the constant value for (t\ge N_0)). Then for all integers (n>m\ge N), by ((*)) and the bound on (S),
+[
+\left|\sum_{j=m+1}^n (a_j-b)\right|
+=|S(n)-S(m)|
+\le 1007^2.
+]
+This proves the assertion. (\square)
+
+**Remark.** The bound (1007^2) is optimal: the quadratic ((b-1)(2015-b)) attains its maximum (1007^2) at (b=1008).
