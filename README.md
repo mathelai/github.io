@@ -262,7 +262,7 @@ python3 populate_metrics.py
 
 ## Citation
 
-If you use this software in your research, please cite:
+If you use this data or code in your research, please cite:
 
 ```bibtex
 @software{mathel2025,
