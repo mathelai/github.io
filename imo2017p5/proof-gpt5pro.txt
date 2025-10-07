@@ -1,0 +1,74 @@
+**Problem.**  (N\ge 2) is fixed. From a row of (N(N+1)) players, all of distinct heights, remove (N(N-1)) so that in the remaining row of (2N) players
+
+* the two tallest are adjacent,
+* the (3^{\text{rd}}) and (4^{\text{th}}) tallest are adjacent,
+* (\dots),
+* the two shortest are adjacent.
+
+Equivalently, in the final row the players, listed from tallest to shortest, come in adjacent pairs in the row order.
+
+---
+
+### Step 1: Group the players by “levels”
+
+Label the players by their **height rank** among the original (N(N+1)) players: rank (1) is tallest, rank (N(N+1)) is shortest.
+
+Split the ranks into (N) consecutive **levels** of size (N+1):
+[
+\text{Level }1 = {1,2,\dots,N+1},\ \ \text{Level }2={N+2,\dots,2N+2},\ \dots,\ \text{Level }N={(N-1)(N+1)+1,\dots,N(N+1)}.
+]
+Think of the level number as a “color”: each of the (N) colors occurs exactly (N+1) times along the row.
+
+If we end up selecting exactly **two** players from each level, then (because all players from level (i) are taller than all players from level (i+1)) the two tallest among the selected (2N) will be precisely the two chosen from level 1, the 3rd and 4th tallest will be the two chosen from level 2, …, and the two shortest will be the two chosen from level (N). Thus, to meet the height conditions it suffices to choose **two from each level** so that in the final row each of these two is adjacent to its partner.
+
+Therefore, it remains to prove the following purely combinatorial statement about colors on a line.
+
+---
+
+### Step 2: A “colored interval” lemma
+
+> **Lemma.** Let (t\ge 1). In any sequence (on a line) of points colored with (t) colors, where each color appears at least (t+1) times, one can choose (t) **pairwise disjoint** intervals, each interval having endpoints of the **same color**, and those endpoints are **consecutive occurrences** of that color (i.e., there is no point of that color between them).
+
+We’ll prove the lemma by induction on (t).
+
+* **Base (t=1).** One color appears at least twice. Take any pair of consecutive occurrences of that color; the interval between them is our single interval. Disjointness is trivial.
+
+* **Inductive step.** Assume the statement true for (t-1). Consider (t) colors, each appearing at least (t+1) times. Among **all** pairs of consecutive occurrences of the same color, choose one whose interval is of **minimal length** along the row; call its color (c) and its endpoints (x<y).
+
+  **Key observation.** Inside the open interval ((x,y)) there is **at most one** occurrence of any other color.
+  *Reason:* If some other color (d) occurred at least twice inside ((x,y)), then two consecutive occurrences of (d) inside ((x,y)) would determine a strictly shorter same-color interval, contradicting the minimality of ([x,y]).
+
+  Now **remove** the closed interval ([x,y]) from the sequence (we have just fixed the pair for color (c)), and also ignore any remaining occurrences of color (c) (we will not select another pair for this color). Every other color loses **at most one** occurrence by the key observation, hence still appears at least ((t+1)-1=t) times outside ([x,y]).
+
+  We are left with (t-1) colors, each appearing at least (t) times, on a shorter line. By the induction hypothesis, we can choose (t-1) pairwise disjoint same-color intervals among those. Together with ([x,y]) we obtain (t) pairwise disjoint intervals as required.
+
+This completes the proof of the lemma.
+
+---
+
+### Step 3: Apply the lemma to the levels
+
+Return to the soccer players colored by levels. Here (t=N), and each of the (N) colors (levels) appears exactly (N+1) times. By the lemma, we can select (N) pairwise disjoint intervals, one per level, whose endpoints are two **consecutive** occurrences of that level (color).
+
+Keep exactly the (2N) endpoints of these intervals and remove everyone else. Because the (N) intervals are pairwise disjoint, in the resulting row each pair’s two players are **adjacent** (there is no selected player between them).
+
+Moreover, since we selected **two from each level**, the height order among the (2N) selected players is blockwise by levels:
+
+* the two chosen from level 1 are the two tallest,
+* the two chosen from level 2 are the 3rd and 4th tallest,
+* (\dots),
+* the two chosen from level (N) are the two shortest.
+
+Thus, in the final row the two tallest stand next to each other, the 3rd and 4th tallest stand next to each other, …, and the two shortest stand next to each other.
+
+Finally, the number removed is exactly
+[
+N(N+1) - 2N = N(N-1),
+]
+as required.
+
+---
+
+### Conclusion
+
+For every (N\ge 2), one can remove (N(N-1)) players so that among the remaining (2N), the ((2k-1)^{\text{st}}) and (2k^{\text{th}}) tallest are adjacent for each (k=1,\dots,N). This proves the statement. ✅
