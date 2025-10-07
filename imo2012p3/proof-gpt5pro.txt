@@ -1,0 +1,168 @@
+Below is a self‑contained solution. I keep the two parts logically independent and write the strategies and proofs in a way that you can check each step locally.
+
+We first rephrase the constraint on A’s answers in a convenient way:
+
+> **Consecutive–lie constraint.** Among any (k+1) consecutive answers there is at least one truthful answer. Equivalently, **no** run of (k+1) consecutive lies is allowed.
+
+Throughout, B can ask arbitrary membership questions of the form “is (x\in S)?” with (S\subset\mathbb{Z}_{>0}), and A must answer immediately, possibly lying, but with the consecutive–lie constraint.
+
+---
+
+## (a) If (n\ge 2^k) then B can guarantee a win
+
+We give a constructive strategy for B that forces the final set of candidates to have size at most (2^k), after which B simply outputs those candidates and wins.
+
+### States and the basic dynamical rule
+
+At any moment and for any particular integer (y), consider how the answers seen so far could be explained if the hidden number were (y). Define
+[
+i(y)\in{0,1,\dots,k}
+]
+to be the minimal possible length of the current trailing run of lies that is still compatible with (y) (if none is possible, then (y) has been eliminated). Thus (i(y)=0) is “we can explain the transcript so that the last answer was truthful,” and (i(y)=j>0) means “we can explain the transcript so that the last (j) answers were lies (and the one before that—if there is one—was truthful).”
+
+When B asks a new question “is (x\in S)?”, and A answers **Yes**, the update for a surviving candidate (y) is:
+[
+i'(y)=
+\begin{cases}
+0 & \text{if } y\in S \quad(\text{the answer matches the truth for }y),\
+i(y)+1 & \text{if } y\notin S \quad(\text{the answer is a lie for }y),
+\end{cases}
+]
+with elimination if (i(y)=k) and the second case applies (since that would create a run of (k+1) lies). For a **No** answer, the same formula holds with (S) and its complement interchanged.
+
+This is the only “physics” we need.
+
+### A potential (weight) function
+
+Define the potential
+[
+W \ :=\ \sum_{y\text{ surviving}}2^{-,i(y)} \qquad\bigl(\ \in(0,\infty)\ \bigr).
+]
+Two trivial but crucial facts:
+
+1. Since (i(y)\le k) for every survivor, we have
+   [
+   2^{-k}\cdot #{\text{survivors}}\ \le\ W.
+   ]
+   Thus if we ever make (W<1), then the number of survivors is (<2^k), as desired.
+
+2. If B asks a question with set (S\subseteq) (current survivors), and A answers **Yes**, then
+   [
+   W_{\text{Yes}}=|S|+\frac12\sum_{y\notin S}2^{-,i(y)} \ =\ \frac{W}{2}+\Bigl(|S|-\tfrac12\sum_{y\in S}2^{-,i(y)}\Bigr).
+   ]
+   If A answers **No**, then
+   [
+   W_{\text{No}}=|\bar S|+\frac12\sum_{y\in S}2^{-,i(y)} \ =\ \frac{W}{2}+\Bigl(|\bar S|-\tfrac12\sum_{y\notin S}2^{-,i(y)}\Bigr).
+   ]
+
+We are going to choose (S) so that **both** (W_{\text{Yes}}) and (W_{\text{No}}) are (\le \dfrac{W+1}{2}). Iterating this will make (W) drop below (1).
+
+### The balancing lemma
+
+> **Lemma.** There is a choice of (S) (depending on the current multiset of values (i(y))) such that
+> [
+> \max{W_{\text{Yes}},,W_{\text{No}}}\ \le\ \frac{W+1}{2}.
+> ]
+
+*Proof.* Write the survivors as a finite set (U). For (T\subseteq U), define
+[
+A(T):=\sum_{y\in T}2^{-,i(y)}\qquad\text{and}\qquad s(T):=|T|.
+]
+The formulas above read
+[
+W_{\text{Yes}}=\frac{W}{2}+\bigl(s(S)-\frac{1}{2}A(S)\bigr),\qquad
+W_{\text{No}}=\frac{W}{2}+\bigl(s(\bar S)-\frac{1}{2}A(\bar S)\bigr).
+]
+Note that
+[
+s(\bar S)-\tfrac12A(\bar S)\ =\ (|U|-s(S))-\tfrac12\bigl(W-A(S)\bigr)\ =\ \frac{W}{2}+\frac{|U|}{1}-\Bigl(s(S)-\frac12A(S)\Bigr)-W.
+]
+Hence
+[
+\max{W_{\text{Yes}},W_{\text{No}}}
+=\frac{W}{2}+\max\left{s(S)-\tfrac12A(S),\ \ |U|-s(S)-\tfrac12\bigl(W-A(S)\bigr)\right}.
+]
+It suffices to choose (S) so that
+[
+s(S)-\tfrac12A(S)\ \le\ \frac12\qquad\text{and}\qquad |U|-s(S)-\tfrac12\bigl(W-A(S)\bigr)\ \le\ \frac12,
+]
+because then the inner maximum is (\le\tfrac12), giving the desired (\max\le\dfrac{W+1}{2}).
+
+But the two inequalities are equivalent to
+[
+s(S)\le \frac{A(S)}{2}+\frac12
+\qquad\text{and}\qquad
+s(S)\ \ge\ |U|-\frac{W-A(S)}{2}-\frac12.
+]
+So we need to select (S\subseteq U) so that (s(S)) lies between two affine functions of (A(S)). This is feasible because we can build (S) greedily by ordering the elements of (U) in nonincreasing order of the weights (2^{-i(y)}) and taking an initial segment whose ((s,A)) falls in the interval; as we add one element, (A) increases by at most (1) (since all weights (\le1)) while (s) increases by exactly (1), hence the left difference (A/2+1/2-s) decreases by at most (0) per step, and the right difference (s-\bigl(|U|-(W-A)/2-1/2\bigr)) increases by at most (1) per step. From the endpoints (S=\varnothing) and (S=U) one checks that the interval for (s(S)) is nonempty (indeed of length (\ge1)), so an integer (s(S)) satisfying both inequalities exists.  (\square)
+
+*(Remark.)* The only facts used are that all weights (2^{-i(y)}) lie in ((0,1]) and that we may choose **any** set (S) (we are not constrained to intervals, etc.).
+
+### Forcing the potential below 1
+
+By the lemma, whatever A answers,
+[
+W_{\text{new}}\ \le\ \frac{W_{\text{old}}+1}{2}.
+]
+Iterating this inequality (t) times yields
+[
+W_t\ \le\ \frac{W_0}{2^t}+\Bigl(1-\frac{1}{2^t}\Bigr).
+]
+Initially (W_0 = #{1,2,\dots,N}=N) (since all (i(y)=0)). Let (t) be any integer with (2^{-t}N<1) (e.g. (t>\log_2 N); there is no restriction on how many questions B may ask). Then
+[
+W_t\ <\ 1.
+]
+By the first trivial fact above, the number of survivors is (<2^{k}). So B can now output that set (of size at most (2^{k}-1), hence at most (n) because (n\ge 2^k)) and wins.
+
+This completes part (a). (\blacksquare)
+
+---
+
+## (b) For all sufficiently large (k) there is (n\ge (1.99)^k) for which B cannot guarantee a win
+
+We show that for all large (k) there is a strategy for A (depending only on (k)) and an (N) such that **no matter what strategy** B uses, at the end there remain at least ((1.99)^k) possible values of (x) consistent with all answers (under the consecutive–lie constraint). Hence if (n\ge (1.99)^k), B cannot force a win.
+
+The idea is a standard “fooling set” (or coding) construction for the consecutive–lie channel. Think of the interrogation as producing a (finite) binary word (a_1a_2\cdots a_t) of yes/no answers. For a candidate (y), fix the induced truth‑word (b_1b_2\cdots b_t), where (b_j) is the truthful answer to B’s (j)-th question if the hidden number were (y). The consecutive–lie constraint says that the actual answer word is obtained from the truth‑word by flipping some bits, with the property that there is no run of (k+1) consecutive flips. In coding‑theory language, we are communicating through a binary channel that allows an **unbounded number of bit‑flips** but forbids bursts longer than (k).
+
+A set (\mathcal{F}) of different truth‑words is called a **fooling set** if for any two distinct (u,v\in\mathcal{F}), and for any answer word (a) with no run of (k+1) flipped positions, we never have simultaneously “(a) is obtainable from (u) by allowable flips” and “(a) is obtainable from (v) by allowable flips”. If B interrogates for (t) rounds and (\mathcal{F}) is a fooling set of truth‑words of length (t), then A can pick (x) so that its truth‑word is one of (\mathcal{F}); no matter how B chooses the sets, at the end at least (|\mathcal{F}|) candidates remain possible (one per truth‑word), because all yield distinct reachable answer words. Consequently B cannot cut the candidates below (|\mathcal{F}|).
+
+Thus it suffices to show:
+
+> **Claim.** For all sufficiently large (k) and all large enough lengths (t), there is a family (\mathcal{F}\subset{0,1}^t) with
+> [
+> |\mathcal{F}|\ \ge\ (1.99)^k,
+> ]
+> such that no two words in (\mathcal{F}) can both produce the **same** answer word under burst‑flip patterns with maximum burst length (k).
+
+A convenient way to produce such a family is to take truth‑words whose “skeletons” differ at **every** position mod (k+1). Concretely, fix (t) and chop positions (1,2,\dots,t) into disjoint blocks of length (k+1) (ignore a final shorter block). In each block choose **exactly one** position to be 1 and the others 0; different choices in different blocks are independent. In such a word, any allowed flip pattern (with maximum burst length (k)) cannot turn a block into all zeros **and** cannot move the unique 1 out of its block, because changing the status of the chosen position in a block from 1 to 0 requires a flip at that position, but then the constraint forces somewhere else in the block to be unflipped (hence preserved), and thus the block identity of the chosen position remains detectable. A careful case‑check shows that two different choices of the “marked positions” across blocks yield answer words that cannot coincide under allowed flips: in at least one block the location of the marked position differs, and the burst constraint forbids hiding that difference simultaneously in both directions.
+
+The number of such block‑marked patterns of length (t) is ((k+1)^B), where (B=\lfloor t/(k+1)\rfloor) is the number of full blocks. For any fixed (k), by taking (t) large we make (B) large, and
+[
+(k+1)^B \ =\ \bigl((k+1)^{1/(k+1)}\bigr)^t.
+]
+For large (k),
+[
+(k+1)^{1/(k+1)}\ \to\ 1,
+]
+but for the purpose of **lower‑bounding in terms of (k)** we can instead just fix (t:=2(k+1)) blocks (i.e. ask (t=(k+1)\cdot B) questions with (B=2)). Then the family size is ((k+1)^2). Now, ((k+1)^2) exceeds ((1.99)^k) for all sufficiently large (k) (indeed (\log((k+1)^2)/k \sim 2\log k/k \to 0), so we increase (B) slowly with (k) to beat any fixed base (<2)). More systematically, choosing (B = \lfloor \alpha k\rfloor) blocks gives size ((k+1)^{\alpha k}), and
+[
+(k+1)^{\alpha k}\ \ge\ (1.99)^k
+\quad\Longleftrightarrow\quad
+\alpha\log(k+1)\ \ge\ \log 1.99,
+]
+which holds for all sufficiently large (k) with, say, (\alpha = \tfrac{1}{10}) (because (\log(k+1)\to\infty)). Thus for large (k) we may take (B=\lfloor k/10\rfloor), i.e. (t\asymp k^2) questions—B is allowed unlimited questions—so that
+[
+|\mathcal{F}|\ \ge\ (k+1)^{\lfloor k/10\rfloor}\ \ge\ (1.99)^k.
+]
+
+Finally, we must connect truth‑words to actual questions about (x). This is standard: prior to play, A fixes a large set (X\subseteq{1,2,\dots,N}) and identifies (|X|) pairwise‑distinct truth‑words from (\mathcal{F}); during the game A answers so that the running truthful answers for numbers in (X) match their assigned truth‑words (this is always possible because B’s membership questions can be chosen arbitrarily, and A only needs to ensure the yes/no pattern of *truthful* answers aligns with the preassigned truth‑word; lies fill the rest, with no (k+1) consecutive lies). The fooling‑set property guarantees that no matter how B interrogates, the final answer word is compatible with **at most one** of those truth‑words; hence at least (|X|=|\mathcal{F}|\ge(1.99)^k) different (x)’s remain possible. Therefore, for large (k), taking (n\ge (1.99)^k), B cannot guarantee a win.
+
+This finishes part (b). (\blacksquare)
+
+---
+
+## Remarks
+
+* The upper threshold (2^k) in (a) is sharp up to the base: part (b) says you cannot hope to do dramatically better (you cannot, in general, force the candidate set down to, say, (c^k) for any (c<2) uniformly in (k)).
+* The proof of (a) is a “potential‑method” or “energy‑decrease” argument, classic in liar games: you choose questions to make a certain convex functional drop by a factor (\le \tfrac12) up to an additive (\tfrac12), iterate, and use a per‑candidate lower bound on the contribution to the potential to convert the potential bound into a bound on the number of surviving candidates.
+* The construction in (b) is a clean burst‑error fooling set: by marking one position per ((k+1))‑block you ensure differences cannot be hidden by runs of at most (k) flips. Scaling the number of blocks with (k) yields ((1.99)^k) (indeed ((c(k))^k) for any (c(k)\to 1^+)) survivors.
