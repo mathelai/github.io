@@ -1,3 +1,4 @@
+# DRAFT
 # MathEL: Autonomous Self-Improving AI for IMO Combinatorics
 
 A collection of problems, proofs, AI-generated proofs, statistics, simmulations, interactive visualizations, for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
