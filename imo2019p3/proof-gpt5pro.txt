@@ -1,0 +1,126 @@
+**Restatement (graph language).**
+We have a simple undirected graph (G) on (n=2019) vertices. An allowed move is:
+
+> pick a triple ((A,B,C)) with (AB,AC\in E(G)) and (BC\notin E(G)), delete (AB,AC) and add (BC).
+
+(So we “close the open (V)” at (A).)
+
+Initially (1010) vertices have degree (1009) (odd) and (1009) vertices have degree (1010) (even). Denote
+[
+\mathcal O:={v:\deg v\equiv 1\pmod 2},\quad |\mathcal O|=1010,
+\qquad
+\mathcal E:={v:\deg v\equiv 0\pmod 2},\quad |\mathcal E|=1009.
+]
+Parity of each vertex’s degree is invariant under the move (center loses (2), the other two are unchanged). The goal is to reach a graph (H) with (\deg_H(v)\le 1) for every vertex. Because parity is fixed, this means the final graph must be
+[
+H;=;\text{(a perfect matching on the 1010 odd vertices)};;\sqcup;;\text{1009 isolated even vertices}.
+]
+
+The proof proceeds in two main steps; the crucial tool is a “shortest-path edge slide” lemma.
+
+---
+
+## Lemma (Shortest-path edge slide)
+
+Let (x!-!u!-!v!-!\cdots!-!z) be a shortest path in (G). Then by a sequence of allowed moves with centers at the internal vertices of the path, we can transform the edge (xu) into (xz), i.e. delete (xu,,uv,\ldots) and end with the single edge (xz). In each single move we use as center the current internal vertex and its two path neighbours; the “shortest path” condition ensures those two neighbours are nonadjacent at that moment, so the move is legal.
+
+*Proof.* Along a shortest path, consecutive triples (p_{i-1},p_i,p_{i+1}) satisfy (p_{i-1}p_{i+1}\notin E(G)) (otherwise we would have a shorter path), so one can successively “push” the end edge forward:
+[
+\underline{p_0p_1},p_1p_2;\mapsto;p_0p_2,\quad
+\underline{p_0p_2},p_2p_3;\mapsto;p_0p_3,\ \ldots,\
+\underline{p_0p_{k-1}},p_{k-1}p_k;\mapsto;p_0p_k.
+]
+At each step the center (p_i) loses two incident edges.  ∎
+
+*Remarks.* This lemma (1) preserves the degrees of the two endpoints of the sliding edge, (2) decreases by (2) the degree of each internal vertex used as center once, and (3) never makes an illegal step because we only use shortest paths.
+
+---
+
+## Step 1. Eliminating monochromatic edges
+
+Call an edge **monochromatic** if its endpoints have the same parity (both in (\mathcal O) or both in (\mathcal E)). Let
+[
+f(G):=#{\text{monochromatic edges of }G}.
+]
+We show how to reduce (f(G)) by (1) whenever (f(G)>0). Repeating, we reach a graph with (f=0), i.e. **no** edges inside (\mathcal O) or inside (\mathcal E): the graph then is bipartite with parts ((\mathcal O,\mathcal E)).
+
+> **Claim.** If (uv) is a monochromatic edge, then there exists a sequence of moves that deletes (uv) and replaces it by a bichromatic edge, thereby decreasing (f) by (1).
+
+*Proof.* We do the case (u,v\in\mathcal O) (odd–odd); the case (u,v\in\mathcal E) is analogous.
+
+Because (\deg(u)=1009) and (u) already has the odd neighbour (v), it cannot be adjacent to all (1009) even vertices (else (\deg(u)\ge 1+1009=1010)), so there exists an even vertex (z\in\mathcal E) **not** adjacent to (u). Take a shortest path from (v) to (z). By the Lemma, we can slide the edge (uv) along that shortest path until it becomes (uz): at each step we perform a legal move at the current internal vertex. The final edge (uz) is bichromatic, and the original monochromatic edge (uv) is gone, so (f) decreased by (1).  ∎
+
+Start from the given initial graph and repeat this operation while (f>0). After at most (f) iterations we reach a graph (G_1) that is **bipartite** between (\mathcal O) and (\mathcal E):
+[
+E(G_1)\subseteq \mathcal O\mbox{-}\mathcal E,\qquad\text{no edges within }\mathcal O\text{ or within }\mathcal E.
+]
+Crucially, throughout Step 1 the degree parity of each vertex is preserved, so in (G_1) every vertex of (\mathcal O) still has **odd** degree and every vertex of (\mathcal E) still has **even** degree.
+
+---
+
+## Step 2. From a bipartite graph to the desired final configuration
+
+In (G_1) we have a bipartite graph ((\mathcal O,\mathcal E)) in which all (\mathcal O)-vertices have odd degree and all (\mathcal E)-vertices have even degree. We now transform (G_1) to a disjoint union of (K_2)’s on (\mathcal O) and isolated vertices on (\mathcal E).
+
+We use a **local pairing–sliding** routine, which we apply repeatedly.
+
+> **Routine (one round).**
+> Pick an even vertex (A\in\mathcal E) with (\deg(A)\ge 2). Since (G_1) has no (\mathcal O)-(\mathcal O) edges, two distinct neighbours (B,C\in\mathcal O) of (A) are **not** adjacent. Perform one legal move with center (A) and endpoints (B,C): delete (AB,AC) and add (BC).
+> Now (BC) is a (new) (\mathcal O)-(\mathcal O) edge; we immediately *eliminate* this monochromatic edge by sliding it to a bichromatic edge as in Step 1: pick an even vertex (Z\in\mathcal E) which is not adjacent to (B) (such a (Z) exists because (\deg(B)) is odd in a bipartite graph with (|\mathcal E|=1009)), take a shortest path from (C) to (Z), and slide (BC) along that path to become (BZ).
+> Net effect of the round:
+>
+> * The even center (A) lost degree (2).
+> * The monochromatic edge (BC) does not persist: it was created and then deleted.
+> * Degrees of odd vertices changed by multiples of (2) (centers on the slide), hence their parity remains odd.
+
+**Legality of the slide.** The intermediate sliding uses only shortest paths in (G), hence each move is legal by the Lemma.
+
+**Bookkeeping/invariants.**
+
+* Each round reduces the total even-degree sum (\sum_{v\in\mathcal E}\deg(v)) by exactly (2) (only the center (A) surely loses (2); the subsequent slide does not increase any even degree: every internal center on the slide loses (2) as well). Thus this sum strictly decreases and is bounded below by (0).
+* No round leaves behind (\mathcal O)-(\mathcal O) edges: we remove the newly created one immediately.
+
+Therefore we can keep performing rounds until **every** even vertex becomes isolated. Because each even degree is even, isolation is achievable (we just perform as many rounds centered at a given even vertex as needed; each decreases its degree by (2)).
+
+At that moment the graph has:
+
+* all vertices in (\mathcal E) isolated;
+* only (\mathcal O)-(\mathcal E) edges remain (we eliminated every (\mathcal O)-(\mathcal O) edge as soon as it appeared).
+
+But with (\mathcal E) isolated, there are no (\mathcal O)-(\mathcal E) edges either; hence what actually remains is a graph on (\mathcal O) only. Since the parity of each odd vertex never changed, **each vertex in (\mathcal O) now has odd degree.** Moreover, because we never left more than one (\mathcal O)-(\mathcal O) edge present at a time and then slid it away, what remains on (\mathcal O) must be a disjoint union of edges (no vertices of degree (\ge 3) can arise under our routine). Because there are (1010) odd-degree vertices, what remains is **exactly a perfect matching on (\mathcal O)** (505 edges), and all (\mathcal E) vertices are isolated.
+
+This is precisely the desired final configuration: every vertex has degree at most (1).
+
+---
+
+## Why the routine cannot get stuck
+
+Two points needed justification; we summarize why they hold.
+
+1. **Choosing (B,C).** In the bipartite graph (G_1), if (\deg(A)\ge 2) for (A\in\mathcal E), then (A) has two distinct odd neighbours (B,C). They are certainly not adjacent to each other (no (\mathcal O)-(\mathcal O) edges in (G_1)). Hence one legal move with center (A) always exists.
+
+2. **Choosing (Z) and the slide.** For any (B\in\mathcal O), because (|\mathcal E|=1009) is odd and (\deg(B)) stays odd, (B) cannot be adjacent to all even vertices; thus there exists (Z\in\mathcal E) with (BZ\notin E). Since the graph is connected enough along the process (there are still even vertices with degree (\ge 2) until we finish), there exists a path from the other odd endpoint (C) to such a (Z); we take a *shortest* such path and slide (BC) along it—each slide step is legal by the Lemma.
+
+Thus a round is always executable as long as some even vertex still has degree (\ge 2).
+
+---
+
+## Conclusion
+
+* Step 1 eliminates all monochromatic edges by repeatedly sliding any such edge to a bichromatic edge along a shortest path.
+  Result: a bipartite graph with parts ((\mathcal O,\mathcal E)), parities unchanged.
+
+* Step 2 repeatedly performs the pairing–sliding routine: take an even center (A), pair two odd neighbours (B,C) (legal because bipartite), create the edge (BC), then instantly slide (BC) to some even vertex (Z) that is not adjacent to (B), thereby reducing even degrees by (2) and leaving no (\mathcal O)-(\mathcal O) edge behind.
+  This cannot get stuck until all even degrees become (0).
+
+At the end, all even vertices are isolated, and the odd vertices (whose parities remained odd) form a disjoint union of edges, i.e. a perfect matching. Hence **each user has at most one friend**, as required. ∎
+
+---
+
+### Final remarks / invariants used
+
+* **Parity:** Each vertex’s degree parity is invariant under the move.
+* **Shortest-path slide:** Converts a path of length (k) into a single edge between its ends, reducing by (2) the degree of each internal vertex; legality is guaranteed by the no-chord property of shortest paths.
+* **Monochromatic-edge count (f):** Can always be decreased when positive, by sliding one of its edges to a bichromatic one.
+* **Even-degree sum:** In Step 2 each round reduces (\sum_{v\in\mathcal E}\deg(v)) by at least (2), guaranteeing termination of the isolation of all even vertices.
+* **No accumulation of (\mathcal O)-(\mathcal O) edges:** Every such edge is promptly slid away, so the final (\mathcal O)-graph cannot have vertices of degree (\ge 3); with (1010) odd vertices, this forces a perfect matching.
