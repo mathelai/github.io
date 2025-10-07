@@ -1,0 +1,83 @@
+Let $N$ be the number of contestants. Let $P=\{1, \dots, 6\}$ be the set of problems. Let $S_i$ be the set of problems solved by contestant $i$.
+We are given two conditions:
+1. For every pair of distinct problems $\{j, k\}$, the number of contestants who solved both, $N(j, k)$, satisfies $N(j, k) > \frac{2}{5}N$.
+2. No contestant solved all 6 problems. Thus, $|S_i| \le 5$ for all $i$.
+
+Let $n_k$ be the number of contestants who solved exactly $k$ problems. We are given $n_6=0$. We want to show that $n_5 \ge 2$.
+
+We use the method of double counting on the total number of solved pairs of problems, $T$.
+
+First, we sum over the $\binom{6}{2}=15$ pairs of problems:
+$T = \sum_{\{j, k\}} N(j, k) > 15 \times \frac{2}{5}N = 6N$.
+
+Second, we sum over the contestants:
+$T = \sum_{i=1}^N \binom{|S_i|}{2} = \sum_{k=0}^5 n_k \binom{k}{2} = n_2 + 3n_3 + 6n_4 + 10n_5$.
+
+We proceed by contradiction. Assume $n_5 \le 1$.
+
+Case 1: $n_5=0$.
+If $n_5=0$, then every contestant solved at most 4 problems. The maximum number of pairs a contestant can solve is $\binom{4}{2}=6$.
+Thus, $T \le \sum_{i=1}^N 6 = 6N$.
+This contradicts $T>6N$. Therefore, we must have $n_5 \ge 1$.
+
+Case 2: $n_5=1$.
+We substitute $n_5=1$ into the inequality $T>6N$.
+$N = n_0+n_1+n_2+n_3+n_4+1$.
+$n_2 + 3n_3 + 6n_4 + 10 > 6(n_0+n_1+n_2+n_3+n_4+1)$.
+$n_2 + 3n_3 + 6n_4 + 10 > 6n_0+6n_1+6n_2+6n_3+6n_4+6$.
+$4 > 6n_0+6n_1+5n_2+3n_3$.
+
+Since $n_k$ are non-negative integers, this inequality forces $n_0=n_1=n_2=0$.
+Also, $3n_3 < 4$, which implies $n_3 \in \{0, 1\}$.
+
+We analyze the two subcases based on the value of $n_3$.
+
+Case 2a: $n_3=1$.
+The contestants consist of one who solved 5 problems ($n_5=1$), one who solved 3 problems ($n_3=1$), and $N-2$ who solved 4 problems ($n_4=N-2$).
+The total number of solved pairs is $T = 10(1) + 3(1) + 6(N-2) = 13 + 6N-12 = 6N+1$.
+
+Let $C_1$ be the unique contestant who solved 5 problems. Let $m$ be the problem missed by $C_1$.
+Consider the 5 pairs involving the problem $m$. Let $T_m$ be the total count of solutions to these 5 pairs.
+$T_m > 5 \times \frac{2}{5}N = 2N$. Since $T_m$ is an integer, $T_m \ge 2N+1$.
+
+Let $T'$ be the total count of solutions to the 10 pairs not involving $m$.
+$T' > 10 \times \frac{2}{5}N = 4N$.
+
+We have $T = T_m+T'$.
+$T' = T-T_m$. Using the lower bound for $T_m$:
+$T' \le (6N+1) - (2N+1) = 4N$.
+This contradicts $T'>4N$. So Case 2a is impossible.
+
+Case 2b: $n_3=0$.
+The contestants consist of one who solved 5 problems ($n_5=1$) and $N-1$ who solved 4 problems ($n_4=N-1$).
+The total number of solved pairs is $T = 10(1) + 6(N-1) = 10+6N-6 = 6N+4$.
+
+Let $C_1$ be the unique contestant who solved 5 problems, missing problem $m$.
+Let's analyze $T_m$. $C_1$ missed $m$, so $C_1$ does not contribute to $T_m$.
+The remaining $N-1$ contestants solved 4 problems each. If a contestant solved $m$, they solved 3 other problems, thus contributing 3 pairs to $T_m$. If they missed $m$, they contribute 0.
+The maximum contribution to $T_m$ from any contestant is 3.
+Thus, $T_m \le 3(N-1) = 3N-3$.
+
+We must have $T_m > 2N$. Combining the inequalities:
+$2N < 3N-3$, which implies $N>3$.
+
+Now let's analyze $T'$. We must have $T' > 4N$.
+$T' = T-T_m$. Using the upper bound for $T_m$:
+$T' \ge (6N+4) - (3N-3) = 3N+7$.
+
+We must have $3N+7 > 4N$, which implies $N < 7$.
+
+We check the remaining possibilities $N=4, 5, 6$. We use the fact that $N(j, k)$ must be an integer. Let $R$ be the minimum number of solutions for any pair. $R = \lfloor \frac{2N}{5} \rfloor + 1$. We must have $T \ge 15R$.
+
+If $N=4$. $\frac{2N}{5}=1.6$. $R=2$. $T \ge 15 \times 2 = 30$.
+In this configuration, $T=6(4)+4=28$. $28 \ge 30$ is a contradiction.
+
+If $N=5$. $\frac{2N}{5}=2$. $R=3$. $T \ge 15 \times 3 = 45$.
+In this configuration, $T=6(5)+4=34$. $34 \ge 45$ is a contradiction.
+
+If $N=6$. $\frac{2N}{5}=2.4$. $R=3$. $T \ge 15 \times 3 = 45$.
+In this configuration, $T=6(6)+4=40$. $40 \ge 45$ is a contradiction.
+
+So Case 2b is also impossible.
+
+Since all cases lead to a contradiction, the assumption $n_5 \le 1$ must be false. Therefore, $n_5 \ge 2$. There are at least 2 contestants who solved exactly 5 problems each.
