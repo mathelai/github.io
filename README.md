@@ -5,7 +5,7 @@ A collection of problems, proofs, AI-generated proofs, statistics, simulations, 
 
 ## Overview
 
-MathEL generates, solves, and explores mathematical olympiad problems:
+MathEL generates, solves, and explores mathematical olympiad problems.
 
 ![MathEL System Architecture](mathel.png)
 
