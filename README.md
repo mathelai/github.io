@@ -1,13 +1,14 @@
 # MathEL: Autonomous Self-Improving AI for IMO Combinatorics
 
-A collection of problems, formal proofs, AI-generated proofs, simmulations, interactive visualizations, simulations for 39 International Mathematical Olympiad (IMO) combinatorics problems spanning 2000-2025.
+A collection of problems, proofs, AI-generated proofs, statistics, simmulations, interactive visualizations, for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
 
 ## Overview
 
-MathEL provides a complete ecosystem for exploring and solving IMO combinatorics problems:
+MathEL provides an ecosystem for exploring, solving, and learning IMO combinatorics problems:
 
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
-- **Automated grading** - GPT-5 powered proof evaluation system
+- **Automated grading** - Proof evaluation script
+- **Study and lean** - Study and learn problems and correct proofs
 - **Python simulations** - Experimental verification and pattern discovery
 - **Interactive web visualizations** - Explore problems through dynamic, browser-based simulations
 - **No server required** - Works offline in the browser
