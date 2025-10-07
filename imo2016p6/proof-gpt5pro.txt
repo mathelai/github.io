@@ -1,0 +1,60 @@
+**Restatement & notation.**
+Let the (n\ge 2) segments be (S_1,\dots,S_n). Because every two segments cross and no three are concurrent, each segment (S_i) contains exactly (n-1) intersection points in its interior.
+
+Fix, for each (S_i), one of its endpoints as the “start,” and orient (S_i) from the chosen start to the other endpoint. Number the intersection points on (S_i) by (1,2,\dots,n-1) in the order they are met from the start. For (i\ne j), write
+[
+a_{ij}\in{1,\dots,n-1}
+]
+for the index of the point (S_i\cap S_j) along (S_i). When Geoff claps the (t)-th time, the frog on (S_i) is at the unique intersection indexed (t) on (S_i). Thus two frogs (on (S_i) and (S_j)) are at the same point at the same time (t) if and only if
+[
+a_{ij}=a_{ji}=t.
+]
+
+The heart of the problem is the following key identity.
+
+---
+
+### Lemma (Key identity).
+
+For every pair (i\ne j),
+[
+\boxed{,a_{ij}+a_{ji}=n,}.
+]
+
+**Proof.** Let (P=S_i\cap S_j). Around (P), choose coordinates so that (S_i) is the (x)-axis oriented left-to-right (so the part “before (P)” on (S_i) is (x<0)) and (S_j) is the (y)-axis oriented bottom-to-top (so the part “before (P)” on (S_j) is (y<0)).
+
+Consider any third segment (S_k) with (k\notin{i,j}). Since (S_k) meets both (S_i) and (S_j) exactly once, its endpoints lie in opposite half-planes with respect to each axis; in particular one endpoint has (x<0) and the other (x>0), and likewise one has (y<0) and the other (y>0). Travelling along (S_k), it crosses the two axes in some order. If it crosses the (x)-axis first, then at that crossing the (x)-coordinate is still negative (since we have not yet crossed the (y)-axis), so the intersection with (S_i) lies on the “before” side (x<0) of (S_i); later, when it crosses the (y)-axis, the (y)-coordinate is then positive, so the intersection with (S_j) lies on the “after” side (y>0). If it crosses the (y)-axis first, the roles are reversed. Therefore:
+
+> For each (k\notin{i,j}), **exactly one** of the two intersections (S_k\cap S_i) and (S_k\cap S_j) lies on the “before” part of the corresponding segment.
+
+Counting over all (k\neq i,j), the number of intersections on (S_i) that occur before (P) plus the number on (S_j) that occur before (P) equals (n-2). By definition, these numbers are (a_{ij}-1) and (a_{ji}-1), respectively. Hence
+[
+(a_{ij}-1)+(a_{ji}-1)=n-2\quad\Longrightarrow\quad a_{ij}+a_{ji}=n.\qedhere
+]
+
+---
+
+With the lemma in hand, the problem is straightforward.
+
+### (a) (n) odd (\Rightarrow) Geoff can avoid all collisions.
+
+If (n) is odd, then for every pair (i\ne j) the integers (a_{ij}) and (a_{ji}) have **opposite parity** (their sum is (n), which is odd). Thus they can never be equal. Consequently, at any time (t), it is impossible that both frogs on (S_i) and (S_j) are at their common intersection (that would require (a_{ij}=a_{ji}=t)). Because each intersection belongs to exactly two segments and no three segments meet at one point, this rules out **all** simultaneous coincidences at intersections.
+
+In fact, this shows something stronger: **for odd (n), any choice of starting endpoints works**—no collisions can ever happen.
+
+### (b) (n) even (\Rightarrow) Geoff cannot avoid a collision.
+
+Let (n) be even and set (t_0:=n/2). For each (i), there is exactly one (j\ne i) with (a_{ij}=t_0). By the lemma,
+[
+a_{ji}=n-a_{ij}=n-t_0=t_0,
+]
+so the same (j) also has (a_{ji}=t_0). In other words, at time (t_0) the frog on (S_i) is at (S_i\cap S_j) **and** the frog on (S_j) is at the same point (S_i\cap S_j). Thus the pair ((i,j)) collides at time (t_0).
+
+Equivalently, if we define the permutation (\sigma_t) by (\sigma_t(i)=j) where (a_{ij}=t), then (\sigma_{n-t}=\sigma_t^{-1}). In particular (\sigma_{n/2}) is an involution with no fixed points; hence it is a product of (n/2) disjoint transpositions, and **at time (n/2) there are (n/2) simultaneous collisions**. Therefore, when (n) is even, Geoff can never fulfill his wish.
+
+---
+
+**Conclusion.**
+
+* If (n) is odd, the lemma forces the two “arrival times” at any intersection to have opposite parity, so **no collisions are possible** (indeed, for any placement).
+* If (n) is even, the midpoint time (n/2) inevitably creates **pairwise collisions**, so **avoiding collisions is impossible**.
