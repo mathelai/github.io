@@ -291,10 +291,4 @@ MIT License - see `LICENSE` file for details.
 
 ## Status Note
 
-This repository contains a mix of:
-- ✅ **Formal proofs** - Verified in Lean 4
-- 🟢 **Experimental evidence** - Verified for small cases
-- 🟡 **Partial solutions** - Key ideas with gaps
-- 🔴 **Unverified claims** - Require mathematical review
-
-Always check the proof status and verify independently for critical applications.
+This repository is work in progress.
