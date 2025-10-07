@@ -1,18 +1,63 @@
 # DRAFT
 # MathEL: Autonomous Self-Improving AI for IMO Combinatorics
 
-A collection of problems, proofs, AI-generated proofs, statistics, simmulations, interactive visualizations, for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
+A collection of problems, proofs, AI-generated proofs, statistics, simulations, and interactive visualizations for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
 
 ## Overview
 
-MathEL provides an ecosystem for exploring, solving, and learning IMO combinatorics problems:
+MathEL generates, solves, and explores mathematical olympiad problems:
+
+![MathEL System Architecture](mathel.png)
+
+1. **Generator** - Models the IMO problem creation process from country submissions to final contest selection for combinatorics problems
+2. **Solver** - Employs three complementary approaches in parallel in a build-review loop:
+   - Natural Language Proof
+   - Code Visual Simulation
+   - Lean Proof & Repair
+3. **Study & Learn** - Tutor-student interaction text of complete and correct proofs that feeds back to grow context
+
+### Key Features
 
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
 - **Automated grading** - Proof evaluation compared with ground truth solutions
-- **Study and lean** - Study and learn problems and correct proofs
-- **Python simulations** - Experimental verification and pattern discovery
-- **Interactive web visualizations** - Explore problems by dynamic, browser-based simulations
+- **Study and learn** - Text of study and learn of correct proofs
+- **Python simulations** - Experimental pattern discovery
+- **Interactive web visualizations** - Explore problems by browser-based simulations
+- **Self-improving loop** - Feedback from tutoring text improves generation and solving by growing context
 - **No server required** - Works offline in the browser
+
+## System Architecture
+
+### Problem Generator
+
+The Generator component models the real IMO problem creation pipeline for combinatorics problems:
+
+- **Long-list**: 170 anonymized, original problem proposals from participating countries (each submits up to 6)
+- **Problem Selection Committee (PSC)**: Expert mathematicians review and refine submissions
+- **Short-list**: 30 problems selected by subject and difficulty
+- **IMO Jury**: Team leaders vote on final selection
+- **Contest Paper**: 6 problems of increasing difficulty
+- **Reserve Problems**: 24 unused problems available for future use
+
+The system incorporates IMO 2001-2025 short-lists, full problems, and human statistics.
+
+### Solver: Parallel Approach
+
+The Solver employs three parallel processes that work together in a build-review loop:
+
+1. **Natural Language Proof**: AI-generated proofs in natural language
+2. **Code Visual Simulation**: Python-based simulation and pattern discovery
+3. **Lean Proof & Repair**: Formal proof verification with automated repair
+
+These three processes are reviewed together, allowing insights from one approach to improve the others by iterative refinement.
+
+### Study & Learn Loop
+
+The Tutor-Student context creates a feedback loop that:
+- Teaches problems and correct proofs
+- Identifies gaps in understanding
+- Grows context for both Generator and Solver
+- Enables continuous self-improvement
 
 ## Quick Start
 
@@ -69,13 +114,13 @@ app/
 │   └── icon-grade.png
 │
 ├── prompts/
-│   └── grading.txt             # GPT-5 grading prompt
+│   └── grading.txt             # Grading prompt
 │
 ├── schemas/
 │   └── results.schema.json     # Unified results schema
 │
 ├── scripts/
-│   └── grade_problems.py       # Automated proof grading script
+│   └── grade_problems.py       # Automated proof grading script comparing AI and ground truth
 │
 ├── generate_proof_js.py        # Generate proof.js from proof.lean
 ├── populate_metrics.py         # Populate problem metrics
@@ -87,14 +132,13 @@ app/
     │
     ├── problem.txt             # Problem statement (LaTeX)
     ├── answer.txt              # Ground truth answer
+    ├── proof-shortlist.txt     # Official proof(s)
     ├── study.txt               # Study and learning of correct proof
     │
-    ├── proof-shortlist.txt     # Official solution(s)
-    ├── proof-deepthink.txt     # DeepThink proof
+    ├── proof-deepthink.txt     # Gemini DeepThink proof
     ├── proof-gpt5pro.txt       # GPT-5 Pro proof
-    ├── proof-sim.txt           # Simulation-based insights
     ├── proof.lean              # Lean 4 proof code
-    ├── proof.js                # Generated JS module for opening Lean proof in Lean 4 compiler
+    ├── proof.js                # Generated JS module for opening Lean proof in Lean 4
     ├── proof.txt               # Combined proof
     │
     └── grade.txt               # AI grading results
@@ -122,16 +166,26 @@ Problems have memorable nicknames for easy reference:
 
 ### Multiple Proof Types
 
-Each problem includes up to 9 different resources:
-1. **Study** - Study and learn of problem and correct proof
-2. **Answer** - Ground truth answer, not proof
-3. **Proof Shortlist** - Official IMO solution(s)
-4. **Proof Deep Think** - AI-generated proof (Gemini DeepThink)
-5. **Proof GPT 5 Pro** - AI-generated proof (OpenAI GPT-5 Pro)
-6. **Sim** - Interactive simulation
-7. **Proof Lean** - Formal proof in Lean 4 (opens live.lean-lang.org)
+Each problem includes up to 9 different resources, corresponding to the three solver processes:
+
+#### Natural Language Proofs
+1. **Proof Shortlist** - Official IMO solution(s)
+2. **Proof Deep Think** - AI-generated proof (Gemini DeepThink)
+3. **Proof GPT 5 Pro** - AI-generated proof (OpenAI GPT-5 Pro)
+
+#### Code Visual Simulation
+4. **Sim** - Interactive Python-based simulation and visualization
+
+#### Lean Proof & Repair
+5. **Proof Lean** - Formal proof in Lean 4 (opens live.lean-lang.org)
+
+#### Study & Learn Materials
+6. **Study** - Guided learning of problem and correct proof
+7. **Answer** - Ground truth answer (not proof)
+
+#### Integration & Evaluation
 8. **Proof All** - Combined proof
-9. **Grade** - Automated grading of AI proofs
+9. **Grade** - Automated grading comparing AI proofs to ground truth solutions
 
 ### Lean 4 Integration
 
@@ -147,7 +201,7 @@ The `scripts/grade_problems.py` tool uses GPT-5 to:
 - Evaluate AI-generated proofs against official solutions
 - Assign IMO-style grades (0-7)
 - Provide detailed justification comments
-- Support both GPT-5 and GPT-5 Pro models
+- Support GPT-5 and GPT-5 Pro models
 
 ```bash
 # Grade all problems (GPT-5 Pro by default)
@@ -291,4 +345,4 @@ MIT License - see `LICENSE` file for details.
 
 ## Status Note
 
-This repository is work in progress.
+This repository is now being updated and is work in progress.
