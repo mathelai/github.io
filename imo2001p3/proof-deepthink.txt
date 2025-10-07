@@ -1,0 +1,81 @@
+This is a solution to the IMO problem.
+
+Let $G$ be the set of girls and $B$ be the set of boys. We are given $|G| = |B| = 21$. Let $P$ be the set of problems.
+For a contestant $c$, let $S(c)$ be the set of problems solved by $c$. We are given the condition:
+1. $|S(c)| \le 6$ for all $c \in G \cup B$.
+
+For a problem $p$, let $G(p)$ be the set of girls who solved $p$, and $B(p)$ be the set of boys who solved $p$.
+We are given the condition:
+2. For every pair $(g, b) \in G \times B$, $S(g) \cap S(b) \neq \emptyset$.
+
+We want to prove that there exists a problem $p$ such that $|G(p)| \ge 3$ and $|B(p)| \ge 3$.
+
+We proceed by contradiction. Assume that for every problem $p \in P$, either $|G(p)| \le 2$ or $|B(p)| \le 2$.
+
+Let's analyze condition (2). It implies that for any girl $g$, the problems she solved must cover all the boys. That is, $\bigcup_{p \in S(g)} B(p) = B$.
+Thus, $21 = |B| \le \sum_{p \in S(g)} |B(p)|$.
+Similarly, for any boy $b$, $21 \le \sum_{p \in S(b)} |G(p)|$.
+
+We partition the set of problems $P$ into two disjoint sets based on the number of girls who solved them:
+$P_1 = \{p \in P : |G(p)| \le 2\}$.
+$P_2 = \{p \in P : |G(p)| \ge 3\}$.
+
+By our assumption, if a problem $p$ is in $P_2$, it must satisfy $|B(p)| \le 2$.
+
+Let's examine the constraints on the contestants based on this partition.
+
+Consider a boy $b$. We know $\sum_{p \in S(b)} |G(p)| \ge 21$ and $|S(b)| \le 6$.
+If all problems solved by $b$ were in $P_1$, then $|G(p)| \le 2$ for all $p \in S(b)$. The total sum would be at most $|S(b)| \times 2 \le 6 \times 2 = 12$. This contradicts the requirement of 21.
+Therefore, every boy must have solved at least one problem in $P_2$.
+
+Consider a girl $g$. We know $\sum_{p \in S(g)} |B(p)| \ge 21$ and $|S(g)| \le 6$.
+If all problems solved by $g$ were in $P_2$, then by our assumption, $|B(p)| \le 2$ for all $p \in S(g)$. The total sum would be at most $|S(g)| \times 2 \le 12$. This contradicts the requirement of 21.
+Therefore, every girl must have solved at least one problem in $P_1$.
+
+Now we use double counting on the total number of shared solutions. Let $M$ be the total number of triples $(g, b, p)$ such that $g$ and $b$ both solved $p$.
+By condition (2), every pair $(g, b)$ contributes at least one such triple. So,
+$M \ge |G| \times |B| = 21 \times 21 = 441$.
+
+We can also calculate $M$ by summing over the problems:
+$M = \sum_{p \in P} |G(p)||B(p)|$.
+
+We split this sum over $P_1$ and $P_2$:
+$M = \sum_{p \in P_1} |G(p)||B(p)| + \sum_{p \in P_2} |G(p)||B(p)|$.
+
+We use the bounds derived from the definitions and the assumption:
+For $p \in P_1$, $|G(p)| \le 2$.
+For $p \in P_2$, $|B(p)| \le 2$.
+
+$M \le \sum_{p \in P_1} 2|B(p)| + \sum_{p \in P_2} |G(p)| \cdot 2$.
+$M \le 2 \left( \sum_{p \in P_1} |B(p)| + \sum_{p \in P_2} |G(p)| \right)$.
+
+Let us define the following quantities:
+$N_{B,1} = \sum_{p \in P_1} |B(p)|$. This is the total count of solutions by boys to problems in $P_1$.
+$N_{G,2} = \sum_{p \in P_2} |G(p)|$. This is the total count of solutions by girls to problems in $P_2$.
+
+We have $441 \le M \le 2 (N_{B,1} + N_{G,2})$.
+This implies $N_{B,1} + N_{G,2} \ge 441/2 = 220.5$.
+
+Now we find upper bounds for $N_{B,1}$ and $N_{G,2}$ using the constraint on the total number of solutions (condition 1).
+The total number of solutions by boys is $N_B = \sum_{b \in B} |S(b)| \le 21 \times 6 = 126$.
+$N_B = N_{B,1} + N_{B,2}$, where $N_{B,2} = \sum_{p \in P_2} |B(p)|$.
+
+We established earlier that every boy solved at least one problem in $P_2$. This means $N_{B,2}$ must be at least the number of boys:
+$N_{B,2} \ge 21$.
+
+Therefore, $N_{B,1} = N_B - N_{B,2} \le 126 - 21 = 105$.
+
+Similarly, the total number of solutions by girls is $N_G \le 126$.
+$N_G = N_{G,1} + N_{G,2}$, where $N_{G,1} = \sum_{p \in P_1} |G(p)|$.
+
+We established earlier that every girl solved at least one problem in $P_1$. This means $N_{G,1}$ must be at least the number of girls:
+$N_{G,1} \ge 21$.
+
+Therefore, $N_{G,2} = N_G - N_{G,1} \le 126 - 21 = 105$.
+
+Combining the upper bounds:
+$N_{B,1} + N_{G,2} \le 105 + 105 = 210$.
+
+We have reached a contradiction: $220.5 \le N_{B,1} + N_{G,2} \le 210$.
+
+Thus, the initial assumption must be false. There must be a problem that was solved by at least three girls and at least three boys.
