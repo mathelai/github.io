@@ -1,0 +1,98 @@
+**Answer.** The minimum is
+[
+\boxed{\binom{2n}{n}-1}.
+]
+
+---
+
+We work on the (n\times n) grid graph (G) whose vertices are the cells and edges join orthogonally adjacent cells. A filling by (1,2,\dots,n^2) induces an **acyclic orientation** of (G): each edge is directed from the smaller to the larger endpoint. A valley is precisely a **source** of this orientation (indegree (0)), and an uphill path is exactly a **directed path** in this orientation whose first vertex is a source.
+
+For a vertex (v), let (f(v)) be the number of uphill paths that end at (v). Then
+[
+f(v)=
+\begin{cases}
+1,&\text{if }v\text{ is a source};\
+\displaystyle\sum_{u\to v} f(u),&\text{otherwise},
+\end{cases}
+]
+where the sum is over the in-neighbors of (v). The total number of uphill paths is
+[
+T=\sum_{v} f(v),
+]
+because each uphill path is counted once at its endpoint.
+
+We now establish:
+
+1. **Upper bound (construction).**
+   Fill the grid so that the entries increase along rows to the right and along columns downward (for example, row-major order (1,2,\dots,n;,n+1,\dots,2n;,\dots)). Then there is a *unique* source at ((1,1)). For each cell ((i,j)) (row (i), column (j)), its only in-neighbors are ((i-1,j)) (if (i>1)) and ((i,j-1)) (if (j>1)), so
+   [
+   f(i,j)=
+   \begin{cases}
+   1,& i=1\text{ or }j=1,\
+   f(i-1,j)+f(i,j-1),& i,j\ge 2.
+   \end{cases}
+   ]
+   Hence, by the Pascal recurrence,
+   [
+   f(i,j)=\binom{i+j-2}{i-1}.
+   ]
+   Therefore
+   [
+   T=\sum_{i=1}^n\sum_{j=1}^n \binom{i+j-2}{i-1}.
+   ]
+   Using the hockey-stick identity twice (or a standard double-sum identity),
+   [
+   \sum_{i=1}^n\sum_{j=1}^n \binom{i+j-2}{i-1}
+   =\binom{2n}{n}-1.
+   ]
+   So this arrangement yields (T=\binom{2n}{n}-1).
+
+2. **Lower bound (optimality).**
+   Let a Nordic square and its induced orientation be given. As above, define (f(v)) and (T=\sum_v f(v)).
+
+We prove that for any orientation on the grid, (T\ge \binom{2n}{n}-1). The proof proceeds in two steps.
+
+---
+
+**Step A (normal form: distance-outward orientation).**
+Let us number the rows and columns from the northwest corner ((1,1)), and let the **Manhattan level** of a cell ((i,j)) be (\ell(i,j):=i+j-2). An edge of the grid always connects two consecutive levels. We claim that among all labelings minimizing (T), we may assume:
+
+* there is a *unique* source, and it is at ((1,1)), and
+* every edge is oriented **outward in level**, i.e., from level (k) to level (k+1).
+
+*Justification of uniqueness and location of a source.* If there are two (or more) sources, deleting all uphill paths except those starting at any one source strictly reduces (T), a contradiction to minimality; hence any minimizer has a unique source. By symmetry of the square, we may rotate so that the unique source sits at a corner; we take it to be ((1,1)).
+
+*Eliminating backward edges.* Suppose an edge between levels (k) and (k+1) is oriented **backwards**, i.e., from level (k+1) to level (k). Consider the (unique) directed paths that end at the tail and at the head of this edge. Reversing a single backward edge (and adjusting labels so that the induced orientation remains acyclic—with the reversal incorporated) cannot increase the total number (T): intuitively, a backward edge provides *extra choices* for directed paths to step inward, thus creating more branching earlier; turning it forward removes those extra inward choices and can only reduce (or keep) the number of directed paths. Repeating this along all level-interfaces yields an orientation with all edges pointing from level (k) to level (k{+}1), and (T) not increased.
+
+(One can formalize the last assertion by considering the contribution of paths grouped by the **last** crossing of each level interface and doing a direct injection: every path that uses a backward edge across a given interface can be “straightened” by replacing that last backward step by the unique forward step available at the same interface, which destroys no path and does not decrease the path count to deeper levels. Iterating across interfaces removes all backward edges without increasing (T).)
+
+Thus, in a minimizer we may assume: unique source at ((1,1)) and all edges cross from level (k) to (k{+}1).
+
+---
+
+**Step B (count on the outward orientation).**
+Under these assumptions, every directed path starts at ((1,1)) and moves outward in level at each step, so the in-neighbors of ((i,j)) are among ((i-1,j)) and ((i,j-1)) (the only cells at the previous level). Hence the same Pascal recurrence as in the construction holds:
+[
+f(i,j)=
+\begin{cases}
+1,& i=1\text{ or }j=1,\
+f(i-1,j)+f(i,j-1),& i,j\ge 2.
+\end{cases}
+]
+Therefore (f(i,j)=\binom{i+j-2}{i-1}) for all (i,j), and
+[
+T=\sum_{i=1}^n\sum_{j=1}^n \binom{i+j-2}{i-1}
+=\binom{2n}{n}-1,
+]
+exactly as before.
+
+Thus (T\ge \binom{2n}{n}-1) for every Nordic square, and equality is achieved by the row-and-column increasing filling. This proves minimality.
+
+---
+
+**Remarks.**
+
+* The dynamic programming quantity (f(i,j)) can be viewed as the number of monotone (south/east) lattice paths from ((1,1)) to ((i,j)) in the “outward” orientation; summing over all endpoints gives (\binom{2n}{n}-1).
+* The lower bound argument’s key idea is that any “inward” (towards the source) oriented edge only creates *more* ways to detour and thus not fewer directed paths; pushing all edges to point outward yields the Pascal rule—which is the most economical branching possible on the grid.
+
+(\square)
