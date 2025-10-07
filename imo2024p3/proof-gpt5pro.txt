@@ -1,0 +1,42 @@
+**There is a small inconsistency in the statement as written.**
+If all (a_i) are *positive* integers and for every (i\ge 1) we have
+[
+a_i=#{1\le j\le k:\ a_j=i},
+]
+then no such sequence exists. Indeed, since there are only (k) terms (a_1,\dots,a_k), only finitely many values can appear among them; let
+[
+M:=\max{a_1,\dots,a_k}.
+]
+Then for every (i>M), the value (i) does not appear in the list (a_1,\dots,a_k), so the right-hand side is (0), hence (a_i=0); but the hypothesis says each (a_i) is positive. This is a contradiction. (Equivalently, summing the defining equalities over all (i\ge 1) gives (\sum_{i\ge 1} a_i=k), impossible if all (a_i\ge 1) for infinitely many (i).)
+
+Consequently, **under the literal statement there is no example**, and the conclusion “at least one of ((a_n)) and (k) is eventually periodic” holds vacuously.
+
+---
+
+### A natural corrected version (and its solution)
+
+The statement becomes meaningful (and standard in this context) if we allow **nonnegative** integers (a_i). I’ll solve that version:
+
+> Let ((a_n)_{n\ge 1}) be an infinite sequence of **nonnegative** integers and let (k) be a positive integer. Suppose that, for each (i\ge 1), (a_i) equals the number of times (i) appears in the list (a_1,a_2,\dots,a_k). Prove that at least one of ((a_n)) and (k) is eventually periodic.
+
+(Here “(k) is eventually periodic” is not really meaningful by itself—(k) is a fixed integer—so the substance is to show that ((a_n)) is eventually periodic.)
+
+**Claim.** ((a_n)) is eventually constant (hence eventually periodic).
+
+**Proof.** Let (M=\max{a_1,\dots,a_k}) (which exists because the list (a_1,\dots,a_k) is finite). For any (i>M), the value (i) does not appear among (a_1,\dots,a_k), so by the defining property we have
+[
+a_i=#{1\le j\le k:\ a_j=i}=0.
+]
+Therefore (a_{M+1}=a_{M+2}=\cdots=0). Hence ((a_n)) is eventually the constant sequence (0), which is periodic with period (1). ∎
+
+A couple of immediate corollaries (useful for checking consistency):
+
+* Summing over (i\ge 1) gives (\sum_{i\ge 1} a_i=#{j\in{1,\dots,k}:\ a_j\ge 1}), i.e., the total count of positive values among (a_1,\dots,a_k). If the first (k) terms are all positive, this sum equals (k).
+* The multiset ({a_1,\dots,a_k}) is precisely ({1^{a_1},2^{a_2},3^{a_3},\dots}), and no values (>M) occur.
+
+---
+
+### Summary
+
+* As stated (with “positive integers”), no such infinite sequence exists; the conclusion then holds vacuously.
+* With the natural correction (“nonnegative integers”), the sequence must be eventually (0), hence eventually periodic (period (1)).
