@@ -1,0 +1,65 @@
+This is an IMO problem, and we provide a complete proof that the desired selection is always possible.
+
+Let $N \ge 2$ be an integer. We are given $M=N(N+1)$ soccer players with distinct heights standing in a row. We want to remove $N(N-1)$ players to leave a row of $2N$ players satisfying $N$ specific adjacency conditions based on height rankings.
+
+**1. Problem Reformulation**
+
+First, we partition the $M$ players into $N$ groups, $G_1, G_2, \dots, G_N$, based on their heights. Each group contains $N+1$ players. $G_1$ contains the $N+1$ tallest players, $G_2$ the next $N+1$ tallest, and so on, until $G_N$, which contains the $N+1$ shortest players.
+
+The conditions require that the resulting row of $2N$ players, say $R$, satisfies:
+(k) no one stands between the $(2k-1)$-th and $(2k)$-th tallest players in $R$.
+
+If we select exactly two players from each group $G_k$, then the selected set $R$ consists of $2N$ players. Let $R_k$ be the pair selected from $G_k$. Since the heights in $G_k$ are all greater than the heights in $G_{k+1}$, the pair $R_k$ precisely constitutes the $(2k-1)$-th and $(2k)$-th tallest players in $R$.
+
+The problem is therefore equivalent to selecting a pair of players $R_k$ from each group $G_k$ such that in the resulting configuration $R$, every pair $R_k$ is adjacent.
+
+We analyze the positions of the players in the original row. For a selected pair $R_k$ with positions $a_k < b_k$, they are adjacent in $R$ if no other player in $R$ has a position $x$ such that $a_k < x < b_k$. Let $J_k = (a_k, b_k)$ be the open interval between them. If we select $N$ pairs, one from each group, the condition that all pairs are adjacent in the resulting row is equivalent to the condition that the corresponding intervals $J_1, \dots, J_N$ are pairwise disjoint.
+
+**2. Defining Interval Families**
+
+For each group $G_k$, let the positions of its $N+1$ members in the row be $p_{k, 1} < p_{k, 2} < \dots < p_{k, N+1}$.
+We define a family $\mathcal{I}_k$ of $N$ candidate intervals by taking the gaps between consecutive players of $G_k$:
+$$ \mathcal{I}_k = \{(p_{k, j}, p_{k, j+1}) \mid j=1, \dots, N\}. $$
+The intervals within each family $\mathcal{I}_k$ are pairwise disjoint.
+
+The problem is now reduced to finding a System of Disjoint Representatives (SDR) for the families $\mathcal{I}_1, \dots, \mathcal{I}_N$. That is, we need to select one interval $J_k \in \mathcal{I}_k$ for each $k$, such that $J_i \cap J_k = \emptyset$ for all $i \ne k$.
+
+**3. Proving the Existence of the SDR**
+
+We prove the existence of the SDR by induction on $N$. We prove the statement $P(N)$: Given $N$ families of intervals $\mathcal{I}_1, \dots, \mathcal{I}_N$, where each family consists of $N$ pairwise disjoint intervals, there exists an SDR.
+
+Base Case: $P(1)$ is trivial. We have one family of size 1, and we select that interval.
+
+Inductive Step: Assume $P(K)$ holds for $1 \le K < N$. We prove $P(N)$.
+
+Let $\mathcal{U} = \cup_{k=1}^N \mathcal{I}_k$ be the union of all $N^2$ intervals. We use a greedy strategy based on the right endpoints of the intervals. Let $r(I)$ denote the right endpoint of an interval $I$.
+
+Choose an interval $J \in \mathcal{U}$ such that $r(J)$ is minimum. (Ties can be broken arbitrarily, for example, by the left endpoint). Suppose $J \in \mathcal{I}_k$.
+
+We select $J$ as the representative for $\mathcal{I}_k$. We now look for representatives for the remaining families that are disjoint from $J$. For $i \ne k$, we define the restricted families:
+$$ \mathcal{I}'_i = \{I \in \mathcal{I}_i \mid I \cap J = \emptyset\}. $$
+
+We claim that at most one interval in $\mathcal{I}_i$ overlaps $J$.
+
+Lemma: Let $\mathcal{F}$ be a family of pairwise disjoint intervals. Let $J$ be an interval such that $r(J) \le r(I)$ for all $I \in \mathcal{F}$. Then at most one interval in $\mathcal{F}$ overlaps $J$.
+
+Proof of Lemma: Suppose two distinct intervals $I_1, I_2 \in \mathcal{F}$ overlap $J$. Since $\mathcal{F}$ is a disjoint family, $I_1$ and $I_2$ are disjoint. Assume $I_1$ is to the left of $I_2$, so $r(I_1) \le l(I_2)$ (where $l(I)$ is the left endpoint).
+By the assumption on $J$, we have $r(J) \le r(I_1)$.
+Since $I_2$ overlaps $J$, we must have $l(I_2) < r(J)$.
+Combining these inequalities:
+$$ r(J) \le r(I_1) \le l(I_2) < r(J). $$
+This gives $r(J) < r(J)$, a contradiction. Thus, at most one interval in $\mathcal{F}$ overlaps $J$.
+
+Applying the Lemma to $\mathcal{I}_i$ ($i \ne k$), since $J$ minimizes the right endpoint globally, the condition of the Lemma is met. Therefore, at most one interval in $\mathcal{I}_i$ overlaps $J$.
+
+Since $|\mathcal{I}_i|=N$, the restricted family $\mathcal{I}'_i$ has size $|\mathcal{I}'_i| \ge N-1$.
+
+We now have $N-1$ families $\mathcal{I}'_i$ ($i \ne k$), each containing at least $N-1$ pairwise disjoint intervals. To apply the induction hypothesis $P(N-1)$, we can take any subset $\mathcal{I}''_i \subset \mathcal{I}'_i$ of size exactly $N-1$.
+
+By $P(N-1)$, there exists an SDR $\{J_i\}_{i \ne k}$ for the families $\mathcal{I}''_i$. These intervals $J_i$ are pairwise disjoint. Furthermore, since $J_i \in \mathcal{I}'_i$, they are disjoint from $J$ by the definition of $\mathcal{I}'_i$.
+
+Thus, the set $\{J_1, \dots, J_N\}$ (where $J_k=J$) forms an SDR for the original families $\mathcal{I}_1, \dots, \mathcal{I}_N$. This completes the inductive step.
+
+**4. Conclusion**
+
+We have shown that it is always possible to find a System of Disjoint Representatives. This corresponds to a selection of $2N$ players, two from each height group, such that the intervals between the pairs are disjoint. This guarantees that the $N$ conditions required by Sir Alex are satisfied.
