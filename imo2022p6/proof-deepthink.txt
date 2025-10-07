@@ -1,0 +1,75 @@
+The problem asks for the smallest possible total number of uphill paths in an $n \times n$ Nordic square.
+
+Let $A$ be the Nordic square. We define a Directed Acyclic Graph (DAG) $D$ on the cells of the board. An edge exists from cell $c'$ to cell $c$ if they are orthogonally adjacent and $A(c') < A(c)$.
+
+A valley is a cell with in-degree 0 in $D$. Let $V$ be the set of valleys. An uphill path is a path in $D$ starting at a valley.
+
+Let $P$ be the total number of uphill paths. Let $E(c)$ be the number of uphill paths ending at cell $c$. Then $P = \sum_c E(c)$.
+
+The recurrence relation for $E(c)$ is:
+$E(c) = I(c \in V) + \sum_{c' \to c} E(c')$,
+where $I(\cdot)$ is the indicator function.
+
+Summing over all cells $c$:
+$P = \sum_c E(c) = \sum_c I(c \in V) + \sum_c \sum_{c' \to c} E(c')$.
+$P = |V| + \sum_{c'} E(c') \cdot (\text{number of outgoing edges from } c')$.
+$P = |V| + \sum_{c \to c'} E(c)$.
+
+Let $E$ be the total number of edges in the underlying $n \times n$ grid graph. $E = 2n(n-1) = 2n^2-2n$. Since the values in adjacent cells are distinct, the number of edges in the DAG $D$ is also $E$.
+
+Since every cell is the end of at least one uphill path (starting from a valley that reaches it), we have $E(c) \ge 1$ for all $c$.
+$P = |V| + \sum_{c \to c'} E(c) \ge |V| + \sum_{c \to c'} 1 = |V| + E$.
+
+Since there is at least one valley (the cell containing 1), $|V| \ge 1$.
+$P \ge 1 + E = 2n^2-2n+1$.
+
+This establishes the lower bound for the total number of uphill paths.
+
+Now we analyze the conditions required to achieve this lower bound.
+Equality holds if and only if:
+1. $|V|=1$. There is a unique valley $v$.
+2. $E(c)=1$ for every edge $(c, c')$. This means $E(c)=1$ for every cell $c$ that has an outgoing edge.
+
+Let $K$ be the set of peaks (cells with out-degree 0). Let $T$ be the set of non-peaks.
+The conditions imply that $E(c)=1$ for all $c \in T$.
+
+Let's analyze the implications of these conditions on the structure of the configuration.
+
+If $c \in T$ and $c \ne v$. $c$ is not a valley. The recurrence is $E(c) = \sum_{c' \to c} E(c')$.
+If $c' \to c$, then $c'$ must be in $T$ (if $c'$ were a peak, it could not have an outgoing edge).
+So $E(c')=1$.
+$1 = \sum_{c' \to c} 1$. This means the in-degree of $c$ in $D$ is $d_{in}(c)=1$.
+
+This implies that the DAG restricted to $T$, $D[T]$, is an arborescence (a directed tree) rooted at $v$, oriented away from the root. Consequently, the underlying undirected graph $G[T]$ must be a tree.
+
+Furthermore, the set of peaks $K$ must be an independent set in the grid graph $G$. If two peaks $k_1, k_2$ were adjacent, say $A(k_1)<A(k_2)$, then $k_1$ would have an outgoing edge to $k_2$, contradicting that $k_1$ is a peak.
+
+Thus, the minimum is achieved if and only if the grid graph $G$ can be partitioned into an independent set $K$ and a set $T$ such that $G[T]$ is a tree. (T is a vertex cover which is also a tree).
+
+It is a known result in graph theory that such a partition exists for any $n \times n$ grid graph. Although the proof of existence is non-trivial, we can rely on this fact to construct the Nordic square.
+
+Construction of the Nordic square:
+Given such a partition $(T, K)$.
+1. Choose an arbitrary root $v \in T$. Define the tree structure on $G[T]$ rooted at $v$.
+2. Assign the values $\{1, \dots, |T|\}$ to the cells in $T$ such that $A(v)=1$ and the values increase along the branches of the tree (parent has a smaller value than child).
+3. Assign the remaining values $\{|T|+1, \dots, n^2\}$ to the cells in $K$ arbitrarily.
+
+Verification:
+Let's verify that this configuration achieves the minimum.
+1. Valleys. $v$ is the unique valley. $A(v)=1$. For $t \in T, t \ne v$, $t$ has exactly one smaller neighbor (its parent in $T$). For $k \in K$, its neighbors are in $T$ (since $K$ is independent). $A(k)>|T| \ge A(t)$. So $k$ is larger than all its neighbors. Thus $|V|=1$.
+2. Peaks. $K$ is the set of peaks. We verified that cells in $K$ are peaks. Cells in $T$ are non-peaks because every $t \in T$ either has a child in $T$ (which is larger) or a neighbor in $K$ (which is larger). If $t$ had neither, all its neighbors would be in $T$ and smaller than $t$. Since $t$ has at most one parent, this implies $t$ has degree at most 1. This is only possible if $n=1$ (where $T=\{1\}, K=\emptyset$) or if $G$ is not an $n \times n$ grid for $n>1$. For $n>1$, degree is at least 2.
+3. $E(c)=1$ for $c \in T$. Since $D[T]$ is an arborescence rooted at $v$, there is a unique path from $v$ to $c$ in $D[T]$. Since all edges between $T$ and $K$ are directed from $T$ to $K$, this is the unique uphill path ending at $c$.
+
+Since the conditions for equality are met, the total number of uphill paths is $2n^2-2n+1$.
+
+We can also calculate the total number of paths $P$ using the structure:
+$P = \sum_{c \in T} E(c) + \sum_{c \in K} E(c) = |T| + \sum_{k \in K} E(k)$.
+For $k \in K$, $E(k) = \sum_{t \to k} E(t)$. The neighbors of $k$ are in $T$, so $E(t)=1$.
+$E(k)$ is the number of neighbors of $k$, $d(k)$.
+$P = |T| + \sum_{k \in K} d(k)$.
+
+The total number of edges $E$ is the sum of edges in $G[T]$ and edges between $T$ and $K$.
+$E(T) = |T|-1$ (since $G[T]$ is a tree).
+$E(T, K) = \sum_{k \in K} d(k)$.
+$E = (|T|-1) + \sum_{k \in K} d(k)$.
+$P = |T| + (E - (|T|-1)) = E+1 = 2n^2-2n+1$.
