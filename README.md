@@ -63,7 +63,7 @@ The Tutor-Student context creates a feedback loop that:
 
 ### Browse Problems
 
-Open `index.html` in your web browser to:
+Open `[index.html](https://mathelai.github.io/)` in your web browser to:
 - Browse all 39 problems with search, filtering, and sorting
 - View problem metadata (year, difficulty, category, nicknames)
 - Click any problem card to open its proofs and interactive visualization
