@@ -1,0 +1,47 @@
+This is a solution to the IMO problem.
+
+Let $\mathcal{S}$ be a finite set of at least two points in the plane, with no three points collinear. We want to show that we can choose a point $P \in \mathcal{S}$ and a line $\ell$ going through $P$ such that the resulting windmill uses each point of $\mathcal{S}$ as a pivot infinitely many times.
+
+We will prove a stronger statement: for any starting configuration where the initial line $\ell$ passes through exactly one point $P \in \mathcal{S}$, the resulting windmill uses every point of $\mathcal{S}$ as a pivot infinitely many times. Such a configuration always exists: choose any $P \in \mathcal{S}$ and select a line through $P$ that avoids the finitely many directions defined by the other points in $\mathcal{S}$.
+
+Let the windmill process be parameterized by time $t \ge 0$. Let $\ell(t)$ be the line and $P(t) \in \mathcal{S}$ be the pivot. The line rotates clockwise continuously. We define $\vec{n}(t)$ as the unit normal vector to $\ell(t)$ that points into the "front" half-plane $H_F(t)$, which is the region the line is sweeping into. $\vec{n}(t)$ also rotates continuously clockwise.
+
+We proceed by contradiction. Assume there exists a point $Z \in \mathcal{S}$ that is used as a pivot only finitely many times. Then there is a time $T_0$ such that for all $t \ge T_0$, $P(t) \ne Z$.
+
+We claim that for $t \ge T_0$, $Z$ is never on the line $\ell(t)$. If $Z \in \ell(t)$, let $P=P(t)$. Since $P \ne Z$, the line rotating around $P$ meets $Z$. By the definition of the windmill, $Z$ must become the new pivot (as it is the unique point met, since no three points are collinear). This contradicts the assumption that $Z$ is no longer a pivot. Thus, $Z \notin \ell(t)$ for $t \ge T_0$.
+
+Define the function $f(t) = (Z-P(t)) \cdot \vec{n}(t)$. This function measures the position of $Z$ relative to $\ell(t)$. We show that $f(t)$ is continuous. Continuity holds when the pivot is fixed. At a pivot switch from $P$ to $Q$ at time $t_c$, the line is $PQ$, so $\vec{n}(t_c)$ is orthogonal to $Q-P$. The change in $f(t)$ at $t_c$ is $(Z-Q) \cdot \vec{n}(t_c) - (Z-P) \cdot \vec{n}(t_c) = (P-Q) \cdot \vec{n}(t_c) = 0$. So $f(t)$ is continuous.
+
+Since $f(t) \ne 0$ for $t \ge T_0$, $f(t)$ must maintain a constant sign. Assume without loss of generality that $f(t) > 0$ for $t \ge T_0$. This means $Z$ is always in the front half-plane.
+
+Since the rotation continues indefinitely, the total angle rotated goes to infinity. We can find an increasing sequence of times $T_0 < T_1 < T_2 < \dots$ such that the total rotation of the line between $T_k$ and $T_{k+1}$ is exactly $180^\circ$ ($\pi$ radians).
+
+Let $P_k = P(T_k)$ and $\vec{n}_k = \vec{n}(T_k)$. Since the rotation between $T_k$ and $T_{k+1}$ is $180^\circ$, the normal vector flips: $\vec{n}_{k+1} = -\vec{n}_k$.
+
+We use the condition $f(T_k) > 0$ and $f(T_{k+1}) > 0$:
+1. $(Z-P_k) \cdot \vec{n}_k > 0$.
+2. $(Z-P_{k+1}) \cdot \vec{n}_{k+1} = (Z-P_{k+1}) \cdot (-\vec{n}_k) > 0$, so $(Z-P_{k+1}) \cdot \vec{n}_k < 0$.
+
+Combining these inequalities, we get:
+$P_k \cdot \vec{n}_k < Z \cdot \vec{n}_k < P_{k+1} \cdot \vec{n}_k$.
+
+Let $g_k = P_k \cdot \vec{n}_k$. We have $g_k < P_{k+1} \cdot \vec{n}_k$.
+Also, $g_{k+1} = P_{k+1} \cdot \vec{n}_{k+1} = P_{k+1} \cdot (-\vec{n}_k) = -P_{k+1} \cdot \vec{n}_k$.
+Thus, $g_k < -g_{k+1}$, or $g_k + g_{k+1} < 0$.
+
+This inequality holds for all $k \ge 0$. We use it to analyze the sequence $g_k$.
+We have $g_k + g_{k+1} < 0$, which implies $g_{k+1} < -g_k$.
+We also have $g_{k+1} + g_{k+2} < 0$, which implies $g_{k+2} > -g_{k+1}$.
+
+Combining these: $g_{k+2} > -g_{k+1}$. Since $g_{k+1} < -g_k$, we have $-g_{k+1} > g_k$.
+Therefore, $g_{k+2} > g_k$.
+
+The subsequence $g_0, g_2, g_4, \dots$ is strictly increasing.
+
+Let's examine the terms $g_{2k}$. The total rotation between $T_0$ and $T_{2k}$ is $2k \times 180^\circ = k \times 360^\circ$. Therefore, the normal vector returns to its initial direction: $\vec{n}_{2k} = \vec{n}_0$.
+Let $\vec{u} = \vec{n}_0$. Then $g_{2k} = P_{2k} \cdot \vec{u}$.
+
+Since $P_{2k} \in \mathcal{S}$, the values $g_{2k}$ belong to the finite set $V = \{P \cdot \vec{u} \mid P \in \mathcal{S}\}$.
+We have an infinite sequence $(g_{2k})_{k \ge 0}$ that is strictly increasing and takes values in a finite set $V$. This is impossible, as a strictly increasing sequence must take infinitely many distinct values, contradicting the finiteness of $V$.
+
+Thus, the assumption that some point $Z$ is used as a pivot only finitely many times must be false. Every point in $\mathcal{S}$ is used as a pivot infinitely many times.
