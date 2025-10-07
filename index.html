@@ -80,6 +80,15 @@
             transition: color 0.3s ease;
         }
 
+        .header-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header-link:hover h1 {
+            color: var(--accent-primary);
+        }
+
         .subtitle {
             font-size: 1.125rem;
             color: var(--text-secondary);
@@ -416,9 +425,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                 </svg>
             </button>
-            <a href="mathel.png" style="color: black; text-decoration: underline; text-decoration-color: black;">
-            <h1>MathEL - DRAFT</h1>
-            </a>
+            <a href="mathel.png" class="header-link"><h1>MathEL</h1></a>
             <p class="subtitle">Autonomous Self-Improving AI for IMO Combinatorics</p>
         </header>
 
@@ -476,6 +483,13 @@
                 allProblems = allProblemsData;
 
                 populateFilters();
+
+                // Restore saved sort order from localStorage
+                const savedSortOrder = localStorage.getItem('mathel-sort-order');
+                if (savedSortOrder) {
+                    document.getElementById('sortBy').value = savedSortOrder;
+                }
+
                 filterAndSort(); // Apply default sorting on initial load
             } catch (error) {
                 console.error('Error loading problems:', error);
@@ -631,7 +645,11 @@
         document.getElementById('searchInput').addEventListener('input', filterAndSort);
         document.getElementById('yearFilter').addEventListener('change', filterAndSort);
         document.getElementById('categoryFilter').addEventListener('change', filterAndSort);
-        document.getElementById('sortBy').addEventListener('change', filterAndSort);
+        document.getElementById('sortBy').addEventListener('change', function() {
+            // Save sort order to localStorage
+            localStorage.setItem('mathel-sort-order', this.value);
+            filterAndSort();
+        });
 
         // Theme Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
