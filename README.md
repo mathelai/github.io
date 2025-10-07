@@ -346,3 +346,6 @@ MIT License - see `LICENSE` file for details.
 ## Status Note
 
 This repository is now being updated and is work in progress.
+
+> Built with ❤️ using Claude Code (Sonnet 4.5) and iteratively reviewed by GPT-5 Pro.
+
