@@ -1,0 +1,31 @@
+Suppose that an $m \times n$ rectangle can be covered by "hooks". For any hook $H$ there is a unique hook $K$ that covers its " inside" square. Then also $H$ covers the inside square of $K$, so the set of hooks can be partitioned into pairs of type $\{H, K\}$, each of which forms one of the following two figures consisting of 12 squares:
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\textwidth]{figure2.png}
+\captionsetup{labelformat=empty}
+\caption{\$A\_\{1}\$\}\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\textwidth]{figure3.png}
+\captionsetup{labelformat=empty}
+\caption{\$B\_\{1}\$\}\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\textwidth]{figure4.png}
+\captionsetup{labelformat=empty}
+\caption{\$A\_\{2}\$\}\end{center}
+\end{figure}
+
+\begin{center}
+\includegraphics[max width=\textwidth]{figure5.png}
+\end{center}
+
+Thus the $m \times n$ rectangle is covered by these tiles. It immediately follows that $12 \mid m n$.\\
+Suppose one of $m, n$ is divisible by 4. Let w.l.o.g. $4 \mid m$. If $3 \mid n$, one can easily cover the rectangle by $3 \times 4$ rectangles and therefore by hooks. Also,\\
+if $12 \mid m$ and $n \notin\{1,2,5\}$, then there exist $k, l \in \mathbb{N}_{0}$ such that $n=3 k+4 l$, and thus the rectangle $m \times n$ can be partitioned into $3 \times 12$ and $4 \times 12$ rectangles all of which can be covered by hooks. If $12 \mid m$ and $n=1,2$, or 5 , then it is easy to see that covering by hooks is not possible.\\
+Now suppose that $4 \nmid m$ and $4 \nmid n$. Then $m, n$ are even and the number of tiles is odd. Assume that the total number of tiles of types $A_{1}$ and $B_{1}$ is odd (otherwise the total number of tiles of types $A_{2}$ and $B_{2}$ is odd, which is analogous). If we color in black all columns whose indices are divisible by 4 , we see that each tile of type $A_{1}$ or $B_{1}$ covers three black squares, which yields an odd number in total. Hence the total number of black squares covered by the tiles of types $A_{2}$ and $B_{2}$ must be odd. This is impossible, since each such tile covers two or four black squares.
