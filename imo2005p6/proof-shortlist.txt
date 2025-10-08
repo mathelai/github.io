@@ -1,0 +1,10 @@
+Assume there were $n$ contestants, $a_{i}$ of whom solved exactly $i$ problems, where $a_{0}+\cdots+a_{5}=n$. Let us count the number $N$ of pairs ( $C, P$ ), where contestant $C$ solved the pair of problems $P$. Each of the 15 pairs of problems was solved by at least $\frac{2 n+1}{5}$ contestants, implying $N \geq 15 \cdot \frac{2 n+1}{5}=6 n+3$. On the other hand, $a_{i}$ students solved $\frac{i(i-1)}{2}$ pairs; hence
+
+$$
+6 n+3 \leq N \leq a_{2}+3 a_{3}+6 a_{4}+10 a_{5}=6 n+4 a_{5}-\left(3 a_{3}+5 a_{2}+6 a_{1}+6 a_{0}\right) .
+$$
+
+Consequently $a_{5} \geq 1$. Assume that $a_{5}=1$. Then we must have $N=6 n+4$, which is only possible if 14 of the pairs of problems were solved by exactly $\frac{2 n+1}{5}$ students and the remaining one by $\frac{2 n+1}{5}+1$ students, and all students but the winner solved 4 problems.\\
+The problem $t$ not solved by the winner will be called tough and the pair of problems solved by $\frac{2 n+1}{5}+1$ students special.\\
+Let us count the number $M_{p}$ of pairs ( $C, P$ ) for which $P$ contains a fixed problem $p$. Let $b_{p}$ be the number of contestants who solved $p$. Then $M_{t}=3 b_{t}$ (each of the $b_{t}$ students solved three pairs of problems containing $t$ ), and $M_{p}=3 b_{p}+1$ for $p \neq t$ (the winner solved four such pairs). On the other hand, each of the five pairs containing $p$ was solved by $\frac{2 n+1}{5}$ or $\frac{2 n+1}{5}+1$ students, so $M_{p}=2 n+2$ if the special pair contains $p$, and $M_{p}=2 n+1$ otherwise.\\
+Now since $M_{t}=3 b_{t}=2 n+1$ or $2 n+2$, we have $2 n+1 \equiv 0$ or $2(\bmod 3)$. But if $p \neq t$ is a problem not contained in the special pair, we have $M_{p}=3 b_{p}+1= 2 n+1$; hence $2 n+1 \equiv 1(\bmod 3)$, which is a contradiction.
