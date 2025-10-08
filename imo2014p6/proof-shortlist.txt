@@ -1,4 +1,4 @@
-C5. Consider $n \geqslant 3$ lines in the plane such that no two lines are parallel and no three have a common point. These lines divide the plane into polygonal regions; let $\mathcal{F}$ be the set of regions having finite area. Prove that it is possible to colour $\lceil\sqrt{n / 2}\rceil$ of the lines blue in such a way that no region in $\mathcal{F}$ has a completely blue boundary. (For a real number $x,\lceil x\rceil$ denotes the least integer which is not smaller than $x$.)\\
+Consider $n \geqslant 3$ lines in the plane such that no two lines are parallel and no three have a common point. These lines divide the plane into polygonal regions; let $\mathcal{F}$ be the set of regions having finite area. Prove that it is possible to colour $\lceil\sqrt{n / 2}\rceil$ of the lines blue in such a way that no region in $\mathcal{F}$ has a completely blue boundary. (For a real number $x,\lceil x\rceil$ denotes the least integer which is not smaller than $x$.)\\
 (Austria)\\
 Solution. Let $L$ be the given set of lines. Choose a maximal (by inclusion) subset $B \subseteq L$ such that when we colour the lines of $B$ blue, no region in $\mathcal{F}$ has a completely blue boundary. Let $|B|=k$. We claim that $k \geqslant\lceil\sqrt{n / 2}\rceil$.
 
@@ -47,7 +47,8 @@ $$
 
 Assume, to the contrary, that three red lines $\ell_{1}, \ell_{2}$, and $\ell_{3}$ are associated to the same blue point $b$. Let $r_{1}, r_{2}$, and $r_{3}$ respectively be the red points associated to these lines; all these points are distinct. The point $b$ defines four blue rays, and each point $r_{i}$ is the red point closest to $b$ on one of these rays. So we may assume that the points $r_{2}$ and $r_{3}$ lie on one blue line passing through $b$, while $r_{1}$ lies on the other one.
 
-\includegraphics[max width=\textwidth, center]{2024_08_22_f8585be468a68da3ddc2g-36}\\
+\includegraphics[max width=\textwidth, center]{figure.png}\\
+
 Now consider the region $A$ used to associate $r_{1}$ and $b$ with $\ell_{1}$. Three of its clockwise consecutive vertices are $r_{1}, b$, and either $r_{2}$ or $r_{3}$ (say, $r_{2}$ ). Since $A$ has only one red side, it can only be the triangle $r_{1} b r_{2}$; but then both $\ell_{1}$ and $\ell_{2}$ pass through $r_{2}$, as well as some blue line. This is impossible by the problem assumptions.
 
 Comment 2. The condition that the lines be non-parallel is essentially not used in the solution, nor in the previous comment; thus it may be omitted.
