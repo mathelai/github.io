@@ -1,0 +1,51 @@
+Let $k$ and $n$ be fixed positive integers. In the liar's guessing game, Amy chooses integers $x$ and $N$ with $1 \leq x \leq N$. She tells Ben what $N$ is, but not what $x$ is. Ben may then repeatedly ask Amy whether $x \in S$ for arbitrary sets $S$ of integers. Amy will always answer with yes or no, but she might lie. The only restriction is that she can lie at most $k$ times in a row. After he has asked as many questions as he wants, Ben must specify a set of at most $n$ positive integers. If $x$ is in this set he wins; otherwise, he loses. Prove that:\\
+a) If $n \geq 2^{k}$ then Ben can always win.\\
+b) For sufficiently large $k$ there exist $n \geq 1.99^{k}$ such that Ben cannot guarantee a win.
+
+Solution. Consider an answer $A \in\{$ yes, no $\}$ to a question of the kind "Is $x$ in the set $S$ ?" We say that $A$ is inconsistent with a number $i$ if $A=$ yes and $i \notin S$, or if $A=n o$ and $i \in S$. Observe that an answer inconsistent with the target number $x$ is a lie.\\
+a) Suppose that Ben has determined a set $T$ of size $m$ that contains $x$. This is true initially with $m=N$ and $T=\{1,2, \ldots, N\}$. For $m>2^{k}$ we show how Ben can find a number $y \in T$ that is different from $x$. By performing this step repeatedly he can reduce $T$ to be of size $2^{k} \leq n$ and thus win.
+
+Since only the size $m>2^{k}$ of $T$ is relevant, assume that $T=\left\{0,1, \ldots, 2^{k}, \ldots, m-1\right\}$. Ben begins by asking repeatedly whether $x$ is $2^{k}$. If Amy answers no $k+1$ times in a row, one of these answers is truthful, and so $x \neq 2^{k}$. Otherwise Ben stops asking about $2^{k}$ at the first answer yes. He then asks, for each $i=1, \ldots, k$, if the binary representation of $x$ has a 0 in the $i$ th digit. Regardless of what the $k$ answers are, they are all inconsistent with a certain number $y \in\left\{0,1, \ldots, 2^{k}-1\right\}$. The preceding answer yes about $2^{k}$ is also inconsistent with $y$. Hence $y \neq x$. Otherwise the last $k+1$ answers are not truthful, which is impossible.
+
+Either way, Ben finds a number in $T$ that is different from $x$, and the claim is proven.\\
+b) We prove that if $1<\lambda<2$ and $n=\left\lfloor(2-\lambda) \lambda^{k+1}\right\rfloor-1$ then Ben cannot guarantee a win. To complete the proof, then it suffices to take $\lambda$ such that $1.99<\lambda<2$ and $k$ large enough so that
+
+$$
+n=\left\lfloor(2-\lambda) \lambda^{k+1}\right\rfloor-1 \geq 1.99^{k}
+$$
+
+Consider the following strategy for Amy. First she chooses $N=n+1$ and $x \in\{1,2, \ldots, n+1\}$ arbitrarily. After every answer of hers Amy determines, for each $i=1,2, \ldots, n+1$, the number $m_{i}$ of consecutive answers she has given by that point that are inconsistent with $i$. To decide on her next answer, she then uses the quantity
+
+$$
+\phi=\sum_{i=1}^{n+1} \lambda^{m_{i}}
+$$
+
+No matter what Ben's next question is, Amy chooses the answer which minimizes $\phi$.\\
+We claim that with this strategy $\phi$ will always stay less than $\lambda^{k+1}$. Consequently no exponent $m_{i}$ in $\phi$ will ever exceed $k$, hence Amy will never give more than $k$ consecutive answers inconsistent with some $i$. In particular this applies to the target number $x$, so she will never lie more than $k$ times in a row. Thus, given the claim, Amy's strategy is legal. Since the strategy does not depend on $x$ in any way, Ben can make no deductions about $x$, and therefore he cannot guarantee a win.
+
+It remains to show that $\phi<\lambda^{k+1}$ at all times. Initially each $m_{i}$ is 0 , so this condition holds in the beginning due to $1<\lambda<2$ and $n=\left\lfloor(2-\lambda) \lambda^{k+1}\right\rfloor-1$. Suppose that $\phi<\lambda^{k+1}$ at some point, and Ben has just asked if $x \in S$ for some set $S$. According as Amy answers yes or no, the new value of $\phi$ becomes
+
+$$
+\phi_{1}=\sum_{i \in S} 1+\sum_{i \notin S} \lambda^{m_{i}+1} \quad \text { or } \quad \phi_{2}=\sum_{i \in S} \lambda^{m_{i}+1}+\sum_{i \notin S} 1 .
+$$
+
+Since Amy chooses the option minimizing $\phi$, the new $\phi$ will equal $\min \left(\phi_{1}, \phi_{2}\right)$. Now we have
+
+$$
+\min \left(\phi_{1}, \phi_{2}\right) \leq \frac{1}{2}\left(\phi_{1}+\phi_{2}\right)=\frac{1}{2}\left(\sum_{i \in S}\left(1+\lambda^{m_{i}+1}\right)+\sum_{i \notin S}\left(\lambda^{m_{i}+1}+1\right)\right)=\frac{1}{2}(\lambda \phi+n+1)
+$$
+
+Because $\phi<\lambda^{k+1}$, the assumptions $\lambda<2$ and $n=\left\lfloor(2-\lambda) \lambda^{k+1}\right\rfloor-1$ lead to
+
+$$
+\min \left(\phi_{1}, \phi_{2}\right)<\frac{1}{2}\left(\lambda^{k+2}+(2-\lambda) \lambda^{k+1}\right)=\lambda^{k+1}
+$$
+
+The claim follows, which completes the solution.\\
+Comment. Given a fixed $k$, let $f(k)$ denote the minimum value of $n$ for which Ben can guarantee a victory. The problem asks for a proof that for large $k$
+
+$$
+1.99^{k} \leq f(k) \leq 2^{k}
+$$
+
+A computer search shows that $f(k)=2,3,4,7,11,17$ for $k=1,2,3,4,5,6$.
