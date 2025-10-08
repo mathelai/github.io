@@ -1,0 +1,26 @@
+Let $n$ and $k$ be fixed positive integers of the same parity, $k \geq n$. We are given $2 n$ lamps numbered 1 through $2 n$; each of them can be on or off. At the beginning all lamps are off. We consider sequences of $k$ steps. At each step one of the lamps is switched (from off to on or from on to off).
+
+Let $N$ be the number of $k$-step sequences ending in the state: lamps $1, \ldots, n$ on, lamps $n+1, \ldots, 2 n$ off.
+
+Let $M$ be the number of $k$-step sequences leading to the same state and not touching lamps $n+1, \ldots, 2 n$ at all.
+
+Find the ratio $N / M$.\\
+Solution. A sequence of $k$ switches ending in the state as described in the problem statement (lamps $1, \ldots, n$ on, lamps $n+1, \ldots, 2 n$ off) will be called an admissible process. If, moreover, the process does not touch the lamps $n+1, \ldots, 2 n$, it will be called restricted. So there are $N$ admissible processes, among which $M$ are restricted.
+
+In every admissible process, restricted or not, each one of the lamps $1, \ldots, n$ goes from off to on, so it is switched an odd number of times; and each one of the lamps $n+1, \ldots, 2 n$ goes from off to off, so it is switched an even number of times.
+
+Notice that $M>0$; i.e., restricted admissible processes do exist (it suffices to switch each one of the lamps $1, \ldots, n$ just once and then choose one of them and switch it $k-n$ times, which by hypothesis is an even number).
+
+Consider any restricted admissible process $\mathbf{p}$. Take any lamp $\ell, 1 \leq \ell \leq n$, and suppose that it was switched $k_{\ell}$ times. As noticed, $k_{\ell}$ must be odd. Select arbitrarily an even number of these $k_{\ell}$ switches and replace each of them by the switch of lamp $n+\ell$. This can be done in $2^{k_{\ell}-1}$ ways (because a $k_{\ell}$-element set has $2^{k_{\ell}-1}$ subsets of even cardinality). Notice that $k_{1}+\cdots+k_{n}=k$.
+
+These actions are independent, in the sense that the action involving lamp $\ell$ does not affect the action involving any other lamp. So there are $2^{k_{1}-1} \cdot 2^{k_{2}-1} \cdots 2^{k_{n}-1}=2^{k-n}$ ways of combining these actions. In any of these combinations, each one of the lamps $n+1, \ldots, 2 n$ gets switched an even number of times and each one of the lamps $1, \ldots, n$ remains switched an odd number of times, so the final state is the same as that resulting from the original process $\mathbf{p}$.
+
+This shows that every restricted admissible process $\mathbf{p}$ can be modified in $2^{k-n}$ ways, giving rise to $2^{k-n}$ distinct admissible processes (with all lamps allowed).
+
+Now we show that every admissible process $\mathbf{q}$ can be achieved in that way. Indeed, it is enough to replace every switch of a lamp with a label $\ell>n$ that occurs in $\mathbf{q}$ by the switch of the corresponding lamp $\ell-n$; in the resulting process $\mathbf{p}$ the lamps $n+1, \ldots, 2 n$ are not involved.
+
+Switches of each lamp with a label $\ell>n$ had occurred in $\mathbf{q}$ an even number of times. So the performed replacements have affected each lamp with a label $\ell \leq n$ also an even number of times; hence in the overall effect the final state of each lamp has remained the same. This means that the resulting process $\mathbf{p}$ is admissible - and clearly restricted, as the lamps $n+1, \ldots, 2 n$ are not involved in it any more.
+
+If we now take process $\mathbf{p}$ and reverse all these replacements, then we obtain process $\mathbf{q}$. These reversed replacements are nothing else than the modifications described in the foregoing paragraphs.
+
+Thus there is a one-to- $\left(2^{k-n}\right)$ correspondence between the $M$ restricted admissible processes and the total of $N$ admissible processes. Therefore $N / M=2^{k-n}$.
