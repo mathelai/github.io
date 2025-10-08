@@ -1,0 +1,105 @@
+Variant 1. A grasshopper jumps along the real axis. He starts at point 0 and makes 2009 jumps to the right with lengths $1,2, \ldots, 2009$ in an arbitrary order. Let $M$ be a set of 2008 positive integers less than $1005 \cdot 2009$. Prove that the grasshopper can arrange his jumps in such a way that he never lands on a point from $M$.
+
+Variant 2. Let $n$ be a nonnegative integer. A grasshopper jumps along the real axis. He starts at point 0 and makes $n+1$ jumps to the right with pairwise different positive integral lengths $a_{1}, a_{2}, \ldots, a_{n+1}$ in an arbitrary order. Let $M$ be a set of $n$ positive integers in the interval $(0, s)$, where $s=a_{1}+a_{2}+\cdots+a_{n+1}$. Prove that the grasshopper can arrange his jumps in such a way that he never lands on a point from $M$.
+
+Solution of Variant 1. We construct the set of landing points of the grasshopper.\\
+Case 1. $M$ does not contain numbers divisible by 2009.\\
+We fix the numbers $2009 k$ as landing points, $k=1,2, \ldots, 1005$. Consider the open intervals $I_{k}=(2009(k-1), 2009 k), k=1,2, \ldots, 1005$. We show that we can choose exactly one point outside of $M$ as a landing point in 1004 of these intervals such that all lengths from 1 to 2009 are realized. Since there remains one interval without a chosen point, the length 2009 indeed will appear. Each interval has length 2009, hence a new landing point in an interval yields with a length $d$ also the length $2009-d$. Thus it is enough to implement only the lengths from $D=\{1,2, \ldots, 1004\}$. We will do this in a greedy way. Let $n_{k}, k=1,2, \ldots, 1005$, be the number of elements of $M$ that belong to the interval $I_{k}$. We order these numbers in a decreasing way, so let $p_{1}, p_{2}, \ldots, p_{1005}$ be a permutation of $\{1,2, \ldots, 1005\}$ such that $n_{p_{1}} \geq n_{p_{2}} \geq \cdots \geq n_{p_{1005}}$. In $I_{p_{1}}$ we do not choose a landing point. Assume that landing points have already been chosen in the intervals $I_{p_{2}}, \ldots, I_{p_{m}}$ and the lengths $d_{2}, \ldots, d_{m}$ from $D$ are realized, $m=1, \ldots, 1004$. We show that there is some $d \in D \backslash\left\{d_{2}, \ldots, d_{m}\right\}$ that can be implemented with a new landing point in $I_{p_{m+1}}$. Assume the contrary. Then the $1004-(m-1)$ other lengths are obstructed by the $n_{p_{m+1}}$ points of $M$ in $I_{p_{m+1}}$. Each length $d$ can be realized by two landing points, namely $2009\left(p_{m+1}-1\right)+d$ and $2009 p_{m+1}-d$, hence
+
+
+\begin{equation*}
+n_{p_{m+1}} \geq 2(1005-m) \tag{1}
+\end{equation*}
+
+
+Moreover, since $|M|=2008=n_{1}+\cdots+n_{1005}$,
+
+
+\begin{equation*}
+2008 \geq n_{p_{1}}+n_{p_{2}}+\cdots+n_{p_{m+1}} \geq(m+1) n_{p_{m+1}} \tag{2}
+\end{equation*}
+
+
+Consequently, by (1) and (2),
+
+$$
+2008 \geq 2(m+1)(1005-m)
+$$
+
+The right hand side of the last inequality obviously attains its minimum for $m=1004$ and this minimum value is greater than 2008, a contradiction.\\
+Case 2. $M$ does contain a number $\mu$ divisible by 2009 .\\
+By the pigeonhole principle there exists some $r \in\{1, \ldots, 2008\}$ such that $M$ does not contain numbers with remainder $r$ modulo 2009. We fix the numbers $2009(k-1)+r$ as landing points, $k=1,2, \ldots, 1005$. Moreover, $1005 \cdot 2009$ is a landing point. Consider the open intervals\\
+$I_{k}=(2009(k-1)+r, 2009 k+r), k=1,2, \ldots, 1004$. Analogously to Case 1 , it is enough to show that we can choose in 1003 of these intervals exactly one landing point outside of $M \backslash\{\mu\}$ such that each of the lengths of $D=\{1,2, \ldots, 1004\} \backslash\{r\}$ are implemented. Note that $r$ and $2009-r$ are realized by the first and last jump and that choosing $\mu$ would realize these two differences again. Let $n_{k}, k=1,2, \ldots, 1004$, be the number of elements of $M \backslash\{\mu\}$ that belong to the interval $I_{k}$ and $p_{1}, p_{2}, \ldots, p_{1004}$ be a permutation of $\{1,2, \ldots, 1004\}$ such that $n_{p_{1}} \geq n_{p_{2}} \geq \cdots \geq n_{p_{1004}}$. With the same reasoning as in Case 1 we can verify that a greedy choice of the landing points in $I_{p_{2}}, I_{p_{3}}, \ldots, I_{p_{1004}}$ is possible. We only have to replace (1) by
+
+$$
+n_{p_{m+1}} \geq 2(1004-m)
+$$
+
+( $D$ has one element less) and (2) by
+
+$$
+2007 \geq n_{p_{1}}+n_{p_{2}}+\cdots+n_{p_{m+1}} \geq(m+1) n_{p_{m+1}}
+$$
+
+Comment. The cardinality 2008 of $M$ in the problem is the maximum possible value. For $M=\{1,2, \ldots, 2009\}$, the grasshopper necessarily lands on a point from $M$.
+
+Solution of Variant 2. First of all we remark that the statement in the problem implies a strengthening of itself: Instead of $|M|=n$ it is sufficient to suppose that $|M \cap(0, s-\bar{a}]| \leq n$, where $\bar{a}=\min \left\{a_{1}, a_{2}, \ldots, a_{n+1}\right\}$. This fact will be used in the proof.\\
+We prove the statement by induction on $n$. The case $n=0$ is obvious. Let $n>0$ and let the assertion be true for all nonnegative integers less than $n$. Moreover let $a_{1}, a_{2}, \ldots, a_{n+1}, s$ and $M$ be given as in the problem. Without loss of generality we may assume that $a_{n+1}<a_{n}<$ $\cdots<a_{2}<a_{1}$. Set
+
+$$
+T_{k}=\sum_{i=1}^{k} a_{i} \quad \text { for } k=0,1, \ldots, n+1
+$$
+
+Note that $0=T_{0}<T_{1}<\cdots<T_{n+1}=s$. We will make use of the induction hypothesis as follows:
+
+Claim 1. It suffices to show that for some $m \in\{1,2, \ldots, n+1\}$ the grasshopper is able to do at least $m$ jumps without landing on a point of $M$ and, in addition, after these $m$ jumps he has jumped over at least $m$ points of $M$.\\
+Proof. Note that $m=n+1$ is impossible by $|M|=n$. Now set $n^{\prime}=n-m$. Then $0 \leq n^{\prime}<n$. The remaining $n^{\prime}+1$ jumps can be carried out without landing on one of the remaining at most $n^{\prime}$ forbidden points by the induction hypothesis together with a shift of the origin. This proves the claim.
+
+An integer $k \in\{1,2, \ldots, n+1\}$ is called smooth, if the grasshopper is able to do $k$ jumps with the lengths $a_{1}, a_{2}, \ldots, a_{k}$ in such a way that he never lands on a point of $M$ except for the very last jump, when he may land on a point of $M$.\\
+Obviously, 1 is smooth. Thus there is a largest number $k^{*}$, such that all the numbers $1,2, \ldots, k^{*}$ are smooth. If $k^{*}=n+1$, the proof is complete. In the following let $k^{*} \leq n$.\\
+Claim 2. We have
+
+
+\begin{equation*}
+T_{k^{*}} \in M \quad \text { and } \quad\left|M \cap\left(0, T_{k^{*}}\right)\right| \geq k^{*} \tag{3}
+\end{equation*}
+
+
+Proof. In the case $T_{k^{*}} \notin M$ any sequence of jumps that verifies the smoothness of $k^{*}$ can be extended by appending $a_{k^{*}+1}$, which is a contradiction to the maximality of $k^{*}$. Therefore we have $T_{k^{*}} \in M$. If $\left|M \cap\left(0, T_{k^{*}}\right)\right|<k^{*}$, there exists an $l \in\left\{1,2, \ldots, k^{*}\right\}$ with $T_{k^{*}+1}-a_{l} \notin M$. By the induction hypothesis with $k^{*}-1$ instead of $n$, the grasshopper is able to reach $T_{k^{*}+1}-a_{l}$\\
+with $k^{*}$ jumps of lengths from $\left\{a_{1}, a_{2}, \ldots, a_{k^{*}+1}\right\} \backslash\left\{a_{l}\right\}$ without landing on any point of $M$. Therefore $k^{*}+1$ is also smooth, which is a contradiction to the maximality of $k^{*}$. Thus Claim 2 is proved.\\
+Now, by Claim 2, there exists a smallest integer $\bar{k} \in\left\{1,2, \ldots, k^{*}\right\}$ with
+
+$$
+T_{\bar{k}} \in M \quad \text { and } \quad\left|M \cap\left(0, T_{\bar{k}}\right)\right| \geq \bar{k}
+$$
+
+Claim 3. It is sufficient to consider the case
+
+
+\begin{equation*}
+\left|M \cap\left(0, T_{\bar{k}-1}\right]\right| \leq \bar{k}-1 \tag{4}
+\end{equation*}
+
+
+Proof. If $\bar{k}=1$, then (4) is clearly satisfied. In the following let $\bar{k}>1$. If $T_{\bar{k}-1} \in M$, then (4) follows immediately by the minimality of $\bar{k}$. If $T_{\bar{k}-1} \notin M$, by the smoothness of $\bar{k}-1$, we obtain a situation as in Claim 1 with $m=\bar{k}-1$ provided that $\mid M \cap\left(0, T_{\bar{k}-1}|| \geq \bar{k}-1\right.$. Hence, we may even restrict ourselves to $\mid M \cap\left(0, T_{\bar{k}-1} \mid \leq \bar{k}-2\right.$ in this case and Claim 3 is proved.\\
+Choose an integer $v \geq 0$ with $\left|M \cap\left(0, T_{\bar{k}}\right)\right|=\bar{k}+v$. Let $r_{1}>r_{2}>\cdots>r_{l}$ be exactly those indices $r$ from $\{\bar{k}+1, \bar{k}+2, \ldots, n+1\}$ for which $T_{\bar{k}}+a_{r} \notin M$. Then
+
+$$
+n=|M|=\left|M \cap\left(0, T_{\bar{k}}\right)\right|+1+\left|M \cap\left(T_{\bar{k}}, s\right)\right| \geq \bar{k}+v+1+(n+1-\bar{k}-l)
+$$
+
+and consequently $l \geq v+2$. Note that\\
+$T_{\bar{k}}+a_{r_{1}}-a_{1}<T_{\bar{k}}+a_{r_{1}}-a_{2}<\cdots<T_{\bar{k}}+a_{r_{1}}-a_{\bar{k}}<T_{\bar{k}}+a_{r_{2}}-a_{\bar{k}}<\cdots<T_{\bar{k}}+a_{r_{v+2}}-a_{\bar{k}}<T_{\bar{k}}$\\
+and that this are $\bar{k}+v+1$ numbers from $\left(0, T_{\bar{k}}\right)$. Therefore we find some $r \in\{\bar{k}+1, \bar{k}+$ $2, \ldots, n+1\}$ and some $s \in\{1,2, \ldots, \bar{k}\}$ with $T_{\bar{k}}+a_{r} \notin M$ and $T_{\bar{k}}+a_{r}-a_{s} \notin M$. Consider the set of jump lengths $B=\left\{a_{1}, a_{2}, \ldots, a_{\bar{k}}, a_{r}\right\} \backslash\left\{a_{s}\right\}$. We have
+
+$$
+\sum_{x \in B} x=T_{\bar{k}}+a_{r}-a_{s}
+$$
+
+and
+
+$$
+T_{\bar{k}}+a_{r}-a_{s}-\min (B)=T_{\bar{k}}-a_{s} \leq T_{\bar{k}-1}
+$$
+
+By (4) and the strengthening, mentioned at the very beginning with $\bar{k}-1$ instead of $n$, the grasshopper is able to reach $T_{\bar{k}}+a_{r}-a_{s}$ by $\bar{k}$ jumps with lengths from $B$ without landing on any point of $M$. From there he is able to jump to $T_{\bar{k}}+a_{r}$ and therefore we reach a situation as in Claim 1 with $m=\bar{k}+1$, which completes the proof.
