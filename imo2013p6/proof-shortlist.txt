@@ -1,0 +1,103 @@
+Let $n \geqslant 2$ be an integer. Consider all circular arrangements of the numbers $0,1, \ldots, n$; the $n+1$ rotations of an arrangement are considered to be equal. A circular arrangement is called beautiful if, for any four distinct numbers $0 \leqslant a, b, c, d \leqslant n$ with $a+c=b+d$, the chord joining numbers $a$ and $c$ does not intersect the chord joining numbers $b$ and $d$.
+
+Let $M$ be the number of beautiful arrangements of $0,1, \ldots, n$. Let $N$ be the number of pairs $(x, y)$ of positive integers such that $x+y \leqslant n$ and $\operatorname{gcd}(x, y)=1$. Prove that
+
+$$
+M=N+1
+$$
+
+Solution 1. Given a circular arrangement of $[0, n]=\{0,1, \ldots, n\}$, we define a $k$-chord to be a (possibly degenerate) chord whose (possibly equal) endpoints add up to $k$. We say that three chords of a circle are aligned if one of them separates the other two. Say that $m \geqslant 3$ chords are aligned if any three of them are aligned. For instance, in Figure 1, $A, B$, and $C$ are aligned, while $B, C$, and $D$ are not.
+
+\includegraphics[max width=\textwidth, center]{figure1.png}\\
+Figure 1
+
+\includegraphics[max width=\textwidth, center]{figure2.png}\\
+Figure 2\\
+Claim. In a beautiful arrangement, the $k$-chords are aligned for any integer $k$.\\
+Proof. We proceed by induction. For $n \leqslant 3$ the statement is trivial. Now let $n \geqslant 4$, and proceed by contradiction. Consider a beautiful arrangement $S$ where the three $k$-chords $A, B, C$ are not aligned. If $n$ is not among the endpoints of $A, B$, and $C$, then by deleting $n$ from $S$ we obtain a beautiful arrangement $S \backslash\{n\}$ of $[0, n-1]$, where $A, B$, and $C$ are aligned by the induction hypothesis. Similarly, if 0 is not among these endpoints, then deleting 0 and decreasing all the numbers by 1 gives a beautiful arrangement $S \backslash\{0\}$ where $A, B$, and $C$ are aligned. Therefore both 0 and $n$ are among the endpoints of these segments. If $x$ and $y$ are their respective partners, we have $n \geqslant 0+x=k=n+y \geqslant n$. Thus 0 and $n$ are the endpoints of one of the chords; say it is $C$.
+
+Let $D$ be the chord formed by the numbers $u$ and $v$ which are adjacent to 0 and $n$ and on the same side of $C$ as $A$ and $B$, as shown in Figure 2. Set $t=u+v$. If we had $t=n$, the $n$-chords $A$, $B$, and $D$ would not be aligned in the beautiful arrangement $S \backslash\{0, n\}$, contradicting the induction hypothesis. If $t<n$, then the $t$-chord from 0 to $t$ cannot intersect $D$, so the chord $C$ separates $t$ and $D$. The chord $E$ from $t$ to $n-t$ does not intersect $C$, so $t$ and $n-t$ are on the same side of $C$. But then the chords $A, B$, and $E$ are not aligned in $S \backslash\{0, n\}$, a contradiction. Finally, the case $t>n$ is equivalent to the case $t<n$ via the beauty-preserving relabelling $x \mapsto n-x$ for $0 \leqslant x \leqslant n$, which sends $t$-chords to $(2 n-t)$-chords. This proves the Claim.
+
+Having established the Claim, we prove the desired result by induction. The case $n=2$ is trivial. Now assume that $n \geqslant 3$. Let $S$ be a beautiful arrangement of $[0, n]$ and delete $n$ to obtain\\
+the beautiful arrangement $T$ of $[0, n-1]$. The $n$-chords of $T$ are aligned, and they contain every point except 0 . Say $T$ is of Type 1 if 0 lies between two of these $n$-chords, and it is of Type 2 otherwise; i.e., if 0 is aligned with these $n$-chords. We will show that each Type 1 arrangement of $[0, n-1]$ arises from a unique arrangement of $[0, n]$, and each Type 2 arrangement of $[0, n-1]$ arises from exactly two beautiful arrangements of $[0, n]$.
+
+If $T$ is of Type 1 , let 0 lie between chords $A$ and $B$. Since the chord from 0 to $n$ must be aligned with $A$ and $B$ in $S, n$ must be on the other arc between $A$ and $B$. Therefore $S$ can be recovered uniquely from $T$. In the other direction, if $T$ is of Type 1 and we insert $n$ as above, then we claim the resulting arrangement $S$ is beautiful. For $0<k<n$, the $k$-chords of $S$ are also $k$-chords of $T$, so they are aligned. Finally, for $n<k<2 n$, notice that the $n$-chords of $S$ are parallel by construction, so there is an antisymmetry axis $\ell$ such that $x$ is symmetric to $n-x$ with respect to $\ell$ for all $x$. If we had two $k$-chords which intersect, then their reflections across $\ell$ would be two ( $2 n-k$ )-chords which intersect, where $0<2 n-k<n$, a contradiction.
+
+If $T$ is of Type 2, there are two possible positions for $n$ in $S$, on either side of 0 . As above, we check that both positions lead to beautiful arrangements of $[0, n]$.
+
+Hence if we let $M_{n}$ be the number of beautiful arrangements of $[0, n]$, and let $L_{n}$ be the number of beautiful arrangements of $[0, n-1]$ of Type 2, we have
+
+$$
+M_{n}=\left(M_{n-1}-L_{n-1}\right)+2 L_{n-1}=M_{n-1}+L_{n-1}
+$$
+
+It then remains to show that $L_{n-1}$ is the number of pairs $(x, y)$ of positive integers with $x+y=n$ and $\operatorname{gcd}(x, y)=1$. Since $n \geqslant 3$, this number equals $\varphi(n)=\#\{x: 1 \leqslant x \leqslant n \operatorname{gcd}(x, n)=1\}$.
+
+To prove this, consider a Type 2 beautiful arrangement of $[0, n-1]$. Label the positions $0, \ldots, n-1(\bmod n)$ clockwise around the circle, so that number 0 is in position 0 . Let $f(i)$ be the number in position $i$; note that $f$ is a permutation of $[0, n-1]$. Let $a$ be the position such that $f(a)=n-1$.
+
+Since the $n$-chords are aligned with 0 , and every point is in an $n$-chord, these chords are all parallel and
+
+$$
+f(i)+f(-i)=n \quad \text { for all } i
+$$
+
+Similarly, since the $(n-1)$-chords are aligned and every point is in an $(n-1)$-chord, these chords are also parallel and
+
+$$
+f(i)+f(a-i)=n-1 \quad \text { for all } i
+$$
+
+Therefore $f(a-i)=f(-i)-1$ for all $i$; and since $f(0)=0$, we get
+
+
+\begin{equation*}
+f(-a k)=k \quad \text { for all } k \tag{1}
+\end{equation*}
+
+
+Recall that this is an equality modulo $n$. Since $f$ is a permutation, we must have $(a, n)=1$. Hence $L_{n-1} \leqslant \varphi(n)$.
+
+To prove equality, it remains to observe that the labeling (1) is beautiful. To see this, consider four numbers $w, x, y, z$ on the circle with $w+y=x+z$. Their positions around the circle satisfy $(-a w)+(-a y)=(-a x)+(-a z)$, which means that the chord from $w$ to $y$ and the chord from $x$ to $z$ are parallel. Thus (1) is beautiful, and by construction it has Type 2. The desired result follows.
+
+Solution 2. Notice that there are exactly $N$ irreducible fractions $f_{1}<\cdots<f_{N}$ in $(0,1)$ whose denominator is at most $n$, since the pair $(x, y)$ with $x+y \leqslant n$ and $(x, y)=1$ corresponds to the fraction $x /(x+y)$. Write $f_{i}=\frac{a_{i}}{b_{i}}$ for $1 \leqslant i \leqslant N$.
+
+We begin by constructing $N+1$ beautiful arrangements. Take any $\alpha \in(0,1)$ which is not one of the above $N$ fractions. Consider a circle of perimeter 1 . Successively mark points $0,1,2, \ldots, n$ where 0 is arbitrary, and the clockwise distance from $i$ to $i+1$ is $\alpha$. The point $k$ will be at clockwise distance $\{k \alpha\}$ from 0 , where $\{r\}$ denotes the fractional part of $r$. Call such a circular arrangement cyclic and denote it by $A(\alpha)$. If the clockwise order of the points is the same in $A\left(\alpha_{1}\right)$ and $A\left(\alpha_{2}\right)$, we regard them as the same circular arrangement. Figure 3 shows the cyclic arrangement $A(3 / 5+\epsilon)$ of $[0,13]$ where $\epsilon>0$ is very small.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_b2be671bc89b7ca62d33g-35}\\
+Figure 3\\
+If $0 \leqslant a, b, c, d \leqslant n$ satisfy $a+c=b+d$, then $a \alpha+c \alpha=b \alpha+d \alpha$, so the chord from $a$ to $c$ is parallel to the chord from $b$ to $d$ in $A(\alpha)$. Hence in a cyclic arrangement all $k$-chords are parallel. In particular every cyclic arrangement is beautiful.
+
+Next we show that there are exactly $N+1$ distinct cyclic arrangements. To see this, let us see how $A(\alpha)$ changes as we increase $\alpha$ from 0 to 1 . The order of points $p$ and $q$ changes precisely when we cross a value $\alpha=f$ such that $\{p f\}=\{q f\}$; this can only happen if $f$ is one of the $N$ fractions $f_{1}, \ldots, f_{N}$. Therefore there are at most $N+1$ different cyclic arrangements.
+
+To show they are all distinct, recall that $f_{i}=a_{i} / b_{i}$ and let $\epsilon>0$ be a very small number. In the arrangement $A\left(f_{i}+\epsilon\right)$, point $k$ lands at $\frac{k a_{i}\left(\bmod b_{i}\right)}{b_{i}}+k \epsilon$. Therefore the points are grouped\\
+into $b_{i}$ clusters next to the points $0, \frac{1}{b_{i}}, \ldots, \frac{b_{i}-1}{b_{i}}$ of the circle. The cluster following $\frac{k}{b_{i}}$ contains the numbers congruent to $k a_{i}^{-1}$ modulo $b_{i}$, listed clockwise in increasing order. It follows that the first number after 0 in $A\left(f_{i}+\epsilon\right)$ is $b_{i}$, and the first number after 0 which is less than $b_{i}$ is $a_{i}^{-1}\left(\bmod b_{i}\right)$, which uniquely determines $a_{i}$. In this way we can recover $f_{i}$ from the cyclic arrangement. Note also that $A\left(f_{i}+\epsilon\right)$ is not the trivial arrangement where we list $0,1, \ldots, n$ in order clockwise. It follows that the $N+1$ cyclic arrangements $A(\epsilon), A\left(f_{1}+\epsilon\right), \ldots, A\left(f_{N}+\epsilon\right)$ are distinct.
+
+Let us record an observation which will be useful later:
+
+
+\begin{equation*}
+\text { if } f_{i}<\alpha<f_{i+1} \text { then } 0 \text { is immediately after } b_{i+1} \text { and before } b_{i} \text { in } A(\alpha) \text {. } \tag{2}
+\end{equation*}
+
+
+Indeed, we already observed that $b_{i}$ is the first number after 0 in $A\left(f_{i}+\epsilon\right)=A(\alpha)$. Similarly we see that $b_{i+1}$ is the last number before 0 in $A\left(f_{i+1}-\epsilon\right)=A(\alpha)$.
+
+Finally, we show that any beautiful arrangement of $[0, n]$ is cyclic by induction on $n$. For $n \leqslant 2$ the result is clear. Now assume that all beautiful arrangements of $[0, n-1]$ are cyclic, and consider a beautiful arrangement $A$ of $[0, n]$. The subarrangement $A_{n-1}=A \backslash\{n\}$ of $[0, n-1]$ obtained by deleting $n$ is cyclic; say $A_{n-1}=A_{n-1}(\alpha)$.
+
+Let $\alpha$ be between the consecutive fractions $\frac{p_{1}}{q_{1}}<\frac{p_{2}}{q_{2}}$ among the irreducible fractions of denominator at most $n-1$. There is at most one fraction $\frac{i}{n}$ in $\left(\frac{p_{1}}{q_{1}}, \frac{p_{2}}{q_{2}}\right)$, since $\frac{i}{n}<\frac{i}{n-1} \leqslant \frac{i+1}{n}$ for $0<i \leqslant n-1$.
+
+Case 1. There is no fraction with denominator $n$ between $\frac{p_{1}}{q_{1}}$ and $\frac{p_{2}}{q_{2}}$.\\
+In this case the only cyclic arrangement extending $A_{n-1}(\alpha)$ is $A_{n}(\alpha)$. We know that $A$ and $A_{n}(\alpha)$ can only differ in the position of $n$. Assume $n$ is immediately after $x$ and before $y$ in $A_{n}(\alpha)$. Since the neighbors of 0 are $q_{1}$ and $q_{2}$ by (2), we have $x, y \geqslant 1$.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_b2be671bc89b7ca62d33g-36}\\
+Figure 4\\
+In $A_{n}(\alpha)$ the chord from $n-1$ to $x$ is parallel and adjacent to the chord from $n$ to $x-1$, so $n-1$ is between $x-1$ and $x$ in clockwise order, as shown in Figure 4. Similarly, $n-1$ is between $y$ and $y-1$. Therefore $x, y, x-1, n-1$, and $y-1$ occur in this order in $A_{n}(\alpha)$ and hence in $A$ (possibly with $y=x-1$ or $x=y-1$ ).
+
+Now, $A$ may only differ from $A_{n}(\alpha)$ in the location of $n$. In $A$, since the chord from $n-1$ to $x$ and the chord from $n$ to $x-1$ do not intersect, $n$ is between $x$ and $n-1$. Similarly, $n$ is between $n-1$ and $y$. Then $n$ must be between $x$ and $y$ and $A=A_{n}(\alpha)$. Therefore $A$ is cyclic as desired.
+
+Case 2. There is exactly one $i$ with $\frac{p_{1}}{q_{1}}<\frac{i}{n}<\frac{p_{2}}{q_{2}}$.\\
+In this case there exist two cyclic arrangements $A_{n}\left(\alpha_{1}\right)$ and $A_{n}\left(\alpha_{2}\right)$ of the numbers $0, \ldots, n$ extending $A_{n-1}(\alpha)$, where $\frac{p_{1}}{q_{1}}<\alpha_{1}<\frac{i}{n}$ and $\frac{i}{n}<\alpha_{2}<\frac{p_{2}}{q_{2}}$. In $A_{n-1}(\alpha), 0$ is the only number between $q_{2}$ and $q_{1}$ by (2). For the same reason, $n$ is between $q_{2}$ and 0 in $A_{n}\left(\alpha_{1}\right)$, and between 0 and $q_{1}$ in $A_{n}\left(\alpha_{2}\right)$.
+
+Letting $x=q_{2}$ and $y=q_{1}$, the argument of Case 1 tells us that $n$ must be between $x$ and $y$ in $A$. Therefore $A$ must equal $A_{n}\left(\alpha_{1}\right)$ or $A_{n}\left(\alpha_{2}\right)$, and therefore it is cyclic.
+
+This concludes the proof that every beautiful arrangement is cyclic. It follows that there are exactly $N+1$ beautiful arrangements of $[0, n]$ as we wished to show.
