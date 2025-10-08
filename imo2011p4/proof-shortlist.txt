@@ -1,0 +1,57 @@
+Let $n>0$ be an integer. We are given a balance and $n$ weights of weight $2^{0}, 2^{1}, \ldots, 2^{n-1}$. In a sequence of $n$ moves we place all weights on the balance. In the first move we choose a weight and put it on the left pan. In each of the following moves we choose one of the remaining weights and we add it either to the left or to the right pan. Compute the number of ways in which we can perform these $n$ moves in such a way that the right pan is never heavier than the left pan.
+
+Answer. The number $f(n)$ of ways of placing the $n$ weights is equal to the product of all odd positive integers less than or equal to $2 n-1$, i.e. $f(n)=(2 n-1)!!=1 \cdot 3 \cdot 5 \cdot \ldots \cdot(2 n-1)$.
+
+Solution 1. Assume $n \geq 2$. We claim
+
+
+\begin{equation*}
+f(n)=(2 n-1) f(n-1) \tag{1}
+\end{equation*}
+
+
+Firstly, note that after the first move the left pan is always at least 1 heavier than the right one. Hence, any valid way of placing the $n$ weights on the scale gives rise, by not considering weight 1 , to a valid way of placing the weights $2,2^{2}, \ldots, 2^{n-1}$.
+
+If we divide the weight of each weight by 2 , the answer does not change. So these $n-1$ weights can be placed on the scale in $f(n-1)$ valid ways. Now we look at weight 1 . If it is put on the scale in the first move, then it has to be placed on the left side, otherwise it can be placed either on the left or on the right side, because after the first move the difference between the weights on the left pan and the weights on the right pan is at least 2 . Hence, there are exactly $2 n-1$ different ways of inserting weight 1 in each of the $f(n-1)$ valid sequences for the $n-1$ weights in order to get a valid sequence for the $n$ weights. This proves the claim.\\
+Since $f(1)=1$, by induction we obtain for all positive integers $n$
+
+$$
+f(n)=(2 n-1)!!=1 \cdot 3 \cdot 5 \cdot \ldots \cdot(2 n-1)
+$$
+
+Comment 1. The word "compute" in the statement of the problem is probably too vague. An alternative but more artificial question might ask for the smallest $n$ for which the number of valid ways is divisible by 2011. In this case the answer would be 1006.
+
+Comment 2. It is useful to remark that the answer is the same for any set of weights where each weight is heavier than the sum of the lighter ones. Indeed, in such cases the given condition is equivalent to asking that during the process the heaviest weight on the balance is always on the left pan.
+
+Comment 3. Instead of considering the lightest weight, one may also consider the last weight put on the balance. If this weight is $2^{n-1}$ then it should be put on the left pan. Otherwise it may be put on\\
+any pan; the inequality would not be violated since at this moment the heaviest weight is already put onto the left pan. In view of the previous comment, in each of these $2 n-1$ cases the number of ways to place the previous weights is exactly $f(n-1)$, which yields (1).
+
+Solution 2. We present a different way of obtaining (11). Set $f(0)=1$. Firstly, we find a recurrent formula for $f(n)$.
+
+Assume $n \geq 1$. Suppose that weight $2^{n-1}$ is placed on the balance in the $i$-th move with $1 \leq i \leq n$. This weight has to be put on the left pan. For the previous moves we have $\binom{n-1}{i-1}$ choices of the weights and from Comment 2 there are $f(i-1)$ valid ways of placing them on the balance. For later moves there is no restriction on the way in which the weights are to be put on the pans. Therefore, all $(n-i)!2^{n-i}$ ways are possible. This gives
+
+
+\begin{equation*}
+f(n)=\sum_{i=1}^{n}\binom{n-1}{i-1} f(i-1)(n-i)!2^{n-i}=\sum_{i=1}^{n} \frac{(n-1)!f(i-1) 2^{n-i}}{(i-1)!} \tag{2}
+\end{equation*}
+
+
+Now we are ready to prove (1). Using $n-1$ instead of $n$ in (2) we get
+
+$$
+f(n-1)=\sum_{i=1}^{n-1} \frac{(n-2)!f(i-1) 2^{n-1-i}}{(i-1)!}
+$$
+
+Hence, again from (2) we get
+
+$$
+\begin{aligned}
+f(n)=2(n-1) \sum_{i=1}^{n-1} & \frac{(n-2)!f(i-1) 2^{n-1-i}}{(i-1)!}+f(n-1) \\
+& =(2 n-2) f(n-1)+f(n-1)=(2 n-1) f(n-1)
+\end{aligned}
+$$
+
+QED.
+
+Comment. There exist different ways of obtaining the formula (2). Here we show one of them.\\
+Suppose that in the first move we use weight $2^{n-i+1}$. Then the lighter $n-i$ weights may be put on the balance at any moment and on either pan. This gives $2^{n-i} \cdot(n-1)!/(i-1)!$ choices for the moves (moments and choices of pan) with the lighter weights. The remaining $i-1$ moves give a valid sequence for the $i-1$ heavier weights and this is the only requirement for these moves, so there are $f(i-1)$ such sequences. Summing over all $i=1,2, \ldots, n$ we again come to (2).
