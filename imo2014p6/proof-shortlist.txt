@@ -1,0 +1,53 @@
+C5. Consider $n \geqslant 3$ lines in the plane such that no two lines are parallel and no three have a common point. These lines divide the plane into polygonal regions; let $\mathcal{F}$ be the set of regions having finite area. Prove that it is possible to colour $\lceil\sqrt{n / 2}\rceil$ of the lines blue in such a way that no region in $\mathcal{F}$ has a completely blue boundary. (For a real number $x,\lceil x\rceil$ denotes the least integer which is not smaller than $x$.)\\
+(Austria)\\
+Solution. Let $L$ be the given set of lines. Choose a maximal (by inclusion) subset $B \subseteq L$ such that when we colour the lines of $B$ blue, no region in $\mathcal{F}$ has a completely blue boundary. Let $|B|=k$. We claim that $k \geqslant\lceil\sqrt{n / 2}\rceil$.
+
+Let us colour all the lines of $L \backslash B$ red. Call a point blue if it is the intersection of two blue lines. Then there are $\binom{k}{2}$ blue points.
+
+Now consider any red line $\ell$. By the maximality of $B$, there exists at least one region $A \in \mathcal{F}$ whose only red side lies on $\ell$. Since $A$ has at least three sides, it must have at least one blue vertex. Let us take one such vertex and associate it to $\ell$.
+
+Since each blue point belongs to four regions (some of which may be unbounded), it is associated to at most four red lines. Thus the total number of red lines is at most $4\binom{k}{2}$. On the other hand, this number is $n-k$, so
+
+$$
+n-k \leqslant 2 k(k-1), \quad \text { thus } \quad n \leqslant 2 k^{2}-k \leqslant 2 k^{2}
+$$
+
+and finally $k \geqslant\lceil\sqrt{n / 2}\rceil$, which gives the desired result.
+
+Comment 1. The constant factor in the estimate can be improved in different ways; we sketch two of them below. On the other hand, the Problem Selection Committee is not aware of any results showing that it is sometimes impossible to colour $k$ lines satisfying the desired condition for $k \gg \sqrt{n}$. In this situation we find it more suitable to keep the original formulation of the problem.
+
+\begin{enumerate}
+  \item Firstly, we show that in the proof above one has in fact $k=|B| \geqslant\lceil\sqrt{2 n / 3}\rceil$.
+\end{enumerate}
+
+Let us make weighted associations as follows. Let a region $A$ whose only red side lies on $\ell$ have $k$ vertices, so that $k-2$ of them are blue. We associate each of these blue vertices to $\ell$, and put the weight $\frac{1}{k-2}$ on each such association. So the sum of the weights of all the associations is exactly $n-k$.
+
+Now, one may check that among the four regions adjacent to a blue vertex $v$, at most two are triangles. This means that the sum of the weights of all associations involving $v$ is at most $1+1+\frac{1}{2}+\frac{1}{2}=3$. This leads to the estimate
+
+$$
+n-k \leqslant 3\binom{k}{2}
+$$
+
+or
+
+$$
+2 n \leqslant 3 k^{2}-k<3 k^{2}
+$$
+
+which yields $k \geqslant\lceil\sqrt{2 n / 3}\rceil$.\\
+2. Next, we even show that $k=|B| \geqslant\lceil\sqrt{n}\rceil$. For this, we specify the process of associating points to red lines in one more different way.
+
+Call a point red if it lies on a red line as well as on a blue line. Consider any red line $\ell$, and take an arbitrary region $A \in \mathcal{F}$ whose only red side lies on $\ell$. Let $r^{\prime}, r, b_{1}, \ldots, b_{k}$ be its vertices in clockwise order with $r^{\prime}, r \in \ell$; then the points $r^{\prime}, r$ are red, while all the points $b_{1}, \ldots, b_{k}$ are blue. Let us associate to $\ell$ the red point $r$ and the blue point $b_{1}$. One may notice that to each pair of a red point $r$ and a blue point $b$, at most one red line can be associated, since there is at most one region $A$ having $r$ and $b$ as two clockwise consecutive vertices.
+
+We claim now that at most two red lines are associated to each blue point $b$; this leads to the desired bound
+
+$$
+n-k \leqslant 2\binom{k}{2} \quad \Longleftrightarrow \quad n \leqslant k^{2}
+$$
+
+Assume, to the contrary, that three red lines $\ell_{1}, \ell_{2}$, and $\ell_{3}$ are associated to the same blue point $b$. Let $r_{1}, r_{2}$, and $r_{3}$ respectively be the red points associated to these lines; all these points are distinct. The point $b$ defines four blue rays, and each point $r_{i}$ is the red point closest to $b$ on one of these rays. So we may assume that the points $r_{2}$ and $r_{3}$ lie on one blue line passing through $b$, while $r_{1}$ lies on the other one.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_f8585be468a68da3ddc2g-36}\\
+Now consider the region $A$ used to associate $r_{1}$ and $b$ with $\ell_{1}$. Three of its clockwise consecutive vertices are $r_{1}, b$, and either $r_{2}$ or $r_{3}$ (say, $r_{2}$ ). Since $A$ has only one red side, it can only be the triangle $r_{1} b r_{2}$; but then both $\ell_{1}$ and $\ell_{2}$ pass through $r_{2}$, as well as some blue line. This is impossible by the problem assumptions.
+
+Comment 2. The condition that the lines be non-parallel is essentially not used in the solution, nor in the previous comment; thus it may be omitted.
