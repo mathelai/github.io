@@ -1,0 +1,40 @@
+Let $n$ be a positive integer. Find the smallest integer $k$ with the following property: Given any real numbers $a_{1}, \ldots, a_{d}$ such that $a_{1}+a_{2}+\cdots+a_{d}=n$ and $0 \leqslant a_{i} \leqslant 1$ for $i=1,2, \ldots, d$, it is possible to partition these numbers into $k$ groups (some of which may be empty) such that the sum of the numbers in each group is at most 1 .\\
+
+Answer. $k=2 n-1$.\\
+Solution 1. If $d=2 n-1$ and $a_{1}=\cdots=a_{2 n-1}=n /(2 n-1)$, then each group in such a partition can contain at most one number, since $2 n /(2 n-1)>1$. Therefore $k \geqslant 2 n-1$. It remains to show that a suitable partition into $2 n-1$ groups always exists.
+
+We proceed by induction on $d$. For $d \leqslant 2 n-1$ the result is trivial. If $d \geqslant 2 n$, then since
+
+$$
+\left(a_{1}+a_{2}\right)+\ldots+\left(a_{2 n-1}+a_{2 n}\right) \leqslant n
+$$
+
+we may find two numbers $a_{i}, a_{i+1}$ such that $a_{i}+a_{i+1} \leqslant 1$. We "merge" these two numbers into one new number $a_{i}+a_{i+1}$. By the induction hypothesis, a suitable partition exists for the $d-1$ numbers $a_{1}, \ldots, a_{i-1}, a_{i}+a_{i+1}, a_{i+2}, \ldots, a_{d}$. This induces a suitable partition for $a_{1}, \ldots, a_{d}$.
+
+Solution 2. We will show that it is even possible to split the sequence $a_{1}, \ldots, a_{d}$ into $2 n-1$ contiguous groups so that the sum of the numbers in each groups does not exceed 1. Consider a segment $S$ of length $n$, and partition it into segments $S_{1}, \ldots, S_{d}$ of lengths $a_{1}, \ldots, a_{d}$, respectively, as shown below. Consider a second partition of $S$ into $n$ equal parts by $n-1$ "empty dots".
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_b2be671bc89b7ca62d33g-21}\\
+Assume that the $n-1$ empty dots are in segments $S_{i_{1}}, \ldots, S_{i_{n-1}}$. (If a dot is on the boundary of two segments, we choose the right segment). These $n-1$ segments are distinct because they have length at most 1 . Consider the partition:
+
+$$
+\left\{a_{1}, \ldots, a_{i_{1}-1}\right\},\left\{a_{i_{1}}\right\},\left\{a_{i_{1}+1}, \ldots, a_{i_{2}-1}\right\},\left\{a_{i_{2}}\right\}, \ldots\left\{a_{i_{n-1}}\right\},\left\{a_{i_{n-1}+1}, \ldots, a_{d}\right\}
+$$
+
+In the example above, this partition is $\left\{a_{1}, a_{2}\right\},\left\{a_{3}\right\},\left\{a_{4}, a_{5}\right\},\left\{a_{6}\right\}, \varnothing,\left\{a_{7}\right\},\left\{a_{8}, a_{9}, a_{10}\right\}$. We claim that in this partition, the sum of the numbers in this group is at most 1 .
+
+For the sets $\left\{a_{i_{t}}\right\}$ this is obvious since $a_{i_{t}} \leqslant 1$. For the sets $\left\{a_{i_{t}}+1, \ldots, a_{i_{t+1}-1}\right\}$ this follows from the fact that the corresponding segments lie between two neighboring empty dots, or between an endpoint of $S$ and its nearest empty dot. Therefore the sum of their lengths cannot exceed 1.
+
+Solution 3. First put all numbers greater than $\frac{1}{2}$ in their own groups. Then, form the remaining groups as follows: For each group, add new $a_{i}$ s one at a time until their sum exceeds $\frac{1}{2}$. Since the last summand is at most $\frac{1}{2}$, this group has sum at most 1 . Continue this procedure until we have used all the $a_{i}$ s. Notice that the last group may have sum less than $\frac{1}{2}$. If the sum of the numbers in the last two groups is less than or equal to 1 , we merge them into one group. In the end we are\\
+left with $m$ groups. If $m=1$ we are done. Otherwise the first $m-2$ have sums greater than $\frac{1}{2}$ and the last two have total sum greater than 1 . Therefore $n>(m-2) / 2+1$ so $m \leqslant 2 n-1$ as desired.
+
+Comment 1. The original proposal asked for the minimal value of $k$ when $n=2$.\\
+Comment 2. More generally, one may ask the same question for real numbers between 0 and 1 whose sum is a real number $r$. In this case the smallest value of $k$ is $k=\lceil 2 r\rceil-1$, as Solution 3 shows.
+
+Solutions 1 and 2 lead to the slightly weaker bound $k \leqslant 2\lceil r\rceil-1$. This is actually the optimal bound for partitions into consecutive groups, which are the ones contemplated in these two solutions. To see\\
+this, assume that $r$ is not an integer and let $c=(r+1-\lceil r\rceil) /(1+\lceil r\rceil)$. One easily checks that $0<c<\frac{1}{2}$ and $\lceil r\rceil(2 c)+(\lceil r\rceil-1)(1-c)=r$, so the sequence
+
+$$
+2 c, 1-c, 2 c, 1-c, \ldots, 1-c, 2 c
+$$
+
+of $2\lceil r\rceil-1$ numbers satisfies the given conditions. For this sequence, the only suitable partition into consecutive groups is the trivial partition, which requires $2\lceil r\rceil-1$ groups.
