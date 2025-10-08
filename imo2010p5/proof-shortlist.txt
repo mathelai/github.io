@@ -1,0 +1,102 @@
+Six stacks $S_{1}, \ldots, S_{6}$ of coins are standing in a row. In the beginning every stack contains a single coin. There are two types of allowed moves:\\
+Move 1: If stack $S_{k}$ with $1 \leq k \leq 5$ contains at least one coin, you may remove one coin from $S_{k}$ and add two coins to $S_{k+1}$.\\
+Move 2: If stack $S_{k}$ with $1 \leq k \leq 4$ contains at least one coin, then you may remove one coin from $S_{k}$ and exchange stacks $S_{k+1}$ and $S_{k+2}$.\\
+Decide whether it is possible to achieve by a sequence of such moves that the first five stacks are empty, whereas the sixth stack $S_{6}$ contains exactly $2010^{2010^{2010}}$ coins.
+
+C4 ${ }^{\prime}$. Same as Problem C4, but the constant $2010^{2010^{2010}}$ is replaced by $2010^{2010}$.\\
+(Netherlands)\\
+Answer. Yes (in both variants of the problem). There exists such a sequence of moves.\\
+Solution. Denote by $\left(a_{1}, a_{2}, \ldots, a_{n}\right) \rightarrow\left(a_{1}^{\prime}, a_{2}^{\prime}, \ldots, a_{n}^{\prime}\right)$ the following: if some consecutive stacks contain $a_{1}, \ldots, a_{n}$ coins, then it is possible to perform several allowed moves such that the stacks contain $a_{1}^{\prime}, \ldots, a_{n}^{\prime}$ coins respectively, whereas the contents of the other stacks remain unchanged.
+
+Let $A=2010^{2010}$ or $A=2010^{2010^{2010}}$, respectively. Our goal is to show that
+
+$$
+(1,1,1,1,1,1) \rightarrow(0,0,0,0,0, A)
+$$
+
+First we prove two auxiliary observations.\\
+Lemma 1. $(a, 0,0) \rightarrow\left(0,2^{a}, 0\right)$ for every $a \geq 1$.\\
+Proof. We prove by induction that $(a, 0,0) \rightarrow\left(a-k, 2^{k}, 0\right)$ for every $1 \leq k \leq a$. For $k=1$, apply Move 1 to the first stack:
+
+$$
+(a, 0,0) \rightarrow(a-1,2,0)=\left(a-1,2^{1}, 0\right)
+$$
+
+Now assume that $k<a$ and the statement holds for some $k<a$. Starting from $\left(a-k, 2^{k}, 0\right)$, apply Move 1 to the middle stack $2^{k}$ times, until it becomes empty. Then apply Move 2 to the first stack:
+
+$$
+\left(a-k, 2^{k}, 0\right) \rightarrow\left(a-k, 2^{k}-1,2\right) \rightarrow \cdots \rightarrow\left(a-k, 0,2^{k+1}\right) \rightarrow\left(a-k-1,2^{k+1}, 0\right)
+$$
+
+Hence,
+
+$$
+(a, 0,0) \rightarrow\left(a-k, 2^{k}, 0\right) \rightarrow\left(a-k-1,2^{k+1}, 0\right)
+$$
+
+Lemma 2. For every positive integer $n$, let $P_{n}=\underbrace{2^{2 \cdot}}_{n}$ (e.g. $P_{3}=2^{2^{2}}=16$ ). Then $(a, 0,0,0) \rightarrow\left(0, P_{a}, 0,0\right)$ for every $a \geq 1$.\\
+Proof. Similarly to Lemma 1 , we prove that $(a, 0,0,0) \rightarrow\left(a-k, P_{k}, 0,0\right)$ for every $1 \leq k \leq a$.\\
+For $k=1$, apply Move 1 to the first stack:
+
+$$
+(a, 0,0,0) \rightarrow(a-1,2,0,0)=\left(a-1, P_{1}, 0,0\right)
+$$
+
+Now assume that the lemma holds for some $k<a$. Starting from ( $a-k, P_{k}, 0,0$ ), apply Lemma 1 , then apply Move 1 to the first stack:
+
+$$
+\left(a-k, P_{k}, 0,0\right) \rightarrow\left(a-k, 0,2^{P_{k}}, 0\right)=\left(a-k, 0, P_{k+1}, 0\right) \rightarrow\left(a-k-1, P_{k+1}, 0,0\right)
+$$
+
+Therefore,
+
+$$
+(a, 0,0,0) \rightarrow\left(a-k, P_{k}, 0,0\right) \rightarrow\left(a-k-1, P_{k+1}, 0,0\right)
+$$
+
+Now we prove the statement of the problem.\\
+First apply Move 1 to stack 5 , then apply Move 2 to stacks $S_{4}, S_{3}, S_{2}$ and $S_{1}$ in this order. Then apply Lemma 2 twice:
+
+$$
+\begin{gathered}
+(1,1,1,1,1,1) \rightarrow(1,1,1,1,0,3) \rightarrow(1,1,1,0,3,0) \rightarrow(1,1,0,3,0,0) \rightarrow(1,0,3,0,0,0) \rightarrow \\
+\quad \rightarrow(0,3,0,0,0,0) \rightarrow\left(0,0, P_{3}, 0,0,0\right)=(0,0,16,0,0,0) \rightarrow\left(0,0,0, P_{16}, 0,0\right)
+\end{gathered}
+$$
+
+We already have more than $A$ coins in stack $S_{4}$, since
+
+$$
+A \leq 2010^{2010^{2010}}<\left(2^{11}\right)^{2010^{2010}}=2^{11 \cdot 2010^{2010}}<2^{2010^{2011}}<2^{\left(2^{11}\right)^{2011}}=2^{2^{11 \cdot 2011}}<2^{2^{2^{15}}}<P_{16}
+$$
+
+To decrease the number of coins in stack $S_{4}$, apply Move 2 to this stack repeatedly until its size decreases to $A / 4$. (In every step, we remove a coin from $S_{4}$ and exchange the empty stacks $S_{5}$ and $S_{6}$.)
+
+$$
+\begin{aligned}
+\left(0,0,0, P_{16}, 0,0\right) \rightarrow & \left(0,0,0, P_{16}-1,0,0\right) \rightarrow\left(0,0,0, P_{16}-2,0,0\right) \rightarrow \\
+& \rightarrow \cdots \rightarrow(0,0,0, A / 4,0,0)
+\end{aligned}
+$$
+
+Finally, apply Move 1 repeatedly to empty stacks $S_{4}$ and $S_{5}$ :
+
+$$
+(0,0,0, A / 4,0,0) \rightarrow \cdots \rightarrow(0,0,0,0, A / 2,0) \rightarrow \cdots \rightarrow(0,0,0,0,0, A)
+$$
+
+Comment 1. Starting with only 4 stack, it is not hard to check manually that we can achieve at most 28 coins in the last position. However, around 5 and 6 stacks the maximal number of coins explodes. With 5 stacks it is possible to achieve more than $2^{2^{14}}$ coins. With 6 stacks the maximum is greater than $P_{P_{2^{14}}}$.
+
+It is not hard to show that the numbers $2010^{2010}$ and $2010^{2010^{2010}}$ in the problem can be replaced by any nonnegative integer up to $P_{P_{2^{14}}}$.\\
+Comment 2. The simpler variant $\mathrm{C}^{\prime}$ of the problem can be solved without Lemma 2:
+
+$$
+\begin{aligned}
+(1,1,1,1,1,1) & \rightarrow(0,3,1,1,1,1) \rightarrow(0,1,5,1,1,1) \rightarrow(0,1,1,9,1,1) \rightarrow \\
+& \rightarrow(0,1,1,1,17,1) \rightarrow(0,1,1,1,0,35) \rightarrow(0,1,1,0,35,0) \rightarrow(0,1,0,35,0,0) \rightarrow \\
+& \rightarrow(0,0,35,0,0,0) \rightarrow\left(0,0,1,2^{34}, 0,0\right) \rightarrow\left(0,0,1,0,2^{2^{34}}, 0\right) \rightarrow\left(0,0,0,2^{2^{34}}, 0,0\right) \\
+& \rightarrow\left(0,0,0,2^{2^{34}}-1,0,0\right) \rightarrow \ldots \rightarrow(0,0,0, A / 4,0,0) \rightarrow(0,0,0,0, A / 2,0) \rightarrow(0,0,0,0,0, A)
+\end{aligned}
+$$
+
+For this reason, the PSC suggests to consider the problem C4 as well. Problem C4 requires more invention and technical care. On the other hand, the problem statement in $\mathrm{C} 4^{\prime}$ hides the fact that the resulting amount of coins can be such incredibly huge and leaves this discovery to the students.
