@@ -1,0 +1,28 @@
+Let $A$ be a 101 -element subset of the set $S=\{1,2, \ldots, 1000000\}$. Prove that there exist numbers $t_{1}, t_{2}, \ldots, t_{100}$ in $S$ such that the sets
+
+$$
+A_{j}=\left\{x+t_{j} \mid x \in A\right\}, \quad j=1,2, \ldots, 100
+$$
+
+are pairwise disjoint.
+
+Solution 1. Consider the set $D=\{x-y \mid x, y \in A\}$. There are at most $101 \times 100+1=$ 10101 elements in $D$. Two sets $A+t_{i}$ and $A+t_{j}$ have nonempty intersection if and only if $t_{i}-t_{j}$ is in $D$. So we need to choose the 100 elements in such a way that we do not use a difference from $D$.
+
+Now select these elements by induction. Choose one element arbitrarily. Assume that $k$ elements, $k \leq 99$, are already chosen. An element $x$ that is already chosen prevents us from selecting any element from the set $x+D$. Thus after $k$ elements are chosen, at most $10101 k \leq 999999$ elements are forbidden. Hence we can select one more element.
+
+Comment. The size $|S|=10^{6}$ is unnecessarily large. The following statement is true:\\
+If $A$ is a $k$-element subset of $S=\{1, \ldots, n\}$ and $m$ is a positive integer such that $n>(m-1)\left(\binom{k}{2}+1\right)$, then there exist $t_{1}, \ldots, t_{m} \in S$ such that the sets $A_{j}=\left\{x+t_{j} \mid x \in A\right\}, j=1, \ldots, m$ are pairwise disjoint.
+
+Solution 2. We give a solution to the generalised version.\\
+Consider the set $B=\{|x-y| \mid x, y \in A\}$. Clearly, $|B| \leq\binom{ k}{2}+1$.\\
+It suffices to prove that there exist $t_{1}, \ldots, t_{m} \in S$ such that $\left|t_{i}-t_{j}\right| \notin B$ for every distinct $i$ and $j$. We will select $t_{1}, \ldots, t_{m}$ inductively.
+
+Choose 1 as $t_{1}$, and consider the set $C_{1}=S \backslash\left(B+t_{1}\right)$. Then we have $\left|C_{1}\right| \geq n-\left(\binom{k}{2}+1\right)> (m-2)\left(\binom{k}{2}+1\right)$.
+
+For $1 \leq i<m$, suppose that $t_{1}, \ldots, t_{i}$ and $C_{i}$ are already defined and that $\left|C_{i}\right|> (m-i-1)\left(\binom{k}{2}+1\right) \geq 0$. Choose the least element in $C_{i}$ as $t_{i+1}$ and consider the set $C_{i+1}=C_{i} \backslash\left(B+t_{i+1}\right)$. Then
+
+$$
+\left|C_{i+1}\right| \geq\left|C_{i}\right|-\left(\binom{k}{2}+1\right)>(m-i-2)\left(\binom{k}{2}+1\right) \geq 0 .
+$$
+
+Clearly, $t_{1}, \ldots, t_{m}$ satisfy the desired condition.
