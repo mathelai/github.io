@@ -1,0 +1,19 @@
+Let $n$ be an integer with $n \geqslant 2$. On a slope of a mountain, $n^{2}$ checkpoints are marked, numbered from 1 to $n^{2}$ from the bottom to the top. Each of two cable car companies, $A$ and $B$, operates $k$ cable cars numbered from 1 to $k$; each cable car provides a transfer from some checkpoint to a higher one. For each company, and for any $i$ and $j$ with $1 \leqslant i<j \leqslant k$, the starting point of car $j$ is higher than the starting point of car $i$; similarly, the finishing point of car $j$ is higher than the finishing point of car $i$. Say that two checkpoints are linked by some company if one can start from the lower checkpoint and reach the higher one by using one or more cars of that company (no movement on foot is allowed).
+
+Determine the smallest $k$ for which one can guarantee that there are two checkpoints that are linked by each of the two companies.\\
+(India)\\
+Answer: $k=n^{2}-n+1$.\\
+Solution. We start with showing that for any $k \leqslant n^{2}-n$ there may be no pair of checkpoints linked by both companies. Clearly, it suffices to provide such an example for $k=n^{2}-n$.
+
+Let company $A$ connect the pairs of checkpoints of the form $(i, i+1)$, where $n \nmid i$. Then all pairs of checkpoints $(i, j)$ linked by $A$ satisfy $\lceil i / n\rceil=\lceil j / n\rceil$.
+
+Let company $B$ connect the pairs of the form $(i, i+n)$, where $1 \leqslant i \leqslant n^{2}-n$. Then pairs of checkpoints $(i, j)$ linked by $B$ satisfy $i \equiv j(\bmod n)$. Clearly, no pair $(i, j)$ satisfies both conditions, so there is no pair linked by both companies.
+
+Now we show that for $k=n^{2}-n+1$ there always exist two required checkpoints. Define an $A$-chain as a sequence of checkpoints $a_{1}<a_{2}<\ldots<a_{t}$ such that company $A$ connects $a_{i}$ with $a_{i+1}$ for all $1 \leqslant i \leqslant t-1$, but there is no $A$-car transferring from some checkpoint to $a_{1}$ and no $A$-car transferring from $a_{t}$ to any other checkpoint. Define $B$-chains similarly. Moving forth and back, one easily sees that any checkpoint is included in a unique $A$-chain (possibly consisting of that single checkpoint), as well as in a unique $B$-chain. Now, put each checkpoint into a correspondence to the pair of the $A$-chain and the $B$-chain it belongs to.
+
+All finishing points of $A$-cars are distinct, so there are $n^{2}-k=n-1$ checkpoints that are not such finishing points. Each of them is a starting point of a unique $A$-chain, so the number of $A$-chains is $n-1$. Similarly, the number of $B$-chains also equals $n-1$. Hence, there are $(n-1)^{2}$ pairs consisting of an $A$ - and a $B$-chain. Therefore, two of the $n^{2}$ checkpoints correspond to the same pair, so that they belong to the same $A$-chain, as well as to the same $B$-chain. This means that they are linked by both companies, as required.
+
+Comment 1. The condition that the $i^{\text {th }}$ car starts and finishes lower than the $j^{\text {th }}$ one is used only in the "moving forth and back" argument and in the counting of starting points of the chains. In both cases, the following weaker assumption suffices: No two cars of the same company start at the same checkpoint, and no two such cars finish at the same checkpoint.
+
+Thus, the problem conditions could be weakened in this way,, with no affect on the solution.\\
+Comment 2. If the number of checkpoints were $N$, then the answer would be $N-\lceil\sqrt{N}\rceil+1$. The solution above works verbatim for this generalization.
