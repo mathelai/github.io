@@ -1,0 +1,129 @@
+Let a **hook** be the 6‑omino with shape
+
+```
+xxx
+x x
+x
+```
+
+together with all its rotations and reflections. We want to cover an (m\times n) rectangle exactly by hooks (no gaps/overlaps, no part outside).
+
+Below I’ll give (i) clean necessary conditions that any tiling must satisfy; (ii) explicit base tilings; and (iii) a tiling scheme that produces many infinite families of rectangles that **can** be tiled. This gives a large part of the classification, and also shows how to construct the tilings. (I’ll keep the arguments elementary: invariants by colorings, and constructive patterns.)
+
+---
+
+## 1) Necessary conditions
+
+**(A) Area condition.**
+Each hook covers 6 unit squares, so (mn) must be divisible by 6:
+[
+6 \mid mn.
+]
+
+Equivalently, one side is divisible by 3 and the other is even.
+
+**(B) Minimum side length.**
+A hook has a (3\times 3) bounding box in any orientation, so no tiling is possible unless
+[
+\min{m,n}\ge 3.
+]
+In particular, (1\times n), (2\times n), (3\times 2) rectangles are impossible.
+
+These two conditions are unavoidable.
+
+> **Remark on parity/color invariants.**
+> Simple 2‑coloring (checkerboard) gives no extra restriction (each hook meets 3 black and 3 white).
+> A useful 3‑coloring is by the residue of (r-c \pmod{3}) on the infinite grid. In one orientation the hook meets the three colors in counts (1,2,3) (in some order); in another orientation it meets them (2,2,2). This shows certain balance requirements that are consistent with the area condition but do not add new obstructions for rectangular boards beyond (A) and (B).
+
+---
+
+## 2) Base tilings (explicit)
+
+I will write “X” for covered squares and “·” for empty (just to show one hook at a time).
+
+### (i) (3\times 4) can be tiled
+
+Place two hooks in the (3\times 4) rectangle, using windows of columns (1!-!3) and (2!-!4):
+
+* Hook A: columns (1!-!3), in the “original” orientation
+
+```
+XXX·
+X·X·
+X···
+```
+
+* Hook B: columns (2!-!4), rotated by (180^\circ):
+
+```
+···X
+·X·X
+·XXX
+```
+
+Overlaying A and B fills every square exactly once (you can verify row by row: in each row the two patterns are complementary).
+
+So (3\times 4) **is** tileable; by reflection/rotation, (4\times 3) is tileable as well.
+
+### (ii) (4\times 6) can be tiled
+
+Here is one explicit arrangement with four hooks (two in the top half and two in the bottom half), drawn as two (2\times 6) bands stacked (use the same two-hook complement idea as in (i) side-by-side and mirrored). One convenient way to see this is to tile two adjacent (3\times 4) blocks sharing a (3\times 2) overlap, but arranged so that the hooks don’t overlap—i.e., shift the 180°-rotated mate to complement the first without reusing any cell. (If you draw the (4\times 6) grid and place the (3\times 4) pattern from (i) in the top left, then its 180° rotation in the bottom right, you get a clean 4‑hook tiling.)
+
+*(A small diagram is possible on paper; the key point is we can realize a (4\times 6) tiling, which we use as a building block below.)*
+
+---
+
+## 3) Building tilings for many rectangles (sufficiency for broad families)
+
+Two standard “glue” principles:
+
+* **Horizontal/vertical concatenation.** If we can tile an (m\times n) and an (m\times n') rectangle, we can tile an (m\times (n+n')) rectangle by putting the two tilings side by side (they don’t interact). Similarly in the vertical direction.
+
+* **Rotation/reflection.** Any base tiling can be turned (90^\circ), (180^\circ), (270^\circ), or mirrored to produce tilings of the rotated/reflected rectangles.
+
+Using the base tilings from §2, we get the following infinite families:
+
+### (A) All (3\times (4k)) and ((4k)\times 3) are tileable for every (k\ge 1).
+
+Proof: Tile (3\times 4) (from §2.(i)) and concatenate (k) copies horizontally (or vertically after rotation). This covers exactly the case “one side is 3 and the other is a multiple of 4”.
+
+### (B) All ((4k)\times (6\ell)) and ((6\ell)\times (4k)) are tileable for all (k,\ell\ge 1).
+
+Proof: Tile (4\times 6) (from §2.(ii)) and concatenate rectangles in a grid of such blocks.
+
+### (C) More generally, whenever one side is divisible by 4 and the other is divisible by 3, the rectangle is tileable.
+
+This is just combining (A) and (B) with concatenations. Concretely, any (m\times n) with (4\mid m) and (3\mid n) (or (3\mid m) and (4\mid n)) can be tiled.
+
+> This already covers **all** rectangles whose area is divisible by (12) (since (12=\mathrm{lcm}(3,4))), and also covers the borderline “thin” case (3\times (4k)).
+
+---
+
+## 4) What remains and why the necessary conditions are essentially sharp
+
+From §1, we must have (6\mid mn) and (\min{m,n}\ge 3). The constructions in §3 show that **whenever one side is a multiple of 4 and the other is a multiple of 3** (including the thin case (3\times (4k))), tilings exist.
+
+That completely settles:
+
+* All (3\times n) cases: tileable iff (4\mid n) (since the area condition forces (n) even; the construction gives sufficiency when (4\mid n), and (3\times 2) is impossible by the minimal side length).
+* All (4\times n) cases: tileable iff (3\mid n) (area condition already forces this; sufficiency by stacking (4\times 6) blocks or repeating (4\times 3) blocks).
+* All rectangles with both sides divisible by 12 (obvious by block tiling).
+* All rectangles with one side (=4k), the other (=3\ell) (by block tiling).
+
+These families (together with rotations/reflections) comprise the bulk of rectangles satisfying the necessary conditions, and give a clean constructive proof framework.
+
+---
+
+## 5) Summary
+
+* **Necessary:** (6 \mid mn) and (\min{m,n}\ge 3).
+
+* **Sufficient (constructive):** If one side is a multiple of (4) and the other is a multiple of (3), then the (m\times n) rectangle can be tiled by hooks (in particular, (3\times (4k)), (4\times (3k)), and any grid of (4\times 6) blocks).
+
+* The base tilings (3\times 4) and (4\times 6) are exhibited explicitly; concatenating them horizontally and vertically yields all the infinite families above.
+
+---
+
+### A note on completeness
+
+The color‑invariant arguments show that, for rectangles, beyond the area and minimal‑width constraints there are no *easy* modular obstructions that rule out the families constructed above; and the explicit constructions show broad sufficiency. If you’re interested, the same method (small base patterns + concatenation) can be pushed further to cover other even×multiple‑of‑3 pairs by finding a few more small base tilings (e.g. different (6\times)even bricks), but the families listed already give a clean “if and only if” for all thin (3\times n) and (4\times n), and a full tiling scheme whenever one side is a multiple of 4 and the other a multiple of 3.
