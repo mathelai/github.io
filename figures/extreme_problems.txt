@@ -1,0 +1,26 @@
+Figure: "Killer Problems" and Extreme Cases: The Outliers of IMO
+
+This figure identifies and analyzes the most extreme IMO problems, focusing on "killer problems" with exceptionally high failure rates and examining the landscape of difficulty outliers across all problem types.
+
+Panel (A) - Distribution of Failure Rates:
+Histogram showing the distribution of failure rates (percentage scoring 0-1 points) across all 156 problems from 2000-2025. The distribution is roughly normal with a mean around 45-50% failure rate, but exhibits a notable right tail extending beyond 80% failure. The green and blue bars representing the highest failure rates (75-100%) identify 30 "killer problems" that defeated more than 80% of contestants. This long tail demonstrates that while most problems are calibrated to challenge roughly half the field, a significant subset is designed to be exceptionally difficult, likely serving as discriminators for medal cutoffs.
+
+Panel (B) - Top 20 Hardest Problems Across All Types:
+Horizontal bar chart ranking the 20 most difficult problems by mean score (lower = harder). The hardest problem is 2017 P3 (Combinatorics, μ = 0.042, 99% failure rate), followed by 2016 P3 (Combinatorics, μ = 0.115) and 2007 P6 (Combinatorics, μ = 0.167). Combinatorics (red) dominates the top 20 with 11 problems, followed by Number Theory (orange, 5 problems), Geometry (green, 3 problems), and Algebra (blue, 1 problem). Notably, positions P3 and P6 are heavily represented, confirming these are designated "hard" positions. The mean scores cluster extremely low (μ < 1.0 for most), with several below 0.3, indicating these problems achieved near-universal failure.
+
+Panel (C) - Failure vs Success Landscape:
+Scatter plot showing mean score (x-axis) against failure rate (y-axis) for all problems. A clear negative correlation dominates: as mean score increases, failure rate decreases. However, the relationship shows interesting non-linearity. Problems cluster in three regions: (1) killer zone (μ < 1, failure > 75%), (2) moderate zone (μ = 1-4, failure = 30-70%), and (3) accessible zone (μ > 4, failure < 35%). Combinatorics (red) shows the densest concentration in the killer zone, while Geometry (green) and Number Theory (orange) problems spread more evenly across all zones. Several outliers appear: problems with moderate mean scores but exceptionally high failure rates (>70%), suggesting bimodal distributions where a small elite group solved them perfectly while most failed.
+
+Panel (D) - Difficulty vs Variability:
+Scatter plot showing mean score against standard deviation in scores. An inverted-U pattern emerges clearly: problems at extreme difficulty levels (very easy or very hard) show low variability (σ < 1.5), while moderate-difficulty problems show maximum variability (σ ≈ 2.5-3.0 at μ = 2-3). This pattern appears across all problem types, indicated by the color distribution. The highest variability occurs for problems with mean scores of 2-3, where score distributions are most spread out. Combinatorics problems (red) cluster toward the low-mean, low-variability region, confirming they tend to produce uniform failure. Geometry problems (green) show some of the highest variability points, suggesting more diverse performance outcomes.
+
+Key Insights for MathEL:
+1. Killer problem prevalence: 30 problems (19% of all IMO problems) achieve >80% failure rates, with 2017 P3 representing the ultimate challenge (99% failure, μ = 0.042)
+2. Combinatorics dominance in extremes: 11 of the top 20 hardest problems are Combinatorics, representing 55% of extreme challenges despite being only 25% of all problems
+3. Position correlation with difficulty: P3 and P6 positions dominate the hardest problems list, indicating systematic difficulty placement by problem committees
+4. Bimodal outliers: Several problems combine moderate mean scores with high failure rates, revealing bimodal distributions where a small elite succeeds while most fail completely
+5. Moderate problems maximize information: The inverted-U variability pattern confirms that moderate-difficulty problems (μ = 2-3) provide maximum discrimination between ability levels
+
+Implications for MathEL: The system must develop specialized capabilities for "killer" Combinatorics problems that appear in P3/P6 positions, as these represent the frontier of difficulty. MathEL should not expect linear difficulty progression; some problems designed to defeat >80% of human contestants may require fundamentally different approaches. The bimodal patterns suggest MathEL needs robust all-or-nothing solution strategies rather than partial approaches. Training should include explicit exposure to these extreme cases to calibrate the system's difficulty assessment and resource allocation. Understanding that moderate-difficulty problems offer maximum learning signal, MathEL should prioritize these for general skill development while treating killer problems as specialized challenges requiring dedicated strategies.
+
+Statistics Summary: Across 2000-2025, the hardest problem was 2017 P3 (Combinatorics) with μ = 0.042 and 99% failure rate. 30 "killer problems" achieved >80% failure rates, with Combinatorics representing 11 of the top 20 hardest problems overall.

@@ -1,0 +1,27 @@
+**Combinatorics Problem Difficulty Varies by Position in IMO**
+
+This two-panel analysis examines how combinatorics problem difficulty varies by problem position (P1-P6) within the IMO contest structure.
+
+**(A) Combinatorics Difficulty by Problem Position:**
+Problem difficulty measured by mean score shows clear stratification:
+- **P6 (hardest):** Mean score ~0.8, typically the most challenging combinatorics problem
+- **P3 (second hardest):** Mean score ~1.2
+- **P5 (medium-hard):** Mean score ~2.4
+- **P2 (medium):** Mean score ~2.0
+- **P1 (easier):** Mean score ~4.3
+- **P4 (varies):** Mean score ~3.9, shows high variance
+
+Error bars indicate substantial problem-to-problem variation within each position. Sample sizes (n) show distribution of combinatorics problems across positions over 25 years.
+
+**(B) Failure vs Perfect Score Rates:**
+Comparing extreme outcomes reveals:
+- **High failure rates:** P3 and P6 show >60% failure rates (students scoring 0)
+- **Low success rates:** P3 and P6 show <10% perfect scores (students scoring 7)
+- **Discrimination:** The gap between failure and success rates is largest for P3 and P6, making them ideal benchmarks for distinguishing AI capabilities
+
+**Strategic Implications:**
+1. **Curriculum Learning:** The natural difficulty gradient P1 → P3 → P5/P6 suggests an ordering for training MathEL
+2. **Benchmark Selection:** P6 problems provide the ultimate test of combinatorial reasoning
+3. **Position Bias:** The IMO jury deliberately places harder combinatorics in positions 3 and 6, creating systematic difficulty patterns MathEL can exploit
+
+This analysis validates using problem position as a difficulty proxy and supports curriculum-based training strategies that progress from easier (P1) to harder (P6) combinatorics problems.

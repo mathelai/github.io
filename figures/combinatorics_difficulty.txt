@@ -1,0 +1,14 @@
+**Combinatorics Problems Are the Most Difficult in IMO**
+(Analysis of 156 IMO Problems, 2000-2025)
+
+This four-panel figure demonstrates that combinatorics problems are systematically harder than other problem types across all difficulty metrics:
+
+**(A) Average Problem Difficulty by Type:** Combinatorics has the lowest mean score (1.89), significantly below Algebra (2.53), Number Theory (2.56), and Geometry (2.97). Lower scores indicate greater difficulty. Error bars show standard deviation.
+
+**(B) Failure Rate by Problem Type:** Combinatorics has the highest failure rate at 56.9% of students scoring 0 points, compared to ~42% for other problem types. This 14 percentage point gap demonstrates substantially higher difficulty.
+
+**(C) Score Distribution by Problem Type:** Violin plots reveal combinatorics has the most extreme bimodal distribution, with heavy concentration at both 0 (failure) and 7 (perfect score), indicating problems that clearly discriminate between strong and weak solvers.
+
+**(D) Perfect Score Rate by Problem Type:** Combinatorics has the lowest perfect score rate at only 18.5%, less than half the rate for Geometry (33.9%), further confirming these are the most challenging IMO problems.
+
+**Key Finding:** Across all four independent difficulty metrics, combinatorics consistently emerges as the hardest problem category, justifying MathEL's focus on this domain as the most challenging frontier in automated mathematical reasoning.

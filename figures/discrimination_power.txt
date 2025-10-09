@@ -1,0 +1,23 @@
+Figure: Problem Discrimination Power: Which Problems Best Distinguish Ability Levels?
+
+This figure analyzes which IMO problems are most effective at discriminating between different student ability levels across the four problem types (Combinatorics, Algebra, Number Theory, Geometry).
+
+Panel (A) - Bimodality Distribution Pattern:
+Shows the ratio of extreme scores (0s and 7s) to middle scores for each problem, plotted against mean difficulty. Higher ratios indicate better discrimination between strong and weak students. Several outlier problems show exceptional bimodality (ratio > 20), primarily among very easy or very hard problems. Number Theory problems demonstrate the most consistent bimodal patterns across difficulty levels.
+
+Panel (B) - Score Variability Pattern:
+Displays standard deviation against mean score for all problems. The scatter plot reveals an inverted-U relationship where problems of moderate difficulty (mean ≈ 2-3) exhibit maximum score spread, indicating these problems are best at creating a spectrum of performance levels. Both very easy and very hard problems show lower variability, as scores cluster at opposite extremes.
+
+Panel (C) - Score Distribution Inequality:
+Box plots of Gini coefficients for score distributions by problem type. Geometry shows the highest median inequality (Gini ≈ 0.45), suggesting its problems create the most unequal score distributions and thus better discrimination. Number Theory follows closely (Gini ≈ 0.35), while Combinatorics shows the lowest inequality (Gini ≈ 0.40), with substantial overlap across all types indicating high variability within categories.
+
+Panel (D) - Predictive Power for Overall Performance:
+Average correlation between individual problem scores and total scores, with error bars showing standard deviation. Number Theory problems show the highest predictive power (r = 0.700), meaning performance on these problems best predicts overall IMO success. Algebra and Geometry follow closely (r ≈ 0.69 and 0.65), while Combinatorics shows the weakest correlation (r = 0.605), suggesting it may test more specialized skills independent of general mathematical ability.
+
+Key Insights for MathEL:
+1. Number Theory problems are the best overall discriminators, combining high bimodality, strong predictive power, and consistent inequality patterns
+2. Problems of moderate difficulty (mean score 2-3) provide maximum information about ability differences through their high score variability
+3. Combinatorics problems show weaker correlation with overall performance, suggesting they test more specialized reasoning skills that MathEL should develop independently
+4. The high Gini coefficients across all types indicate that IMO problems successfully create performance hierarchies, making them ideal benchmarks for evaluating AI progress
+
+Implications: MathEL's training should prioritize diverse problem exposure across difficulty levels, with special attention to moderate-difficulty problems that maximize discrimination power. The system should also recognize that success in Combinatorics may require distinct reasoning strategies beyond general problem-solving ability.
