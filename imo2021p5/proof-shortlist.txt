@@ -1,0 +1,31 @@
+A thimblerigger has 2021 thimbles numbered from 1 through 2021. The thimbles are arranged in a circle in arbitrary order. The thimblerigger performs a sequence of 2021 moves; in the $k^{\text {th }}$ move, he swaps the positions of the two thimbles adjacent to thimble $k$.
+
+Prove that there exists a value of $k$ such that, in the $k^{\text {th }}$ move, the thimblerigger swaps some thimbles $a$ and $b$ such that $a<k<b$.
+
+Solution. Assume the contrary. Say that the $k^{\text {th }}$ thimble is the central thimble of the $k^{\text {th }}$ move, and its position on that move is the central position of the move.
+
+Step 1: Black and white colouring.
+Before the moves start, let us paint all thimbles in white. Then, after each move, we repaint its central thimble in black. This way, at the end of the process all thimbles have become black.
+
+By our assumption, in every move $k$, the two swapped thimbles have the same colour (as their numbers are either both larger or both smaller than $k$ ). At every moment, assign the colours of the thimbles to their current positions; then the only position which changes its colour in a move is its central position. In particular, each position is central for exactly one move (when it is being repainted to black).
+
+Step 2: Red and green colouring.
+Now we introduce a colouring of the positions. If in the $k^{\text {th }}$ move, the numbers of the two swapped thimbles are both less than $k$, then we paint the central position of the move in red; otherwise we paint that position in green. This way, each position has been painted in red or green exactly once. We claim that among any two adjacent positions, one becomes green and the other one becomes red; this will provide the desired contradiction since 2021 is odd.
+
+Consider two adjacent positions $A$ and $B$, which are central in the $a^{\text {th }}$ and in the $b^{\text {th }}$ moves, respectively, with $a<b$. Then in the $a^{\text {th }}$ move the thimble at position $B$ is white, and therefore has a number greater than $a$. After the $a^{\text {th }}$ move, position $A$ is green and the thimble at position $A$ is black. By the arguments from Step 1, position $A$ contains only black thimbles after the $a^{\text {th }}$ step. Therefore, on the $b^{\text {th }}$ move, position $A$ contains a black thimble whose number is therefore less than $b$, while thimble $b$ is at position $B$. So position $B$ becomes red, and hence $A$ and $B$ have different colours.
+
+Comment 1. Essentially, Step 1 provides the proof of the following two assertions (under the indirect assumption):\\
+(1) Each position $P$ becomes central in exactly one move (denote that move's number by $k$ ); and\\
+(2) Before the $k^{\text {th }}$ move, position $P$ always contains a thimble whose number is larger than the number of the current move, while after the $k^{\text {th }}$ move the position always contains a thimble whose number is smaller than the number of the current move.
+
+Both (1) and (2) can be proved without introduction of colours, yet the colours help to visualise the argument.
+
+After these two assertions have been proved, Step 2 can be performed in various ways, e.g., as follows.
+
+At any moment in the process, the black positions are split into several groups consisting of one or more contiguous black positions each; different groups are separated by white positions. Now one can prove by induction on $k$ that, after the $k^{\text {th }}$ move, all groups have odd sizes. Indeed, in every move, the new black position either forms a separate group, or merges two groups (say, of lengths $a$ and $b$ ) into a single group of length $a+b+1$.
+
+However, after the $2020^{\text {th }}$ move the black positions should form one group of length 2020. This is a contradiction.
+
+This argument has several variations; e.g., one can check in a similar way that, after the process starts, at least one among the groups of white positions has an even size.
+
+Comment 2. The solution above works equally well for any odd number of thimbles greater than 1 , instead of 2021. On the other hand, a similar statement with an even number $n=2 k \geqslant 4$ of thimbles is wrong. To show that, the thimblerigger can enumerate positions from 1 through $n$ clockwise, and then put thimbles $1,2, \ldots, k$ at the odd positions, and thimbles $k+1, k+2, \ldots, 2 k$ at the even positions.
