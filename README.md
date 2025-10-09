@@ -22,7 +22,7 @@ MathEL generates, solves, and explores mathematical olympiad problems:
 **All 39 problems evaluated** comparing Gemini DeepThink vs GPT-5 Pro against official solutions:
 - **Winner: DeepThink 6.44/7** (92.0%) vs GPT-5 Pro 6.31/7 (90.1%)
 - Both systems achieve ~91% correctness on IMO combinatorics
-- See `FINAL_EVALUATION_SUMMARY.md` for complete analysis
+- See `EVALUATION_SUMMARY.md` for complete analysis
 
 ### Key Features
 
@@ -107,8 +107,8 @@ app/
 ├── CITATION.cff                        # Citation metadata
 ├── pyproject.toml                      # Python dependencies
 │
-├── FINAL_EVALUATION_SUMMARY.md         # AI proof evaluation summary (DeepThink vs GPT-5 Pro)
-├── FINAL_IMO_EVALUATION_ALL_39.json    # Complete evaluation data for all 39 problems
+├── EVALUATION_SUMMARY.md               # AI proof evaluation summary (DeepThink vs GPT-5 Pro)
+├── IMO_EVALUATION_ALL_39.json          # Evaluation data for all 39 problems
 │
 ├── generate_dataset.py                 # Generate dataset.json from problem directories
 ├── generate_proof_js.py                # Generate proof.js from proof.lean
@@ -218,7 +218,7 @@ Problems with formal proofs include:
 
 An evaluation of all 39 problems comparing **Gemini DeepThink** vs **GPT-5 Pro** proofs against official IMO shortlist solutions was completed using strict IMO grading standards (0-7 scale).
 
-**Final Results:**
+**Comparison Results:**
 - **DeepThink**: 6.44/7 average (92.0%) - 29 perfect scores, 2 wrong answers
 - **GPT-5 Pro**: 6.31/7 average (90.1%) - 34 perfect scores, 3 wrong answers
 
@@ -229,9 +229,8 @@ An evaluation of all 39 problems comparing **Gemini DeepThink** vs **GPT-5 Pro**
 - Under strict "wrong answer = 0" grading, **reliability matters more than perfect score rate**
 
 **Evaluation Files:**
-- `FINAL_EVALUATION_SUMMARY.md` - Complete analysis with head-to-head comparison
-- `FINAL_IMO_EVALUATION_ALL_39.json` - Detailed grades and comments for all problems
-- `imo2004p3_evaluation_updated.md` - Example milestone-based evaluation
+- `EVALUATION_SUMMARY.md` - Aanalysis with head-to-head comparison
+- `IMO_EVALUATION_ALL_39.json` - Detailed grades and comments for all problems
 
 **Grading Standard:**
 - Grade 7: Fully correct proof
