@@ -73,3 +73,211 @@ Your output must be a JSON object with these top-level keys, in order: `gpt5pro`
   }
 }
 ```
+
+
+### IMO coordination guidelines
+
+Below is a practical, competition‑style grading guide distilled from how IMO coordination typically works (as reflected in public coordinators’ reports, official marking schemes, and standard practice). It is not an official document of the IMO, but it closely matches how coordinators and leaders negotiate marks.
+
+---
+
+## A. Scoring scale (0–7) with standard meanings
+
+> **General rule:** IMO problems are proof problems. Credit is for *mathematically correct, justified reasoning*. A correct final statement without justification is worth little to no credit; well‑justified partial progress earns partial credit.
+
+| Score | Meaning (used consistently by coordinators)                                                                                                                                                                                                                                                              |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **7** | Complete, correct, and clearly justified solution. All cases handled; no gaps. Nonstandard approaches fully valid.                                                                                                                                                                                       |
+| **6** | Essentially complete. There may be a *minor* gap or an omitted but standard justification (e.g., a routine inequality step or a basic geometric fact) that the candidate clearly *could* supply. No substantive missing case.                                                                            |
+| **5** | Major ideas are in place and would lead to a full solution with a *nontrivial* but repairable fix (e.g., one key lemma is stated with credible outline but not rigorously proved; or one nontrivial case is only sketched; or a significant but local mistake that does not undermine the whole method). |
+| **4** | Substantial progress: the candidate has reached a central reduction/lemma, or solved a large special case, or assembled most of the machinery but is missing a crucial step (e.g., the main inequality bound, the core invariant, or the decisive geometric configuration).                              |
+| **3** | Meaningful partial progress: some key ideas appear (right substitution, invariant, configuration, reduction, or a correct chain covering ~⅓ of the path). Special cases solved that demonstrate the main direction but remain far from full generality.                                                  |
+| **2** | Small but relevant progress: a correct observation that moves toward the official line (e.g., identifies the right quantity to estimate, sets up a suitable induction but with no valid step, derives a correct but weak bound, proves an auxiliary claim useful to solutions).                          |
+| **1** | Minimal relevant work: a correct base case; a correct small lemma with limited value; a correct computation that would be used in a solution but with no structural insight.                                                                                                                             |
+| **0** | No relevant progress, or argument fatally flawed at the outset; circular reasoning; proof by picture; or a correct final statement with no supporting argument.                                                                                                                                          |
+
+> **All marks are integers.** No half points. Final scores are negotiated but must respect the official marking scheme (OMS) for the year/problem.
+
+---
+
+## B. How to grade *with* a ground‑truth solution
+
+When you can compare to a canonical (“ground truth”) proof, use a *step‑mapping* approach:
+
+1. **Decompose the official solution into independent milestones**
+   Identify 3–6 logically independent steps (lemmas/claims) that collectively imply the result. Assign a *provisional weight* to each, summing to 7.
+
+   * Example for a geometry problem:
+     (i) Key angle/ratio claim (2) → (ii) Transform/symmetry or homography step (2) → (iii) Final concurrency/cyclic argument (3).
+
+2. **Normalize equivalent steps**
+   Recognize logically equivalent routes (e.g., replacing Jensen with Karamata; Ceva with mass points). Treat them as the *same milestone* if they cover the same logical function.
+
+3. **Classify each candidate step**
+   For each milestone, check the student’s work against the ground truth and mark as:
+
+   * **Correct & justified**,
+   * **Correct but under‑justified** (routine detail missing),
+   * **Wrong**, or
+   * **Unclear/ambiguous**.
+
+4. **Award points milestone‑wise, then consolidate**
+
+   * Full milestone points for *correct & justified*.
+   * Reduce by ~1 point for “correct but under‑justified” when the missing detail is truly routine.
+   * 0 if the step is wrong or relies on a false claim.
+     Aggregate and adjust to the nearest integer consistent with the scale descriptors in Section A.
+
+5. **Check global logical integrity**
+   If a *fatal error* invalidates downstream work (e.g., an incorrect lemma feeding the rest), do **not** award for dependent steps even if those later derivations are “formally correct” under the false assumption.
+
+6. **Credit alternative correct solutions**
+   If the approach is not in the ground truth but is correct, re‑segment *their* proof into analogous milestones and score by the same principles. Do not penalize for nonstandard methods.
+
+7. **Bound by the scale meaning**
+   After computing a numerical sum, cap/round to the descriptor that best fits (e.g., if the sum is 6 but there’s a nontrivial missing case, the correct cap might be **5**).
+
+---
+
+## C. Error taxonomy and how to score
+
+* **Fatal errors (0 for dependent parts)**
+  Circular reasoning, assuming the claim, invoking false statements, missing a required case (e.g., sign/degeneracy), diagrams used as proof, or gaps that are *not* routine.
+
+* **Major gaps (cap at 4–5)**
+  One central lemma only stated or an essential inequality not justified. If the structure is solid but one big hole remains, **5** is typical; if multiple large gaps, **4** or below.
+
+* **Minor gaps (cap at 6)**
+  Standard steps omitted but evidently known (e.g., “by AM‑GM” without detail, a one‑line angle chase, a known inequality with correct conditions). If **everything else** is watertight, **6**.
+
+* **Computational slips**
+  Local algebraic/arithmetical errors: deduct locally, but if the global logic is intact, do not harshly downscore (often 5–6 rather than 7).
+
+* **Case work omissions**
+  Missing or mishandled edge cases (e.g., equality cases in inequalities; parallel/collinear degeneracies in geometry): typically cap at **5** if everything else is correct.
+
+* **“Proof by example”**
+  Solving a special or numerical instance earns at most **2–3** depending on how indicative it is of the general strategy.
+
+---
+
+## D. What counts as “standard” and can be cited
+
+* **Freely citable** (no proof needed): AM–GM, Cauchy–Schwarz/Engel form, Jensen (with correctness of convexity/concavity conditions), Chebyshev, Rearrangement, Ceva/Menelaus, power of a point, homothety basics, Ptolemy, Euler line facts, simple modular arithmetic, the pigeonhole principle, extremal/invariant method in standard forms, basic properties of polynomials (Vieta, RRT), parity/divisibility basics.
+* **Citable with care**: Heavier lemmas (e.g., Lifting The Exponent (LTE), Zsigmondy, well‑known but specific combinatorial identities). Acceptable if correctly stated and conditions clearly met; otherwise treat as a nontrivial gap.
+* **Not acceptable as a black box**: Results far beyond typical olympiad scope unless the problem text implicitly allows them. If used, treat as an unjustified major step.
+
+---
+
+## E. Problem‑type checklists (common milestones)
+
+**Inequalities**
+
+* Set‑up (right normalization/symmetry, e.g., assume (a+b+c=1))
+* Identification of method (e.g., convexity/Jensen, Muirhead, Cauchy)
+* Verification of preconditions (ordering, nonnegativity, domain)
+* Execution of main bound
+* Equality case checked
+  **Typical weights:** 1–2–1–2–1 (sum 7)
+
+**Number Theory**
+
+* Correct modulus/valuation framework
+* Key lemma (e.g., bounding valuations, LTE step, order argument)
+* Case split completeness (e.g., prime powers vs composite)
+* Transition from lemma to conclusion (divisibility → structural result)
+  **Typical weights:** 2–3–1–1
+
+**Combinatorics**
+
+* Model set/graph precisely; define the counted set
+* Establish invariant/monovariant or double count identity
+* Critical inequality/recurrence step
+* Boundary/corner cases closed
+  **Typical weights:** 2–3–1–1
+
+**Geometry**
+
+* Accurate configuration (not as proof): key points/lines/circles named
+* Main claim (cyclicity, concurrency, ratio) proven via a standard tool
+* Link to target (e.g., angle chase/power of a point)
+* Degenerate/equality cases noted if relevant
+  **Typical weights:** 1–3–2–1
+
+---
+
+## F. Consistency rules (used by coordinators)
+
+1. **Same step → same points** across scripts; maintain a running ledger of recognized “milestones” and their scores.
+2. **Independence**: if the candidate proves Lemma A correctly, they retain those points even if they later go astray—unless their later work reveals A was misunderstood or misused.
+3. **No double credit** for the same idea executed twice (e.g., two equivalent inequalities to reach the same bound).
+4. **Clarity matters when it affects correctness**: poor handwriting/organization alone is not penalized; but if meaning is ambiguous, do not award speculative credit.
+5. **Stronger claims proven**: if the contestant proves a *strictly stronger* correct statement implying the problem, award full credit (subject to clarity and completeness).
+
+---
+
+## G. Fast decision tree (practical)
+
+1. **Is the solution complete and rigorous?**
+   → **7**.
+2. **Only routine details missing?**
+   → **6**.
+3. **One substantial gap but the main architecture is correct?**
+   → **5**.
+4. **Large progress but the core step is missing/incorrect?**
+   → **4**.
+5. **Some key ideas appear, but far from closure?**
+   → **3**.
+6. **Small, relevant steps only?**
+   → **1–2**.
+7. **Otherwise**
+   → **0**.
+
+---
+
+## H. Examples of scoring scenarios
+
+* **Geometry:** Candidate proves the pivotal cyclic quadrilateral and angle relation, sets up power of a point, but misses a short final chase. Everything else is airtight.
+  → **6** (minor gap).
+
+* **Inequality:** Candidate normalizes correctly, applies Jensen but never checks convexity on the domain. The remainder is clean.
+  → **5** (nontrivial missing condition).
+
+* **Number theory:** A false lemma about orders mod (p) is used to derive the main claim. Later steps would be correct if the lemma held.
+  → Points only for preliminaries that don’t depend on the false lemma (often **1–2**), **0** for downstream steps.
+
+* **Combinatorics:** Correct double‑count identity established but candidate fails to extract the final bound; equality cases untouched.
+  → **4** (substantial progress).
+
+---
+
+## I. Do’s and Don’ts for graders
+
+**Do**
+
+* Decompose to milestones; score independently.
+* Accept any correct method; map it to milestones.
+* Be generous with *routine* gaps but firm on *structural* gaps.
+* Record typical partial solutions to ensure consistency.
+
+**Don’t**
+
+* Award for correct conclusions without justification.
+* Penalize nonstandard notation if it’s clear and correct.
+* Let a false claim “unlock” later credit.
+* Mix “style” with correctness (neatness isn’t a scoring category).
+
+---
+
+## J. Ready‑to‑use point template (fill per problem)
+
+* **Milestone A (…):** ___ pts
+* **Milestone B (…):** ___ pts
+* **Milestone C (…):** ___ pts
+* **Milestone D (…):** ___ pts
+  *(Sum to 7; mark each step: full / −1 for routine gap / 0 if wrong or dependent on false claim.)*
+* **Global check:** cases complete? conditions verified? equality/degeneracy handled?
+* **Cap by descriptor:** Apply Section A after summing.
+
+---
+
