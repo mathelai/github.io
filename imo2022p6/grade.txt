@@ -1,3 +1,0 @@
-**Expected Score: 7/7**
-
-Optimal construction proven minimal
