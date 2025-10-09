@@ -1,0 +1,26 @@
+Alice fills the fields of an $n \times n$ board with numbers from 1 to $n^{2}$, each number being used exactly once. She then counts the total number of good paths on the board. A good path is a sequence of fields of arbitrary length (including 1 ) such that:\\
+(i) The first field in the sequence is one that is only adjacent to fields with larger numbers,\\
+(ii) Each subsequent field in the sequence is adjacent to the previous field,\\
+(iii) The numbers written on the fields in the sequence are in increasing order.
+
+Two fields are considered adjacent if they share a common side. Find the smallest possible number of good paths Alice can obtain, as a function of $n$.\\
+
+Answer: $2 n^{2}-2 n+1$.
+
+Solution.
+We will call any field that is only adjacent to fields with larger numbers a well. Other fields will be called non-wells. Let us make a second $n \times n$ board $B$ where in each field we will write the number of good sequences which end on the corresponding field in the original board $A$. We will thus look for the minimal possible value of the sum of all entries in $B$.
+
+We note that any well has just one good path ending in it, consisting of just the well, and that any other field has the number of good paths ending in it equal to the sum of this quantity for all the adjacent fields with smaller values, since a good path can only come into the field from a field of lower value. Therefore, if we fill in the fields in $B$ in increasing order with respect to their values in $A$, it follows that each field not adjacent to any already filled field will receive a 1, while each field adjacent to already filled fields will receive the sum of the numbers already written on these adjacent fields.
+
+We note that there is at least one well in $A$, that corresponding with the field with the entry 1 in $A$. Hence, the sum of values of fields in $B$ corresponding to wells in $A$ is at least 1 . We will now try to minimize the sum of the non-well entries, i.e. of the entries in $B$ corresponding to the non-wells in $A$. We note that we can ascribe to each pair of adjacent fields the value of the lower assigned number and that the sum of non-well entries will then equal to the sum of the ascribed numbers. Since the lower number is still at least 1, the sum of non-well entries will at least equal the number of pairs of adjacent fields, which is $2 n(n-1)$. Hence, the total minimum sum of entries in $B$ is at least $2 n(n-1)+1=2 n^{2}-2 n+1$. The necessary conditions for the minimum to be achieved is for there to be only one well and for no two entries in $B$ larger than 1 to be adjacent to each other.
+
+We will now prove that the lower limit of $2 n^{2}-2 n+1$ entries can be achieved. This amounts to finding a way of marking a certain set of squares, those that have a value of 1 in $B$, such that no two unmarked squares are adjacent and that the marked squares form a connected tree with respect to adjacency.
+
+For $n=1$ and $n=2$ the markings are respectively the lone field and the L-trimino. Now, for $n>2$, let $s=2$ for $n \equiv 0,2 \bmod 3$ and $s=1$ for $n \equiv 1 \bmod 3$. We will take indices $k$ and $l$ to be arbitrary non-negative integers. For $n \geqslant 3$ we will construct a path of marked squares in the first two columns consisting of all squares of the form $(1, i)$ where $i$ is not of the form $6 k+s$ and $(2, j)$ where $j$ is of the form $6 k+s-1,6 k+s$ or $6+s+1$. Obviously, this path is connected. Now, let us consider the fields $(2,6 k+s)$ and $(1,6 k+s+3)$. For each considered field $(i, j)$ we will mark all squares of the form $(l, j)$ for $l>i$ and $(i+2 k, j \pm 1)$. One can easily see that no set of marked fields will produce a cycle, that the only fields of the unmarked form $(1,6 k+s),(2+2 l+1,6 k+s \pm 1)$ and $(2+2 l, 6 k+s+3 \pm 1)$ and that no two are adjacent, since\\
+the consecutive considered fields are in columns of opposite parity. Examples of markings are given for $n=3,4,5,6,7$, and the corresponding constructions for $A$ and $B$ are given for $n=5$.
+
+Common remarks.
+\begin{itemize}
+  \item The construction can be achieved in different ways. For example, it can also be done recursively; we can complete any construction for $n$ to a construction for $n+1$.
+  \item It is a natural idea to change the direction of the path: that way it can start anywhere, but only can end in a well, which exactly means that we cannot extend the path. This is just a reformulation of the problem, but can give some intuitions.
+\end{itemize}
