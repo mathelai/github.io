@@ -1,11 +1,12 @@
 # DRAFT
+
 # [MathEL: Autonomous Self-Improving AI for IMO Combinatorics](https://mathelai.github.io)
 
 A collection of problems, proofs, AI-generated proofs, statistics, simulations, and interactive visualizations for 39 International Mathematical Olympiad (IMO) combinatorics problems between 2000-2025.
 
 ## Overview
 
-MathEL generates, solves, and explores mathematical olympiad problems.
+MathEL generates, solves, and explores mathematical olympiad problems:
 
 ![MathEL System Architecture](mathel.png)
 
@@ -16,10 +17,17 @@ MathEL generates, solves, and explores mathematical olympiad problems.
    - Lean Proof & Repair
 3. **Study & Learn** - Tutor-student interaction text of complete and correct proofs that feeds back to grow context
 
+### Latest Update: AI Proof Evaluation Complete ✓
+
+**All 39 problems evaluated** comparing Gemini DeepThink vs GPT-5 Pro against official solutions:
+- **Winner: DeepThink 6.44/7** (92.0%) vs GPT-5 Pro 6.31/7 (90.1%)
+- Both systems achieve ~91% correctness on IMO combinatorics
+- See `FINAL_EVALUATION_SUMMARY.md` for complete analysis
+
 ### Key Features
 
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
-- **Automated grading** - Proof evaluation compared with ground truth solutions
+- **Comprehensive evaluation** - All 39 AI proofs rigorously graded against ground truth using IMO standards
 - **Study and learn** - Text of study and learn of correct proofs
 - **Python simulations** - Experimental pattern discovery
 - **Interactive web visualizations** - Explore problems by browser-based simulations
@@ -45,7 +53,7 @@ The system incorporates IMO 2001-2025 short-lists, full problems, and human stat
 
 The Solver employs three parallel processes that work together in a build-review loop:
 
-1. **Natural Language Proofs**: AI-generated proofs in natural language
+1. **Natural Language Proof**: AI-generated proofs in natural language
 2. **Code Visual Simulation**: Python-based simulation and pattern discovery
 3. **Lean Proof & Repair**: Formal proof verification with automated repair
 
@@ -63,7 +71,7 @@ The Tutor-Student context creates a feedback loop that:
 
 ### Browse Problems
 
-Open `[index.html](https://mathelai.github.io/)` in your web browser to:
+Open `index.html` in your web browser to:
 - Browse all 39 problems with search, filtering, and sorting
 - View problem metadata (year, difficulty, category, nicknames)
 - Click any problem card to open its proofs and interactive visualization
@@ -90,19 +98,27 @@ python3 simulation.py
 
 ```
 app/
-├── index.html                  # Main problem browser UI
-├── dataset.js                  # Problem metadata with nicknames
-├── mathel.png                  # Logo/figure
-├── README.md                   # This file
-├── LICENSE                     # MIT License
-├── CITATION.cff                # Citation metadata
-├── pyproject.toml              # Python dependencies
+├── index.html                          # Main problem browser UI
+├── dataset.js                          # Problem metadata with nicknames
+├── dataset.json                        # Problem data in JSON format
+├── mathel.png                          # Logo/figure
+├── README.md                           # This file
+├── LICENSE                             # MIT License
+├── CITATION.cff                        # Citation metadata
+├── pyproject.toml                      # Python dependencies
 │
-├── styles/                     # CSS stylesheets
-│   ├── base.css                # Base styles
-│   └── tokens.css              # Design tokens
+├── FINAL_EVALUATION_SUMMARY.md         # AI proof evaluation summary (DeepThink vs GPT-5 Pro)
+├── FINAL_IMO_EVALUATION_ALL_39.json    # Complete evaluation data for all 39 problems
 │
-├── icons/                      # Button icons (study, answer, proof types, etc.)
+├── generate_dataset.py                 # Generate dataset.json from problem directories
+├── generate_proof_js.py                # Generate proof.js from proof.lean
+├── populate_metrics.py                 # Populate problem metrics
+│
+├── styles/                             # CSS stylesheets
+│   ├── base.css                        # Base styles
+│   └── tokens.css                      # Design tokens
+│
+├── icons/                              # Button icons (study, answer, proof types, etc.)
 │   ├── icon-study.png
 │   ├── icon-answer.png
 │   ├── icon-proof-shortlist.png
@@ -113,35 +129,39 @@ app/
 │   ├── icon-proof-all.png
 │   └── icon-grade.png
 │
-├── prompts/
-│   └── grading.txt             # Grading prompt
+├── prompts/                            # Prompts for AI interactions
+│   └── grading.txt                     # Grading prompt
 │
-├── schemas/
-│   └── results.schema.json     # Unified results schema
+├── schemas/                            # JSON schemas
+│   └── results.schema.json             # Unified results schema
 │
-├── scripts/
-│   └── grade_problems.py       # Automated proof grading script comparing AI and ground truth
+├── scripts/                            # Utility scripts
 │
-├── generate_proof_js.py        # Generate proof.js from proof.lean
-├── populate_metrics.py         # Populate problem metrics
+├── figures/                            # Problem figures and diagrams
 │
-└── imo{YYYY}p{N}/              # 39 problem directories
-    ├── index.html              # Interactive visualization
-    ├── simulation.py           # Python simulation
-    ├── results.json            # Simulation results
+├── generator/                          # Problem generation system
+│
+├── solver/                             # Problem solving system
+│
+├── statistics/                         # IMO statistics and data
+│
+├── shortlists/                         # IMO shortlist problems and solutions
+│
+└── imo{YYYY}p{N}/                      # 39 problem directories (2000-2025)
+    ├── index.html                      # Interactive visualization
+    ├── simulation.py                   # Python simulation
+    ├── results.json                    # Simulation results
     │
-    ├── problem.txt             # Problem statement (LaTeX)
-    ├── answer.txt              # Ground truth answer
-    ├── proof-shortlist.txt     # Official proof(s)
-    ├── study.txt               # Study and learning of correct proof
+    ├── problem.txt                     # Problem statement (LaTeX)
+    ├── answer.txt                      # Ground truth answer
+    ├── proof-shortlist.txt             # Official IMO solution(s)
+    ├── study.txt                       # Study and learning of correct proof
     │
-    ├── proof-deepthink.txt     # Gemini DeepThink proof
-    ├── proof-gpt5pro.txt       # GPT-5 Pro proof
-    ├── proof.lean              # Lean 4 proof code
-    ├── proof.js                # Generated JS module for opening Lean proof in Lean 4
-    ├── proof.txt               # Combined proof
-    │
-    └── grade.txt               # AI grading results
+    ├── proof-deepthink.txt             # Gemini DeepThink proof
+    ├── proof-gpt5pro.txt               # GPT-5 Pro proof
+    ├── proof.lean                      # Lean 4 proof code
+    ├── proof.js                        # Generated JS module for Lean 4 Web
+    └── proof.txt                       # Combined proof
 ```
 
 ## Features
@@ -166,12 +186,12 @@ Problems have memorable nicknames for easy reference:
 
 ### Multiple Proof Types
 
-Each problem includes up to 9 different resources, corresponding to the three solver processes:
+Each problem includes up to 8 different resources, corresponding to the three solver processes:
 
 #### Natural Language Proofs
 1. **Proof Shortlist** - Official IMO solution(s)
-2. **Proof Deep Think** - AI-generated proof (Gemini DeepThink)
-3. **Proof GPT 5 Pro** - AI-generated proof (OpenAI GPT-5 Pro)
+2. **Proof DeepThink** - AI-generated proof (Gemini DeepThink)
+3. **Proof GPT-5 Pro** - AI-generated proof (OpenAI GPT-5 Pro)
 
 #### Code Visual Simulation
 4. **Sim** - Interactive Python-based simulation and visualization
@@ -183,9 +203,8 @@ Each problem includes up to 9 different resources, corresponding to the three so
 6. **Study** - Guided learning of problem and correct proof
 7. **Answer** - Ground truth answer (not proof)
 
-#### Integration & Evaluation
-8. **Proof All** - Combined proof
-9. **Grade** - Automated grading comparing AI proofs to ground truth solutions
+#### Integration
+8. **Proof All** - Combined proof from all approaches
 
 ### Lean 4 Integration
 
@@ -195,27 +214,31 @@ Problems with formal proofs include:
 - Direct integration with [live.lean-lang.org](https://live.lean-lang.org/)
 - One-click loading of proof code with LZ-String compression
 
-### Automated Grading
+### AI Proof Evaluation Results
 
-The `scripts/grade_problems.py` tool uses GPT-5 to:
-- Evaluate AI-generated proofs against official solutions
-- Assign IMO-style grades (0-7)
-- Provide detailed justification comments
-- Support GPT-5 and GPT-5 Pro models
+A comprehensive evaluation of all 39 problems comparing **Gemini DeepThink** vs **GPT-5 Pro** proofs against official IMO shortlist solutions was completed using strict IMO grading standards (0-7 scale).
 
-```bash
-# Grade all problems (GPT-5 Pro by default)
-export OPENAI_API_KEY='your-key'
-python3 scripts/grade_problems.py
+**Final Results:**
+- **DeepThink**: 6.44/7 average (92.0%) - 29 perfect scores, 2 wrong answers
+- **GPT-5 Pro**: 6.31/7 average (90.1%) - 34 perfect scores, 3 wrong answers
 
-# Use regular GPT-5 instead
-python3 scripts/grade_problems.py -gpt5
+**Key Findings:**
+- Both AI systems demonstrate **exceptional performance** at ~91% of maximum possible score
+- DeepThink wins by 0.13 points due to **fewer catastrophic failures** (2 vs 3 wrong answers)
+- GPT-5 Pro has **higher peak performance** (87.2% vs 74.4% perfect score rate)
+- Under strict "wrong answer = 0" grading, **reliability matters more than perfect score rate**
 
-# View help
-python3 scripts/grade_problems.py --help
-```
+**Evaluation Files:**
+- `FINAL_EVALUATION_SUMMARY.md` - Complete analysis with head-to-head comparison
+- `FINAL_IMO_EVALUATION_ALL_39.json` - Detailed grades and comments for all problems
+- `imo2004p3_evaluation_updated.md` - Example milestone-based evaluation
 
-Results are saved to `grade.txt` in each problem directory.
+**Grading Standard:**
+- Grade 7: Fully correct proof
+- Grade 6: Essentially correct with minor gaps
+- Grade 3: Partial progress
+- Grade 2: Small but relevant progress
+- Grade 0: Wrong answer or no valid progress
 
 ## Problem Coverage
 
@@ -283,6 +306,16 @@ All `results.json` files conform to `schemas/results.schema.json`:
 
 ## Development
 
+### Generate Dataset
+
+After adding or modifying problem directories:
+
+```bash
+python3 generate_dataset.py
+```
+
+This creates `dataset.json` from all problem directories, collecting metadata, proofs, and statistics.
+
 ### Generate Lean Proof Modules
 
 After modifying `proof.lean` files:
@@ -295,9 +328,13 @@ This creates `proof.js` modules that enable direct loading into Lean 4 Web.
 
 ### Update Problem Metrics
 
+After modifying problem metadata:
+
 ```bash
 python3 populate_metrics.py
 ```
+
+This updates metrics like difficulty scores and categories across all problems.
 
 ## Requirements
 
@@ -311,10 +348,9 @@ python3 populate_metrics.py
 - numpy
 - pydantic
 
-### For Grading
+### For Development
 - Python 3.8+
-- openai Python package
-- OpenAI API key with GPT-5 access
+- Standard library modules (json, pathlib, etc.)
 
 ## Citation
 
@@ -339,13 +375,18 @@ MIT License - see `LICENSE` file for details.
 ## Acknowledgments
 
 - Problem statements © International Mathematical Olympiad
+- Official solutions from IMO shortlists (2000-2024) and Evan Chen's solutions (2025)
 - Lean 4 integration powered by [live.lean-lang.org](https://live.lean-lang.org/)
 - Compression via [LZ-String](https://pieroxy.net/blog/pages/lz-string/index.html)
-- AI proofs generated using OpenAI's GPT-5 Pro and Gemini DeepThink models
+- AI proofs generated using:
+  - OpenAI GPT-5 Pro
+  - Google Gemini DeepThink
+- Proof evaluation using Claude Code with Sonnet 4.5 by IMO grading standards
 
-## Status Note
+## Project Status
+
+**Active Development** - This repository contains a complete evaluation of 39 IMO combinatorics problems (2000-2025) with AI-generated proofs, official solutions, interactive visualizations, and quality assessment.
 
 This repository is now being updated and is work in progress.
 
 > Built with ❤️ using Claude Code (Sonnet 4.5) and iteratively reviewed by GPT-5 Pro with human oversight.
-
