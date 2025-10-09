@@ -1,3 +1,0 @@
-**Expected Score: 7/7**
-
-Complete bijection argument
