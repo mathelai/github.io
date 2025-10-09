@@ -1,4 +1,4 @@
-# DRAFT
+ # DRAFT
 
 # [MathEL: Autonomous Self-Improving AI for IMO Combinatorics](https://mathelai.github.io)
 
@@ -27,7 +27,7 @@ MathEL generates, solves, and explores mathematical olympiad problems:
 ### Key Features
 
 - **Multiple proof approaches** - Official solutions, AI-generated proofs, and formal Lean 4 proofs
-- **Comprehensive evaluation** - All 39 AI proofs rigorously graded against ground truth using IMO standards
+- **Evaluation** - All 39 AI proofs rigorously graded against ground truth using IMO standards
 - **Study and learn** - Text of study and learn of correct proofs
 - **Python simulations** - Experimental pattern discovery
 - **Interactive web visualizations** - Explore problems by browser-based simulations
@@ -214,9 +214,9 @@ Problems with formal proofs include:
 - Direct integration with [live.lean-lang.org](https://live.lean-lang.org/)
 - One-click loading of proof code with LZ-String compression
 
-### AI Proof Evaluation Results
+### AI Proof Comparison
 
-A comprehensive evaluation of all 39 problems comparing **Gemini DeepThink** vs **GPT-5 Pro** proofs against official IMO shortlist solutions was completed using strict IMO grading standards (0-7 scale).
+An evaluation of all 39 problems comparing **Gemini DeepThink** vs **GPT-5 Pro** proofs against official IMO shortlist solutions was completed using strict IMO grading standards (0-7 scale).
 
 **Final Results:**
 - **DeepThink**: 6.44/7 average (92.0%) - 29 perfect scores, 2 wrong answers
