@@ -1,93 +1,66 @@
-**Solution.**
-Let
+**Problem.** Let (S={1,2,\dots,10^6}). Show that for any (A\subset S) with (|A|=101), there exist (100) distinct (x_1,\dots,x_{100}\in S) such that the sets
 [
-S={(h,k)\in\mathbb Z_{\ge 0}^2:; h+k<n}.
+A+x_i={a+x_i:\ a\in A}\qquad (i=1,\dots,100)
 ]
-Assume the coloring condition:
-
-> If ((h,k)) is red and (h'\le h,\ k'\le k), then ((h',k')) is also red.
-
-Equivalently, the set of red points is *downward closed* (an order ideal in the product order), hence the set of blue points is *upward closed*.
+are pairwise disjoint.
 
 ---
 
-### Step 1: Reduce the problem to a product over columns/rows
+### Key idea
 
-For (h=0,1,\dots,n-1), let
+Two translates (A+x) and (A+y) intersect iff (y-x) is a difference of two elements of (A). So it suffices to choose (x_1,\dots,x_{100}) so that all differences (x_j-x_i) avoid the difference set of (A).
+
+Formally, define the **difference set**
 [
-c_h=#{k:\ 0\le k\le n-1-h,\ (h,k)\text{ is blue}}
+D:={a-b:\ a,b\in A}.
 ]
-be the number of blue points in column (h).
-For (k=0,1,\dots,n-1), let
+Note that (0\in D), and the number of *distinct nonzero* differences is at most
 [
-r_k=#{h:\ 0\le h\le n-1-k,\ (h,k)\text{ is blue}}
+|{a-b:\ a,b\in A,\ a\neq b}|\ \le\ 2\binom{101}{2} = 10{,}100,
 ]
-be the number of blue points in row (k).
+since there are at most (\binom{101}{2}=5050) distinct positive differences and the negative ones mirror them. Hence
+[
+|D|\le 10{,}100+1=10{,}101.
+]
 
-Because red is downward closed, in every fixed column (h) the blue points (if any) form a contiguous top segment; likewise, in every fixed row (k) the blue points form a contiguous right segment. Therefore:
-
-* A **type 1** subset consists of choosing one blue point in each column (h=0,1,\dots,n-1), independently. Hence the number of type 1 subsets is
-  [
-  N_1=\prod_{h=0}^{n-1} c_h.
-  ]
-
-* A **type 2** subset consists of choosing one blue point in each row (k=0,1,\dots,n-1), independently. Hence the number of type 2 subsets is
-  [
-  N_2=\prod_{k=0}^{n-1} r_k.
-  ]
-
-It remains to prove (\prod_h c_h=\prod_k r_k).
+We use this to greedily choose the shifts (x_i).
 
 ---
 
-### Step 2: A key equality via diagonals
+### Greedy construction
 
-For (t=0,1,\dots,n-1), let the **diagonal**
+We will choose (x_1,\dots,x_{100}\in S) inductively so that for every (i<j),
 [
-\Delta_t={(h,k)\in S:\ h+k=t}.
+x_j-x_i\notin D.
 ]
-Fix (j\in{1,2,\dots,n}). Consider the set of columns that contain at least (j) blue points.
+This ensures the translates are disjoint: indeed, if ((A+x_i)\cap(A+x_j)\neq\varnothing), then there exist (a,a'\in A) with (a+x_i=a'+x_j), i.e. (x_j-x_i=a-a'\in D), a contradiction.
 
-Because the blue points in a column form a contiguous top segment, a column (h) has at least (j) blue points **iff** the (j)-th point from the top of column (h) is blue. The (j)-th from the top in column (h) has coordinates ((h,,n-h-j)) (provided this lies in (S), i.e. (h\le n-j)). Thus:
-
+Assume we have already chosen distinct (x_1,\dots,x_{t-1}\in S) with the property above (for (t=1) this is vacuous). Consider the **forbidden set**
 [
-#{\text{columns with }\ge j\text{ blue}}
-=#{,h:\ 0\le h\le n-j,\ (h,,n-h-j)\text{ is blue},}
-= #\bigl(\Delta_{n-j}\cap\text{blue}\bigr).
-\tag{1}
+F_{t-1}:=\bigcup_{j=1}^{t-1} (x_j + D)\subset \mathbb{Z}.
 ]
+For any (x\in S), if (x\in F_{t-1}), then (x-x_j\in D) for some (j<t), which we must avoid. Thus any valid (x_t) must lie in (S\setminus F_{t-1}).
 
-By the same reasoning in rows: a row (k) has at least (j) blue points **iff** the (j)-th point from the right, ((n-k-j,,k)), is blue; hence
-
+Now estimate the size:
 [
-#{\text{rows with }\ge j\text{ blue}}
-=#{,k:\ 0\le k\le n-j,\ (n-k-j,,k)\text{ is blue},}
-= #\bigl(\Delta_{n-j}\cap\text{blue}\bigr).
-\tag{2}
+|(x_j+D)\cap S|\le |D|\le 10{,}101,\qquad \text{for each }j,
 ]
-
-Comparing (1) and (2), we conclude that for every (j),
+so by the union bound
 [
-#{\text{columns with }\ge j\text{ blue}}
-=#{\text{rows with }\ge j\text{ blue}}.
-\tag{3}
+|F_{t-1}\cap S|\ \le\ \sum_{j=1}^{t-1} |(x_j+D)\cap S|\ \le\ (t-1)\cdot 10{,}101.
 ]
+Therefore, for (t\le 100),
+[
+|S\setminus F_{t-1}| \ \ge\ |S| - (t-1)\cdot 10{,}101 \ \ge\ 10^6 - 99\cdot 10{,}101 \ =\ 10^6 - 999{,}999 \ =\ 1.
+]
+So there exists at least one choice for (x_t\in S\setminus F_{t-1}). This completes the induction up to (t=100).
+
+By construction, the (x_i) are distinct (since (x_i=x_j) would give (x_i\in x_j+D) via (0\in D)), and we have ensured (x_j-x_i\notin D) for (i\ne j), hence ((A+x_i)\cap(A+x_j)=\varnothing) for all (i\ne j).
 
 ---
 
-### Step 3: Equality of multisets ({c_h}) and ({r_k})
+### Conclusion
 
-Given any finite multiset of nonnegative integers (x_1,\dots,x_n), the numbers
-[
-F(j)=#{i:\ x_i\ge j}\quad (j\ge 1)
-]
-determine the multiset: indeed, the multiplicity of the value (m) equals (F(m)-F(m+1)).
+For any (A\subset S) with (|A|=101), there exist (100) distinct (x_1,\dots,x_{100}\in S) such that the translates (A+x_i) are pairwise disjoint.
 
-Apply this with (x_i=c_i) (columns) and with (x_i=r_i) (rows). By (3), the “distribution functions” of ({c_h}) and ({r_k}) coincide for every (j), hence the two multisets ({c_h}) and ({r_k}) are identical. In particular,
-[
-\prod_{h=0}^{n-1} c_h=\prod_{k=0}^{n-1} r_k.
-]
-
-Therefore (N_1=N_2): the number of type (1) subsets equals the number of type (2) subsets.
-
-(\square)
+*(Remark: The numbers line up sharply: (|D|\le 10{,}101) and (99\cdot 10{,}101=999{,}999=|S|-1), guaranteeing that at the 100th step there is still at least one available choice.)*
