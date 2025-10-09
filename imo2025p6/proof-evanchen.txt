@@ -1,0 +1,42 @@
+We show a general construction when $n=k^2$ illustrated below for $k=5$; it generalizes readily. There are a total of $(k-1)^2$ tiles which are $k \times k$ squares and another $4(k-1)$ tiles on the boundary, giving a total of
+$$
+(k-1)^2+4(k-1)=k^2+2 k-3
+$$
+tiles as promised.
+\begin{center}
+\includegraphics[width=0.45\textwidth]{IMO2025p6_1.png}
+\end{center}
+
+Theorem (Erdös-Szekeres)
+Let $n \geq 1$ be an integer. Given a permutation of $(1, \ldots, n)$, if a longest increasing subsequence (LIS) has length $a$ and a longest decreasing subsequence (LDS) has length $b$, then $a b \geq n$.
+
+This is a stronger version of the theorem compared to another version which instead just asserts that $\max (a, b) \geq \sqrt{n}$.
+To apply this to the present problem, take the $n$ uncovered squares which we henceforth call "black" as a permutation. Then consider both an LIS of length $a$ and an LDS of length $b$. We do the following artistic illustration:
+- Draw the LIS as a broken line, then connect it to the southwest and northwest corner of the board.
+- Similarly, draw the LDS as a broken line, then connect it to the northwest and southeast corner of the board.
+- These two steps partition the board into four quadrants, which we call north, east, south, west.
+- For each black cell in the north quadrant, write an $\mathbf{N}$ in the cell above it (for the cell in the first row, this will be off the board). Do the same for $\mathbf{E}$ (east), $\mathbf{S}$ (south), $\mathbf{W}$ (west).
+- Some black cells are in multiple quadrants (i.e. part of the LIS/LDS). Write all letters in that case.
+
+Claim - In this algorithm, the total number of letters written is exactly
+$$
+C:= \begin{cases}n+a+b+1 & \text { if the LIS and LDS intersect } \\ n+a+b & \text { otherwise }\end{cases}
+$$
+
+Proof. This is obvious. Each black square contributes at least one letter. Each black square on exactly one of the LIS and LDS contributes one extra letter. And a black square on both contributes 4 letters instead of $1+1+1$.
+
+Note by AM-GM we have $a+b \geq 2 \sqrt{a b} \geq 2 \sqrt{n}$, so we have a bound of
+$$
+C \geq n+2 \sqrt{n}+\varepsilon \quad \text { where } \quad \varepsilon:= \begin{cases}1 & \text { if the LIS and LDS intersect } \\ 0 & \text { otherwise } .\end{cases}
+$$
+
+To relate $C$ to the number of tiles, the critical claim is the following, which is by construction:
+
+Claim - None of Matilda's tiles can have more than one letter written in any cell.
+
+Proof. This follows from the construction.
+We split into two cases based on $\varepsilon$.
+- When $\varepsilon=1$, at most four letters go off the grid (one for each direction), the number of tiles is at least $C-4 \geq n+2 \sqrt{n}-3$.
+- Suppose $\varepsilon=0$. Then $C-4 \geq n+2 \sqrt{n}-4$. However, we make the additional observation here that the tile where the LIS and LDS meet has no letters on it either; hence there are at least $1+(C-4) \geq n+2 \sqrt{n}-3$ tiles.
+
+Remark. When $a=b$, it is in fact always possible to guarantee $\varepsilon=1$. Moreover, when $a \neq b$, the AM-GM inequality is strict. This gives a way to avoid the additional observation needed for $\varepsilon=0$ above.
