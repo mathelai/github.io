@@ -6,4 +6,4 @@ Problem prefix: <problem prefix>
 Problem suffix:
 
 Here is the ground truth suffix of the IMO problem: <problem suffix>
-Determine by comparing the predicted suffix, you computed earlier, with the ground truth suffix if there is leakage of the problem in the model training on a scale of 0-5, where 0 is no leakage and 5 is leakage.
+Determine by comparing the predicted suffix, you computed earlier, with the ground truth suffix if there is leakage of the problem in the model training.
