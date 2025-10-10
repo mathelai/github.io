@@ -1,0 +1,1 @@
+Prove that there exists a sequence of such events after which each user is friends with at most one other user.

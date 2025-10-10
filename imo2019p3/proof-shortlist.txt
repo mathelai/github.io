@@ -1,0 +1,53 @@
+On a certain social network, there are 2019 users, some pairs of which are friends, where friendship is a symmetric relation. Initially, there are 1010 people with 1009 friends each and 1009 people with 1010 friends each. However, the friendships are rather unstable, so events of the following kind may happen repeatedly, one at a time:
+
+Let $A, B$, and $C$ be people such that $A$ is friends with both $B$ and $C$, but $B$ and $C$ are not friends; then $B$ and $C$ become friends, but $A$ is no longer friends with them.
+
+Prove that, regardless of the initial friendships, there exists a sequence of such events after which each user is friends with at most one other user.\\
+(Croatia)\\
+Common remarks. The problem has an obvious rephrasing in terms of graph theory. One is given a graph $G$ with 2019 vertices, 1010 of which have degree 1009 and 1009 of which have degree 1010. One is allowed to perform operations on $G$ of the following kind:
+
+Suppose that vertex $A$ is adjacent to two distinct vertices $B$ and $C$ which are not adjacent to each other. Then one may remove the edges $A B$ and $A C$ from $G$ and add the edge $B C$ into $G$.
+
+Call such an operation a refriending. One wants to prove that, via a sequence of such refriendings, one can reach a graph which is a disjoint union of single edges and vertices.
+
+All of the solutions presented below will use this reformulation.\\
+Solution 1. Note that the given graph is connected, since the total degree of any two vertices is at least 2018 and hence they are either adjacent or have at least one neighbour in common. Hence the given graph satisfies the following condition:
+
+Every connected component of $G$ with at least three vertices is not complete and has a vertex of odd degree.
+
+We will show that if a graph $G$ satisfies condition (1) and has a vertex of degree at least 2, then there is a refriending on $G$ that preserves condition (1). Since refriendings decrease the total number of edges of $G$, by using a sequence of such refriendings, we must reach a graph $G$ with maximal degree at most 1 , so we are done.
+
+\begin{center}
+\includegraphics[max width=\textwidth]{2024_08_22_9e58862c38624455a821g-041}
+\end{center}
+
+Pick a vertex $A$ of degree at least 2 in a connected component $G^{\prime}$ of $G$. Since no component of $G$ with at least three vertices is complete we may assume that not all of the neighbours of $A$ are adjacent to one another. (For example, pick a maximal complete subgraph $K$ of $G^{\prime}$. Some vertex $A$ of $K$ has a neighbour outside $K$, and this neighbour is not adjacent to every vertex of $K$ by maximality.) Removing $A$ from $G$ splits $G^{\prime}$ into smaller connected components $G_{1}, \ldots, G_{k}$ (possibly with $k=1$ ), to each of which $A$ is connected by at least one edge. We divide into several cases.
+
+Case 1: $k \geqslant 2$ and $A$ is connected to some $G_{i}$ by at least two edges.\\
+Choose a vertex $B$ of $G_{i}$ adjacent to $A$, and a vertex $C$ in another component $G_{j}$ adjacent to $A$. The vertices $B$ and $C$ are not adjacent, and hence removing edges $A B$ and $A C$ and adding in edge $B C$ does not disconnect $G^{\prime}$. It is easy to see that this preserves the condition, since the refriending does not change the parity of the degrees of vertices.
+
+Case 2: $k \geqslant 2$ and $A$ is connected to each $G_{i}$ by exactly one edge.\\
+Consider the induced subgraph on any $G_{i}$ and the vertex $A$. The vertex $A$ has degree 1 in this subgraph; since the number of odd-degree vertices of a graph is always even, we see that $G_{i}$ has a vertex of odd degree (in $G$ ). Thus if we let $B$ and $C$ be any distinct neighbours of $A$, then removing edges $A B$ and $A C$ and adding in edge $B C$ preserves the above condition: the refriending creates two new components, and if either of these components has at least three vertices, then it cannot be complete and must contain a vertex of odd degree (since each $G_{i}$ does).
+
+Case 3: $k=1$ and $A$ is connected to $G_{1}$ by at least three edges.\\
+By assumption, $A$ has two neighbours $B$ and $C$ which are not adjacent to one another. Removing edges $A B$ and $A C$ and adding in edge $B C$ does not disconnect $G^{\prime}$. We are then done as in Case 1 .
+
+Case 4: $k=1$ and $A$ is connected to $G_{1}$ by exactly two edges.\\
+Let $B$ and $C$ be the two neighbours of $A$, which are not adjacent. Removing edges $A B$ and $A C$ and adding in edge $B C$ results in two new components: one consisting of a single vertex; and the other containing a vertex of odd degree. We are done unless this second component would be a complete graph on at least 3 vertices. But in this case, $G_{1}$ would be a complete graph minus the single edge $B C$, and hence has at least 4 vertices since $G^{\prime}$ is not a 4 -cycle. If we let $D$ be a third vertex of $G_{1}$, then removing edges $B A$ and $B D$ and adding in edge $A D$ does not disconnect $G^{\prime}$. We are then done as in Case 1.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_9e58862c38624455a821g-042}\\
+Comment. In fact, condition 1 above precisely characterises those graphs which can be reduced to a graph of maximal degree $\leqslant 1$ by a sequence of refriendings.
+
+Solution 2. As in the previous solution, note that a refriending preserves the property that a graph has a vertex of odd degree and (trivially) the property that it is not complete; note also that our initial graph is connected. We describe an algorithm to reduce our initial graph to a graph of maximal degree at most 1 , proceeding in two steps.
+
+Step 1: There exists a sequence of refriendings reducing the graph to a tree.\\
+Proof. Since the number of edges decreases with each refriending, it suffices to prove the following: as long as the graph contains a cycle, there exists a refriending such that the resulting graph is still connected. We will show that the graph in fact contains a cycle $Z$ and vertices $A, B, C$ such that $A$ and $B$ are adjacent in the cycle $Z, C$ is not in $Z$, and is adjacent to $A$ but not $B$. Removing edges $A B$ and $A C$ and adding in edge $B C$ keeps the graph connected, so we are done.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_9e58862c38624455a821g-043}\\
+To find this cycle $Z$ and vertices $A, B, C$, we pursue one of two strategies. If the graph contains a triangle, we consider a largest complete subgraph $K$, which thus contains at least three vertices. Since the graph itself is not complete, there is a vertex $C$ not in $K$ connected to a vertex $A$ of $K$. By maximality of $K$, there is a vertex $B$ of $K$ not connected to $C$, and hence we are done by choosing a cycle $Z$ in $K$ through the edge $A B$.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_9e58862c38624455a821g-043(1)}\\
+If the graph is triangle-free, we consider instead a smallest cycle $Z$. This cycle cannot be Hamiltonian (i.e. it cannot pass through every vertex of the graph), since otherwise by minimality the graph would then have no other edges, and hence would have even degree at every vertex. We may thus choose a vertex $C$ not in $Z$ adjacent to a vertex $A$ of $Z$. Since the graph is triangle-free, it is not adjacent to any neighbour $B$ of $A$ in $Z$, and we are done.
+
+Step 2: Any tree may be reduced to a disjoint union of single edges and vertices by a sequence of refriendings.\\
+Proof. The refriending preserves the property of being acyclic. Hence, after applying a sequence of refriendings, we arrive at an acyclic graph in which it is impossible to perform any further refriendings. The maximal degree of any such graph is 1 : if it had a vertex $A$ with two neighbours $B, C$, then $B$ and $C$ would necessarily be nonadjacent since the graph is cycle-free, and so a refriending would be possible. Thus we reach a graph with maximal degree at most 1 as desired.
