@@ -1,0 +1,2 @@
+Define a hook to be a figure made up of six unit squares as shown in the problem statement,
+or any of the figures obtained by applying rotations and reflections to this figure.
