@@ -1,0 +1,1 @@
+Let $(a_n)_{n=1}^{\infty}$ be an infinite sequence of positive integers, and let $k$ be a positive integer. Suppose that, for each $i \geq 1$, $a_i$ is equal to the number of times $i$ appears in the list $a_1, a_2, \ldots, a_k$.

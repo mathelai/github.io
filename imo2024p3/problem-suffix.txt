@@ -1,0 +1,4 @@
+Prove that at least one of the sequence $(a_n)$ and $k$ is eventually periodic.
+\medskip
+\noindent
+(An infinite sequence $(a_n)$ is eventually periodic if there exist positive integers $N$ and $T$ such that $a_{n+T} = a_n$ for all $n \geq N$.)
