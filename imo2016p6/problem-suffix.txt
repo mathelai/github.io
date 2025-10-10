@@ -1,0 +1,4 @@
+egin{enumerate}
+\item[(a)] Prove that Geoff can always fulfill his wish if $n$ is odd.
+\item[(b)] Prove that Geoff can never fulfill his wish if $n$ is even.
+\end{enumerate}
