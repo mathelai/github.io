@@ -1,5 +1,3 @@
- # DRAFT
-
 Abstract:
 This work curates a dataset of all 39 International Mathematical Olympiad (IMO) combinatorics problems and solutions, from the past 25 years. The dataset is annotated by problem subcategories, solution techniques, human performance statistics, and study \& learn traces. Building on this dataset, we present an autonomous self-improving mathematical system based on frontier models that continually generate, solve, verify, and learn. Our pipeline consists of problem generation, simulation-based solution discovery, bidirectional natural language to Lean translation, iterative Lean proof repair, and multi-turn teacher-student dialogue for knowledge extraction from verified natural language proofs. Starting with the curated problems, ordered by difficulty from easy to hard, the system solves them using a curriculum learning approach and then progressively generates increasingly harder problems, simulating the IMO problem generation and selection process. The system improves itself by in-context learning, discovering solution techniques. Given a training budget, the system perfectly solves 36 out of 39 (96.3\% average accuracy and no failures) of IMO combinatorics problems from the past 25 years, each in under 1.5 hours, without search, including the hardest IMO 2025 combinatorics problem 6, which has not been previously solved by AI. The system continually learns by growing context in each iteration to generate new problems and solution strategies. We make our system available online https://mathelai.github.io
 
@@ -141,7 +139,7 @@ app/
 │
 ├── scripts/                            # Utility scripts
 │
-├── figures/                            # Problem figures and diagrams
+├── figures/                            # Figures and their captions
 │
 ├── generator/                          # Problem generation system
 │
