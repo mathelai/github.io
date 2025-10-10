@@ -1,0 +1,1 @@
+Suppose Matilda manages to cover the entire grid using exactly $2025$ tiles. Find the minimum possible value for the sum of the perimeters of these tiles.
