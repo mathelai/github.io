@@ -1,5 +1,6 @@
-# Prediction
-An IMO combinatorics problem has been split into two disjoint parts: the prefix and the suffix. The prefix is the part that sets up the problem, providing initial conditions or statements of the problem or givens, and sets the stage for the problem. The suffix of the problem is the part of the problem that needs to be determined, shown, or proven, the set of objectives to be achieved, or verified. You are given the IMO problem prefix, and your goal is to predict the IMO problem suffix without searching online.
+An IMO problem has been split into two disjoint parts: the prefix and the suffix. The prefix is the part that sets up the problem, providing initial conditions or statements of the problem or givens, and sets the stage for the problem. The suffix of the problem is the part of the problem that needs to be determined, shown, or proven, the set of objectives to be achieved, or verified. You are given the IMO problem prefix, and your goal is to predict the IMO problem suffix without searching online.
+Problem prefix: <problem prefix>
+Problem suffix:
 
-# Test
-An IMO combinatorics problem has been split into two disjoint parts: the prefix and the suffix. The prefix is the part that sets up the problem, providing initial conditions or statements of the problem or givens, and sets the stage for the problem. The suffix of the problem is the part of the problem that needs to be determined, shown, or proven, the set of objectives to be achieved, or verified. You are given an IMO combinatorics problem prefix and suffix (ground truth). You are also given a predicted suffix for the problem. Determine by comparing the predicted suffix with the ground truth suffix if there is leakage of the problem in the model training on a scale of 0-5, where 0 is no leakage and 5 is leakage.
+Here is the ground truth suffix of the IMO problem: <problem suffix>
+Determine by comparing the predicted suffix, you computed earlier, with the ground truth suffix if there is leakage of the problem in the model training on a scale of 0-5, where 0 is no leakage and 5 is leakage.
