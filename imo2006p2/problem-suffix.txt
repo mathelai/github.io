@@ -1,0 +1,1 @@
+Find the maximum number of isosceles triangles having two good sides that could appear in such a configuration.
