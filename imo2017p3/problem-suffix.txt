@@ -1,0 +1,1 @@
+Is it always possible, no matter how the rabbit moves, and no matter what points are reported by the tracking device, for the hunter to choose her moves so that after $10^9$ rounds she can ensure that the distance between her and the rabbit is at most 100?
