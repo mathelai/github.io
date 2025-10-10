@@ -1,0 +1,1 @@
+Find all pairs $(n, k)$ with $1 \leqslant k \leqslant 2 n$ such that for every initial ordering, at some moment during the process, the leftmost $n$ coins will all be of the same type.

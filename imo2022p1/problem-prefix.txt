@@ -1,0 +1,4 @@
+The Bank of Oslo issues two types of coin: aluminium (denoted $A$ ) and bronze (denoted $B$ ). Marianne has $n$ aluminium coins and $n$ bronze coins, arranged in a row in some arbitrary initial order. A chain is any subsequence of consecutive coins of the same type. Given a fixed positive integer $k \leqslant 2 n$, Marianne repeatedly performs the following operation: she identifies the longest chain containing the $k^{\text {th }}$ coin from the left, and moves all coins in that chain to the left end of the row. For example, if $n=4$ and $k=4$, the process starting from the ordering $A A B B B A B A$ would be
+$$
+A A B \underline{B} B A B A \rightarrow B B B \underline{A} A A B A \rightarrow A A A \underline{B} B B B A \rightarrow B B B \underline{B} A A A A \rightarrow B B B \underline{B} A A A A \rightarrow \cdots .
+$$
