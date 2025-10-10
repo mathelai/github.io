@@ -1,0 +1,3 @@
+Prove that:\\
+(a) If $n \geq 2^{k}$, then $B$ can guarantee a win.\\
+(b) For all sufficiently large $k$, there exists an integer $n \geq(1.99)^{k}$ such that $B$ cannot guarantee a win.
