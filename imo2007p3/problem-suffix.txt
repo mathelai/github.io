@@ -1,0 +1,1 @@
+Prove that the competitors can be arranged in two rooms such that the largest size of cliques in one room is the same as the largest size of cliques in the other room.
