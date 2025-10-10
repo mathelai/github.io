@@ -1,0 +1,1 @@
+Show that there are at least 2 contestants who solved exactly 5 problems each.
