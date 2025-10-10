@@ -1,0 +1,4 @@
+egin{enumerate}
+\item[(a)] Show that, for each initial configuration, Harry stops after a finite number of operations.
+\item[(b)] For each initial configuration $C$, let $f(C)$ be the number of operations before Harry stops. For example, $f(AAB) = 3$ and $f(BBB) = 0$. Determine the average value of $f(C)$ over all $2^n$ possible initial configurations $C$.
+\end{enumerate}

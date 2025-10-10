@@ -1,0 +1,154 @@
+Let $n$ be a positive integer. Harry has $n$ coins lined up on his desk, each showing heads or tails. He repeatedly does the following operation: if there are $k$ coins showing heads and $k>0$, then he flips the $k^{\text {th }}$ coin over; otherwise he stops the process. (For example, the process starting with $T H T$ would be $T H T \rightarrow H H T \rightarrow H T T \rightarrow T T T$, which takes three steps.)
+
+Letting $C$ denote the initial configuration (a sequence of $n H$ 's and $T$ 's), write $\ell(C)$ for the number of steps needed before all coins show $T$. Show that this number $\ell(C)$ is finite, and determine its average value over all $2^{n}$ possible initial configurations $C$.
+
+Answer: The average is $\frac{1}{4} n(n+1)$.\\
+Common remarks. Throughout all these solutions, we let $E(n)$ denote the desired average value.
+
+Solution 1. We represent the problem using a directed graph $G_{n}$ whose vertices are the length $n$ strings of $H$ 's and $T$ 's. The graph features an edge from each string to its successor (except for $T T \cdots T T$, which has no successor). We will also write $\bar{H}=T$ and $\bar{T}=H$.
+
+The graph $G_{0}$ consists of a single vertex: the empty string. The main claim is that $G_{n}$ can be described explicitly in terms of $G_{n-1}$ :
+
+\begin{itemize}
+  \item We take two copies, $X$ and $Y$, of $G_{n-1}$.
+  \item In $X$, we take each string of $n-1$ coins and just append a $T$ to it. In symbols, we replace $s_{1} \cdots s_{n-1}$ with $s_{1} \cdots s_{n-1} T$.
+  \item In $Y$, we take each string of $n-1$ coins, flip every coin, reverse the order, and append an $H$ to it. In symbols, we replace $s_{1} \cdots s_{n-1}$ with $\bar{s}_{n-1} \bar{s}_{n-2} \cdots \bar{s}_{1} H$.
+  \item Finally, we add one new edge from $Y$ to $X$, namely $H H \cdots H H H \rightarrow H H \cdots H H T$.
+\end{itemize}
+
+We depict $G_{4}$ below, in a way which indicates this recursive construction:
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_9e58862c38624455a821g-034}\\
+We prove the claim inductively. Firstly, $X$ is correct as a subgraph of $G_{n}$, as the operation on coins is unchanged by an extra $T$ at the end: if $s_{1} \cdots s_{n-1}$ is sent to $t_{1} \cdots t_{n-1}$, then $s_{1} \cdots s_{n-1} T$ is sent to $t_{1} \cdots t_{n-1} T$.
+
+Next, $Y$ is also correct as a subgraph of $G_{n}$, as if $s_{1} \cdots s_{n-1}$ has $k$ occurrences of $H$, then $\bar{s}_{n-1} \cdots \bar{s}_{1} H$ has $(n-1-k)+1=n-k$ occurrences of $H$, and thus (provided that $k>0$ ), if $s_{1} \cdots s_{n-1}$ is sent to $t_{1} \cdots t_{n-1}$, then $\bar{s}_{n-1} \cdots \bar{s}_{1} H$ is sent to $\bar{t}_{n-1} \cdots \bar{t}_{1} H$.
+
+Finally, the one edge from $Y$ to $X$ is correct, as the operation does send $H H \cdots H H H$ to $H H \cdots H H T$.
+
+To finish, note that the sequences in $X$ take an average of $E(n-1)$ steps to terminate, whereas the sequences in $Y$ take an average of $E(n-1)$ steps to reach $H H \cdots H$ and then an additional $n$ steps to terminate. Therefore, we have
+
+$$
+E(n)=\frac{1}{2}(E(n-1)+(E(n-1)+n))=E(n-1)+\frac{n}{2}
+$$
+
+We have $E(0)=0$ from our description of $G_{0}$. Thus, by induction, we have $E(n)=\frac{1}{2}(1+\cdots+$ $n)=\frac{1}{4} n(n+1)$, which in particular is finite.
+
+Solution 2. We consider what happens with configurations depending on the coins they start and end with.
+
+\begin{itemize}
+  \item If a configuration starts with $H$, the last $n-1$ coins follow the given rules, as if they were all the coins, until they are all $T$, then the first coin is turned over.
+  \item If a configuration ends with $T$, the last coin will never be turned over, and the first $n-1$ coins follow the given rules, as if they were all the coins.
+  \item If a configuration starts with $T$ and ends with $H$, the middle $n-2$ coins follow the given rules, as if they were all the coins, until they are all $T$. After that, there are $2 n-1$ more steps: first coins $1,2, \ldots, n-1$ are turned over in that order, then coins $n, n-1, \ldots, 1$ are turned over in that order.
+\end{itemize}
+
+As this covers all configurations, and the number of steps is clearly finite for 0 or 1 coins, it follows by induction on $n$ that the number of steps is always finite.
+
+We define $E_{A B}(n)$, where $A$ and $B$ are each one of $H, T$ or *, to be the average number of steps over configurations of length $n$ restricted to those that start with $A$, if $A$ is not *, and that end with $B$, if $B$ is not * (so * represents "either $H$ or $T$ "). The above observations tell us that, for $n \geqslant 2$ :
+
+\begin{itemize}
+  \item $E_{H *}(n)=E(n-1)+1$.
+  \item $E_{* T}(n)=E(n-1)$.
+  \item $E_{H T}(n)=E(n-2)+1$ (by using both the observations for $H *$ and for $* T$ ).
+  \item $E_{T H}(n)=E(n-2)+2 n-1$.
+\end{itemize}
+
+Now $E_{H *}(n)=\frac{1}{2}\left(E_{H H}(n)+E_{H T}(n)\right)$, so $E_{H H}(n)=2 E(n-1)-E(n-2)+1$. Similarly, $E_{T T}(n)=2 E(n-1)-E(n-2)-1$. So
+
+$$
+E(n)=\frac{1}{4}\left(E_{H T}(n)+E_{H H}(n)+E_{T T}(n)+E_{T H}(n)\right)=E(n-1)+\frac{n}{2}
+$$
+
+We have $E(0)=0$ and $E(1)=\frac{1}{2}$, so by induction on $n$ we have $E(n)=\frac{1}{4} n(n+1)$.\\
+Solution 3. Let $H_{i}$ be the number of heads in positions 1 to $i$ inclusive (so $H_{n}$ is the total number of heads), and let $I_{i}$ be 1 if the $i^{\text {th }}$ coin is a head, 0 otherwise. Consider the function
+
+$$
+t(i)=I_{i}+2\left(\min \left\{i, H_{n}\right\}-H_{i}\right)
+$$
+
+We claim that $t(i)$ is the total number of times coin $i$ is turned over (which implies that the process terminates). Certainly $t(i)=0$ when all coins are tails, and $t(i)$ is always a nonnegative integer, so it suffices to show that when the $k^{\text {th }}$ coin is turned over (where $k=H_{n}$ ), $t(k)$ goes down by 1 and all the other $t(i)$ are unchanged. We show this by splitting into cases:
+
+\begin{itemize}
+  \item If $i<k, I_{i}$ and $H_{i}$ are unchanged, and $\min \left\{i, H_{n}\right\}=i$ both before and after the coin flip, so $t(i)$ is unchanged.
+  \item If $i>k, \min \left\{i, H_{n}\right\}=H_{n}$ both before and after the coin flip, and both $H_{n}$ and $H_{i}$ change by the same amount, so $t(i)$ is unchanged.
+  \item If $i=k$ and the coin is heads, $I_{i}$ goes down by 1 , as do both $\min \left\{i, H_{n}\right\}=H_{n}$ and $H_{i}$; so $t(i)$ goes down by 1 .
+  \item If $i=k$ and the coin is tails, $I_{i}$ goes up by $1, \min \left\{i, H_{n}\right\}=i$ is unchanged and $H_{i}$ goes up by 1 ; so $t(i)$ goes down by 1 .
+\end{itemize}
+
+We now need to compute the average value of
+
+$$
+\sum_{i=1}^{n} t(i)=\sum_{i=1}^{n} I_{i}+2 \sum_{i=1}^{n} \min \left\{i, H_{n}\right\}-2 \sum_{i=1}^{n} H_{i}
+$$
+
+The average value of the first term is $\frac{1}{2} n$, and that of the third term is $-\frac{1}{2} n(n+1)$. To compute the second term, we sum over choices for the total number of heads, and then over the possible values of $i$, getting
+
+$$
+2^{1-n} \sum_{j=0}^{n}\binom{n}{j} \sum_{i=1}^{n} \min \{i, j\}=2^{1-n} \sum_{j=0}^{n}\binom{n}{j}\left(n j-\binom{j}{2}\right)
+$$
+
+Now, in terms of trinomial coefficients,
+
+$$
+\sum_{j=0}^{n} j\binom{n}{j}=\sum_{j=1}^{n}\binom{n}{n-j, j-1,1}=n \sum_{j=0}^{n-1}\binom{n-1}{j}=2^{n-1} n
+$$
+
+and
+
+$$
+\sum_{j=0}^{n}\binom{j}{2}\binom{n}{j}=\sum_{j=2}^{n}\binom{n}{n-j, j-2,2}=\binom{n}{2} \sum_{j=0}^{n-2}\binom{n-2}{j}=2^{n-2}\binom{n}{2}
+$$
+
+So the second term above is
+
+$$
+2^{1-n}\left(2^{n-1} n^{2}-2^{n-2}\binom{n}{2}\right)=n^{2}-\frac{n(n-1)}{4}
+$$
+
+and the required average is
+
+$$
+E(n)=\frac{1}{2} n+n^{2}-\frac{n(n-1)}{4}-\frac{1}{2} n(n+1)=\frac{n(n+1)}{4}
+$$
+
+Solution 4. Harry has built a Turing machine to flip the coins for him. The machine is initially positioned at the $k^{\text {th }}$ coin, where there are $k$ heads (and the position before the first coin is considered to be the $0^{\text {th }}$ coin). The machine then moves according to the following rules, stopping when it reaches the position before the first coin: if the coin at its current position is $H$, it flips the coin and moves to the previous coin, while if the coin at its current position is $T$, it flips the coin and moves to the next position.
+
+Consider the maximal sequences of consecutive moves in the same direction. Suppose the machine has $a$ consecutive moves to the next coin, before a move to the previous coin. After those $a$ moves, the $a$ coins flipped in those moves are all heads, as is the coin the machine is now at, so at least the next $a+1$ moves will all be moves to the previous coin. Similarly, $a$ consecutive moves to the previous coin are followed by at least $a+1$ consecutive moves to\\
+the next coin. There cannot be more than $n$ consecutive moves in the same direction, so this proves that the process terminates (with a move from the first coin to the position before the first coin).
+
+Thus we have a (possibly empty) sequence $a_{1}<\cdots<a_{t} \leqslant n$ giving the lengths of maximal sequences of consecutive moves in the same direction, where the final $a_{t}$ moves must be moves to the previous coin, ending before the first coin. We claim there is a bijection between initial configurations of the coins and such sequences. This gives
+
+$$
+E(n)=\frac{1}{2}(1+2+\cdots+n)=\frac{n(n+1)}{4}
+$$
+
+as required, since each $i$ with $1 \leqslant i \leqslant n$ will appear in half of the sequences, and will contribute $i$ to the number of moves when it does.
+
+To see the bijection, consider following the sequence of moves backwards, starting with the machine just before the first coin and all coins showing tails. This certainly determines a unique configuration of coins that could possibly correspond to the given sequence. Furthermore, every coin flipped as part of the $a_{j}$ consecutive moves is also flipped as part of all subsequent sequences of $a_{k}$ consecutive moves, for all $k>j$, meaning that, as we follow the moves backwards, each coin is always in the correct state when flipped to result in a move in the required direction. (Alternatively, since there are $2^{n}$ possible configurations of coins and $2^{n}$ possible such ascending sequences, the fact that the sequence of moves determines at most one configuration of coins, and thus that there is an injection from configurations of coins to such ascending sequences, is sufficient for it to be a bijection, without needing to show that coins are in the right state as we move backwards.)
+
+Solution 5. We explicitly describe what happens with an arbitrary sequence $C$ of $n$ coins. Suppose that $C$ contain $k$ heads at positions $1 \leqslant c_{1}<c_{2}<\cdots<c_{k} \leqslant n$.
+
+Let $i$ be the minimal index such that $c_{i} \geqslant k$. Then the first few steps will consist of turning over the $k^{\mathrm{th}},(k+1)^{\mathrm{th}}, \ldots, c_{i}^{\mathrm{th}},\left(c_{i}-1\right)^{\mathrm{th}},\left(c_{i}-2\right)^{\mathrm{th}}, \ldots, k^{\mathrm{th}}$ coins in this order. After that we get a configuration with $k-1$ heads at the same positions as in the initial one, except for $c_{i}$. This part of the process takes $2\left(c_{i}-k\right)+1$ steps.
+
+After that, the process acts similarly; by induction on the number of heads we deduce that the process ends. Moreover, if the $c_{i}$ disappear in order $c_{i_{1}}, \ldots, c_{i_{k}}$, the whole process takes
+
+$$
+\ell(C)=\sum_{j=1}^{k}\left(2\left(c_{i_{j}}-(k+1-j)\right)+1\right)=2 \sum_{j=1}^{k} c_{j}-2 \sum_{j=1}^{k}(k+1-j)+k=2 \sum_{j=1}^{k} c_{j}-k^{2}
+$$
+
+steps.\\
+Now let us find the total value $S_{k}$ of $\ell(C)$ over all $\binom{n}{k}$ configurations with exactly $k$ heads. To sum up the above expression over those, notice that each number $1 \leqslant i \leqslant n$ appears as $c_{j}$ exactly $\binom{n-1}{k-1}$ times. Thus
+
+$$
+\begin{gathered}
+S_{k}=2\binom{n-1}{k-1} \sum_{i=1}^{n} i-\binom{n}{k} k^{2}=2 \frac{(n-1) \cdots(n-k+1)}{(k-1)!} \cdot \frac{n(n+1)}{2}-\frac{n \cdots(n-k+1)}{k!} k^{2} \\
+=\frac{n(n-1) \cdots(n-k+1)}{(k-1)!}((n+1)-k)=n(n-1)\binom{n-2}{k-1}+n\binom{n-1}{k-1}
+\end{gathered}
+$$
+
+Therefore, the total value of $\ell(C)$ over all configurations is
+
+$$
+\sum_{k=1}^{n} S_{k}=n(n-1) \sum_{k=1}^{n}\binom{n-2}{k-1}+n \sum_{k=1}^{n}\binom{n-1}{k-1}=n(n-1) 2^{n-2}+n 2^{n-1}=2^{n} \frac{n(n+1)}{4}
+$$
+
+Hence the required average is $E(n)=\frac{n(n+1)}{4}$.

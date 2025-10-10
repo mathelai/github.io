@@ -1,0 +1,7 @@
+The Bank of Bath issues coins with an $A$ on one side and a $B$ on the other. Harry has $n$ of these coins arranged in a line from left to right. He repeatedly performs the following operation:
+\medskip
+\noindent
+If there are exactly $k$ coins showing $A$, then he turns over the $k$-th coin from the left; otherwise, all coins show $B$ and he stops.
+\medskip
+\noindent
+For example, if $n = 3$, the process starting with the configuration $AAB$ would be $AAB \to ABB \to BBB$, which stops after three operations.
