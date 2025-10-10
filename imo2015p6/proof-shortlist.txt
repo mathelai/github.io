@@ -1,0 +1,124 @@
+Consider an infinite sequence $a_{1}, a_{2}, \ldots$ of positive integers with $a_{i} \leqslant 2015$ for all $i \geqslant 1$. Suppose that for any two distinct indices $i$ and $j$ we have $i+a_{i} \neq j+a_{j}$.
+
+Prove that there exist two positive integers $b$ and $N$ such that
+
+$$
+\left|\sum_{i=m+1}^{n}\left(a_{i}-b\right)\right| \leqslant 1007^{2}
+$$
+
+whenever $n>m \geqslant N$.\\
+
+Solution 1. We visualize the set of positive integers as a sequence of points. For each $n$ we draw an arrow emerging from $n$ that points to $n+a_{n}$; so the length of this arrow is $a_{n}$. Due to the condition that $m+a_{m} \neq n+a_{n}$ for $m \neq n$, each positive integer receives at most one arrow. There are some positive integers, such as 1 , that receive no arrows; these will be referred to as starting points in the sequel. When one starts at any of the starting points and keeps following the arrows, one is led to an infinite path, called its ray, that visits a strictly increasing sequence of positive integers. Since the length of any arrow is at most 2015, such a ray, say with starting point $s$, meets every interval of the form $[n, n+2014]$ with $n \geqslant s$ at least once.
+
+Suppose for the sake of contradiction that there would be at least 2016 starting points. Then we could take an integer $n$ that is larger than the first 2016 starting points. But now the interval $[n, n+2014]$ must be met by at least 2016 rays in distinct points, which is absurd. We have thereby shown that the number $b$ of starting points satisfies $1 \leqslant b \leqslant 2015$. Let $N$ denote any integer that is larger than all starting points. We contend that $b$ and $N$ are as required.
+
+To see this, let any two integers $m$ and $n$ with $n>m \geqslant N$ be given. The sum $\sum_{i=m+1}^{n} a_{i}$ gives the total length of the arrows emerging from $m+1, \ldots, n$. Taken together, these arrows form $b$ subpaths of our rays, some of which may be empty. Now on each ray we look at the first number that is larger than $m$; let $x_{1}, \ldots, x_{b}$ denote these numbers, and let $y_{1}, \ldots, y_{b}$ enumerate in corresponding order the numbers defined similarly with respect to $n$. Then the list of differences $y_{1}-x_{1}, \ldots, y_{b}-x_{b}$ consists of the lengths of these paths and possibly some zeros corresponding to empty paths. Consequently, we obtain
+
+$$
+\sum_{i=m+1}^{n} a_{i}=\sum_{j=1}^{b}\left(y_{j}-x_{j}\right)
+$$
+
+whence
+
+$$
+\sum_{i=m+1}^{n}\left(a_{i}-b\right)=\sum_{j=1}^{b}\left(y_{j}-n\right)-\sum_{j=1}^{b}\left(x_{j}-m\right)
+$$
+
+Now each of the $b$ rays meets the interval $[m+1, m+2015]$ at some point and thus $x_{1}-$ $m, \ldots, x_{b}-m$ are $b$ distinct members of the set $\{1,2, \ldots, 2015\}$. Moreover, since $m+1$ is not a starting point, it must belong to some ray; so 1 has to appear among these numbers, wherefore
+
+$$
+1+\sum_{j=1}^{b-1}(j+1) \leqslant \sum_{j=1}^{b}\left(x_{j}-m\right) \leqslant 1+\sum_{j=1}^{b-1}(2016-b+j)
+$$
+
+The same argument applied to $n$ and $y_{1}, \ldots, y_{b}$ yields
+
+$$
+1+\sum_{j=1}^{b-1}(j+1) \leqslant \sum_{j=1}^{b}\left(y_{j}-n\right) \leqslant 1+\sum_{j=1}^{b-1}(2016-b+j)
+$$
+
+So altogether we get
+
+$$
+\begin{aligned}
+\left|\sum_{i=m+1}^{n}\left(a_{i}-b\right)\right| & \leqslant \sum_{j=1}^{b-1}((2016-b+j)-(j+1))=(b-1)(2015-b) \\
+& \leqslant\left(\frac{(b-1)+(2015-b)}{2}\right)^{2}=1007^{2}
+\end{aligned}
+$$
+
+as desired.\\
+Solution 2. Set $s_{n}=n+a_{n}$ for all positive integers $n$. By our assumptions, we have
+
+$$
+n+1 \leqslant s_{n} \leqslant n+2015
+$$
+
+for all $n \in \mathbb{Z}_{>0}$. The members of the sequence $s_{1}, s_{2}, \ldots$ are distinct. We shall investigate the set
+
+$$
+M=\mathbb{Z}_{>0} \backslash\left\{s_{1}, s_{2}, \ldots\right\}
+$$
+
+Claim. At most 2015 numbers belong to $M$.\\
+Proof. Otherwise let $m_{1}<m_{2}<\cdots<m_{2016}$ be any 2016 distinct elements from $M$. For $n=m_{2016}$ we have
+
+$$
+\left\{s_{1}, \ldots, s_{n}\right\} \cup\left\{m_{1}, \ldots, m_{2016}\right\} \subseteq\{1,2, \ldots, n+2015\}
+$$
+
+where on the left-hand side we have a disjoint union containing altogether $n+2016$ elements. But the set on the right-hand side has only $n+2015$ elements. This contradiction proves our claim.
+
+Now we work towards proving that the positive integers $b=|M|$ and $N=\max (M)$ are as required. Recall that we have just shown $b \leqslant 2015$.
+
+Let us consider any integer $r \geqslant N$. As in the proof of the above claim, we see that
+
+
+\begin{equation*}
+B_{r}=M \cup\left\{s_{1}, \ldots, s_{r}\right\} \tag{1}
+\end{equation*}
+
+
+is a subset of $[1, r+2015] \cap \mathbb{Z}$ with precisely $b+r$ elements. Due to the definitions of $M$ and $N$, we also know $[1, r+1] \cap \mathbb{Z} \subseteq B_{r}$. It follows that there is a set $C_{r} \subseteq\{1,2, \ldots, 2014\}$ with $\left|C_{r}\right|=b-1$ and
+
+
+\begin{equation*}
+B_{r}=([1, r+1] \cap \mathbb{Z}) \cup\left\{r+1+x \mid x \in C_{r}\right\} \tag{2}
+\end{equation*}
+
+
+For any finite set of integers $J$ we denote the sum of its elements by $\sum J$. Now the equations (1) and (2) give rise to two ways of computing $\sum B_{r}$ and the comparison of both methods leads to
+
+$$
+\sum M+\sum_{i=1}^{r} s_{i}=\sum_{i=1}^{r} i+b(r+1)+\sum C_{r}
+$$
+
+or in other words to
+
+
+\begin{equation*}
+\sum M+\sum_{i=1}^{r}\left(a_{i}-b\right)=b+\sum C_{r} \tag{3}
+\end{equation*}
+
+
+After this preparation, we consider any two integers $m$ and $n$ with $n>m \geqslant N$. Plugging $r=n$ and $r=m$ into (3) and subtracting the estimates that result, we deduce
+
+$$
+\sum_{i=m+1}^{n}\left(a_{i}-b\right)=\sum C_{n}-\sum C_{m}
+$$
+
+Since $C_{n}$ and $C_{m}$ are subsets of $\{1,2, \ldots, 2014\}$ with $\left|C_{n}\right|=\left|C_{m}\right|=b-1$, it is clear that the absolute value of the right-hand side of the above inequality attains its largest possible value if either $C_{m}=\{1,2, \ldots, b-1\}$ and $C_{n}=\{2016-b, \ldots, 2014\}$, or the other way around. In these two cases we have
+
+$$
+\left|\sum C_{n}-\sum C_{m}\right|=(b-1)(2015-b)
+$$
+
+so in the general case we find
+
+$$
+\left|\sum_{i=m+1}^{n}\left(a_{i}-b\right)\right| \leqslant(b-1)(2015-b) \leqslant\left(\frac{(b-1)+(2015-b)}{2}\right)^{2}=1007^{2}
+$$
+
+as desired.
+
+Comment. The sets $C_{n}$ may be visualized by means of the following process: Start with an empty blackboard. For $n \geqslant 1$, the following happens during the $n^{\text {th }}$ step. The number $a_{n}$ gets written on the blackboard, then all numbers currently on the blackboard are decreased by 1 , and finally all zeros that have arisen get swept away.
+
+It is not hard to see that the numbers present on the blackboard after $n$ steps are distinct and form the set $C_{n}$. Moreover, it is possible to complete a solution based on this idea.
