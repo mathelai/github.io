@@ -1,0 +1,1 @@
+Determine the minimum value of $n$ for which Turbo has a strategy that guarantees reaching the last row on the $n^{\text {th }}$ attempt or earlier, regardless of the locations of the monsters.\\
