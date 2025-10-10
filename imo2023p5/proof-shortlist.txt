@@ -1,0 +1,127 @@
+Let $n$ be a positive integer. We arrange $1+2+\cdots+n$ circles in a triangle with $n$ rows, such that the $i^{\text {th }}$ row contains exactly $i$ circles. The following figure shows the case $n=6$.
+
+In this triangle, a ninja-path is a sequence of circles obtained by repeatedly going from a circle to one of the two circles directly below it. In terms of $n$, find the largest value of $k$ such that if one circle from every row is coloured red, we can always find a ninja-path in which at least $k$ of the circles are red.\\
+
+Answer: The maximum value is $k=1+\left\lfloor\log _{2} n\right\rfloor$.\\
+
+Solution 1. Write $N=\left\lfloor\log _{2} n\right\rfloor$ so that we have $2^{N} \leqslant n \leqslant 2^{N+1}-1$.\\
+We first provide a construction where every ninja-path passes through at most $N+1$ red circles. For the row $i=2^{a}+b$ for $0 \leqslant a \leqslant N$ and $0 \leqslant b<2^{a}$, we colour the $(2 b+1)^{\text {th }}$ circle.
+
+Then every ninja-path passes through at most one red circle in each of the rows $2^{a}, 2^{a}+$ $1, \ldots, 2^{a+1}-1$ for each $0 \leqslant a \leqslant N$. It follows that every ninja-path passes through at most $N+1$ red circles.
+
+We now prove that for every colouring, there exists a ninja-path going through at least $N+1$ red circles. For each circle $C$, we assign the maximum number of red circles in a ninja-path that starts at the top of the triangle and ends at $C$.
+
+Note that
+
+\begin{itemize}
+  \item if $C$ is not red, then the number assigned to $C$ is the maximum of the number assigned to the one or two circles above $C$, and
+  \item if $C$ is red, then the number assigned to $C$ is one plus the above maximum.
+\end{itemize}
+
+Write $v_{1}, \ldots, v_{i}$ for the numbers in row $i$, and let $v_{m}$ be the maximum among these numbers. Then the numbers in row $i+1$ will be at least
+
+$$
+v_{1}, \ldots, v_{m-1}, v_{m}, v_{m}, v_{m+1}, \ldots, v_{i}
+$$
+
+not taking into account the fact that one of the circles in row $i+1$ is red. On the other hand, for the red circle in row $i+1$, the lower bound on the assigned number can be increased by 1 . Therefore the sum of the numbers in row $i+1$ is at least
+
+$$
+\left(v_{1}+\cdots+v_{i}\right)+v_{m}+1
+$$
+
+Using this observation, we prove the following claim.\\
+Claim 1. Let $\sigma_{k}$ be the sum of the numbers assigned to circles in row $k$. Then for $0 \leqslant j \leqslant N$, we have $\sigma_{2^{j}} \geqslant j \cdot 2^{j}+1$.\\
+Proof. We use induction on $j$. This is clear for $j=0$, since the number in the first row is always 1. For the induction step, suppose that $\sigma_{2 j} \geqslant j \cdot 2^{j}+1$. Then the maximum value assigned to a circle in row $2^{j}$ is at least $j+1$. As a consequence, for every $k \geqslant 2^{j}$, there is a circle on row $k$ with number at least $j+1$. Then by our observation above, we have
+
+$$
+\sigma_{k+1} \geqslant \sigma_{k}+(j+1)+1=\sigma_{k}+(j+2)
+$$
+
+Then we get
+
+$$
+\sigma_{2^{j+1}} \geqslant \sigma_{2^{j}}+2^{j}(j+2) \geqslant j \cdot 2^{j}+1+2^{j}(j+2)=(j+j+2) 2^{j}+1=(j+1) 2^{j+1}+1
+$$
+
+This completes the inductive step.\\
+For $j=N$, this immediately implies that some circle in row $2^{N}$ has number at least $N+1$. This shows that there is a ninja-path passing through at least $N+1$ red circles.
+
+Solution 2. We give an alternative proof that there exists a ninja-path passing through at least $N+1$ red circles. Assign numbers to circles as in the previous solution, but we only focus on the numbers assigned to red circles.
+
+For each positive integer $i$, denote by $e_{i}$ the number of red circles with number $i$.\\
+Claim 2. If the red circle on row $l$ has number $i$, then $e_{i} \leqslant l$.\\
+Proof. Note that if two circles $C$ and $C^{\prime}$ are both assigned the same number $i$, then there cannot be a ninja-path joining the two circles. We partition the triangle into a smaller triangle with the red circle in row $l$ at its top along with $l-1$ lines that together cover all other circles.
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_adbc038ec876eb2291bbg-41}\\
+In each set, there can be at most one red circle with number $i$, and therefore $e_{i} \leqslant l$.\\
+We observe that if there exists a red circle $C$ with number $i \geqslant 2$, then there also exists a red circle with number $i-1$ in some row that is above the row containing $C$. This is because the second last red circle in the ninja-path ending at $C$ has number $i-1$.\\
+Claim 3. We have $e_{i} \leqslant 2^{i-1}$ for every positive integer $i$.
+
+Proof. We prove by induction on $i$. The base case $i=1$ is clear, since the only red circle with number 1 is the one at the top of the triangle. We now assume that the statement is true for $1 \leqslant i \leqslant j-1$ and prove the statement for $i=j$. If $e_{j}=0$, there is nothing to prove. Otherwise, let $l$ be minimal such that the red circle on row $l$ has number $j$. Then all the red circles on row $1, \ldots, l-1$ must have number less than $j$. This shows that
+
+$$
+l-1 \leqslant e_{1}+e_{2}+\cdots+e_{j-1} \leqslant 1+2+\cdots+2^{j-2}=2^{j-1}-1
+$$
+
+This proves that $l \leqslant 2^{j-1}$, and by Claim 2 , we also have $e_{j} \leqslant l$. Therefore $e_{j} \leqslant 2^{j-1}$.\\
+We now see that
+
+$$
+e_{1}+e_{2}+\cdots+e_{N} \leqslant 1+\cdots+2^{N-1}=2^{N}-1<n
+$$
+
+Therefore there exists a red circle with number at least $N+1$, which means that there exists a ninja-path passing through at least $N+1$ red circles.
+
+Solution 3. We provide yet another proof that there exists a ninja-path passing through at least $N+1$ red circles. In this solution, we assign to a circle $C$ the maximum number of red circles on a ninja-path starting at $C$ (including $C$ itself).
+
+Denote by $f_{i}$ the number of red circles with number $i$. Note that if a red circle $C$ has number $i$, and there is a ninja-path from $C$ to another red circle $C^{\prime}$, then the number assigned to $C^{\prime}$ must be less than $i$.\\
+Claim 4. If the red circle on row $l$ has number less than or equal to $i$, then $f_{i} \leqslant l$.\\
+Proof. This proof is same as the proof of Claim 2. The additional input is that if the red circle on row $l$ has number strictly less than $i$, then the smaller triangle cannot have a red circle with number $i$.
+
+Claim 5. We have
+
+$$
+f_{1}+f_{2}+\cdots+f_{i} \leqslant n-\left\lfloor\frac{n}{2^{i}}\right\rfloor
+$$
+
+for all $0 \leqslant i \leqslant N$.\\
+Proof. We use induction on $i$. The base case $i=0$ is clear as the left hand side is the empty sum and the right hand side is zero. For the induction step, we assume that $i \geqslant 1$ and that the statement is true for $i-1$. Let $l$ be minimal such that the red circle on row $l$ has number less than or equal to $i$. Then all the red circles with number less than or equal to $i$ lie on rows $l, l+1, \ldots, n$, and therefore
+
+$$
+f_{1}+f_{2}+\cdots+f_{i} \leqslant n-l+1
+$$
+
+On the other hand, the induction hypothesis together with the fact that $f_{i} \leqslant l$ shows that
+
+$$
+f_{1}+\cdots+f_{i-1}+f_{i} \leqslant n-\left\lfloor\frac{n}{2^{i-1}}\right\rfloor+l
+$$
+
+Averaging the two inequalities gives
+
+$$
+f_{1}+\cdots+f_{i} \leqslant n-\frac{1}{2}\left\lfloor\frac{n}{2^{i-1}}\right\rfloor+\frac{1}{2}
+$$
+
+Since the left hand side is an integer, we conclude that
+
+$$
+f_{1}+\cdots+f_{i} \leqslant n-\left\lfloor\frac{1}{2}\left\lfloor\frac{n}{2^{i-1}}\right\rfloor\right\rfloor=n-\left\lfloor\frac{n}{2^{i}}\right\rfloor
+$$
+
+This completes the induction step.\\
+Taking $i=N$, we obtain
+
+$$
+f_{1}+f_{2}+\cdots+f_{N} \leqslant n-\left\lfloor\frac{n}{2^{N}}\right\rfloor<n
+$$
+
+This implies that there exists a ninja-path passing through at least $N+1$ red circles.\\
+Comment. Using essentially the same argument, one may inductively prove
+
+$$
+e_{a}+e_{a+1}+\cdots+e_{a+i-1} \leqslant n-\left\lfloor\frac{n}{2^{i}}\right\rfloor
+$$
+
+instead. Taking $a=1$ and $i=N$ gives the desired statement.
