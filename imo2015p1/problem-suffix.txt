@@ -1,0 +1,1 @@
+Determine all integers $n\geq 3$ for which there exists a balanced centre-free set consisting of $n$ points.
