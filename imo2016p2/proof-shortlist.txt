@@ -1,0 +1,40 @@
+Find all positive integers $n$ for which we can fill in the entries of an $n \times n$ table with the following properties:
+
+\begin{itemize}
+  \item each entry can be one of $I, M$ and $O$;
+  \item in each row and each column, the letters $I, M$ and $O$ occur the same number of times; and
+  \item in any diagonal whose number of entries is a multiple of three, the letters $I, M$ and $O$ occur the same number of times.
+\end{itemize}
+
+Answer. $n$ can be any multiple of 9 .\\
+Solution. We first show that such a table exists when $n$ is a multiple of 9 . Consider the following $9 \times 9$ table.
+
+\[
+\left(\begin{array}{ccccccccc}
+I & I & I & M & M & M & O & O & O  \tag{1}\\
+M & M & M & O & O & O & I & I & I \\
+O & O & O & I & I & I & M & M & M \\
+I & I & I & M & M & M & O & O & O \\
+M & M & M & O & O & O & I & I & I \\
+O & O & O & I & I & I & M & M & M \\
+I & I & I & M & M & M & O & O & O \\
+M & M & M & O & O & O & I & I & I \\
+O & O & O & I & I & I & M & M & M
+\end{array}\right)
+\]
+
+It is a direct checking that the table (1) satisfies the requirements. For $n=9 k$ where $k$ is a positive integer, we form an $n \times n$ table using $k \times k$ copies of (1). For each row and each column of the table of size $n$, since there are three $I$ 's, three $M$ 's and three $O$ 's for any nine consecutive entries, the numbers of $I, M$ and $O$ are equal. In addition, every diagonal of the large table whose number of entries is divisible by 3 intersects each copy of (1) at a diagonal with number of entries divisible by 3 (possibly zero). Therefore, every such diagonal also contains the same number of $I, M$ and $O$.
+
+Next, consider any $n \times n$ table for which the requirements can be met. As the number of entries of each row should be a multiple of 3 , we let $n=3 k$ where $k$ is a positive integer. We divide the whole table into $k \times k$ copies of $3 \times 3$ blocks. We call the entry at the centre of such a $3 \times 3$ square a vital entry. We also call any row, column or diagonal that contains at least one vital entry a vital line. We compute the number of pairs $(l, c)$ where $l$ is a vital line and $c$ is an entry belonging to $l$ that contains the letter $M$. We let this number be $N$.
+
+On the one hand, since each vital line contains the same number of $I, M$ and $O$, it is obvious that each vital row and each vital column contain $k$ occurrences of $M$. For vital diagonals in either direction, we count there are exactly
+
+$$
+1+2+\cdots+(k-1)+k+(k-1)+\cdots+2+1=k^{2}
+$$
+
+occurrences of $M$. Therefore, we have $N=4 k^{2}$.
+
+On the other hand, there are $3 k^{2}$ occurrences of $M$ in the whole table. Note that each entry belongs to exactly 1 or 4 vital lines. Therefore, $N$ must be congruent to $3 k^{2} \bmod 3$.
+
+From the double counting, we get $4 k^{2} \equiv 3 k^{2}(\bmod 3)$, which forces $k$ to be a multiple of 3. Therefore, $n$ has to be a multiple of 9 and the proof is complete.
