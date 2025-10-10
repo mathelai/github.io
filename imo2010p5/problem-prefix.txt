@@ -1,0 +1,6 @@
+Six stacks $S_1, . . . , S_6$ of coins are standing in a row. In the beginning every stack contains
+a single coin. There are two types of allowed moves:\\
+Move 1 : If stack Sk with $1 \le k \le 5$ contains at least one coin, you may remove one coin
+from $S_k$ and add two coins to $S_{k+1}$.\\
+Move 2 : If stack Sk with $1 \le k \le 4$ contains at least one coin, then you may remove
+one coin from $S_k$ and exchange stacks $S_{k+1}$ and $S_{k+2}$.

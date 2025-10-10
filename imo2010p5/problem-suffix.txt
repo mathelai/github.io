@@ -1,0 +1,2 @@
+Decide whether it is possible to achieve by a sequence of such moves that the first five stacks
+are empty, whereas the sixth stack $S_6$ contains exactly $2010^{2010^{2010}}$ coins.
