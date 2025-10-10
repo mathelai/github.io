@@ -1,0 +1,1 @@
+There are $4n$ pebbles of weights $1, 2, 3, \ldots, 4n$. Each pebble is colored in one of $n$ colors and there are four pebbles of each color.

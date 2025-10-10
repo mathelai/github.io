@@ -1,0 +1,23 @@
+$4 n$ coins of weights $1,2,3, \ldots, 4 n$ are given. Each coin is colored in one of $n$ colors and there are four coins of each color. Show that all these coins can be partitioned into two sets with the same total weight, such that each set contains two coins of each color.\\
+(Hungary)\\
+Solution 1. Let us pair the coins with weights summing up to $4 n+1$, resulting in the set $S$ of $2 n$ pairs: $\{1,4 n\},\{2,4 n-1\}, \ldots,\{2 n, 2 n+1\}$. It suffices to partition $S$ into two sets, each consisting of $n$ pairs, such that each set contains two coins of each color.
+
+Introduce a multi-graph $G$ (i.e., a graph with loops and multiple edges allowed) on $n$ vertices, so that each vertex corresponds to a color. For each pair of coins from $S$, we add an edge between the vertices corresponding to the colors of those coins. Note that each vertex has degree 4. Also, a desired partition of the coins corresponds to a coloring of the edges of $G$ in two colors, say red and blue, so that each vertex has degree 2 with respect to each color (i.e., each vertex has equal red and blue degrees).
+
+To complete the solution, it suffices to provide such a coloring for each component $G^{\prime}$ of $G$. Since all degrees of the vertices are even, in $G^{\prime}$ there exists an Euler circuit $C$ (i.e., a circuit passing through each edge of $G^{\prime}$ exactly once). Note that the number of edges in $C$ is even (it equals twice the number of vertices in $G^{\prime}$ ). Hence all the edges can be colored red and blue so that any two edges adjacent in $C$ have different colors (one may move along $C$ and color the edges one by one alternating red and blue colors). Thus in $G^{\prime}$ each vertex has equal red and blue degrees, as desired.
+
+Comment 1. To complete Solution 1, any partition of the edges of $G$ into circuits of even lengths could be used. In the solution above it was done by the reference to the well-known Euler Circuit Lemma: Let $G$ be a connected graph with all its vertices of even degrees. Then there exists a circuit passing through each edge of $G$ exactly once.
+
+Solution 2. As in Solution 1, we will show that it is possible to partition $2 n$ pairs $\{1,4 n\}$, $\{2,4 n-1\}, \ldots,\{2 n, 2 n+1\}$ into two sets, each consisting of $n$ pairs, such that each set contains two coins of each color.
+
+Introduce a multi-graph (i.e., a graph with multiple edges allowed) $\Gamma$ whose vertices correspond to coins; thus we have $4 n$ vertices of $n$ colors so that there are four vertices of each color. Connect pairs of vertices $\{1,4 n\},\{2,4 n-1\}, \ldots,\{2 n, 2 n+1\}$ by $2 n$ black edges.
+
+Further, for each monochromatic quadruple of vertices $i, j, k, \ell$ we add a pair of grey edges forming a matching, e.g., $(i, j)$ and $(k, \ell)$. In each of $n$ colors of coins we can choose one of three possible matchings; this results in $3^{n}$ ways of constructing grey edges. Let us call each of $3^{n}$ possible graphs $\Gamma$ a cyclic graph. Note that in a cyclic graph $\Gamma$ each vertex has both black and grey degrees equal to 1 . Hence $\Gamma$ is a union of disjoint cycles, and in each cycle black and grey edges alternate (in particular, all cycles have even lengths).
+
+It suffices to find a cyclic graph with all its cycle lengths divisible by 4. Indeed, in this case, for each cycle we start from some vertex, move along the cycle and recolor the black edges either to red or to blue, alternating red and blue colors. Now blue and red edges define the required partition, since for each monochromatic quadruple of vertices the grey edges provide a bijection between the endpoints of red and blue edges.
+
+Among all possible cyclic graphs, let us choose graph $\Gamma_{0}$ having the minimal number of components (i.e., cycles). The following claim completes the solution.\\
+Claim. In $\Gamma_{0}$, all cycle lengths are divisible by 4.\\
+Proof. Assuming the contrary, choose a cycle $C_{1}$ with an odd number of grey edges. For some color $c$ the cycle $C_{1}$ contains exactly one grey edge joining two vertices $i, j$ of color $c$, while the other edge joining two vertices $k, \ell$ of color $c$ lies in another cycle $C_{2}$. Now delete edges $(i, j)$ and $(k, \ell)$ and add edges $(i, k)$ and $(j, \ell)$. By this switch we again obtain a cyclic graph $\Gamma_{0}^{\prime}$ and decrease the number of cycles by 1 . This contradicts the choice of $\Gamma_{0}$.
+
+Comment 2. Use of an auxiliary graph and reduction to a new problem in terms of this graph is one of the crucial steps in both solutions presented. In fact, graph $G$ from Solution 1 could be obtained from any graph $\Gamma$ from Solution 2 by merging the vertices of the same color.

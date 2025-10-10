@@ -1,0 +1,6 @@
+Show that we can arrange the pebbles into two piles so that the following two conditions are both satisfied:
+\medskip
+\begin{itemize}
+\item The total weights of both piles are the same.
+\item Each pile contains two pebbles of each color.
+\end{itemize}
