@@ -1,0 +1,20 @@
+Queenie and Horst play a game on a $20 \times 20$ chessboard. In the beginning the board is empty. In every turn, Horst places a black knight on an empty square in such a way that his new knight does not attack any previous knights. Then Queenie places a white queen on an empty square. The game gets finished when somebody cannot move.
+
+Find the maximal positive $K$ such that, regardless of the strategy of Queenie, Horst can put at least $K$ knights on the board.\\
+(Armenia)\\
+Answer: $K=20^{2} / 4=100$. In case of a $4 N \times 4 M$ board, the answer is $K=4 N M$.\\
+Solution. We show two strategies, one for Horst to place at least 100 knights, and another strategy for Queenie that prevents Horst from putting more than 100 knights on the board.
+
+A strategy for Horst: Put knights only on black squares, until all black squares get occupied.
+
+Colour the squares of the board black and white in the usual way, such that the white and black squares alternate, and let Horst put his knights on black squares as long as it is possible. Two knights on squares of the same colour never attack each other. The number of black squares is $20^{2} / 2=200$. The two players occupy the squares in turn, so Horst will surely find empty black squares in his first 100 steps.
+
+A strategy for Queenie: Group the squares into cycles of length 4, and after each step of Horst, occupy the opposite square in the same cycle.
+
+Consider the squares of the board as vertices of a graph; let two squares be connected if two knights on those squares would attack each other. Notice that in a $4 \times 4$ board the squares can be grouped into 4 cycles of length 4, as shown in Figure 1. Divide the board into parts of size $4 \times 4$, and perform the same grouping in every part; this way we arrange the 400 squares of the board into 100 cycles (Figure 2).
+
+The strategy of Queenie can be as follows: Whenever Horst puts a new knight to a certain square $A$, which is part of some cycle $A-B-C-D-A$, let Queenie put her queen on the opposite square $C$ in that cycle (Figure 3). From this point, Horst cannot put any knight on $A$ or $C$ because those squares are already occupied, neither on $B$ or $D$ because those squares are attacked by the knight standing on $A$. Hence, Horst can put at most one knight on each cycle, that is at most 100 knights in total.
+
+Comment 1. Queenie's strategy can be prescribed by a simple rule: divide the board into $4 \times 4$ parts; whenever Horst puts a knight in a part $P$, Queenie reflects that square about the centre of $P$ and puts her queen on the reflected square.
+
+Comment 2. The result remains the same if Queenie moves first. In the first turn, she may put her first queen arbitrarily. Later, if she has to put her next queen on a square that already contains a queen, she may move arbitrarily again.
