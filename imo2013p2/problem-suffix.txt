@@ -1,0 +1,1 @@
+Find the least value of $k$ such that for any Colombian configuration of $4027$ points, there is a good arrangement of $k$ lines.
