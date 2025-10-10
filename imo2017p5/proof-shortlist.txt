@@ -1,0 +1,40 @@
+Let $N \geqslant 2$ be an integer. $N(N+1)$ soccer players, no two of the same height, stand in a row in some order. Coach Ralph wants to remove $N(N-1)$ people from this row so that in the remaining row of $2 N$ players, no one stands between the two tallest ones, no one stands between the third and the fourth tallest ones, ..., and finally no one stands between the two shortest ones. Show that this is always possible.\\
+(Russia)\\
+Solution 1. Split the row into $N$ blocks with $N+1$ consecutive people each. We will show how to remove $N-1$ people from each block in order to satisfy the coach's wish.
+
+First, construct a $(N+1) \times N$ matrix where $x_{i, j}$ is the height of the $i^{\text {th }}$ tallest person of the $j^{\text {th }}$ block-in other words, each column lists the heights within a single block, sorted in decreasing order from top to bottom.
+
+We will reorder this matrix by repeatedly swapping whole columns. First, by column permutation, make sure that $x_{2,1}=\max \left\{x_{2, i}: i=1,2, \ldots, N\right\}$ (the first column contains the largest height of the second row). With the first column fixed, permute the other ones so that $x_{3,2}=\max \left\{x_{3, i}: i=2, \ldots, N\right\}$ (the second column contains the tallest person of the third row, first column excluded). In short, at step $k(k=1,2, \ldots, N-1)$, we permute the columns from $k$ to $N$ so that $x_{k+1, k}=\max \left\{x_{i, k}: i=k, k+1, \ldots, N\right\}$, and end up with an array like this:
+
+\includegraphics[max width=\textwidth, center]{2024_08_22_d87ed7beb898e38f9bcbg-44.jpg}\\
+Now we make the bold choice: from the original row of people, remove everyone but those with heights
+
+
+\begin{equation*}
+x_{1,1}>x_{2,1}>x_{2,2}>x_{3,2}>\cdots>x_{N, N-1}>x_{N, N}>x_{N+1, N} \tag{*}
+\end{equation*}
+
+
+Of course this height order (*) is not necessarily their spatial order in the new row. We now need to convince ourselves that each pair $\left(x_{k, k} ; x_{k+1, k}\right)$ remains spatially together in this new row. But $x_{k, k}$ and $x_{k+1, k}$ belong to the same column/block of consecutive $N+1$ people; the only people that could possibly stand between them were also in this block, and they are all gone.
+
+Solution 2. Split the people into $N$ groups by height: group $G_{1}$ has the $N+1$ tallest ones, group $G_{2}$ has the next $N+1$ tallest, and so on, up to group $G_{N}$ with the $N+1$ shortest people.
+
+Now scan the original row from left to right, stopping as soon as you have scanned two people (consecutively or not) from the same group, say, $G_{i}$. Since we have $N$ groups, this must happen before or at the $(N+1)^{\text {th }}$ person of the row. Choose this pair of people, removing all the other people from the same group $G_{i}$ and also all people that have been scanned so far. The only people that could separate this pair's heights were in group $G_{i}$ (and they are gone); the only people that could separate this pair's positions were already scanned (and they are gone too).
+
+We are now left with $N-1$ groups (all except $G_{i}$ ). Since each of them lost at most one person, each one has at least $N$ unscanned people left in the row. Repeat the scanning process from left to right, choosing the next two people from the same group, removing this group and\\
+everyone scanned up to that point. Once again we end up with two people who are next to each other in the remaining row and whose heights cannot be separated by anyone else who remains (since the rest of their group is gone). After picking these 2 pairs, we still have $N-2$ groups with at least $N-1$ people each.
+
+If we repeat the scanning process a total of $N$ times, it is easy to check that we will end up with 2 people from each group, for a total of $2 N$ people remaining. The height order is guaranteed by the grouping, and the scanning construction from left to right guarantees that each pair from a group stand next to each other in the final row. We are done.
+
+Solution 3. This is essentially the same as solution 1, but presented inductively. The essence of the argument is the following lemma.\\
+Lemma. Assume that we have $N$ disjoint groups of at least $N+1$ people in each, all people have distinct heights. Then one can choose two people from each group so that among the chosen people, the two tallest ones are in one group, the third and the fourth tallest ones are in one group, ..., and the two shortest ones are in one group.\\
+Proof. Induction on $N \geqslant 1$; for $N=1$, the statement is trivial.\\
+Consider now $N$ groups $G_{1}, \ldots, G_{N}$ with at least $N+1$ people in each for $N \geqslant 2$. Enumerate the people by $1,2, \ldots, N(N+1)$ according to their height, say, from tallest to shortest. Find the least $s$ such that two people among $1,2, \ldots, s$ are in one group (without loss of generality, say this group is $G_{N}$ ). By the minimality of $s$, the two mentioned people in $G_{N}$ are $s$ and some $i<s$.
+
+Now we choose people $i$ and $s$ in $G_{N}$, forget about this group, and remove the people $1,2, \ldots, s$ from $G_{1}, \ldots, G_{N-1}$. Due to minimality of $s$ again, each of the obtained groups $G_{1}^{\prime}, \ldots, G_{N-1}^{\prime}$ contains at least $N$ people. By the induction hypothesis, one can choose a pair of people from each of $G_{1}^{\prime}, \ldots, G_{N-1}^{\prime}$ so as to satisfy the required conditions. Since all these people have numbers greater than $s$, addition of the pair $(s, i)$ from $G_{N}$ does not violate these requirements.
+
+To solve the problem, it suffices now to split the row into $N$ contiguous groups with $N+1$ people in each and apply the Lemma to those groups.
+
+Comment 1. One can identify each person with a pair of indices $(p, h)(p, h \in\{1,2, \ldots, N(N+1)\})$ so that the $p^{\text {th }}$ person in the row (say, from left to right) is the $h^{\text {th }}$ tallest person in the group. Say that $(a, b)$ separates $\left(x_{1}, y_{1}\right)$ and $\left(x_{2}, y_{2}\right)$ whenever $a$ is strictly between $x_{1}$ and $y_{1}$, or $b$ is strictly between $x_{2}$ and $y_{2}$. So the coach wants to pick $2 N$ people $\left(p_{i}, h_{i}\right)(i=1,2, \ldots, 2 N)$ such that no chosen person separates $\left(p_{1}, h_{1}\right)$ from $\left(p_{2}, h_{2}\right)$, no chosen person separates $\left(p_{3}, h_{3}\right)$ and $\left(p_{4}, h_{4}\right)$, and so on. This formulation reveals a duality between positions and heights. In that sense, solutions 1 and 2 are dual of each other.
+
+Comment 2. The number $N(N+1)$ is sharp for $N=2$ and $N=3$, due to arrangements $1,5,3,4,2$ and $1,10,6,4,3,9,5,8,7,2,11$.
