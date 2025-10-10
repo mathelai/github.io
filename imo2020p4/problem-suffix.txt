@@ -1,0 +1,1 @@
+Determine the smallest positive integer $k$ for which one can guarantee that there are two stations that are linked by both companies.
