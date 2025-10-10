@@ -1,0 +1,5 @@
+Prove that there exist two positive integers $b$ and $N$ for which
+$$
+\left|\sum_{j=m+1}^{n}\left(a_{j}-b\right)\right| \leq 1007^{2}
+$$
+for all integers $m$ and $n$ such that $n>m \geq N$.
