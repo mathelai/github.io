@@ -1,4 +1,7 @@
-An IMO problem has been split into two disjoint parts: the prefix and the suffix. The prefix is the part that sets up the problem, providing initial conditions or statements of the problem or givens, and sets the stage for the problem. The suffix of the problem is the part of the problem that needs to be determined, shown, or proven, the set of objectives to be achieved, or verified. You are given the IMO problem prefix, and your goal is to predict the IMO problem suffix without searching online.
+An IMO problem has been split into two disjoint parts: the prefix and the suffix.
+The prefix is the part that sets up the problem, providing initial conditions or statements of the problem or givens, and sets the stage for the problem.
+The suffix of the problem is the part of the problem that needs to be determined, shown, or proven, the set of objectives to be achieved, or verified. 
+You are given the IMO problem prefix, and your goal is to predict the IMO problem suffix without searching online.
 Problem prefix: <problem prefix>
 Problem suffix:
 
