@@ -1,0 +1,1 @@
+Show that for some distinct permutations $a$, $b$ the difference $f(a) - f(b)$ is a multiple of $m!$.

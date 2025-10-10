@@ -1,0 +1,1 @@
+Let $n_1, n_2, \dots , n_m$ be integers where $m>1$ is odd. Let $x = (x_1, \dots , x_m)$ denote a permutation of the integers $1, 2, \cdots , m$. Let $f(x) = x_1n_1 + x_2n_2 + ... + x_mn_m$.
