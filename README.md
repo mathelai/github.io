@@ -132,7 +132,7 @@ app/
 │   ├── icon-proof-all.png
 │   └── icon-grade.png
 │
-├── prompts/                            # Prompts for AI interactions
+├── prompts/                            # Prompts
 │   └── grading.txt                     # Grading prompt
 │   └── leakage.txt                     # Leakge testing prompts
 │
