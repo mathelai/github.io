@@ -1,0 +1,1 @@
+A set of lines in the plane is in general position if no two are parallel and no three pass through the same point. A set of lines in general position cuts the plane into regions, some of which have finite area; we call these its finite regions.
