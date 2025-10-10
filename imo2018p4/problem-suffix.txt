@@ -1,0 +1,1 @@
+Find the greatest $k$ such that Amy can ensure that she places at least $k$ red stones, no matter how Ben places his blue stones.
