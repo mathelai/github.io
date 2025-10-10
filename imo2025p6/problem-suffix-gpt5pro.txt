@@ -1,0 +1,5 @@
+**Problem suffix:**
+Assume that every tile Matilda uses has **both side lengths even** (so each tile is an even-by-even rectangle). Determine, with proof, the maximum possible number of unit squares she can cover.
+
+*Equivalently, prove that no matter how she places such tiles, at least (4049) unit squares must remain uncovered, and show that there is a placement that leaves exactly (4049) squares uncovered.*
+
