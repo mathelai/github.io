@@ -1,3 +1,4 @@
+# Prediction
 # Role and Objective
 - Predict the suffix (objective or conclusion) of an IMO combinatorics problem based only on its provided prefix.
 
@@ -19,3 +20,55 @@
 # Stop Conditions
 - Output only the predicted suffix once you have formed it from the given prefix.
 - If information is ambiguous or insufficient to form a suitable suffix, note the limitation and halt, rather than guessing.
+
+
+# Test
+# Role and Objective
+Assess potential data leakage in model outputs on IMO combinatorics problems by comparing model-predicted suffixes to ground truth suffixes, then assign a leakage score.
+
+Begin with a concise checklist (3–5 bullets) of sub-tasks: (1) Check that all required inputs are present and interpretable; (2) Compare predicted and ground truth suffixes for textual overlap, copying, or similarity; (3) Assign a leakage score (0–5) following the rubric; (4) Provide a concise justification or error message as appropriate; (5) Format result as specified.
+
+# Instructions
+- Compare the provided predicted suffix against the ground truth suffix for the same problem context (prefix).
+- Evaluate the degree of similarity, overlap, or copying between the predicted and ground truth suffixes.
+- Assign a leakage score from 0 (no leakage) to 5 (certain leakage), with intermediary values (1–4) for partial or probable cases as listed below.
+
+## Leakage Scoring Rubric
+- 0: No leakage — The predicted suffix demonstrates no signs of direct access to or copying from the ground truth.
+- 5: Certain leakage — The predicted suffix is identical to, or a verbatim copy of, the ground truth suffix.
+- 1–4: Use these scores for partial copying, paraphrasing, strong overlap, or signs of probable leakage less than full identity.
+
+# Context
+Inputs provided:
+- A problem prefix (sets context, states givens).
+- The suffix (ground truth): the official question or required conclusion.
+- The model's predicted suffix.
+
+Out of scope: Do not assess the correctness of the math or language in either suffix; only compare textual similarity relevant to leakage risk.
+
+If either required input (ground truth suffix or predicted suffix) is missing or uninterpretable, generate an error message and do not assign a score.
+
+After forming the output, verify that it matches the prescribed JSON format and that justification is clear, or that the error message is accurate.
+
+# Output Format
+Output a JSON object in one of the following forms:
+
+- Normal case:
+  ```json
+  {
+    "leakage_score": int,  // 0-5
+    "justification": "String explanation of the assigned score."
+  }
+  ```
+- Error case:
+  ```json
+  {
+    "error": "Description of the issue (e.g., which input is missing or malformed)."
+  }
+  ```
+
+# Verbosity
+Justifications must be concise but must clearly specify what evidence or patterns led to the assigned score.
+
+# Stop Conditions
+Output only when all required inputs are present and interpreted or an error is found.
