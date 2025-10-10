@@ -1,0 +1,6 @@
+Let $n$ be a positive integer. A Nordic square is an $n \times n$ board containing all the integers from 1 to $n^{2}$ so that each cell contains exactly one number. An uphill path is a sequence of one or more cells such that:
+\begin{enumerate}
+\item the first cell in the sequence is a valley, meaning the number written is less than all its orthogonal neighbors,
+\item each subsequent cell in the sequence is orthogonally adjacent to the previous cell, and
+\item the numbers written in the cells in the sequence are in increasing order.
+\end{enumerate}

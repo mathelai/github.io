@@ -1,0 +1,1 @@
+Find, as a function of $n$, the smallest possible total number of uphill paths in a Nordic square.
