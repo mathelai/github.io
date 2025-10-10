@@ -1,0 +1,1 @@
+Prove that the order can be chosen in such a way that the grasshopper never lands on any point in $M$.
