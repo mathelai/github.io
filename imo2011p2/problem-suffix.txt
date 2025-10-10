@@ -1,0 +1,1 @@
+Show that we can choose a point $P$ in $\mathcal{S}$ and a line $\ell$ going through $P$ such that the resulting windmill uses each point of $\mathcal{S}$ as a pivot infinitely many times.
