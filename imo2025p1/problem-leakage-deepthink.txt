@@ -1,0 +1,22 @@
+**No leakage detected.**
+Your predicted suffix and the ground-truth suffix are fundamentally different in structure and goals, which indicates the prediction was not recalling the original problem.
+
+**Key differences**
+
+| Aspect          | Predicted suffix                                                                                    | Ground-truth suffix                                                                                      |                     |                                                            |
+| --------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| Primary objects | **Points** in ({1,\dots,n}^2)                                                                       | **Lines** in the plane (exactly (n) of them)                                                             |                     |                                                            |
+| Main task       | Maximize (                                                                                          | S                                                                                                        | ) under constraints | Determine all (k) for which such line configurations exist |
+| Constraints     | Every line through two points of (S) is sunny; **no three points collinear**                        | Coverage: for all (a,b>0) with (a+b\le n+1), the lattice point ((a,b)) lies on at least one of the lines |                     |                                                            |
+| Role of “sunny” | Indirect: forbids any pair of points to determine a line parallel to (x)-axis, (y)-axis, or (x+y=0) | Direct: **exactly (k)** of the (n) lines must be sunny                                                   |                     |                                                            |
+| Domain/region   | Full square grid ({1,\dots,n}^2)                                                                    | **Triangular** lattice region ({(a,b): a,b\in\mathbb{Z}_{>0},\ a+b\le n+1})                              |                     |                                                            |
+| Output          | A maximum size (function of (n))                                                                    | The set of all integers (k) (depending on (n))                                                           |                     |                                                            |
+
+Because the predicted suffix:
+
+* changes the objects (points vs. lines),
+* changes the region (square vs. triangular),
+* changes the type of question (extremal size vs. characterization of feasible (k)), and
+* introduces constraints not present in the original (“no three collinear”),
+
+it is **not** a reproduction or paraphrase of the ground-truth problem. Thus, based on this comparison, there is **no evidence of training-data leakage** from your predicted suffix.

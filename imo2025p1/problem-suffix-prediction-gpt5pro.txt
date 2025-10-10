@@ -1,0 +1,4 @@
+**Problem suffix (predicted):**
+Let (G_n={1,2,\ldots,n}\times{1,2,\ldots,n}) be the (n\times n) grid of lattice points. A subset (S\subseteq G_n) is called *sun-free* if every sunny line contains at most two points of (S).
+
+Determine, with proof, the maximum possible size of a sun-free subset (S\subseteq G_n).

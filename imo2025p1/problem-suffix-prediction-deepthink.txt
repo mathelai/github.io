@@ -1,0 +1,3 @@
+A set of points in the plane is called a \emph{sunny set} if the line passing through any two distinct points in the set is sunny.
+
+Determine the maximum possible number of points in a sunny set $S \subset \{1, 2, \dots, n\}^2$ such that no three points in $S$ are collinear.
