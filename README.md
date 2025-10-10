@@ -357,14 +357,14 @@ This updates metrics like difficulty scores and categories across all problems.
 
 ## Citation
 
-If you use this data or code in your research, please cite:
+If you use this data, prompts, or code in your research, please cite:
 
 ```bibtex
 @software{mathel2025,
   title = {MathEL: Autonomous Self-Improving AI for IMO Combinatorics},
   author = {{MathEL Project}},
   year = {2025},
-  url = {https://github.com/mathel/mathel},
+  url = {https://github.com/mathelai},
   version = {1.0.0}
 }
 ```
