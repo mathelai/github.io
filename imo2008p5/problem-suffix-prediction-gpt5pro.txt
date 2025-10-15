@@ -1,0 +1,5 @@
+**Problem suffix:** Prove that
+[
+N ;=; 2^{,k-n}, M
+\qquad\text{(equivalently, } \frac{N}{M} = 2^{,k-n}\text{).}
+]
