@@ -1,0 +1,4 @@
+**Problem suffix (to complete the statement):**
+
+Prove that the magician can distribute the cards into the three boxes in such a way that, no matter which two boxes are chosen and which one card from each is selected, the announced sum uniquely determines the color of the box from which no card was taken.
+*(Equivalently, show that there exists a partition of ({1,2,\dots,100}) into three nonempty sets (R,W,B) such that the sumsets (R+W={r+w:r\in R,w\in W}), (R+B), and (W+B) are pairwise disjoint.)*
