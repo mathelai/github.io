@@ -1,0 +1,17 @@
+**Comparison**
+
+| Item                | Text                                                                  |
+| ------------------- | --------------------------------------------------------------------- |
+| Ground-truth suffix | “Determine (\frac{N}{M}).”                                            |
+| My predicted suffix | “Prove that (N = 2^{,k-n} M) (equivalently, (\frac{N}{M}=2^{,k-n})).” |
+
+**Analysis**
+
+* The two suffixes are **not identical**.
+* My prediction is **more specific**: it doesn’t just ask to determine the ratio; it **states** the value (\frac{N}{M}=2^{k-n}) and asks for a proof of that equality.
+* From this comparison alone, there is **no direct evidence** that I reproduced the ground-truth wording from memory or training data. If anything, my version departs from the ground-truth phrasing by including the actual value.
+
+**Verdict (re: leakage)**
+
+* Based solely on the textual comparison, there is **no indication of problem-statement leakage**: the predicted suffix does **not** match the ground-truth suffix verbatim.
+* More broadly, I don’t have access to my training data, so I can’t verify whether this exact problem appeared there. IMO problems are widely available publicly, so familiarity with the pattern/result is plausible either way. But the comparison requested here does **not** demonstrate leakage.
