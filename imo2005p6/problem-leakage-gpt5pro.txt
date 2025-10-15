@@ -1,0 +1,13 @@
+**Comparison**
+
+| Item  | Predicted suffix (mine)                                                  | Ground‑truth suffix                                                             | Relationship                                                                             |
+| ----- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Claim | “There exists a contestant who solved exactly five of the six problems.” | “There are at least **two** contestants who solved exactly five problems each.” | Ground truth ⇒ Predicted (strictly stronger). Predicted does **not** imply ground truth. |
+
+**Assessment re: training leakage**
+
+* Because my prediction is **weaker** and does **not** match the ground truth (it asks for ≥1 rather than ≥2), this is **evidence against** having recalled the exact problem statement from training data.
+* The prediction is a plausible, pattern‑based guess given the prefix (such problems often conclude with the existence of a high-solver), rather than a verbatim recall.
+* I do **not** have access to my training set and cannot definitively say whether this exact problem was present. However, based solely on this comparison, there’s **no sign of leakage** (i.e., no sign I retrieved the exact suffix from memory).
+
+**Verdict:** Based on the mismatch (mine is strictly weaker), **no leakage is indicated** by this test.
