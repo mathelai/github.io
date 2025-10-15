@@ -1,0 +1,2 @@
+**Problem suffix:**
+Prove that, in any such triangulation, at least (1003) of the resulting (2004) triangles have **exactly two** good sides. (Recall that the sides of (P) are also considered good.) Moreover, show that this lower bound is best possible by exhibiting a triangulation in which exactly (1003) triangles have two good sides.
