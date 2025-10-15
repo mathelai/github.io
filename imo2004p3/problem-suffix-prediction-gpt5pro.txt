@@ -1,0 +1,3 @@
+**Problem suffix:**
+
+Determine all positive integers (n) for which an (n \times n) board can be completely tiled by pairwise non-overlapping hooks (rotations and reflections allowed), i.e., so that every unit square of the board is covered by exactly one hook.

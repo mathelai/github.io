@@ -1,0 +1,22 @@
+**Short answer:** No clear evidence of leakage.
+
+**Why: a side‑by‑side comparison**
+
+| Aspect           | My predicted suffix                                            | Ground truth suffix                                                   |
+| ---------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Board shape      | Only **squares** (n\times n)                                   | **All rectangles** (m\times n)                                        |
+| Task             | Decide for which (n) a tiling exists                           | Determine **all** (m,n) for which a tiling exists                     |
+| Overlaps/gaps    | “completely tiled… pairwise non‑overlapping” (implies no gaps) | Explicitly: “without gaps and without overlaps”                       |
+| Outside coverage | Not explicitly stated (implicit in “board is covered”)         | **Explicitly**: “no part of a hook covers area outside the rectangle” |
+| Transformations  | Rotations/reflections allowed                                  | Same                                                                  |
+
+**Interpretation**
+
+* The prediction captures the **general theme** (tiling with hooks under rotations/reflections, exact cover), but it is a **narrower, different problem** (only (n\times n) boards).
+* Phrasing and scope **do not match**; if this were verbatim recall of the specific IMO problem, we would expect the (m\times n) formulation and the explicit “outside the rectangle” clause.
+
+**Verdict**
+
+Given the mismatch in scope and wording, this looks like a **pattern‑based guess** of a standard tiling question rather than recall of the specific problem. From this comparison alone, there’s **no indication of problem leakage** in training.
+
+*(General note: I don’t have visibility into my training set. I was trained on a mixture of licensed data, data created by human trainers, and publicly available data. The conclusion above is based solely on the textual comparison you asked for.)*
