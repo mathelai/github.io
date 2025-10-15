@@ -1,0 +1,3 @@
+**Problem suffix:**
+
+Prove that the competitors can be divided into two rooms so that the largest clique contained entirely within the first room has the same size as the largest clique contained entirely within the second room.
