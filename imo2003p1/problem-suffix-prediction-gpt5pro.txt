@@ -1,0 +1,3 @@
+**Problem suffix (prediction):**
+
+Determine the smallest integer (k) such that any subset (A \subseteq S) with (|A| = k) must contain two distinct elements (x,y) with (x \mid y). Moreover, show that this value of (k) is best possible by constructing a subset of (S) with (k-1) elements containing no such pair.
