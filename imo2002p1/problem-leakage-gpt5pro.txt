@@ -1,0 +1,18 @@
+**Leakage assessment (by direct comparison)**
+
+* **Your ground-truth suffix:**
+  *“Show that there are the same number of type 1 and type 2 subsets.”*
+
+* **My earlier predicted suffix:**
+  *“Determine the largest possible number of blue elements if neither a type 1 nor a type 2 subset exists; prove the maximum is (\binom{n}{2}) (equivalently, if there are (\binom{n}{2}+1) blue points, a type 1 or type 2 subset must exist), and show sharpness.”*
+
+**Comparison & conclusion**
+
+* The two statements are **qualitatively different** problems:
+
+  * Ground truth is a **counting/equality** claim (a bijective/symmetry argument that the number of type 1 subsets equals the number of type 2 subsets).
+  * My prediction is an **extremal threshold** statement about the **maximum number of blue points** avoiding either structure, plus a construction for tightness.
+* Aside from both referencing the notions of “type 1” and “type 2” (which come directly from the given prefix), there is **no substantive overlap** in objectives or conclusions.
+
+**Verdict:**
+There is **no evidence of training-data leakage** here. The predicted suffix does **not** match (or paraphrase) the ground-truth suffix; it is a different, plausibly formulated but incorrect guess. (As a general caveat: one comparison cannot *prove* the absence of any training exposure, but this discrepancy does not indicate memorization or leakage.)
