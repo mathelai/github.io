@@ -1,0 +1,2 @@
+**Problem suffix:**
+Assume that (\gcd!\left(m,,n_1+n_2+\cdots+n_m\right)=1). Show that as (x) ranges over all permutations of ({1,2,\dots,m}), the residues (f(x) \pmod m) run through each residue class exactly ((m-1)!) times. In particular, there exists a permutation (x) such that (m \mid f(x)).
